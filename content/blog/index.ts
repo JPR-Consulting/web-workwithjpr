@@ -9,6 +9,7 @@ import { post as seoBasics } from './seo-basics-lokale-unternehmen';
 import { post as kampfsport } from './website-fuer-kampfsport-gyms';
 import { post as kundengewinnung } from './online-kundengewinnung';
 import { post as vibeCoding } from './vibe-coding-unternehmen';
+import { post as werbeanzeigen } from './warum-werbeanzeigen-nicht-funktionieren';
 
 export interface BlogPost {
   slug: string;
@@ -32,6 +33,7 @@ export const blogPosts: BlogPost[] = [
   kampfsport,
   kundengewinnung,
   vibeCoding,
+  werbeanzeigen,
 ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
