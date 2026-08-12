@@ -4,6 +4,12 @@ import { Quote } from 'lucide-react';
 const TestimonialsSection: React.FC = () => {
   const testimonials = [
     {
+      name: 'Diana Römer Duque',
+      company: 'COLOMBINA — Catering & Kochkurse',
+      logo: '/logos/colombina.webp',
+      quote: 'Meine Kurstermine, Texte und Anfragen verwalte ich jetzt einfach selbst — und die Seite fühlt sich trotzdem hundertprozentig nach meiner Marke an. Dass das alles an einem Tag entstanden ist, kann ich immer noch nicht ganz glauben.',
+    },
+    {
       name: 'Michael Nüske',
       company: 'ropeFX — Industriekletterer Berlin',
       logo: '/logos/ropefx.webp',
@@ -25,7 +31,7 @@ const TestimonialsSection: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Das sagen unsere Kunden</h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((t) => (
             <div
               key={t.name}
