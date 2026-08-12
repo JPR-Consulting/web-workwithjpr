@@ -4,6 +4,15 @@ import { ExternalLink } from 'lucide-react';
 const PortfolioSection: React.FC = () => {
   const projects = [
     {
+      title: 'COLOMBINA — Catering & Kochkurse',
+      type: 'Gastronomie & Events',
+      desc: 'Kolumbianische Kochkurse und Catering in Berlin. Conversion-optimierte Landing Pages mit Buchungssystem, eigenem Mini-CMS und DSGVO-konformem Cookie-Consent.',
+      tags: ['Landing Pages', 'Buchungssystem', 'CMS', 'Cookie-Consent', 'Conversion-Optimierung'],
+      url: 'https://colombina-kochkurse.vercel.app',
+      image: '/portfolio/colombina.webp',
+      result: 'Von der bestehenden Website zur buchbaren Plattform mit selbst pflegbaren Kursterminen — Struktur, Buchung und CMS an einem Tag umgesetzt.',
+    },
+    {
       title: 'Muay Thai Subyen e.V.',
       type: 'Sport & Verein',
       desc: 'Berlins einziges durch die Thailand Sports Authority zertifiziertes Muay Thai Gym. Dark-Theme mit Neon-Akzenten, Trainingsplan und Mitgliederverwaltung.',
