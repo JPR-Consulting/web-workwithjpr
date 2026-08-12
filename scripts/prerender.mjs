@@ -29,7 +29,7 @@ function renderPage({ title, description, canonical, ogType, rootHtml, jsonLd })
   html = html.replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${esc(title)}$2`);
   html = html.replace(/(<meta name="twitter:description" content=")[^"]*(")/, `$1${esc(description)}$2`);
   if (jsonLd) html = html.replace('</head>', `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>\n</head>`);
-  if (rootHtml) html = html.replace(/<div id="root">[\s\S]*?<\/div>\s*(?=<script|<div id="prerender"|$)/, `<div id="root">${rootHtml}</div>\n`);
+  if (rootHtml) html = html.replace(/<div id="root">[\s\S]*?<\/body>/, `<div id="root">${rootHtml}</div>\n  </body>`);
   return html;
 }
 
