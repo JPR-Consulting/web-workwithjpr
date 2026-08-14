@@ -11,6 +11,7 @@ import FAQSection from './components/FAQSection';
 import Imprint from './components/Imprint';
 import Privacy from './components/Privacy';
 import CookieBanner from './components/CookieBanner';
+import HeroBackdrop from './components/HeroBackdrop';
 import BlogIndex from './components/BlogIndex';
 import BlogPostView from './components/BlogPost';
 import { useInView } from './hooks/useInView';
@@ -175,8 +176,9 @@ const App: React.FC = () => {
 
       <div className="relative z-10">
         {/* Hero */}
-        <header className="min-h-[100dvh] flex items-center justify-center px-4 pt-10 pb-20">
-          <div className="container mx-auto max-w-5xl text-center">
+        <header className="relative overflow-hidden min-h-[100dvh] flex items-center justify-center px-4 pt-10 pb-20">
+          <HeroBackdrop />
+          <div className="relative z-10 container mx-auto max-w-5xl text-center">
             <div className="flex justify-center mb-14 animate-fade-in">
               <div className="relative">
                 <div className="absolute -inset-6 bg-cyan-500/10 rounded-full blur-[50px]" />
