@@ -33,8 +33,14 @@ function renderPage({ title, description, canonical, ogType, rootHtml, jsonLd })
   return html;
 }
 
+// Kopfzeile mit Logo, damit der Moment vor dem Mount nach der Seite aussieht
+// und nicht nach einem nackten Textabzug.
 const shell = (inner) => `
 <div style="min-height:100vh;background:#09090b;color:#d4d4d8;font-family:system-ui,-apple-system,sans-serif">
+<div style="border-bottom:1px solid #27272a">
+<div style="max-width:768px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;gap:12px">
+<img src="/JPR1.webp" alt="JPR Consulting" width="34" height="34" style="border-radius:50%">
+<span style="color:#fff;font-weight:600;letter-spacing:-.01em">JPR Consulting</span></div></div>
 <div style="max-width:768px;margin:0 auto;padding:60px 20px;line-height:1.7">${inner}</div></div>`;
 
 // --- Blog-Artikel ---

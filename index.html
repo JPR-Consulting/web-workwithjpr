@@ -228,13 +228,23 @@
     </script>
   </head>
   <body class="bg-zinc-950 text-white antialiased">
-    <!-- Loading fallback shown until React hydrates (prevents blank screen on slow mobile) -->
-    <div id="root"><div style="min-height:100vh;background:#09090b;color:#d4d4d8;font-family:system-ui,-apple-system,sans-serif"><div style="max-width:900px;margin:0 auto;padding:60px 20px;line-height:1.7">
-      <header>
-        <h1>Deine neue Website — in Tagen, nicht Monaten.</h1>
-        <p>Webdesign für lokale Unternehmen in Berlin. Erster Entwurf kostenlos — du siehst vorab, was du bekommst.</p>
+    <!-- Loading fallback shown until React hydrates (prevents blank screen on slow mobile).
+         Der erste Bildschirm bildet den echten Hero nach — sonst blitzt hier eine schmale
+         Textspalte auf, die wie ein Blogartikel aussieht. Der restliche Text bleibt für
+         Crawler und ohne JavaScript erhalten, steht aber unterhalb des Falzes. -->
+    <div id="root"><div style="min-height:100vh;background:#09090b;color:#d4d4d8;font-family:system-ui,-apple-system,sans-serif">
+      <header style="min-height:100vh;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px">
+        <img src="/JPR1.webp" alt="JPR Consulting" width="176" height="176" style="width:min(176px,38vw);height:auto;border-radius:50%;margin-bottom:clamp(28px,7vh,56px)">
+        <h1 style="margin:0;font-size:clamp(2.1rem,5.2vw,4.5rem);font-weight:700;line-height:1.06;letter-spacing:-.022em;max-width:16ch">
+          <span style="color:#2ee0c6">Deine neue Website —</span><br><span style="color:#fff">in Tagen, nicht Monaten.</span>
+        </h1>
+        <p style="margin:22px 0 0;font-size:clamp(1rem,1.4vw,1.25rem);color:#9ca3af;max-width:42ch">
+          Webdesign für lokale Unternehmen in Berlin.<br><span style="color:#fff;font-weight:600">Erster Entwurf kostenlos — du siehst vorab, was du bekommst.</span>
+        </p>
+        <span style="display:inline-block;margin-top:34px;padding:15px 28px;border-radius:9px;background:linear-gradient(135deg,#06b6d4,#10b981);color:#03211e;font-weight:700;font-size:1rem">Kostenloser Entwurf anfragen</span>
       </header>
 
+      <div style="max-width:900px;margin:0 auto;padding:60px 20px;line-height:1.7">
       <main>
         <section>
           <h2>Unsere Leistungen</h2>
