@@ -214,7 +214,12 @@ const App: React.FC = () => {
               >
                 Kostenloser Entwurf anfragen
               </button>
-              <p className="text-gray-500 text-sm">Aktuell freie Kapazitäten — Projekt noch diesen Monat starten</p>
+              <p
+                className="text-gray-400 text-sm"
+                style={{ textShadow: '0 1px 14px rgba(9,9,11,.95)' }}
+              >
+                Aktuell freie Kapazitäten — Projekt noch diesen Monat starten
+              </p>
             </div>
           </div>
         </header>

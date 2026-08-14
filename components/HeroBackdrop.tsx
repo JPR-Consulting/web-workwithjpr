@@ -14,11 +14,26 @@ const WALL = ['muaythai', 'dance', 'colombina', 'k1', 'squash'];
 
 type Row = { wf: number; y: number; speed: number; dim: number; idx: number };
 
-const ROWS: Row[] = [
+const ROWS_WIDE: Row[] = [
   { wf: 0.125, y: 0.11, speed: 0.0092, dim: 0.66, idx: 0 },
   { wf: 0.170, y: 0.45, speed: 0.0158, dim: 0.46, idx: 2 },
   { wf: 0.225, y: 0.78, speed: 0.0245, dim: 0.26, idx: 4 },
 ];
+
+/**
+ * Hochkant ist das Fenster schmal und sehr hoch: dieselben drei Reihen
+ * ergäben ein paar riesige Rechtecke, von denen eins hinter der Headline
+ * steht. Stattdessen vier schmalere Reihen, die das mittlere Drittel
+ * (0.28–0.70) komplett für den Text frei lassen.
+ */
+const ROWS_NARROW: Row[] = [
+  { wf: 0.075, y: 0.06, speed: 0.0085, dim: 0.70, idx: 0 },
+  { wf: 0.098, y: 0.20, speed: 0.0140, dim: 0.56, idx: 2 },
+  { wf: 0.120, y: 0.78, speed: 0.0200, dim: 0.42, idx: 1 },
+  { wf: 0.150, y: 0.92, speed: 0.0270, dim: 0.30, idx: 3 },
+];
+
+const NARROW_MAX = 767;
 
 const STILL_FRAME = 4200;
 
@@ -126,17 +141,20 @@ const HeroBackdrop: React.FC = () => {
       if (!ready(first)) return;
       const aspect = first.naturalHeight / first.naturalWidth;
 
+      const narrow = W <= NARROW_MAX;
+      const rows = narrow ? ROWS_NARROW : ROWS_WIDE;
+
       ctx.save();
       ctx.translate(W / 2, H / 2);
-      ctx.rotate(-0.088);
+      ctx.rotate(narrow ? -0.06 : -0.088);
       ctx.translate(-W / 2, -H / 2);
 
-      // Fensterbreite an einer Mindestbasis messen, nicht am Viewport: sonst
-      // laufen auf schmalen Screens alle drei Reihen in dieselbe Größe und
-      // die Tiefenstaffelung geht verloren.
-      const unit = Math.max(W, 900);
+      // Fensterbreite an einer festen Basis messen, nicht am Viewport: sonst
+      // laufen auf schmalen Screens alle Reihen in dieselbe Größe und die
+      // Tiefenstaffelung geht verloren.
+      const unit = narrow ? 1250 : Math.max(W, 900);
 
-      for (const row of ROWS) {
+      for (const row of rows) {
         const w = unit * row.wf;
         const ch = w * aspect;
         const h = ch + Math.max(14, w * 0.055);
@@ -154,16 +172,40 @@ const HeroBackdrop: React.FC = () => {
       ctx.restore();
     };
 
+    /**
+     * Quer: klassisches Cover. Hochkant NICHT — ein 16:9-Bild auf ein 9:19-
+     * Fenster gecovert zeigt nur noch rund ein Viertel der Bildbreite, der
+     * Lichtstrahl wird dabei so weit hochgezoomt, dass er als flächiger
+     * Teal-Nebel ankommt statt als Strahl. Deshalb hochkant auf Breite
+     * einpassen, oben verankern und nach unten ins Dunkle auslaufen lassen.
+     */
     const cover = (img: HTMLImageElement, t: number, amp: number, speed: number) => {
       if (!ready(img)) return;
-      const s =
-        Math.max(W / img.naturalWidth, H / img.naturalHeight) *
-        (1.05 + 0.035 * Math.sin(t * speed));
+      const drift = Math.sin(t * speed * 0.7) * amp;
+      const breathe = 1.05 + 0.035 * Math.sin(t * speed);
+
+      if (W <= NARROW_MAX) {
+        const s = (W / img.naturalWidth) * (1.14 + 0.03 * Math.sin(t * speed));
+        const w = img.naturalWidth * s;
+        const h = img.naturalHeight * s;
+        const y = -h * 0.04;
+        ctx.drawImage(img, (W - w) / 2 + drift * 0.4, y, w, h);
+
+        const from = y + h * 0.62;
+        const g = ctx.createLinearGradient(0, from, 0, y + h);
+        g.addColorStop(0, 'rgba(8,9,10,0)');
+        g.addColorStop(1, '#08090a');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, from, W, H - from);
+        return;
+      }
+
+      const s = Math.max(W / img.naturalWidth, H / img.naturalHeight) * breathe;
       const w = img.naturalWidth * s;
       const h = img.naturalHeight * s;
       ctx.drawImage(
         img,
-        (W - w) / 2 + Math.sin(t * speed * 0.7) * amp,
+        (W - w) / 2 + drift,
         (H - h) / 2 + Math.cos(t * speed * 0.55) * amp * 0.5,
         w,
         h
@@ -278,12 +320,21 @@ const HeroBackdrop: React.FC = () => {
         className="absolute inset-0 w-full h-full"
         style={{ WebkitMaskImage: fade, maskImage: fade }}
       />
-      {/* Scrim hinter der Textsäule — hält die Copy lesbar, egal was drunter driftet */}
+      {/* Scrim hinter der Textsäule — hält die Copy lesbar, egal was drunter
+          driftet. Quer ein Oval um den Textblock, hochkant ein Band über die
+          volle Breite: dort steht der Text randlos und ein Oval träfe ihn nicht. */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 hidden md:block"
         style={{
           background:
             'radial-gradient(46% 34% at 50% 50%, rgba(8,9,10,.82) 0%, rgba(8,9,10,.55) 45%, rgba(8,9,10,0) 100%)',
+        }}
+      />
+      <div
+        className="absolute inset-0 md:hidden"
+        style={{
+          background:
+            'linear-gradient(to bottom, rgba(8,9,10,.30) 0%, rgba(8,9,10,.62) 24%, rgba(8,9,10,.84) 44%, rgba(8,9,10,.84) 66%, rgba(8,9,10,.76) 84%, rgba(8,9,10,.68) 100%)',
         }}
       />
     </div>
