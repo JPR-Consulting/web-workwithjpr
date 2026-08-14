@@ -172,6 +172,16 @@ const HeroBackdrop: React.FC = () => {
 
     const frame = (t: number) => {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // Solange die Platte fehlt, gar nichts zeichnen: ein deckendes Schwarz
+      // würde den Verlauf der Seite überdecken und den Hero flacher machen
+      // als ohne diese Komponente. Lieber durchsichtig bleiben und einblenden.
+      if (!ready(plate)) {
+        ctx.clearRect(0, 0, W, H);
+        return;
+      }
+      host.style.opacity = '1';
+
       ctx.fillStyle = '#08090a';
       ctx.fillRect(0, 0, W, H);
 
@@ -258,7 +268,11 @@ const HeroBackdrop: React.FC = () => {
     'linear-gradient(to bottom, black 0%, black 52%, rgba(0,0,0,.34) 82%, transparent 99%)';
 
   return (
-    <div ref={hostRef} className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+    <div
+      ref={hostRef}
+      className="absolute inset-0 z-0 pointer-events-none opacity-0 transition-opacity duration-700 ease-out"
+      aria-hidden="true"
+    >
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"

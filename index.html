@@ -42,6 +42,10 @@
     <!-- Fonts (self-hosted, DSGVO compliant — no external requests) -->
     <link rel="stylesheet" href="/fonts/fonts.css">
 
+    <!-- Hero-Hintergrund: ohne Preload startet der Download erst, wenn das
+         JS-Bundle geparst und React gemountet ist (~1,3 s auf 3G) -->
+    <link rel="preload" as="image" type="image/webp" href="/hero/backplate.webp" fetchpriority="high">
+
     <!-- Structured Data: LocalBusiness -->
     <script type="application/ld+json">
     {
