@@ -114,4 +114,70 @@ for (const [route, title] of [['imprint', 'Impressum | JPR Consulting'], ['priva
   console.log(`✓ /${route}`);
 }
 
+
+// --- Preisseite /preise (Commercial-Intent-Landingpage) ---
+{
+  const url = `${SITE}/preise`;
+  const tiers = [
+    { name: 'Starter', price: '1500', label: 'One-Page Website', items: ['Mobil optimiert', 'Kontaktformular', 'Google Maps', 'Basis-SEO', '1 Korrekturschleife'] },
+    { name: 'Professional', price: '3000', label: 'Mehrseitige Website + Online-Terminbuchung', items: ['Team- & Leistungsseiten', 'Erweiterte SEO-Optimierung', 'Google Analytics', 'Galerie / Portfolio', '3 Korrekturschleifen', 'Einführung & Support'] },
+    { name: 'Business', price: '5000', label: 'Online-Shop oder Web-App', items: ['Alles aus Professional', 'Kundenverwaltung / Backend', 'Individuelle Funktionen', 'Automatisierungen', 'Laufender Support'] },
+  ];
+  const rootHtml = shell(`
+    <p><a href="/" style="color:#22d3ee">← Zur Startseite</a></p>
+    <h1 style="color:#fff;font-size:2.2rem;line-height:1.2">Webdesign Preise in Berlin — transparent ab 1.500 €</h1>
+    <p>Eine professionelle Website kostet bei JPR Consulting zwischen <strong style="color:#fff">1.500 €</strong> und <strong style="color:#fff">5.000 €+</strong> — je nach Umfang. Keine versteckten Kosten, keine Agentur-Tagessätze: Du bekommst ein festes Angebot, bevor es losgeht. Der erste Entwurf ist kostenlos.</p>
+    ${tiers.map(t => `
+    <h2 style="color:#fff">${t.name} — ab ${Number(t.price).toLocaleString('de-DE')} € (${t.label})</h2>
+    <ul>${t.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`).join('')}
+    <h2 style="color:#fff">Was den Preis beeinflusst</h2>
+    <ul>
+      <li><strong style="color:#fff">Umfang & Seitenanzahl</strong> — ein One-Pager ist schneller gebaut als zehn Unterseiten.</li>
+      <li><strong style="color:#fff">Design-Anspruch</strong> — Standard-Design inklusive, individuelle Animationen und Branding kosten extra.</li>
+      <li><strong style="color:#fff">Funktionen & Schnittstellen</strong> — Terminbuchung, Bezahlung, Kundenverwaltung, Anbindungen.</li>
+      <li><strong style="color:#fff">Inhalte & Pflege</strong> — Texte/Bilder liefern oder erstellen lassen, mit oder ohne laufende Betreuung.</li>
+    </ul>
+    <p>Alle Preise netto zzgl. MwSt. · Ratenzahlung möglich · Hosting ab 15 €/Monat</p>
+    <p>Ausführlicher Ratgeber: <a href="/blog/was-kostet-eine-website-berlin" style="color:#22d3ee">Was kostet eine Website in Berlin?</a></p>
+    <p><a href="/" style="color:#22d3ee">JPR Consulting — Webdesign Berlin</a></p>`);
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: 'Webdesign Berlin',
+      serviceType: 'Webdesign',
+      areaServed: { '@type': 'City', name: 'Berlin' },
+      provider: { '@type': 'ProfessionalService', name: 'JPR Consulting GmbH', url: SITE, telephone: '+4917631504123', address: { '@type': 'PostalAddress', streetAddress: 'Letteallee 91', postalCode: '13409', addressLocality: 'Berlin', addressCountry: 'DE' } },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Webdesign Pakete',
+        itemListElement: tiers.map(t => ({
+          '@type': 'Offer',
+          name: `${t.name} — ${t.label}`,
+          priceSpecification: { '@type': 'PriceSpecification', minPrice: t.price, priceCurrency: 'EUR' },
+          url,
+        })),
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Start', item: SITE },
+        { '@type': 'ListItem', position: 2, name: 'Preise', item: url },
+      ],
+    },
+  ];
+  mkdirSync(`${DIST}/preise`, { recursive: true });
+  writeFileSync(`${DIST}/preise/index.html`, renderPage({
+    title: 'Webdesign Preise Berlin 2026 — Website ab 1.500 € | JPR Consulting',
+    description: 'Transparente Preisliste: One-Page Website ab 1.500 €, Website mit Terminbuchung ab 3.000 €, Shop oder Web-App ab 5.000 €. Festes Angebot im kostenlosen Erstgespräch.',
+    canonical: url,
+    ogType: 'website',
+    rootHtml,
+    jsonLd,
+  }));
+  console.log('✓ /preise');
+}
+
 console.log(`Prerender fertig: ${blogPosts.length} Artikel + Blog-Index + 2 Rechtsseiten.`);

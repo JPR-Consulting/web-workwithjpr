@@ -2,9 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://workwithjpr.com/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-08-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://workwithjpr.com/preise</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://workwithjpr.com/blog</loc>
@@ -14,7 +20,7 @@
   </url>
   <url>
     <loc>https://workwithjpr.com/blog/was-kostet-eine-website-berlin</loc>
-    <lastmod>2026-03-08</lastmod>
+    <lastmod>2026-08-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

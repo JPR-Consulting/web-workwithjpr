@@ -3,9 +3,10 @@ import { Check } from 'lucide-react';
 
 interface Props {
   openCalendly: () => void;
+  showDetailsLink?: boolean;
 }
 
-const PricingSection: React.FC<Props> = ({ openCalendly }) => {
+const PricingSection: React.FC<Props> = ({ openCalendly, showDetailsLink }) => {
   const tiers = [
     {
       name: 'Starter',
@@ -105,6 +106,13 @@ const PricingSection: React.FC<Props> = ({ openCalendly }) => {
         <p className="text-center text-gray-600 text-sm mt-8">
           Alle Preise netto zzgl. MwSt. · Ratenzahlung möglich · Hosting ab 15€/Monat
         </p>
+        {showDetailsLink && (
+          <p className="text-center text-sm mt-4">
+            <a href="/preise" className="text-cyan-400 hover:text-cyan-300 transition-colors">
+              Alle Webdesign-Preise in Berlin im Detail →
+            </a>
+          </p>
+        )}
       </div>
     </section>
   );

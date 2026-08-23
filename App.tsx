@@ -14,6 +14,7 @@ import CookieBanner from './components/CookieBanner';
 import HeroBackdrop from './components/HeroBackdrop';
 import BlogIndex from './components/BlogIndex';
 import BlogPostView from './components/BlogPost';
+import PreisePage from './components/PreisePage';
 import { useInView } from './hooks/useInView';
 import { getPostBySlug } from './content/blog';
 
@@ -26,7 +27,7 @@ declare global {
 }
 
 
-type ViewState = 'HOME' | 'IMPRINT' | 'PRIVACY' | 'BLOG' | 'BLOG_POST';
+type ViewState = 'HOME' | 'IMPRINT' | 'PRIVACY' | 'BLOG' | 'BLOG_POST' | 'PREISE';
 
 const navLinks = [
   { label: 'Leistungen', id: 'services' },
@@ -76,6 +77,8 @@ const App: React.FC = () => {
         setCurrentView('IMPRINT');
       } else if (path === '/privacy' || path === '/datenschutz') {
         setCurrentView('PRIVACY');
+      } else if (path === '/preise') {
+        setCurrentView('PREISE');
       } else if (path === '/blog') {
         setCurrentView('BLOG');
       } else if (path.startsWith('/blog/')) {
@@ -95,6 +98,7 @@ const App: React.FC = () => {
     let path = '/';
     if (currentView === 'IMPRINT') path = '/imprint';
     else if (currentView === 'PRIVACY') path = '/privacy';
+    else if (currentView === 'PREISE') path = '/preise';
     else if (currentView === 'BLOG') path = '/blog';
     else if (currentView === 'BLOG_POST' && currentSlug) path = `/blog/${currentSlug}`;
     if (window.location.pathname !== path) {
@@ -149,6 +153,7 @@ const App: React.FC = () => {
 
   if (currentView === 'IMPRINT') return <Imprint onBack={() => navigate('HOME')} />;
   if (currentView === 'PRIVACY') return <Privacy onBack={() => navigate('HOME')} />;
+  if (currentView === 'PREISE') return <PreisePage onNavigate={navigate} openCalendly={openCalendly} />;
   if (currentView === 'BLOG') return <BlogIndex onNavigate={navigate} />;
   if (currentView === 'BLOG_POST') {
     const post = getPostBySlug(currentSlug);
@@ -240,7 +245,7 @@ const App: React.FC = () => {
           <TestimonialsSection />
         </div>
         <div ref={section6.ref} className={fadeLeft(section6.isInView)} id="pricing">
-          <PricingSection openCalendly={openCalendly} />
+          <PricingSection openCalendly={openCalendly} showDetailsLink />
         </div>
         <div ref={section7.ref} className={fadeUp(section7.isInView)} id="about">
           <AboutSection openCalendly={openCalendly} />
@@ -294,6 +299,7 @@ const App: React.FC = () => {
             </div>
 
             <div className="flex flex-wrap justify-center gap-8 mb-10 text-sm">
+              <button onClick={() => navigate('PREISE')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Preise</button>
               <button onClick={() => navigate('BLOG')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Blog</button>
               <button onClick={() => navigate('IMPRINT')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Impressum</button>
               <button onClick={() => navigate('PRIVACY')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Datenschutz</button>

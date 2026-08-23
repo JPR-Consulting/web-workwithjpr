@@ -1,7 +1,7 @@
 export const post = {
   slug: 'was-kostet-eine-website-berlin',
-  title: 'Was kostet eine Website in Berlin? Preise, Pakete und Tipps für 2026',
-  description: 'Realistische Preise für professionelles Webdesign in Berlin. Von der einfachen One-Page Website bis zum Online-Shop — was du wirklich zahlen musst.',
+  title: 'Was kostet eine Website in Berlin? Preise 2026 (ab 1.500 €)',
+  description: 'Konkrete Zahlen statt „kommt drauf an": One-Pager ab 1.500 €, Website mit Terminbuchung ab 3.000 €, Shop ab 5.000 €. Alle Preisfaktoren und versteckten Kosten im Überblick.',
   date: '2026-03-08',
   tags: ['Webdesign', 'Berlin', 'Preise'],
   readTime: '6 min',
@@ -11,6 +11,8 @@ export const post = {
 Eine professionelle Website für ein lokales Unternehmen in Berlin kostet zwischen **1.500€ und 5.000€+** — je nach Umfang. Aber was bekommst du für welchen Preis? Und worauf solltest du achten, damit du nicht zu viel zahlst?
 
 ## Preise im Überblick
+
+Die aktuelle Preisliste mit allen Paketen findest du übrigens jederzeit auf unserer [Preisseite](/preise).
 
 ### One-Page Website (ab 1.500€)
 Ideal für Handwerker, Freelancer oder kleine Dienstleister, die eine professionelle Online-Präsenz brauchen.
