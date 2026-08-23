@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ArrowLeft, Layers, Palette, Plug, RefreshCw } from 'lucide-react';
 import PricingSection from './PricingSection';
+import TestimonialsSection from './TestimonialsSection';
 import FAQSection from './FAQSection';
 
 interface Props {
@@ -124,6 +125,7 @@ const PreisePage: React.FC<Props> = ({ onNavigate, openCalendly }) => {
         </div>
       </section>
 
+      <TestimonialsSection />
       <FAQSection />
 
       {/* CTA */}

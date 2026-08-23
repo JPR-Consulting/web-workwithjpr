@@ -5,6 +5,7 @@ import HowItWorksSection from './components/HowItWorksSection';
 import ServicesSection from './components/ServicesSection';
 import ProblemSection from './components/ProblemSection';
 import PricingSection from './components/PricingSection';
+import TestimonialsSection from './components/TestimonialsSection';
 import PortfolioSection from './components/PortfolioSection';
 import FAQSection from './components/FAQSection';
 import Imprint from './components/Imprint';
@@ -239,6 +240,9 @@ const App: React.FC = () => {
         </div>
         <div ref={section4.ref} className={fadeScale(section4.isInView)} id="portfolio">
           <PortfolioSection />
+        </div>
+        <div ref={section5.ref} className={fadeUp(section5.isInView)}>
+          <TestimonialsSection />
         </div>
         <div ref={section6.ref} className={fadeLeft(section6.isInView)} id="pricing">
           <PricingSection openCalendly={openCalendly} showDetailsLink />
