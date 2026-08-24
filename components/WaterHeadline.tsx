@@ -38,7 +38,7 @@ void main() {
   float dist = length(d);
 
   // Ringwelle um den Zeiger, nach außen laufend und gedämpft
-  float ring = sin(dist * 34.0 - uTime * 3.4) * exp(-dist * 7.0);
+  float ring = sin(dist * 30.0 - uTime * 3.2) * exp(-dist * 6.0);
   // Sanfte Grunddünung, damit die "Pfütze" auch in Ruhe minimal lebt
   float swell = sin(uv.x * 9.0 + uTime * 0.7) * 0.0016 * uStrength;
 
@@ -145,16 +145,26 @@ const WaterHeadline: React.FC<Props> = ({ lines, className = '' }) => {
       spans.forEach((span) => {
         const cs = getComputedStyle(span);
         const sr = span.getBoundingClientRect();
-        ctx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
-        ctx.textBaseline = 'alphabetic';
+        // Font-Shorthand inkl. line-height, damit Canvas exakt wie das DOM setzt
+        ctx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize}/${cs.lineHeight} ${cs.fontFamily}`;
         ctx.letterSpacing = cs.letterSpacing === 'normal' ? '0px' : cs.letterSpacing;
-        const x = sr.left - rect.left;
-        // Grundlinie: Kastenoberkante + ~0.78 der Schriftgröße (passt für Syne)
-        const y = sr.top - rect.top + parseFloat(cs.fontSize) * 0.78;
-        const kind = span.dataset.line;
+        ctx.textBaseline = 'alphabetic';
+        ctx.textAlign = 'left';
+
         const text = span.textContent || '';
+        const x = sr.left - rect.left;
+        // Grundlinie aus den echten Font-Metriken statt geschätztem Faktor:
+        // Zeilenkasten mittig um die Schriftbox, dann Ascent addieren.
+        const m = ctx.measureText(text);
+        const ascent = m.actualBoundingBoxAscent || parseFloat(cs.fontSize) * 0.72;
+        const descent = m.actualBoundingBoxDescent || parseFloat(cs.fontSize) * 0.2;
+        const y = sr.top - rect.top + (sr.height - (ascent + descent)) / 2 + ascent;
+
+        const kind = span.dataset.line;
         if (kind === 'outline') {
+          // Strichstärke wie im CSS (-webkit-text-stroke: 2px), skaliert mit dpr-Scale
           ctx.lineWidth = 2;
+          ctx.lineJoin = 'round';
           ctx.strokeStyle = '#f4f4f0';
           ctx.strokeText(text, x, y);
         } else {
