@@ -175,7 +175,9 @@
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
+  /* ueber dem Inhalt (Sektionen bringen eigene bg-ink-Flaechen mit),
+     aber unter der fixierten Navigation (z-50) */
+  z-index: 40;
 }
 
 /* Raster: 64px-Gitter aus Hairlines, zum unteren Rand hin ausblendend */
@@ -194,10 +196,10 @@
 .bg-texture::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
-  opacity: 0.14;
-  mix-blend-mode: soft-light;
+  opacity: 0.2;
+  mix-blend-mode: overlay;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bg-texture::after { opacity: 0.1; }
+  .bg-texture::after { opacity: 0.14; }
 }
