@@ -178,6 +178,7 @@
   /* ueber dem Inhalt (Sektionen bringen eigene bg-ink-Flaechen mit),
      aber unter der fixierten Navigation (z-50) */
   z-index: 40;
+  will-change: transform;
 }
 
 /* Raster: 64px-Gitter aus Hairlines, zum unteren Rand hin ausblendend */

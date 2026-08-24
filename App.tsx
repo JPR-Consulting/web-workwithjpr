@@ -732,7 +732,7 @@ const App: React.FC = () => {
         {/* CTA */}
         <section id="kontakt" className="px-6 md:px-12 border-b border-line bg-accent text-ink py-16 md:py-24">
           <div ref={ctaRef} className="reveal flex justify-between items-center gap-10 flex-wrap">
-            <h2 className="font-syne font-extrabold text-[clamp(44px,6vw,78px)] leading-none uppercase tracking-[-0.02em]">
+            <h2 className="font-syne font-extrabold text-[clamp(38px,6vw,78px)] leading-[1.04] uppercase tracking-[-0.015em] break-words max-w-full">
               Bereit<br />loszulegen?
             </h2>
             <div className="max-w-[380px]">
@@ -751,9 +751,9 @@ const App: React.FC = () => {
         </section>
 
         {/* Footer */}
-        <footer className="px-6 md:px-12 flex justify-between items-center gap-5 flex-wrap py-6 font-mono text-[13px] text-muted uppercase">
-          <div>JPR Studio ist eine Marke der JPR Consulting GmbH · Letteallee 91 · 13409 Berlin</div>
-          <div className="flex gap-6 items-center flex-wrap">
+        <footer className="px-6 md:px-12 flex flex-col md:flex-row md:justify-between md:items-center gap-5 py-8 font-mono text-[13px] text-muted uppercase">
+          <div className="leading-[1.7] normal-case md:uppercase">JPR Studio ist eine Marke der JPR Consulting GmbH · Letteallee 91 · 13409 Berlin</div>
+          <div className="flex gap-x-6 gap-y-3 items-center flex-wrap">
             <button onClick={scrollToTop} className="text-muted hover:text-accent transition-colors">Nach oben</button>
             <button onClick={() => navigate('BLOG')} className="text-muted hover:text-accent transition-colors">Blog</button>
             <button onClick={() => navigate('IMPRINT')} className="text-muted hover:text-accent transition-colors">Impressum</button>
@@ -860,6 +860,20 @@ const AboutText: React.FC = () => {
 /** FAQ-Akkordeon-Item (+ dreht zu × via rotate 45deg, max-height-Transition). */
 const FaqItem: React.FC<{ q: string; a: string; isOpen: boolean; onToggle: () => void }> = ({ q, a, isOpen, onToggle }) => {
   const contentRef = useRef<HTMLDivElement>(null);
+  // Hoehe messen statt beim ersten Render zu raten: scrollHeight ist vor dem
+  // Layout 0, wodurch die Antwort zugeklappt blieb. Auch bei Resize neu messen.
+  const [height, setHeight] = useState(0);
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+    const measure = () => setHeight(el.scrollHeight);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    if (document.fonts?.ready) document.fonts.ready.then(measure);
+    return () => ro.disconnect();
+  }, [a]);
+
   return (
     <div className="border-b border-line">
       <button
@@ -877,7 +891,7 @@ const FaqItem: React.FC<{ q: string; a: string; isOpen: boolean; onToggle: () =>
       </button>
       <div
         className="overflow-hidden transition-[max-height] duration-500 ease-[cubic-bezier(.19,1,.22,1)]"
-        style={{ maxHeight: isOpen ? `${contentRef.current?.scrollHeight ?? 500}px` : '0px' }}
+        style={{ maxHeight: isOpen ? `${height || 600}px` : '0px' }}
       >
         <div ref={contentRef}>
           <p className="pb-[26px] pr-10 text-[15px] leading-[1.7] text-muted max-w-[760px]">{a}</p>
