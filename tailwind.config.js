@@ -7,11 +7,21 @@ export default {
         primary: {
           cyan: '#06b6d4',
           dark: '#000000'
-        }
+        },
+        ink: '#101012',
+        panel: '#1a1a1e',
+        line: '#26262a',
+        ftext: '#f4f4f0',
+        muted: '#b4b4bc',
+        dim: '#74747e',
+        accent: '#d4ff4f',
       },
       fontFamily: {
         sans: ['Outfit', 'sans-serif'],
         display: ['Satoshi', 'sans-serif'],
+        syne: ['Syne', 'Avenir Next', 'system-ui', 'sans-serif'],
+        body: ['Space Grotesk', 'Helvetica Neue', 'system-ui', 'sans-serif'],
+        mono: ['IBM Plex Mono', 'SF Mono', 'Menlo', 'monospace'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out forwards',

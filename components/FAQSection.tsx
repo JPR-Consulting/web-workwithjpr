@@ -1,59 +1,56 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+
+const faqs = [
+  {
+    q: 'Was kostet eine Website?',
+    a: 'Das hängt vom Umfang ab. Eine einfache One-Page Website beginnt ab 1.500 €, eine mehrseitige Website mit Buchungssystem ab 3.000 €. Im kostenlosen Erstgespräch bekommst du ein individuelles Angebot — transparent, ohne versteckte Kosten.',
+  },
+  {
+    q: 'Wie lange dauert es, bis meine Website fertig ist?',
+    a: 'Eine einfache Website ist in wenigen Tagen fertig. Komplexere Projekte mit Shop oder individuellen Funktionen dauern 1–2 Wochen. Kein monatelanges Warten — wir setzen schnell um.',
+  },
+  {
+    q: 'Brauche ich technisches Wissen?',
+    a: 'Nein, überhaupt nicht. Wir kümmern uns um alles Technische. Nach dem Launch zeigen wir dir in einer Einführung, wie du einfache Änderungen selbst vornehmen kannst — falls gewünscht.',
+  },
+  {
+    q: 'Was passiert nach dem Launch?',
+    a: 'Wir lassen dich nicht im Stich. Je nach Paket bekommst du laufenden Support, Hosting und regelmäßige Updates. Wenn du etwas ändern oder erweitern möchtest, sind wir für dich da.',
+  },
+  {
+    q: 'Könnt ihr auch bestehende Websites überarbeiten?',
+    a: 'Ja, definitiv. Ob Redesign, Performance-Optimierung oder neue Funktionen — wir schauen uns an, was du hast, und machen daraus etwas Modernes.',
+  },
+  {
+    q: 'Nutzt ihr WordPress?',
+    a: 'Nein. Wir nutzen modernere Technik — das bedeutet: schnellere Ladezeiten, bessere Platzierung bei Google und keine Probleme durch veraltete Plugins.',
+  },
+  {
+    q: 'Arbeitet ihr nur mit Unternehmen in Berlin?',
+    a: 'Wir sind in Berlin ansässig und spezialisiert auf lokale Unternehmen. Aber wir arbeiten auch remote — der Standort spielt für digitale Projekte keine Rolle.',
+  },
+];
 
 const FAQSection: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const faqs = [
-    {
-      q: 'Was kostet eine Website?',
-      a: 'Das hängt vom Umfang ab. Eine einfache One-Page Website beginnt ab 1.500€, eine mehrseitige Website mit Buchungssystem ab 3.000€. Im kostenlosen Erstgespräch erstellen wir dir ein individuelles Angebot — transparent, ohne versteckte Kosten.'
-    },
-    {
-      q: 'Wie lange dauert es, bis meine Website fertig ist?',
-      a: 'Eine einfache Website ist in wenigen Tagen fertig. Komplexere Projekte mit Shop oder individuellen Funktionen dauern 1–2 Wochen. Kein monatelanges Warten — wir setzen schnell um.'
-    },
-    {
-      q: 'Brauche ich technisches Wissen?',
-      a: 'Nein, überhaupt nicht. Wir kümmern uns um alles Technische. Nach dem Launch zeigen wir dir in einer Einführung, wie du einfache Änderungen selbst vornehmen kannst — falls gewünscht.'
-    },
-    {
-      q: 'Was passiert nach dem Launch?',
-      a: 'Wir lassen dich nicht im Stich. Je nach Paket bekommst du laufenden Support, Hosting und regelmäßige Updates. Wenn du etwas ändern oder erweitern möchtest, sind wir für dich da.'
-    },
-    {
-      q: 'Könnt ihr auch bestehende Websites überarbeiten?',
-      a: 'Ja, definitiv. Ob Redesign, Performance-Optimierung oder neue Funktionen — wir schauen uns an, was du hast, und machen daraus etwas Modernes.'
-    },
-    {
-      q: 'Nutzt ihr WordPress?',
-      a: 'Nein. Wir nutzen modernere Technik — das bedeutet: schnellere Ladezeiten, bessere Platzierung bei Google und keine Probleme durch veraltete Plugins.'
-    },
-    {
-      q: 'Arbeitet ihr nur mit Unternehmen in Berlin?',
-      a: 'Wir sind in Berlin ansässig und spezialisiert auf lokale Unternehmen. Aber wir arbeiten auch remote — der Standort spielt für digitale Projekte keine Rolle.'
-    }
-  ];
-
   return (
-    <section className="py-20 px-4">
-      <div className="container mx-auto max-w-3xl">
-        <div className="text-center mb-12">
-          <p className="text-cyan-400 text-sm font-semibold uppercase tracking-widest mb-3">FAQ</p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight mb-4">Häufige Fragen</h2>
-        </div>
+    <section className="px-6 md:px-12 border-b border-line py-16 md:py-24">
+      <div className="font-mono text-[13px] text-accent uppercase mb-5">FAQ</div>
+      <h2 className="font-syne font-extrabold uppercase text-[clamp(34px,4.5vw,60px)] tracking-[-0.015em] leading-[1.02] mb-[52px]">
+        Häufige Fragen.
+      </h2>
 
-        <div className="space-y-3">
-          {faqs.map((faq, idx) => (
-            <FAQItem
-              key={idx}
-              question={faq.q}
-              answer={faq.a}
-              isOpen={openIndex === idx}
-              onToggle={() => setOpenIndex(openIndex === idx ? null : idx)}
-            />
-          ))}
-        </div>
+      <div className="border-t border-line max-w-[980px]">
+        {faqs.map((faq, idx) => (
+          <FAQItem
+            key={faq.q}
+            question={faq.q}
+            answer={faq.a}
+            isOpen={openIndex === idx}
+            onToggle={() => setOpenIndex(openIndex === idx ? null : idx)}
+          />
+        ))}
       </div>
     </section>
   );
@@ -66,29 +63,28 @@ const FAQItem: React.FC<{
   onToggle: () => void;
 }> = ({ question, answer, isOpen, onToggle }) => {
   const contentRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState(0);
-
-  useEffect(() => {
-    if (contentRef.current) {
-      setHeight(isOpen ? contentRef.current.scrollHeight : 0);
-    }
-  }, [isOpen]);
 
   return (
-    <div className="rounded-xl bg-zinc-800/40 border border-white/5 overflow-hidden hover:border-cyan-500/30 transition-colors">
+    <div className="border-b border-line">
       <button
+        type="button"
         onClick={onToggle}
-        className="w-full px-6 py-5 text-left flex items-center justify-between gap-4"
+        className="w-full flex justify-between items-center gap-6 py-[26px] bg-transparent border-none cursor-pointer text-left font-syne font-bold text-xl text-ftext hover:text-accent transition-colors"
       >
-        <span className="font-semibold text-white">{question}</span>
-        <ChevronDown className={`w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+        {question}
+        <span
+          className="font-mono text-xl text-accent flex-shrink-0 transition-transform duration-300"
+          style={{ transform: isOpen ? 'rotate(45deg)' : 'none' }}
+        >
+          +
+        </span>
       </button>
       <div
-        style={{ height: `${height}px` }}
-        className="transition-[height] duration-300 ease-out overflow-hidden"
+        className="overflow-hidden transition-[max-height] duration-500 ease-[cubic-bezier(.19,1,.22,1)]"
+        style={{ maxHeight: isOpen ? `${contentRef.current?.scrollHeight ?? 500}px` : '0px' }}
       >
-        <div ref={contentRef} className="px-6 pb-5 text-gray-400 text-sm leading-relaxed">
-          {answer}
+        <div ref={contentRef}>
+          <p className="pb-[26px] pr-10 text-[15px] leading-[1.7] text-muted max-w-[760px]">{answer}</p>
         </div>
       </div>
     </div>

@@ -83,8 +83,8 @@ const CookieBanner: React.FC = () => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 p-4 animate-slide-up">
-      <div className="container mx-auto max-w-4xl bg-zinc-900 border border-white/10 rounded-2xl p-6 shadow-2xl">
-        <p className="text-gray-400 text-sm mb-4 leading-relaxed">
+      <div className="container mx-auto max-w-4xl bg-panel border border-line p-6 font-body">
+        <p className="text-muted text-sm mb-4 leading-relaxed">
           Wir verwenden Cookies und Tracking-Technologien (Google Analytics, Facebook Pixel), um unsere Website zu verbessern und Werbeanzeigen zu optimieren.
           Mehr dazu in unserer{' '}
           <button
@@ -92,16 +92,16 @@ const CookieBanner: React.FC = () => {
               window.history.pushState({}, '', '/privacy');
               window.dispatchEvent(new PopStateEvent('popstate'));
             }}
-            className="text-cyan-400 hover:text-cyan-300 underline transition-colors"
+            className="text-accent hover:text-ftext underline transition-colors"
           >
             Datenschutzerklärung
           </button>.
         </p>
-        <div className="flex flex-wrap gap-3">
-          <button onClick={() => accept('all')} className="px-5 py-2 bg-cyan-500 text-white text-sm font-semibold rounded-lg hover:bg-cyan-400 transition-colors">
+        <div className="flex flex-wrap gap-3 font-mono text-[13px] uppercase">
+          <button onClick={() => accept('all')} className="px-5 py-3 bg-accent text-ink font-medium border border-accent hover:bg-transparent hover:text-accent transition-colors">
             Alle akzeptieren
           </button>
-          <button onClick={() => accept('necessary')} className="px-5 py-2 bg-zinc-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-zinc-700 border border-white/10 transition-colors">
+          <button onClick={() => accept('necessary')} className="px-5 py-3 bg-transparent text-ftext font-medium border border-line hover:border-accent hover:text-accent transition-colors">
             Nur notwendige
           </button>
         </div>

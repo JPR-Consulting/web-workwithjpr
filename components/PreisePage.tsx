@@ -3,6 +3,7 @@ import { ArrowLeft, Layers, Palette, Plug, RefreshCw } from 'lucide-react';
 import PricingSection from './PricingSection';
 import TestimonialsSection from './TestimonialsSection';
 import FAQSection from './FAQSection';
+import MagneticButton from './MagneticButton';
 
 interface Props {
   onNavigate: (view: string, slug?: string) => void;
@@ -48,110 +49,107 @@ const PreisePage: React.FC<Props> = ({ onNavigate, openCalendly }) => {
   }, []);
 
   return (
-    <div className="min-h-[100dvh] bg-zinc-950 text-white">
-      <div className="container mx-auto max-w-6xl px-4 pt-20">
+    <div className="min-h-[100dvh] bg-ink text-ftext font-body">
+      <div className="px-6 md:px-12 pt-20">
         <button
           onClick={() => onNavigate('HOME')}
-          className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-12 text-sm"
+          className="flex items-center gap-2 text-muted hover:text-accent transition-colors mb-12 font-mono text-sm uppercase"
         >
           <ArrowLeft className="w-4 h-4" />
           Zur Startseite
         </button>
 
         {/* Hero */}
-        <div className="text-center max-w-3xl mx-auto mb-4">
-          <p className="text-cyan-400 text-sm font-semibold uppercase tracking-widest mb-3">Preise</p>
-          <h1 className="text-4xl md:text-6xl font-display font-bold tracking-tighter mb-6 leading-tight">
-            Webdesign Preise in Berlin —{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">
-              transparent ab 1.500&nbsp;€
-            </span>
+        <div className="max-w-3xl mb-4">
+          <div className="font-mono text-[13px] text-accent uppercase mb-5">Preise</div>
+          <h1 className="font-syne font-extrabold uppercase text-[clamp(34px,5.5vw,70px)] tracking-[-0.02em] leading-[1.02] mb-6">
+            Webdesign Preise in Berlin — <span className="text-accent">transparent ab 1.500&nbsp;€</span>
           </h1>
-          <p className="text-xl text-gray-400 leading-relaxed">
-            Eine professionelle Website kostet bei uns zwischen <strong className="text-white">1.500&nbsp;€</strong> und{' '}
-            <strong className="text-white">5.000&nbsp;€+</strong> — je nach Umfang. Keine versteckten Kosten, keine
+          <p className="text-lg text-muted leading-[1.7]">
+            Eine professionelle Website kostet bei uns zwischen <strong className="text-ftext">1.500&nbsp;€</strong> und{' '}
+            <strong className="text-ftext">5.000&nbsp;€+</strong> — je nach Umfang. Keine versteckten Kosten, keine
             Agentur-Tagessätze: Du bekommst ein festes Angebot, bevor es losgeht. Und den ersten Entwurf gibt es kostenlos.
           </p>
         </div>
       </div>
 
-      {/* Pricing tiers (same as homepage) */}
+      {/* Pricing tiers (wie Homepage) */}
       <PricingSection openCalendly={openCalendly} />
 
       {/* Price factors */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto max-w-5xl">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Was den Preis beeinflusst</h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              „Ab-Preise" sind ehrlich gemeint — hier sind die vier Faktoren, die entscheiden, wo dein Projekt landet.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {factors.map((f, i) => (
-              <div key={i} className="p-7 rounded-2xl bg-zinc-800/40 border border-white/5 hover:border-cyan-500/30 transition-all duration-300">
-                <f.icon className="w-7 h-7 text-cyan-400 mb-4" />
-                <h3 className="text-lg font-bold mb-2">{f.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{f.text}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10 p-7 rounded-2xl bg-cyan-500/5 border border-cyan-500/20">
-            <h3 className="text-lg font-bold mb-2">Warum kein WordPress?</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Viele Agenturen wirken auf den ersten Blick günstiger, weil sie ein WordPress-Theme anpassen. Dafür zahlst du
-              später: Plugin-Lizenzen, Sicherheitsupdates, langsame Ladezeiten. Wir bauen mit moderner Webtechnologie —
-              schneller bei Google, keine Plugin-Wartung, keine laufenden Lizenzkosten.{' '}
-              <button
-                onClick={() => onNavigate('BLOG_POST', 'individuelles-backend-vs-wordpress')}
-                className="text-cyan-400 hover:text-cyan-300 transition-colors"
-              >
-                Mehr dazu im Vergleich →
-              </button>
-            </p>
-          </div>
-
-          <p className="text-center text-gray-500 text-sm mt-10">
-            Du willst tiefer einsteigen? Im Ratgeber{' '}
-            <button
-              onClick={() => onNavigate('BLOG_POST', 'was-kostet-eine-website-berlin')}
-              className="text-cyan-400 hover:text-cyan-300 transition-colors"
-            >
-              „Was kostet eine Website in Berlin?"
-            </button>{' '}
-            rechnen wir alle Posten (inkl. versteckter Kosten) im Detail durch.
+      <section className="px-6 md:px-12 border-b border-line py-16 md:py-24">
+        <div className="mb-[52px] max-w-3xl">
+          <h2 className="font-syne font-extrabold uppercase text-[clamp(28px,3.5vw,44px)] tracking-[-0.015em] mb-4">
+            Was den Preis beeinflusst
+          </h2>
+          <p className="text-muted text-lg">
+            „Ab-Preise" sind ehrlich gemeint — hier sind die vier Faktoren, die entscheiden, wo dein Projekt landet.
           </p>
         </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line">
+          {factors.map((f) => (
+            <div key={f.title} className="bg-ink hover:bg-panel transition-colors p-9">
+              <f.icon className="w-6 h-6 text-accent mb-4" strokeWidth={1.5} />
+              <h3 className="font-syne font-bold text-lg mb-2">{f.title}</h3>
+              <p className="text-muted text-sm leading-[1.6]">{f.text}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 p-8 border border-line bg-panel">
+          <h3 className="font-syne font-bold text-lg mb-2">Warum kein WordPress?</h3>
+          <p className="text-muted text-sm leading-[1.6]">
+            Viele Agenturen wirken auf den ersten Blick günstiger, weil sie ein WordPress-Theme anpassen. Dafür zahlst du
+            später: Plugin-Lizenzen, Sicherheitsupdates, langsame Ladezeiten. Wir bauen mit moderner Webtechnologie —
+            schneller bei Google, keine Plugin-Wartung, keine laufenden Lizenzkosten.{' '}
+            <button
+              onClick={() => onNavigate('BLOG_POST', 'individuelles-backend-vs-wordpress')}
+              className="text-accent hover:text-ftext transition-colors"
+            >
+              Mehr dazu im Vergleich →
+            </button>
+          </p>
+        </div>
+
+        <p className="text-muted text-sm mt-8 font-mono uppercase">
+          Du willst tiefer einsteigen? Im Ratgeber{' '}
+          <button
+            onClick={() => onNavigate('BLOG_POST', 'was-kostet-eine-website-berlin')}
+            className="text-accent hover:text-ftext transition-colors normal-case"
+          >
+            „Was kostet eine Website in Berlin?"
+          </button>{' '}
+          rechnen wir alle Posten (inkl. versteckter Kosten) im Detail durch.
+        </p>
       </section>
 
       <TestimonialsSection />
       <FAQSection />
 
       {/* CTA */}
-      <section className="py-24 px-4">
-        <div className="container mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">Was kostet deine Website?</h2>
-          <p className="text-xl text-gray-400 mb-10 max-w-xl mx-auto">
-            Buch dir 30 Minuten — du bekommst ein festes Angebot und den ersten Entwurf kostenlos.
-          </p>
-          <button
-            onClick={openCalendly}
-            className="inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-white transition-all duration-200 rounded-lg hover:scale-105 shadow-[0_0_40px_rgba(6,182,212,0.5)] animate-gradient-shift bg-[length:200%_200%]"
-            style={{ backgroundImage: 'linear-gradient(135deg, #06b6d4, #10b981, #06b6d4)' }}
-          >
-            Kostenloser Entwurf anfragen
-          </button>
-        </div>
+      <section className="px-6 md:px-12 bg-accent text-ink py-16 md:py-24 text-center">
+        <h2 className="font-syne font-extrabold uppercase text-[clamp(34px,5vw,60px)] tracking-[-0.02em] mb-4">
+          Was kostet deine Website?
+        </h2>
+        <p className="text-lg mb-8 max-w-xl mx-auto">
+          Buch dir 30 Minuten — du bekommst ein festes Angebot und den ersten Entwurf kostenlos.
+        </p>
+        <MagneticButton
+          as="button"
+          onClick={openCalendly}
+          className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-ink text-ftext px-7 py-4 border border-ink hover:bg-transparent hover:text-ink transition-colors"
+        >
+          Kostenloser Entwurf anfragen →
+        </MagneticButton>
       </section>
 
       {/* Mini footer */}
-      <footer className="py-10 px-4 border-t border-white/5">
-        <div className="flex flex-wrap justify-center gap-8 text-sm">
-          <button onClick={() => onNavigate('HOME')} className="text-gray-400 hover:text-white transition-colors">Startseite</button>
-          <button onClick={() => onNavigate('BLOG')} className="text-gray-400 hover:text-white transition-colors">Blog</button>
-          <button onClick={() => onNavigate('IMPRINT')} className="text-gray-400 hover:text-white transition-colors">Impressum</button>
-          <button onClick={() => onNavigate('PRIVACY')} className="text-gray-400 hover:text-white transition-colors">Datenschutz</button>
+      <footer className="px-6 md:px-12 py-10 border-t border-line">
+        <div className="flex flex-wrap justify-center gap-8 font-mono text-[13px] uppercase">
+          <button onClick={() => onNavigate('HOME')} className="text-muted hover:text-accent transition-colors">Startseite</button>
+          <button onClick={() => onNavigate('BLOG')} className="text-muted hover:text-accent transition-colors">Blog</button>
+          <button onClick={() => onNavigate('IMPRINT')} className="text-muted hover:text-accent transition-colors">Impressum</button>
+          <button onClick={() => onNavigate('PRIVACY')} className="text-muted hover:text-accent transition-colors">Datenschutz</button>
         </div>
       </footer>
     </div>

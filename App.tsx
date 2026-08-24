@@ -1,21 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowUp, Menu, X } from 'lucide-react';
-import AboutSection from './components/AboutSection';
-import HowItWorksSection from './components/HowItWorksSection';
-import ServicesSection from './components/ServicesSection';
-import ProblemSection from './components/ProblemSection';
-import PricingSection from './components/PricingSection';
-import TestimonialsSection from './components/TestimonialsSection';
-import PortfolioSection from './components/PortfolioSection';
-import FAQSection from './components/FAQSection';
+import React, { useState, useEffect, useRef } from 'react';
 import Imprint from './components/Imprint';
 import Privacy from './components/Privacy';
 import CookieBanner from './components/CookieBanner';
-import HeroBackdrop from './components/HeroBackdrop';
+import CustomCursor from './components/CustomCursor';
+import MagneticButton from './components/MagneticButton';
+import ScrambleLabel from './components/ScrambleLabel';
 import BlogIndex from './components/BlogIndex';
 import BlogPostView from './components/BlogPost';
 import PreisePage from './components/PreisePage';
-import { useInView } from './hooks/useInView';
+import { useLenis } from './hooks/useLenis';
+import { useReveal } from './hooks/useReveal';
 import { getPostBySlug } from './content/blog';
 
 declare global {
@@ -26,29 +20,187 @@ declare global {
   }
 }
 
-
 type ViewState = 'HOME' | 'IMPRINT' | 'PRIVACY' | 'BLOG' | 'BLOG_POST' | 'PREISE';
 
 const navLinks = [
-  { label: 'Leistungen', id: 'services' },
-  { label: 'Portfolio', id: 'portfolio' },
-  { label: 'Preise', id: 'pricing' },
-  { label: 'Blog', id: 'blog' },
+  { label: '[01] Leistungen', id: 'leistungen' },
+  { label: '[02] Projekte', id: 'projekte' },
+  { label: '[03] Prozess', id: 'prozess' },
+  { label: '[04] Preise', id: 'preise' },
+  { label: '[05] FAQ', id: 'faq' },
 ];
 
+/** Sektions-Headline mit Zeilen-Reveal (aus jpr-prototyp.html .sec-title). */
+const SectionTitle: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className }) => {
+  const ref = useReveal<HTMLHeadingElement>();
+  return (
+    <h2
+      ref={ref}
+      className={`font-syne font-extrabold uppercase text-[clamp(34px,4.5vw,60px)] tracking-[-0.015em] leading-[1.02] mb-[52px] sec-title-line ${className ?? ''}`}
+    >
+      <span>{children}</span>
+    </h2>
+  );
+};
+
+const Eyebrow: React.FC<{ children: string }> = ({ children }) => {
+  const ref = useReveal<HTMLDivElement>();
+  return (
+    <div ref={ref} className="reveal font-mono text-[13px] text-accent uppercase mb-5">
+      {children}
+    </div>
+  );
+};
+
+/** [01] Leistungen — Grid-Zelle mit Reveal. */
+const ServiceCell: React.FC<{ idx: string; title: string; desc: string }> = ({ idx, title, desc }) => {
+  const ref = useReveal<HTMLDivElement>();
+  return (
+    <div ref={ref} className="reveal bg-ink hover:bg-panel transition-colors p-10">
+      <div className="font-mono text-xs text-dim mb-[18px]">{idx}</div>
+      <h3 className="font-syne font-bold text-[28px] mb-3">{title}</h3>
+      <p className="text-base leading-[1.6] text-muted">{desc}</p>
+    </div>
+  );
+};
+
+/** [02] Projekte — Browser-Frame-Karte mit Bild-Maske-Reveal. */
+const ProjectCard: React.FC<{ url: string; href: string; title: string; tag: string; img: string }> = ({ url, href, title, tag, img }) => {
+  const shotRef = useReveal<HTMLDivElement>();
+  const footRef = useReveal<HTMLDivElement>();
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className="card cursor-pointer group block">
+      <div className="border border-line bg-panel mb-[18px] transition-all duration-500 ease-[cubic-bezier(.19,1,.22,1)] group-hover:-translate-y-1.5 group-hover:border-accent/40 group-hover:shadow-[0_18px_40px_rgba(0,0,0,0.45)]">
+        <div className="flex items-center gap-1.5 px-3.5 py-2.5 border-b border-line">
+          <i className="w-2 h-2 rounded-full bg-[#2e2e33] inline-block" />
+          <i className="w-2 h-2 rounded-full bg-[#2e2e33] inline-block" />
+          <i className="w-2 h-2 rounded-full bg-[#2e2e33] inline-block" />
+          <span className="ml-auto font-mono text-xs text-dim">{url}</span>
+        </div>
+        <div ref={shotRef} className="mask-reveal h-[340px] bg-panel relative overflow-hidden">
+          <div className="absolute inset-0 transition-transform duration-500 ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.045]">
+            <img
+              src={img}
+              alt={`Website von ${title}`}
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover object-top grayscale-[35%] contrast-[1.02] transition-[filter] duration-500 group-hover:grayscale-0 group-hover:contrast-100"
+            />
+          </div>
+        </div>
+      </div>
+      <div ref={footRef} className="reveal flex justify-between items-baseline gap-4">
+        <h3 className="font-syne font-bold text-[22px]">{title}</h3>
+        <div className="font-mono text-[13px] text-muted uppercase text-right">{tag}</div>
+      </div>
+    </a>
+  );
+};
+
+/** Kundenstimmen — Hairline-Grid-Zelle mit Reveal. */
+const TestimonialCell: React.FC<{ quote: string; logo: string; alt: string; name: string; company: string }> = ({ quote, logo, alt, name, company }) => {
+  const ref = useReveal<HTMLDivElement>();
+  return (
+    <div ref={ref} className="reveal bg-ink hover:bg-panel transition-colors p-9 flex flex-col justify-between">
+      <p className="text-[17px] leading-[1.65] text-[#d8d8de] mb-7">&bdquo;{quote}&ldquo;</p>
+      <div className="flex items-center gap-3.5">
+        <img src={logo} alt={alt} className="h-10 w-auto max-w-[90px] object-contain" />
+        <div className="font-mono text-[13px] text-muted uppercase leading-[1.9]">
+          {name}<br />{company}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/** Prozess — Schritt mit großer Outline-Zahl (Hover → lime). */
+const ProcessStep: React.FC<{ n: string; title: string; desc: string }> = ({ n, title, desc }) => {
+  const ref = useReveal<HTMLDivElement>();
+  return (
+    <div ref={ref} className="reveal group bg-ink hover:bg-panel transition-colors p-10 relative">
+      <div
+        className="font-syne font-extrabold text-[64px] leading-none mb-6 transition-colors group-hover:[-webkit-text-stroke-color:#d4ff4f]"
+        style={{ WebkitTextStroke: '1.5px #74747e', color: 'transparent' }}
+      >
+        {n}
+      </div>
+      <h3 className="font-syne font-bold text-[22px] mb-3">{title}</h3>
+      <p className="text-base leading-[1.6] text-muted">{desc}</p>
+    </div>
+  );
+};
+
+/** Preise — Tier-Karte mit Reveal, Professional mit Lime-Outline. */
+const PriceTier: React.FC<{
+  name: string; for: string; price: string; reco: boolean; features: string[]; openCalendly: () => void;
+}> = ({ name, for: forWhom, price, reco, features, openCalendly }) => {
+  const ref = useReveal<HTMLDivElement>();
+  return (
+    <div
+      ref={ref}
+      className={`reveal bg-ink hover:bg-panel transition-colors p-10 flex flex-col relative ${reco ? 'outline outline-1 outline-accent -outline-offset-1' : ''}`}
+    >
+      {reco && (
+        <div className="absolute top-0 right-0 px-3.5 py-2 bg-accent text-ink font-mono text-[11px] font-medium uppercase">
+          ✦ Empfohlen
+        </div>
+      )}
+      <h3 className="font-syne font-bold text-[26px] mb-1.5">{name}</h3>
+      <div className="font-mono text-[13px] text-dim uppercase mb-6">{forWhom}</div>
+      <div className="font-syne font-extrabold text-[40px] text-accent mb-7">{price}</div>
+      <ul className="flex flex-col gap-2.5 text-[15px] text-muted flex-grow mb-7">
+        {features.map((f) => (
+          <li key={f} className="flex gap-2.5 items-start">
+            <span className="text-accent flex-shrink-0">→</span>
+            {f}
+          </li>
+        ))}
+      </ul>
+      <MagneticButton
+        as="button"
+        onClick={openCalendly}
+        className={`self-start inline-flex items-center gap-2.5 font-mono text-[13px] font-medium uppercase px-[22px] py-[13px] border transition-colors ${
+          reco
+            ? 'bg-accent text-ink border-accent hover:bg-transparent hover:text-accent'
+            : 'bg-ink text-ftext border-line hover:bg-transparent'
+        }`}
+      >
+        Entwurf anfragen
+      </MagneticButton>
+    </div>
+  );
+};
+
 const App: React.FC = () => {
-  const [showScrollTop, setShowScrollTop] = useState(false);
-  const [showStickyCTA, setShowStickyCTA] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showStickyNav, setShowStickyNav] = useState(false);
+  const [navHidden, setNavHidden] = useState(false);
   const [currentView, setCurrentView] = useState<ViewState>('HOME');
   const [currentSlug, setCurrentSlug] = useState<string>('');
+  const [heroIn, setHeroIn] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const lastScrollY = useRef(0);
 
+  useLenis();
+
+  // Hero-Intro-Stagger beim Mount
+  useEffect(() => {
+    if (currentView !== 'HOME') return;
+    const raf1 = requestAnimationFrame(() => {
+      const raf2 = requestAnimationFrame(() => setHeroIn(true));
+      return () => cancelAnimationFrame(raf2);
+    });
+    return () => cancelAnimationFrame(raf1);
+  }, [currentView]);
+
+  // Nav-Autohide + Sticky-CTA
   useEffect(() => {
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
-      setShowStickyCTA(window.scrollY > window.innerHeight);
+      const y = window.scrollY;
+      setShowStickyNav(y > 120);
+      if (y > 120 && y > lastScrollY.current + 2) setNavHidden(true);
+      else if (y < lastScrollY.current - 2 || y <= 120) setNavHidden(false);
+      lastScrollY.current = y;
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -106,20 +258,10 @@ const App: React.FC = () => {
     }
   }, [currentView, currentSlug]);
 
-  const scrollToSection = (id: string) => {
-    if (id === 'blog') {
-      navigate('BLOG');
-      setMobileMenuOpen(false);
-      return;
-    }
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-    setMobileMenuOpen(false);
-  };
-
   const openCalendly = () => {
     if (window.Calendly) {
       window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/workwithjpr/30min?hide_gdpr_banner=1&background_color=0a0a0a&text_color=ffffff&primary_color=06b6d4'
+        url: 'https://calendly.com/workwithjpr/30min?hide_gdpr_banner=1&background_color=101012&text_color=f4f4f0&primary_color=d4ff4f'
       });
     }
   };
@@ -128,28 +270,15 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   const navigate = (view: string, slug?: string) => {
     if (slug) setCurrentSlug(slug);
     setCurrentView(view as ViewState);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  const section1 = useInView();
-  const section2 = useInView();
-  const section3 = useInView();
-  const section4 = useInView();
-  const section5 = useInView();
-  const section6 = useInView();
-  const section7 = useInView();
-  const section8 = useInView();
-  const section9 = useInView();
-
-  const fadeUp = (inView: boolean) =>
-    `transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`;
-  const fadeLeft = (inView: boolean) =>
-    `transition-all duration-700 ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`;
-  const fadeScale = (inView: boolean) =>
-    `transition-all duration-700 ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`;
 
   if (currentView === 'IMPRINT') return <Imprint onBack={() => navigate('HOME')} />;
   if (currentView === 'PRIVACY') return <Privacy onBack={() => navigate('HOME')} />;
@@ -161,258 +290,444 @@ const App: React.FC = () => {
     return <BlogIndex onNavigate={navigate} />;
   }
 
-  return (
-    <div className="min-h-[100dvh] bg-zinc-950 text-white overflow-x-hidden selection:bg-cyan-500 selection:text-white">
-      {/* Background */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950" />
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-cyan-600/20 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '4s' }} />
-        <div className="absolute bottom-0 right-1/3 w-[400px] h-[400px] bg-emerald-600/15 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '6s', animationDelay: '1s' }} />
-        <div className="absolute top-1/2 right-1/4 w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-[80px] animate-pulse" style={{ animationDuration: '5s', animationDelay: '2s' }} />
-        <div className="absolute inset-0 opacity-[0.04]" style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-          backgroundSize: '50px 50px'
-        }} />
-        <div className="absolute inset-0 opacity-[0.03]" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-          backgroundSize: '128px 128px'
-        }} />
-      </div>
+  const faqs = [
+    {
+      q: 'Was kostet eine Website?',
+      a: 'Das hängt vom Umfang ab. Eine einfache One-Page Website beginnt ab 1.500 €, eine mehrseitige Website mit Buchungssystem ab 3.000 €. Im kostenlosen Erstgespräch bekommst du ein individuelles Angebot — transparent, ohne versteckte Kosten.',
+    },
+    {
+      q: 'Wie lange dauert es, bis meine Website fertig ist?',
+      a: 'Eine einfache Website ist in wenigen Tagen fertig. Komplexere Projekte mit Shop oder individuellen Funktionen dauern 1–2 Wochen. Kein monatelanges Warten — wir setzen schnell um.',
+    },
+    {
+      q: 'Brauche ich technisches Wissen?',
+      a: 'Nein, überhaupt nicht. Wir kümmern uns um alles Technische. Nach dem Launch zeigen wir dir in einer Einführung, wie du einfache Änderungen selbst vornehmen kannst — falls gewünscht.',
+    },
+    {
+      q: 'Was passiert nach dem Launch?',
+      a: 'Wir lassen dich nicht im Stich. Je nach Paket bekommst du laufenden Support, Hosting und regelmäßige Updates. Wenn du etwas ändern oder erweitern möchtest, sind wir für dich da.',
+    },
+    {
+      q: 'Könnt ihr auch bestehende Websites überarbeiten?',
+      a: 'Ja, definitiv. Ob Redesign, Performance-Optimierung oder neue Funktionen — wir schauen uns an, was du hast, und machen daraus etwas Modernes.',
+    },
+    {
+      q: 'Nutzt ihr WordPress?',
+      a: 'Nein. Wir nutzen modernere Technik — das bedeutet: schnellere Ladezeiten, bessere Platzierung bei Google und keine Probleme durch veraltete Plugins.',
+    },
+    {
+      q: 'Arbeitet ihr nur mit Unternehmen in Berlin?',
+      a: 'Wir sind in Berlin ansässig und spezialisiert auf lokale Unternehmen. Aber wir arbeiten auch remote — der Standort spielt für digitale Projekte keine Rolle.',
+    },
+  ];
 
-      <div className="relative z-10">
+  const marqueeItems = (
+    <>
+      <span>Muay Thai Subyen <b>— Kampfsportschule</b></span>
+      <span className="text-accent px-0">✦</span>
+      <span>Colombina <b>— Kochkurse &amp; Catering</b></span>
+      <span className="text-accent px-0">✦</span>
+      <span>RopeFX <b>— Höhenarbeiten</b></span>
+      <span className="text-accent px-0">✦</span>
+    </>
+  );
+
+  return (
+    <div className="bg-ink text-ftext font-body overflow-x-hidden selection:bg-accent selection:text-ink">
+      <CustomCursor />
+
+      {/* Nav */}
+      <nav
+        className={`nav-autohide ${navHidden ? 'hidden' : ''} fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 md:px-12 py-5 bg-ink/[0.82] backdrop-blur-md border-b border-line`}
+      >
+        <button onClick={scrollToTop} className="font-syne font-extrabold text-[19px] uppercase tracking-[0.01em] text-ftext">
+          JPR <span className="text-accent">Studio</span>&reg;
+        </button>
+        <ul className="hidden md:flex gap-8 list-none font-mono text-[13px] uppercase">
+          {navLinks.map((link) => (
+            <li key={link.id}>
+              <ScrambleLabel
+                as="span"
+                mode="hover"
+                onClick={() => scrollToSection(link.id)}
+                className="text-muted hover:text-accent transition-colors cursor-pointer"
+              >
+                {link.label}
+              </ScrambleLabel>
+            </li>
+          ))}
+        </ul>
+        <MagneticButton
+          as="button"
+          onClick={openCalendly}
+          className="inline-flex items-center gap-2.5 font-mono text-[13px] font-medium uppercase bg-accent text-ink px-5 py-3 border border-accent hover:bg-transparent hover:text-accent transition-colors"
+        >
+          Entwurf anfragen →
+        </MagneticButton>
+      </nav>
+
+      <main>
         {/* Hero */}
-        <header className="relative overflow-hidden min-h-[100dvh] flex items-center justify-center px-4 pt-10 pb-20">
-          <HeroBackdrop />
-          <div className="relative z-10 container mx-auto max-w-5xl text-center">
-            <div className="flex justify-center mb-14 animate-fade-in">
-              <div className="relative">
-                <div className="absolute -inset-6 bg-cyan-500/10 rounded-full blur-[50px]" />
-                <div className="relative w-44 h-44 md:w-56 md:h-56 rounded-full overflow-hidden hover:scale-105 transition-all duration-500">
-                  <img
-                    src="/JPR1.webp"
-                    alt="JPR Consulting"
-                    className="w-full h-full object-cover scale-110"
-                  />
-                </div>
+        <header className="px-6 md:px-12 border-b border-line pt-32 md:pt-[220px] pb-16 md:pb-[72px]">
+          <div className="flex justify-between font-mono text-[13px] text-muted uppercase mb-10 md:mb-14 flex-wrap gap-2">
+            <div>Webdesign — Berlin</div>
+            <div>Kein WordPress / React-Stack</div>
+          </div>
+
+          <h1 className="font-syne font-extrabold uppercase text-[clamp(52px,9vw,132px)] leading-[0.95] tracking-[-0.02em]">
+            <span className={`hero-line ${heroIn ? 'in' : ''}`}>
+              <span>Websites,</span>
+            </span>
+            <span className={`hero-line hero-line-2 text-accent ${heroIn ? 'in' : ''}`}>
+              <span>die Kunden</span>
+            </span>
+            <span
+              className={`hero-line hero-line-3 ${heroIn ? 'in' : ''}`}
+              style={{ WebkitTextStroke: '2px #f4f4f0', color: 'transparent' }}
+            >
+              <span>bringen.</span>
+            </span>
+          </h1>
+
+          <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-8 mt-14 flex-wrap`}>
+            <div className="font-mono text-[13px] text-muted leading-[1.9] uppercase">
+              Für Handwerker, Praxen, Gyms<br />und lokale Unternehmen
+            </div>
+            <div className="flex flex-col items-start gap-6 max-w-[460px]">
+              <div className="text-lg leading-[1.65] text-[#d8d8de]">
+                Erster Entwurf kostenlos — du siehst vorab, was du bekommst. Festpreis ab 1.500&nbsp;€.
+              </div>
+              <div className="flex gap-3.5 flex-wrap">
+                <MagneticButton
+                  as="button"
+                  onClick={openCalendly}
+                  className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-accent text-ink px-7 py-4 border border-accent hover:bg-transparent hover:text-accent transition-colors"
+                >
+                  Kostenloser Entwurf anfragen →
+                </MagneticButton>
+                <MagneticButton
+                  as="button"
+                  onClick={() => scrollToSection('preise')}
+                  className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-transparent text-ftext px-7 py-4 border border-[#3a3a40] hover:border-accent hover:text-accent transition-colors"
+                >
+                  Preise ansehen
+                </MagneticButton>
               </div>
             </div>
-
-            <h1 className="text-5xl md:text-7xl font-display font-bold tracking-tighter mb-6 leading-none animate-fade-in">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">
-                Deine neue Website —
-              </span>
-              <br />
-              <span className="text-white">in Tagen, nicht Monaten.</span>
-            </h1>
-
-            <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in">
-              Webdesign für lokale Unternehmen in Berlin.
-              <br />
-              <span className="text-white font-semibold">Erster Entwurf kostenlos — du siehst vorab, was du bekommst.</span>
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center animate-fade-in">
-              <button
-                onClick={openCalendly}
-                className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 focus:ring-offset-gray-900 active:scale-[0.98] hover:scale-105 shadow-[0_0_30px_rgba(6,182,212,0.3)]"
-                style={{ backgroundImage: 'linear-gradient(135deg, #06b6d4, #10b981)' }}
-              >
-                Kostenloser Entwurf anfragen
-              </button>
-              <p
-                className="text-gray-400 text-sm"
-                style={{ textShadow: '0 1px 14px rgba(9,9,11,.95)' }}
-              >
-                Aktuell freie Kapazitäten — Projekt noch diesen Monat starten
-              </p>
-            </div>
           </div>
+
+          <div className={`hero-proof ${heroIn ? 'in' : ''} flex gap-7 flex-wrap mt-10 pt-6 border-t border-line font-mono text-[13px] text-muted uppercase`}>
+            <span className="inline-flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5}><path d="M4 12L10 18L20 6" /></svg>
+              Live in Tagen statt Monaten
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5}><path d="M4 12L10 18L20 6" /></svg>
+              Festpreis vor Projektstart
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5}><path d="M4 12L10 18L20 6" /></svg>
+              Erster Entwurf kostenlos
+            </span>
+          </div>
+
+          <p className="mt-6 font-mono text-[13px] text-dim uppercase">
+            Aktuell freie Kapazitäten — Projekt noch diesen Monat starten
+          </p>
         </header>
 
-        <div ref={section1.ref} className={fadeUp(section1.isInView)}>
-          <ProblemSection />
-        </div>
-        <div ref={section2.ref} className={fadeLeft(section2.isInView)} id="services">
-          <ServicesSection openCalendly={openCalendly} />
-        </div>
-        <div ref={section3.ref} className={fadeUp(section3.isInView)}>
-          <HowItWorksSection />
-        </div>
-        <div ref={section4.ref} className={fadeScale(section4.isInView)} id="portfolio">
-          <PortfolioSection />
-        </div>
-        <div ref={section5.ref} className={fadeUp(section5.isInView)}>
-          <TestimonialsSection />
-        </div>
-        <div ref={section6.ref} className={fadeLeft(section6.isInView)} id="pricing">
-          <PricingSection openCalendly={openCalendly} showDetailsLink />
-        </div>
-        <div ref={section7.ref} className={fadeUp(section7.isInView)} id="about">
-          <AboutSection openCalendly={openCalendly} />
-        </div>
-
-        {/* Consultation Section */}
-        <div ref={section8.ref} className={fadeScale(section8.isInView)}>
-          <section id="consultation-form" className="py-24 px-4 relative">
-            <div className="container mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl md:text-5xl font-bold mb-4">Bereit loszulegen?</h2>
-              <p className="text-xl text-gray-400 mb-10 max-w-xl mx-auto">
-                Buch dir 30 Minuten — wir besprechen dein Projekt und du bekommst einen ersten Entwurf kostenlos.
-              </p>
-
-              <button
-                onClick={openCalendly}
-                className="inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-white transition-all duration-200 rounded-lg hover:scale-105 shadow-[0_0_40px_rgba(6,182,212,0.5)] animate-gradient-shift bg-[length:200%_200%]"
-                style={{ backgroundImage: 'linear-gradient(135deg, #06b6d4, #10b981, #06b6d4)' }}
-              >
-                Termin buchen — kostenlos
-              </button>
-
-              <p className="text-gray-500 text-sm mt-4">30 Minuten · Unverbindlich · Per Video-Call</p>
-
-              <p className="text-gray-600 text-sm mt-8">
-                Oder schreib uns direkt an{' '}
-                <a href="mailto:info@workwithjpr.com" className="text-cyan-400 hover:text-cyan-300 transition-colors">
-                  info@workwithjpr.com
-                </a>
-              </p>
-            </div>
-          </section>
-        </div>
-
-        <div ref={section9.ref} className={fadeUp(section9.isInView)}>
-          <FAQSection />
-        </div>
-
-        {/* Footer */}
-        <footer className="py-20 px-4 bg-zinc-950 border-t border-white/5">
-          <div className="container mx-auto max-w-6xl">
-            <div className="flex justify-center mb-10">
-              <img src="/JPR1.webp" alt="JPR Consulting" className="w-28 h-28 md:w-36 md:h-36 rounded-full opacity-80 hover:opacity-100 transition-opacity duration-300" />
-            </div>
-
-            {/* Site Links */}
-            <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
-              <span className="px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-semibold">Web Services</span>
-              <a href="https://ai.workwithjpr.com" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-400 text-xs font-semibold hover:text-white hover:border-white/20 transition-colors">KI-Automatisierung</a>
-              <a href="https://game.workwithjpr.com" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-400 text-xs font-semibold hover:text-white hover:border-white/20 transition-colors">Gaming UA</a>
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-8 mb-10 text-sm">
-              <button onClick={() => navigate('PREISE')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Preise</button>
-              <button onClick={() => navigate('BLOG')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Blog</button>
-              <button onClick={() => navigate('IMPRINT')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Impressum</button>
-              <button onClick={() => navigate('PRIVACY')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Datenschutz</button>
-              <a href="mailto:info@workwithjpr.com" className="text-gray-400 hover:text-white transition-colors">Kontakt</a>
-              <a href="https://www.linkedin.com/in/jan-rojek-b31474a" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">LinkedIn</a>
-            </div>
-            {/* Google Review CTA */}
-            <div className="flex justify-center mb-10">
-              <a
-                href="https://g.page/r/Cbent0mi4nueEAE/review"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-3 px-5 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-cyan-500/30 transition-all duration-300"
-              >
-                <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
-                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
-                  <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                  <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                  <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                </svg>
-                <div className="text-left">
-                  <p className="text-white text-sm font-semibold group-hover:text-cyan-400 transition-colors">Bewertung auf Google hinterlassen</p>
-                  <p className="text-gray-500 text-xs">Ihre Meinung hilft uns und anderen Unternehmen</p>
-                </div>
-                <span className="text-yellow-400 text-sm ml-1">★★★★★</span>
-              </a>
-            </div>
-
-            <div className="border-t border-white/5 mb-8" />
-            <div className="text-center space-y-2">
-              <p className="text-white font-semibold text-sm">JPR Consulting GmbH</p>
-              <p className="text-gray-500 text-xs">Letteallee 91 · 13409 Berlin · Deutschland</p>
-              <p className="text-gray-600 text-xs pt-4">© 2026 JPR Consulting GmbH. Alle Rechte vorbehalten.</p>
+        {/* Marquee */}
+        <section className="overflow-hidden border-b border-line" aria-label="Referenzen">
+          <div className="font-mono text-[13px] text-accent uppercase pt-3.5 px-6 md:px-12">Unsere Kunden</div>
+          <div className="flex whitespace-nowrap w-max pt-[14px] pb-[18px] overflow-hidden">
+            <div className="marquee-track flex whitespace-nowrap font-syne font-bold text-[22px] uppercase text-dim">
+              <span className="flex">
+                {marqueeItems}
+                {marqueeItems}
+              </span>
+              <span className="flex">
+                {marqueeItems}
+                {marqueeItems}
+              </span>
             </div>
           </div>
+        </section>
+
+        {/* [01] Leistungen */}
+        <section id="leistungen" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
+          <Eyebrow>[01] — Leistungen</Eyebrow>
+          <SectionTitle>Alles aus einer Hand.</SectionTitle>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line">
+            <ServiceCell idx="/ 001" title="Moderne Website" desc="Mobil optimiert, schnell, wird bei Google gefunden. React statt WordPress." />
+            <ServiceCell idx="/ 002" title="Online-Terminbuchung" desc="Deine Kunden buchen direkt online — Tag und Nacht, ohne Telefon." />
+            <ServiceCell idx="/ 003" title="Shop & Web-Apps" desc="Zahlungsabwicklung, Kundenverwaltung, individuelle Funktionen." />
+            <ServiceCell idx="/ 004" title="KI-Automatisierung" desc="Prozesse automatisieren — vom Angebot bis zur Rechnung." />
+          </div>
+        </section>
+
+        {/* [02] Projekte */}
+        <section id="projekte" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
+          <Eyebrow>[02] — Ausgewählte Projekte</Eyebrow>
+          <SectionTitle>Echte Kunden, echte Seiten.</SectionTitle>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <ProjectCard url="muaythai-subyen.de" href="https://www.muaythai-subyen.de" title="Muay Thai Subyen" tag="Web-App / Mitgliederverwaltung" img="/portfolio-shots/subyen.jpg" />
+            <ProjectCard url="colombina-kochkurse.vercel.app" href="https://colombina-kochkurse.vercel.app" title="Colombina Kochkurse" tag="Landingpage / Buchung" img="/portfolio-shots/colombina.jpg" />
+            <ProjectCard url="ropefx.com" href="https://ropefx.com" title="RopeFX" tag="Website / Anfragen-Funnel" img="/portfolio-shots/ropefx.jpg" />
+          </div>
+        </section>
+
+        {/* Kundenstimmen */}
+        <section className="px-6 md:px-12 border-b border-line py-16 md:py-24">
+          <Eyebrow>Kundenstimmen</Eyebrow>
+          <SectionTitle>Das sagen unsere Kunden.</SectionTitle>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line">
+            <TestimonialCell
+              quote="Meine Kurstermine, Texte und Anfragen verwalte ich jetzt einfach selbst — und die Seite fühlt sich trotzdem hundertprozentig nach meiner Marke an. Dass das alles an einem Tag entstanden ist, kann ich immer noch nicht ganz glauben."
+              logo="/logos/colombina.webp"
+              alt="Colombina Logo"
+              name="Diana Römer Duque"
+              company="Colombina — Catering & Kochkurse"
+            />
+            <TestimonialCell
+              quote="Die Website stand innerhalb weniger Tage. Seitdem bekommen wir regelmäßig Anfragen darüber — und sie sieht richtig professionell aus. Unkompliziert und auf den Punkt."
+              logo="/logos/ropefx.webp"
+              alt="RopeFX Logo"
+              name="Michael Nüske"
+              company="RopeFX — Industriekletterer Berlin"
+            />
+            <TestimonialCell
+              quote="Innerhalb einer Woche hatten wir eine komplette Website mit Trainingsplan, Mitgliederverwaltung und Online-Vertragsabschluss. Das hätte ich so schnell nicht erwartet."
+              logo="/logos/muay-thai-subyen.webp"
+              alt="Muay Thai Subyen Logo"
+              name="Sven Markulla"
+              company="Muay Thai Subyen e.V."
+            />
+          </div>
+          <p className="mt-7 font-mono text-[13px] uppercase">
+            <a href="https://g.page/r/Cbent0mi4nueEAE/review" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-ftext transition-colors">
+              Auch zufrieden? Bewertung auf Google hinterlassen →
+            </a>
+          </p>
+        </section>
+
+        {/* [03] Prozess */}
+        <section id="prozess" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
+          <Eyebrow>[03] — Prozess</Eyebrow>
+          <SectionTitle>So funktioniert's.</SectionTitle>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line">
+            <ProcessStep n="01" title="Kostenloses Erstgespräch" desc="Wir besprechen dein Geschäft, deine Ziele und was du brauchst. 30 Minuten, unverbindlich." />
+            <ProcessStep n="02" title="Kostenloser Entwurf" desc="Du bekommst einen ersten Entwurf deiner Website — komplett kostenlos. Erst wenn du zufrieden bist, geht's weiter." />
+            <ProcessStep n="03" title="Umsetzung & Launch" desc="Wir bauen, du gibst Feedback, wir gehen live. Du bekommst eine Einführung und laufenden Support." />
+          </div>
+        </section>
+
+        {/* Über mich */}
+        <section id="jan" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
+          <Eyebrow>Wer dahinter steckt</Eyebrow>
+          <div className="flex gap-16 items-center flex-wrap">
+            <AboutPhoto />
+            <AboutText />
+          </div>
+        </section>
+
+        {/* [04] Preise */}
+        <section id="preise" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
+          <Eyebrow>[04] — Preise / Festpreis vor Start</Eyebrow>
+          <SectionTitle>Transparent. Ohne Tagessätze.</SectionTitle>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line">
+            <PriceTier
+              name="Starter" for="Für den Start" price="ab 1.500 €" reco={false}
+              features={['One-Page Website', 'Mobil optimiert', 'Kontaktformular', 'Google Maps Einbindung', 'Basis-SEO', '1 Korrekturschleife']}
+              openCalendly={openCalendly}
+            />
+            <PriceTier
+              name="Professional" for="Unser beliebtestes Paket" price="ab 3.000 €" reco={true}
+              features={['Mehrseitige Website', 'Online-Terminbuchung', 'Team- & Leistungsseiten', 'Erweiterte SEO-Optimierung', 'Google Analytics', '3 Korrekturschleifen', 'Einführung & Support']}
+              openCalendly={openCalendly}
+            />
+            <PriceTier
+              name="Business" for="Für anspruchsvolle Projekte" price="ab 5.000 €" reco={false}
+              features={['Alles aus Professional', 'Online-Shop oder Web-App', 'Kundenverwaltung / Backend', 'Individuelle Funktionen', 'Automatisierungen', 'Unbegrenzte Korrekturen']}
+              openCalendly={openCalendly}
+            />
+          </div>
+          <p className="mt-6 font-mono text-[13px] text-dim uppercase">
+            Alle Preise netto zzgl. MwSt. · Ratenzahlung möglich · Hosting ab 15 €/Monat
+          </p>
+          <p className="mt-4 text-sm font-mono">
+            <a href="/preise" className="text-accent hover:text-ftext transition-colors">
+              Alle Webdesign-Preise in Berlin im Detail →
+            </a>
+          </p>
+        </section>
+
+        {/* [05] FAQ */}
+        <section id="faq" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
+          <Eyebrow>[05] — FAQ</Eyebrow>
+          <SectionTitle>Häufige Fragen.</SectionTitle>
+          <div className="reveal border-t border-line max-w-[980px]">
+            {faqs.map((faq, idx) => {
+              const isOpen = openFaq === idx;
+              return (
+                <FaqItem key={faq.q} q={faq.q} a={faq.a} isOpen={isOpen} onToggle={() => setOpenFaq(isOpen ? null : idx)} />
+              );
+            })}
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section id="kontakt" className="px-6 md:px-12 border-b border-line bg-accent text-ink py-16 md:py-24">
+          <div className="reveal flex justify-between items-center gap-10 flex-wrap">
+            <h2 className="font-syne font-extrabold text-[clamp(44px,6vw,78px)] leading-none uppercase tracking-[-0.02em]">
+              Bereit<br />loszulegen?
+            </h2>
+            <div className="max-w-[380px]">
+              <p className="text-[17px] leading-[1.6] mb-6">
+                30 Minuten Gespräch — der erste Entwurf ist kostenlos.
+              </p>
+              <MagneticButton
+                as="button"
+                onClick={openCalendly}
+                className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-ink text-ftext px-7 py-4 border border-ink hover:bg-transparent hover:text-ink transition-colors"
+              >
+                Kostenloser Entwurf →
+              </MagneticButton>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="px-6 md:px-12 flex justify-between items-center gap-5 flex-wrap py-6 font-mono text-[13px] text-muted uppercase">
+          <div>JPR Studio ist eine Marke der JPR Consulting GmbH · Letteallee 91 · 13409 Berlin</div>
+          <div className="flex gap-6 items-center flex-wrap">
+            <button onClick={scrollToTop} className="text-muted hover:text-accent transition-colors">Nach oben</button>
+            <button onClick={() => navigate('BLOG')} className="text-muted hover:text-accent transition-colors">Blog</button>
+            <button onClick={() => navigate('IMPRINT')} className="text-muted hover:text-accent transition-colors">Impressum</button>
+            <button onClick={() => navigate('PRIVACY')} className="text-muted hover:text-accent transition-colors">Datenschutz</button>
+            <a href="https://www.linkedin.com/in/jan-rojek-b31474a" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent transition-colors">LinkedIn</a>
+            <a
+              href="https://g.page/r/Cbent0mi4nueEAE/review"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-muted hover:text-accent transition-colors normal-case"
+            >
+              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              </svg>
+              Bewertung auf Google
+            </a>
+          </div>
         </footer>
-      </div>
+      </main>
 
-      {/* Sticky Navigation */}
-      {showStickyCTA && (
-        <div className="fixed top-0 left-0 right-0 z-50 bg-zinc-950/98 backdrop-blur-2xl border-b border-white/5 shadow-2xl animate-slide-up">
-          <div className="container mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-            {/* Logo + Name */}
-            <button onClick={scrollToTop} className="flex items-center gap-4 group">
-              <img src="/JPR1.webp" alt="JPR" className="w-12 h-12 md:w-10 md:h-10 rounded-full opacity-90 group-hover:opacity-100 transition-opacity" />
-              <span className="hidden md:block text-white font-bold text-sm">JPR Consulting</span>
+      {/* Sticky-CTA-Leiste beim Scrollen */}
+      {showStickyNav && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-ink/95 backdrop-blur-md border-b border-line">
+          <div className="flex items-center justify-between gap-4 px-6 md:px-12 py-3">
+            <button onClick={scrollToTop} className="font-syne font-extrabold text-sm uppercase text-ftext">
+              JPR <span className="text-accent">Studio</span>
             </button>
-
-            {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-6">
               {navLinks.map((link) => (
                 <button
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
-                  className="text-gray-400 hover:text-white text-sm font-medium transition-colors"
+                  className="font-mono text-[12px] text-muted hover:text-accent uppercase transition-colors"
                 >
                   {link.label}
                 </button>
               ))}
-              <button
-                onClick={openCalendly}
-                className="ml-2 px-5 py-2 text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(6,182,212,0.5)] animate-gradient-shift bg-[length:200%_200%] text-sm"
-                style={{ backgroundImage: 'linear-gradient(135deg, #06b6d4, #10b981, #06b6d4)' }}
-              >
-                Kostenloser Entwurf
-              </button>
-            </nav>
-
-            {/* Mobile: CTA + Hamburger */}
-            <div className="md:hidden flex items-center gap-3">
-              <button
-                onClick={openCalendly}
-                className="px-4 py-2 text-white font-semibold rounded-lg transition-all text-sm shadow-[0_0_15px_rgba(6,182,212,0.5)] animate-gradient-shift bg-[length:200%_200%]"
-                style={{ backgroundImage: 'linear-gradient(135deg, #06b6d4, #10b981, #06b6d4)' }}
-              >
-                Anfragen
-              </button>
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-gray-400 hover:text-white transition-colors"
-                aria-label="Menü"
-              >
-                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
             </div>
+            <button
+              onClick={openCalendly}
+              className="font-mono text-[12px] font-medium uppercase bg-accent text-ink px-4 py-2.5 border border-accent hover:bg-transparent hover:text-accent transition-colors"
+            >
+              Entwurf anfragen
+            </button>
           </div>
-
-          {/* Mobile Menu Drawer */}
-          {mobileMenuOpen && (
-            <div className="md:hidden border-t border-white/5 bg-zinc-950/98 backdrop-blur-2xl">
-              <div className="container mx-auto max-w-6xl px-4 py-4 flex flex-col gap-3">
-                {navLinks.map((link) => (
-                  <button
-                    key={link.id}
-                    onClick={() => scrollToSection(link.id)}
-                    className="text-gray-400 hover:text-white text-base font-medium transition-colors text-left py-2 border-b border-white/5 last:border-0"
-                  >
-                    {link.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       )}
 
-      {showScrollTop && (
-        <button onClick={scrollToTop} className="fixed bottom-8 right-8 z-40 p-4 rounded-full bg-zinc-900/80 backdrop-blur-md border border-white/10 text-white shadow-lg hover:bg-cyan-500 hover:border-cyan-500 transition-all duration-300 hover:scale-110 animate-fade-in" aria-label="Nach oben">
-          <ArrowUp className="w-6 h-6" />
-        </button>
-      )}
-
       <CookieBanner />
+    </div>
+  );
+};
+
+/** Über-mich Foto mit Clip-Path-Reveal + Grayscale→Farbe bei Hover. */
+const AboutPhoto: React.FC = () => {
+  const ref = useReveal<HTMLDivElement>();
+  return (
+    <div ref={ref} className="mask-reveal group w-[320px] h-[380px] flex-shrink-0 relative overflow-hidden">
+      <img
+        src="/jan-rojek.webp"
+        alt="Jan Rojek, Gründer von JPR Studio"
+        className="w-full h-full object-cover grayscale contrast-[1.05] transition-[filter] duration-500 group-hover:grayscale-0 group-hover:contrast-100"
+      />
+      <div className="absolute bottom-0 left-0 px-4 py-2.5 bg-accent text-ink font-mono text-[11px] font-medium uppercase">
+        Berlin / Gründer
+      </div>
+    </div>
+  );
+};
+
+const AboutText: React.FC = () => {
+  const ref = useReveal<HTMLDivElement>();
+  return (
+    <div ref={ref} className="reveal flex-1 min-w-[300px] max-w-[640px]">
+      <h2 className="font-syne font-extrabold uppercase text-[clamp(30px,3.6vw,48px)] tracking-[-0.015em] mb-6">
+        Hi, ich bin <span className="text-accent">Jan.</span>
+      </h2>
+      <p className="text-base leading-[1.7] text-muted mb-4">
+        Seit über 7 Jahren baue ich Websites und digitale Lösungen — von Websites für lokale Unternehmen bis zu Automatisierungssystemen für internationale Firmen.
+      </p>
+      <p className="text-base leading-[1.7] text-muted mb-4">
+        Was mich antreibt: Wenn ein Handwerker plötzlich über seine Website Anfragen bekommt. Oder eine Praxis ihre Terminbuchung online hat und das Telefon nicht mehr ständig klingelt.
+      </p>
+      <p className="text-base leading-[1.7] text-ftext font-medium mb-4">
+        Ich spreche deine Sprache — nicht die von Entwicklern. Du sagst mir, was dein Business braucht, und ich baue es.
+      </p>
+      <div className="flex gap-7 flex-wrap mt-7 pt-[22px] border-t border-line font-mono text-xs text-muted uppercase">
+        <span>7+ Jahre Webentwicklung</span>
+        <span>Du sprichst direkt mit dem, der baut</span>
+        <span>
+          <a href="https://www.linkedin.com/in/jan-rojek-b31474a" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-ftext transition-colors">
+            LinkedIn →
+          </a>
+        </span>
+      </div>
+    </div>
+  );
+};
+
+/** FAQ-Akkordeon-Item (+ dreht zu × via rotate 45deg, max-height-Transition). */
+const FaqItem: React.FC<{ q: string; a: string; isOpen: boolean; onToggle: () => void }> = ({ q, a, isOpen, onToggle }) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+  return (
+    <div className="border-b border-line">
+      <button
+        type="button"
+        onClick={onToggle}
+        className="w-full flex justify-between items-center gap-6 py-[26px] bg-transparent border-none cursor-pointer text-left font-syne font-bold text-xl text-ftext hover:text-accent transition-colors"
+      >
+        {q}
+        <span
+          className="font-mono text-xl text-accent flex-shrink-0 transition-transform duration-300"
+          style={{ transform: isOpen ? 'rotate(45deg)' : 'none' }}
+        >
+          +
+        </span>
+      </button>
+      <div
+        className="overflow-hidden transition-[max-height] duration-500 ease-[cubic-bezier(.19,1,.22,1)]"
+        style={{ maxHeight: isOpen ? `${contentRef.current?.scrollHeight ?? 500}px` : '0px' }}
+      >
+        <div ref={contentRef}>
+          <p className="pb-[26px] pr-10 text-[15px] leading-[1.7] text-muted max-w-[760px]">{a}</p>
+        </div>
+      </div>
     </div>
   );
 };
