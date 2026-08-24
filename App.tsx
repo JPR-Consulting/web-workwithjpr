@@ -411,7 +411,7 @@ const App: React.FC = () => {
   );
 
   return (
-    <div className="bg-ink text-ftext font-body overflow-x-hidden selection:bg-accent selection:text-ink">
+    <div className="bg-texture bg-ink text-ftext font-body overflow-x-hidden selection:bg-accent selection:text-ink">
       <CustomCursor />
 
       {/* Nav */}
@@ -444,7 +444,7 @@ const App: React.FC = () => {
         </MagneticButton>
       </nav>
 
-      <main>
+      <main className="relative z-[1]">
         {/* Hero */}
         <header className="px-6 md:px-12 border-b border-line pt-32 md:pt-[220px] pb-16 md:pb-[72px]">
           {waterReady ? (
