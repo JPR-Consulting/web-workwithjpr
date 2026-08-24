@@ -157,3 +157,9 @@
     animation: none !important;
   }
 }
+
+/* Wasser-Effekt: nur die in die Textur gezeichneten Textknoten ausblenden.
+   Interaktive Elemente (Buttons, Links) bleiben sichtbar und klickbar. */
+.water-hide-text [data-line] {
+  opacity: 0;
+}

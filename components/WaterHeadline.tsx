@@ -279,7 +279,7 @@ const WaterHeadline: React.FC<Props> = ({ children, className = '' }) => {
   return (
     <div ref={hostRef} className={`relative ${className}`}>
       {/* DOM-Text: bleibt für Screenreader/SEO, wird bei aktivem Shader unsichtbar */}
-      <div ref={domRef} style={active ? { opacity: 0 } : undefined}>
+      <div ref={domRef} className={active ? 'water-hide-text' : undefined}>
         {children}
       </div>
       <canvas
