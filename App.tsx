@@ -454,7 +454,7 @@ const App: React.FC = () => {
             <div data-line>Kein WordPress / React-Stack</div>
           </div>
 
-          <h1 className="font-syne font-extrabold uppercase text-[clamp(52px,9vw,132px)] leading-[0.95] tracking-[-0.02em]">
+          <h1 className="font-syne font-extrabold uppercase text-[clamp(38px,8.4vw,132px)] leading-[1.02] tracking-[-0.015em] break-words">
             <span className={`hero-line ${heroIn ? 'in' : ''}`}>
               <span data-line>Websites,</span>
             </span>
@@ -524,7 +524,7 @@ const App: React.FC = () => {
             <div data-line>Kein WordPress / React-Stack</div>
           </div>
 
-          <h1 className="font-syne font-extrabold uppercase text-[clamp(52px,9vw,132px)] leading-[0.95] tracking-[-0.02em]">
+          <h1 className="font-syne font-extrabold uppercase text-[clamp(38px,8.4vw,132px)] leading-[1.02] tracking-[-0.015em] break-words">
             <span className={`hero-line ${heroIn ? 'in' : ''}`}>
               <span data-line>Websites,</span>
             </span>

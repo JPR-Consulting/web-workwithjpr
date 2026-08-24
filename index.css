@@ -39,6 +39,9 @@
 .hero-line {
   display: block;
   overflow: hidden;
+  /* Luft fuer -webkit-text-stroke der Outline-Zeile, sonst wird der
+     letzte Buchstabe auf schmalen Viewports beschnitten */
+  padding-right: 0.06em;
 }
 .hero-line > span {
   display: block;
