@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 interface Props {
-  /** Zeilen der Überschrift — Reihenfolge = Darstellung von oben nach unten. */
-  lines: { text: string; style: 'solid' | 'accent' | 'outline' }[];
+  /** Beliebiger Inhalt; jedes Element mit data-line wird in die Wasser-Textur gezeichnet. */
+  children: React.ReactNode;
   className?: string;
 }
 
@@ -66,7 +66,7 @@ function compile(gl: WebGLRenderingContext, type: number, src: string) {
   return sh;
 }
 
-const WaterHeadline: React.FC<Props> = ({ lines, className = '' }) => {
+const WaterHeadline: React.FC<Props> = ({ children, className = '' }) => {
   const hostRef = useRef<HTMLDivElement>(null);
   const domRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -170,7 +170,8 @@ const WaterHeadline: React.FC<Props> = ({ lines, className = '' }) => {
         const descent = m.actualBoundingBoxDescent || parseFloat(cs.fontSize) * 0.2;
         const y = sr.top - rect.top + (sr.height - (ascent + descent)) / 2 + ascent;
 
-        const kind = span.dataset.line;
+        const stroke = cs.webkitTextStrokeWidth && parseFloat(cs.webkitTextStrokeWidth) > 0;
+        const kind = stroke ? 'outline' : 'fill';
         const paintText = (fn: 'fill' | 'stroke') => {
           if (supportsLS) {
             if (fn === 'stroke') ctx.strokeText(text, x, y);
@@ -187,12 +188,12 @@ const WaterHeadline: React.FC<Props> = ({ lines, className = '' }) => {
           }
         };
         if (kind === 'outline') {
-          ctx.lineWidth = 2;
+          ctx.lineWidth = parseFloat(cs.webkitTextStrokeWidth) || 2;
           ctx.lineJoin = 'round';
-          ctx.strokeStyle = '#f4f4f0';
+          ctx.strokeStyle = cs.webkitTextStrokeColor || '#f4f4f0';
           paintText('stroke');
         } else {
-          ctx.fillStyle = kind === 'accent' ? '#d4ff4f' : '#f4f4f0';
+          ctx.fillStyle = cs.color;
           paintText('fill');
         }
       });
@@ -273,29 +274,13 @@ const WaterHeadline: React.FC<Props> = ({ lines, className = '' }) => {
       gl.deleteBuffer(buf);
       gl.deleteProgram(prog);
     };
-  }, [lines]);
+  }, [children]);
 
   return (
     <div ref={hostRef} className={`relative ${className}`}>
       {/* DOM-Text: bleibt für Screenreader/SEO, wird bei aktivem Shader unsichtbar */}
       <div ref={domRef} style={active ? { opacity: 0 } : undefined}>
-        {lines.map((l, i) => (
-          <span key={l.text} className="block overflow-hidden">
-            <span
-              data-line={l.style}
-              className="block"
-              style={
-                l.style === 'outline'
-                  ? { WebkitTextStroke: '2px #f4f4f0', color: 'transparent' }
-                  : l.style === 'accent'
-                    ? { color: '#d4ff4f' }
-                    : undefined
-              }
-            >
-              {l.text}
-            </span>
-          </span>
-        ))}
+        {children}
       </div>
       <canvas
         ref={canvasRef}

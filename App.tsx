@@ -5,6 +5,7 @@ import CookieBanner from './components/CookieBanner';
 import CustomCursor from './components/CustomCursor';
 import MagneticButton from './components/MagneticButton';
 import WaterHeadline from './components/WaterHeadline';
+import WaterImage from './components/WaterImage';
 import ScrambleLabel from './components/ScrambleLabel';
 import BlogIndex from './components/BlogIndex';
 import BlogPostView from './components/BlogPost';
@@ -82,14 +83,40 @@ const ProjectCard: React.FC<{ url: string; href: string; title: string; tag: str
     const update = () => {
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      // 0 = Karte betritt den Viewport von unten, 1 = sie hat die Ruhelage erreicht
-      const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.62)));
-      const eased = 1 - Math.pow(1 - p, 3);
-      const rot = (1 - eased) * 42;     // Grad, kippt aus der Tiefe hoch
-      const ty = (1 - eased) * 90;      // px, kommt von unten
-      const sc = 0.9 + eased * 0.1;     // wächst leicht auf
-      el.style.transform = `perspective(1400px) rotateX(${rot}deg) translateY(${ty}px) scale(${sc})`;
-      el.style.opacity = String(Math.min(1, 0.25 + eased * 1.1));
+
+      // Fortschritt der Karte durch den Viewport: 0 = Unterkante betritt das Bild,
+      // 1 = Karte ist oben komplett hinausgelaufen.
+      const total = vh + r.height;
+      const travelled = Math.min(total, Math.max(0, vh - r.top));
+      const t = travelled / total;
+
+      // Zwei Phasen: hereinrollen (unten) und wieder wegrollen (oben).
+      const IN = 0.42;   // bis hierhin richtet sich die Karte auf
+      const OUT = 0.62;  // ab hier kippt sie nach hinten weg
+      let rot: number;
+      let ty: number;
+      let op: number;
+      if (t < IN) {
+        const p = t / IN;
+        const e = 1 - Math.pow(1 - p, 3);
+        rot = (1 - e) * 46;          // aus der Tiefe hochkippen
+        ty = (1 - e) * 90;
+        op = 0.2 + e * 0.8;
+      } else if (t > OUT) {
+        const p = Math.min(1, (t - OUT) / (1 - OUT));
+        const e = Math.pow(p, 2.2);
+        rot = -e * 46;               // nach hinten oben wegrollen
+        ty = -e * 70;
+        op = 1 - e * 0.85;
+      } else {
+        rot = 0;
+        ty = 0;
+        op = 1;
+      }
+
+      const sc = 0.92 + (1 - Math.abs(rot) / 46) * 0.08;
+      el.style.transform = `perspective(1300px) rotateX(${rot}deg) translateY(${ty}px) scale(${sc})`;
+      el.style.opacity = String(Math.max(0, Math.min(1, op)));
       raf = requestAnimationFrame(update);
     };
     raf = requestAnimationFrame(update);
@@ -102,7 +129,7 @@ const ProjectCard: React.FC<{ url: string; href: string; title: string; tag: str
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="card cursor-pointer group block will-change-transform origin-bottom opacity-0"
+      className="card cursor-pointer group block will-change-transform opacity-0"
     >
       <div className="border border-line bg-panel mb-[18px] transition-[border-color,box-shadow] duration-500 ease-[cubic-bezier(.19,1,.22,1)] group-hover:border-accent/40 group-hover:shadow-[0_18px_40px_rgba(0,0,0,0.45)]">
         <div className="flex items-center gap-1.5 px-3.5 py-2.5 border-b border-line">
@@ -420,44 +447,35 @@ const App: React.FC = () => {
       <main>
         {/* Hero */}
         <header className="px-6 md:px-12 border-b border-line pt-32 md:pt-[220px] pb-16 md:pb-[72px]">
+          {waterReady ? (
+            <WaterHeadline>
           <div className="flex justify-between font-mono text-[13px] text-muted uppercase mb-10 md:mb-14 flex-wrap gap-2">
-            <div>Webdesign — Berlin</div>
-            <div>Kein WordPress / React-Stack</div>
+            <div data-line>Webdesign — Berlin</div>
+            <div data-line>Kein WordPress / React-Stack</div>
           </div>
 
           <h1 className="font-syne font-extrabold uppercase text-[clamp(52px,9vw,132px)] leading-[0.95] tracking-[-0.02em]">
-            {waterReady ? (
-              <WaterHeadline
-                lines={[
-                  { text: 'Websites,', style: 'solid' },
-                  { text: 'die Kunden', style: 'accent' },
-                  { text: 'bringen.', style: 'outline' },
-                ]}
-              />
-            ) : (
-              <>
-                <span className={`hero-line ${heroIn ? 'in' : ''}`}>
-                  <span>Websites,</span>
-                </span>
-                <span className={`hero-line hero-line-2 text-accent ${heroIn ? 'in' : ''}`}>
-                  <span>die Kunden</span>
-                </span>
-                <span
-                  className={`hero-line hero-line-3 ${heroIn ? 'in' : ''}`}
-                  style={{ WebkitTextStroke: '2px #f4f4f0', color: 'transparent' }}
-                >
-                  <span>bringen.</span>
-                </span>
-              </>
-            )}
+            <span className={`hero-line ${heroIn ? 'in' : ''}`}>
+              <span data-line>Websites,</span>
+            </span>
+            <span className={`hero-line hero-line-2 text-accent ${heroIn ? 'in' : ''}`}>
+              <span data-line>die Kunden</span>
+            </span>
+            <span
+              className={`hero-line hero-line-3 ${heroIn ? 'in' : ''}`}
+              style={{ WebkitTextStroke: '2px #f4f4f0', color: 'transparent' }}
+            >
+              <span data-line>bringen.</span>
+            </span>
           </h1>
 
           <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-8 mt-14 flex-wrap`}>
             <div className="font-mono text-[13px] text-muted leading-[1.9] uppercase">
-              Für Handwerker, Praxen, Gyms<br />und lokale Unternehmen
+              <span data-line className="block">Für Handwerker, Praxen, Gyms</span>
+              <span data-line className="block">und lokale Unternehmen</span>
             </div>
             <div className="flex flex-col items-start gap-6 max-w-[460px]">
-              <div className="text-lg leading-[1.65] text-[#d8d8de]">
+              <div data-line className="text-lg leading-[1.65] text-[#d8d8de]">
                 Erster Entwurf kostenlos — du siehst vorab, was du bekommst. Festpreis ab 1.500&nbsp;€.
               </div>
             </div>
@@ -483,21 +501,93 @@ const App: React.FC = () => {
           <div className={`hero-proof ${heroIn ? 'in' : ''} flex gap-7 flex-wrap mt-10 pt-6 border-t border-line font-mono text-[13px] text-muted uppercase`}>
             <span className="inline-flex items-center gap-2">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5}><path d="M4 12L10 18L20 6" /></svg>
-              Live in Tagen statt Monaten
+              <span data-line>Live in Tagen statt Monaten</span>
             </span>
             <span className="inline-flex items-center gap-2">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5}><path d="M4 12L10 18L20 6" /></svg>
-              Festpreis vor Projektstart
+              <span data-line>Festpreis vor Projektstart</span>
             </span>
             <span className="inline-flex items-center gap-2">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5}><path d="M4 12L10 18L20 6" /></svg>
-              Erster Entwurf kostenlos
+              <span data-line>Erster Entwurf kostenlos</span>
             </span>
           </div>
 
           <p className="mt-6 font-mono text-[13px] text-dim uppercase">
-            Aktuell freie Kapazitäten — Projekt noch diesen Monat starten
+            <span data-line>Aktuell freie Kapazitäten — Projekt noch diesen Monat starten</span>
           </p>
+            </WaterHeadline>
+          ) : (
+            <>
+          <div className="flex justify-between font-mono text-[13px] text-muted uppercase mb-10 md:mb-14 flex-wrap gap-2">
+            <div data-line>Webdesign — Berlin</div>
+            <div data-line>Kein WordPress / React-Stack</div>
+          </div>
+
+          <h1 className="font-syne font-extrabold uppercase text-[clamp(52px,9vw,132px)] leading-[0.95] tracking-[-0.02em]">
+            <span className={`hero-line ${heroIn ? 'in' : ''}`}>
+              <span data-line>Websites,</span>
+            </span>
+            <span className={`hero-line hero-line-2 text-accent ${heroIn ? 'in' : ''}`}>
+              <span data-line>die Kunden</span>
+            </span>
+            <span
+              className={`hero-line hero-line-3 ${heroIn ? 'in' : ''}`}
+              style={{ WebkitTextStroke: '2px #f4f4f0', color: 'transparent' }}
+            >
+              <span data-line>bringen.</span>
+            </span>
+          </h1>
+
+          <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-8 mt-14 flex-wrap`}>
+            <div className="font-mono text-[13px] text-muted leading-[1.9] uppercase">
+              <span data-line className="block">Für Handwerker, Praxen, Gyms</span>
+              <span data-line className="block">und lokale Unternehmen</span>
+            </div>
+            <div className="flex flex-col items-start gap-6 max-w-[460px]">
+              <div data-line className="text-lg leading-[1.65] text-[#d8d8de]">
+                Erster Entwurf kostenlos — du siehst vorab, was du bekommst. Festpreis ab 1.500&nbsp;€.
+              </div>
+            </div>
+          </div>
+
+          <div className={`hero-foot ${heroIn ? 'in' : ''} flex gap-3.5 flex-wrap mt-12`}>
+                <MagneticButton
+                  as="button"
+                  onClick={openCalendly}
+                  className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-accent text-ink px-7 py-4 border border-accent hover:bg-transparent hover:text-accent transition-colors"
+                >
+                  Kostenloser Entwurf anfragen →
+                </MagneticButton>
+                <MagneticButton
+                  as="button"
+                  onClick={() => scrollToSection('preise')}
+                  className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-transparent text-ftext px-7 py-4 border border-[#3a3a40] hover:border-accent hover:text-accent transition-colors"
+                >
+                  Preise ansehen
+                </MagneticButton>
+          </div>
+
+          <div className={`hero-proof ${heroIn ? 'in' : ''} flex gap-7 flex-wrap mt-10 pt-6 border-t border-line font-mono text-[13px] text-muted uppercase`}>
+            <span className="inline-flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5}><path d="M4 12L10 18L20 6" /></svg>
+              <span data-line>Live in Tagen statt Monaten</span>
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5}><path d="M4 12L10 18L20 6" /></svg>
+              <span data-line>Festpreis vor Projektstart</span>
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5}><path d="M4 12L10 18L20 6" /></svg>
+              <span data-line>Erster Entwurf kostenlos</span>
+            </span>
+          </div>
+
+          <p className="mt-6 font-mono text-[13px] text-dim uppercase">
+            <span data-line>Aktuell freie Kapazitäten — Projekt noch diesen Monat starten</span>
+          </p>
+            </>
+          )}
         </header>
 
         {/* Marquee */}
@@ -725,10 +815,11 @@ const AboutPhoto: React.FC = () => {
   const ref = useReveal<HTMLDivElement>();
   return (
     <div ref={ref} className="mask-reveal group w-[320px] h-[380px] flex-shrink-0 relative overflow-hidden">
-      <img
+      <WaterImage
         src="/jan-rojek.webp"
         alt="Jan Rojek, Gründer von JPR Studio"
-        className="w-full h-full object-cover grayscale contrast-[1.05] transition-[filter] duration-500 group-hover:grayscale-0 group-hover:contrast-100"
+        intensity={0.4}
+        className="w-full h-full grayscale contrast-[1.05] transition-[filter] duration-500 group-hover:grayscale-0 group-hover:contrast-100"
       />
       <div className="absolute bottom-0 left-0 px-4 py-2.5 bg-accent text-ink font-mono text-[11px] font-medium uppercase">
         Berlin / Gründer
