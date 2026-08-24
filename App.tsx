@@ -118,8 +118,7 @@ const ProcessStep: React.FC<{ n: string; title: string; desc: string }> = ({ n, 
   return (
     <div ref={ref} className="reveal group bg-ink hover:bg-panel transition-colors p-10 relative">
       <div
-        className="font-syne font-extrabold text-[64px] leading-none mb-6 transition-colors group-hover:[-webkit-text-stroke-color:#d4ff4f]"
-        style={{ WebkitTextStroke: '1.5px #74747e', color: 'transparent' }}
+        className="font-syne font-extrabold text-[64px] leading-none mb-6 text-accent transition-opacity opacity-90 group-hover:opacity-100"
       >
         {n}
       </div>
@@ -177,6 +176,8 @@ const App: React.FC = () => {
   const [currentSlug, setCurrentSlug] = useState<string>('');
   const [heroIn, setHeroIn] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const faqRef = useReveal<HTMLDivElement>();
+  const ctaRef = useReveal<HTMLDivElement>();
   const lastScrollY = useRef(0);
 
   useLenis();
@@ -397,7 +398,10 @@ const App: React.FC = () => {
               <div className="text-lg leading-[1.65] text-[#d8d8de]">
                 Erster Entwurf kostenlos — du siehst vorab, was du bekommst. Festpreis ab 1.500&nbsp;€.
               </div>
-              <div className="flex gap-3.5 flex-wrap">
+            </div>
+          </div>
+
+          <div className={`hero-foot ${heroIn ? 'in' : ''} flex gap-3.5 flex-wrap mt-12`}>
                 <MagneticButton
                   as="button"
                   onClick={openCalendly}
@@ -412,8 +416,6 @@ const App: React.FC = () => {
                 >
                   Preise ansehen
                 </MagneticButton>
-              </div>
-            </div>
           </div>
 
           <div className={`hero-proof ${heroIn ? 'in' : ''} flex gap-7 flex-wrap mt-10 pt-6 border-t border-line font-mono text-[13px] text-muted uppercase`}>
@@ -468,7 +470,7 @@ const App: React.FC = () => {
         {/* [02] Projekte */}
         <section id="projekte" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
           <Eyebrow>[02] — Ausgewählte Projekte</Eyebrow>
-          <SectionTitle>Echte Kunden, echte Seiten.</SectionTitle>
+          <SectionTitle>Aktuelle Projekte.</SectionTitle>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <ProjectCard url="muaythai-subyen.de" href="https://www.muaythai-subyen.de" title="Muay Thai Subyen" tag="Web-App / Mitgliederverwaltung" img="/portfolio-shots/subyen.jpg" />
             <ProjectCard url="colombina-kochkurse.vercel.app" href="https://colombina-kochkurse.vercel.app" title="Colombina Kochkurse" tag="Landingpage / Buchung" img="/portfolio-shots/colombina.jpg" />
@@ -565,7 +567,7 @@ const App: React.FC = () => {
         <section id="faq" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
           <Eyebrow>[05] — FAQ</Eyebrow>
           <SectionTitle>Häufige Fragen.</SectionTitle>
-          <div className="reveal border-t border-line max-w-[980px]">
+          <div ref={faqRef} className="reveal border-t border-line max-w-[980px]">
             {faqs.map((faq, idx) => {
               const isOpen = openFaq === idx;
               return (
@@ -577,7 +579,7 @@ const App: React.FC = () => {
 
         {/* CTA */}
         <section id="kontakt" className="px-6 md:px-12 border-b border-line bg-accent text-ink py-16 md:py-24">
-          <div className="reveal flex justify-between items-center gap-10 flex-wrap">
+          <div ref={ctaRef} className="reveal flex justify-between items-center gap-10 flex-wrap">
             <h2 className="font-syne font-extrabold text-[clamp(44px,6vw,78px)] leading-none uppercase tracking-[-0.02em]">
               Bereit<br />loszulegen?
             </h2>
