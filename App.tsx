@@ -4,6 +4,7 @@ import Privacy from './components/Privacy';
 import CookieBanner from './components/CookieBanner';
 import CustomCursor from './components/CustomCursor';
 import MagneticButton from './components/MagneticButton';
+import WaterHeadline from './components/WaterHeadline';
 import ScrambleLabel from './components/ScrambleLabel';
 import BlogIndex from './components/BlogIndex';
 import BlogPostView from './components/BlogPost';
@@ -176,6 +177,13 @@ const App: React.FC = () => {
   const [currentSlug, setCurrentSlug] = useState<string>('');
   const [heroIn, setHeroIn] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  // Wasser-Shader erst nach dem Hero-Intro aktivieren, damit der
+  // Zeilen-Reveal beim Laden sichtbar bleibt.
+  const [waterReady, setWaterReady] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setWaterReady(true), 1500);
+    return () => clearTimeout(t);
+  }, []);
   const faqRef = useReveal<HTMLDivElement>();
   const ctaRef = useReveal<HTMLDivElement>();
   const lastScrollY = useRef(0);
@@ -376,18 +384,30 @@ const App: React.FC = () => {
           </div>
 
           <h1 className="font-syne font-extrabold uppercase text-[clamp(52px,9vw,132px)] leading-[0.95] tracking-[-0.02em]">
-            <span className={`hero-line ${heroIn ? 'in' : ''}`}>
-              <span>Websites,</span>
-            </span>
-            <span className={`hero-line hero-line-2 text-accent ${heroIn ? 'in' : ''}`}>
-              <span>die Kunden</span>
-            </span>
-            <span
-              className={`hero-line hero-line-3 ${heroIn ? 'in' : ''}`}
-              style={{ WebkitTextStroke: '2px #f4f4f0', color: 'transparent' }}
-            >
-              <span>bringen.</span>
-            </span>
+            {waterReady ? (
+              <WaterHeadline
+                lines={[
+                  { text: 'Websites,', style: 'solid' },
+                  { text: 'die Kunden', style: 'accent' },
+                  { text: 'bringen.', style: 'outline' },
+                ]}
+              />
+            ) : (
+              <>
+                <span className={`hero-line ${heroIn ? 'in' : ''}`}>
+                  <span>Websites,</span>
+                </span>
+                <span className={`hero-line hero-line-2 text-accent ${heroIn ? 'in' : ''}`}>
+                  <span>die Kunden</span>
+                </span>
+                <span
+                  className={`hero-line hero-line-3 ${heroIn ? 'in' : ''}`}
+                  style={{ WebkitTextStroke: '2px #f4f4f0', color: 'transparent' }}
+                >
+                  <span>bringen.</span>
+                </span>
+              </>
+            )}
           </h1>
 
           <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-8 mt-14 flex-wrap`}>
