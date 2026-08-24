@@ -57,7 +57,7 @@ const ServiceCell: React.FC<{ idx: string; title: string; desc: string }> = ({ i
   const ref = useReveal<HTMLDivElement>();
   return (
     <div ref={ref} className="reveal bg-ink hover:bg-panel transition-colors p-10">
-      <div className="font-mono text-xs text-dim mb-[18px]">{idx}</div>
+      <div className="font-mono text-[13px] text-accent mb-[18px]">{idx}</div>
       <h3 className="font-syne font-bold text-[28px] mb-3">{title}</h3>
       <p className="text-base leading-[1.6] text-muted">{desc}</p>
     </div>
