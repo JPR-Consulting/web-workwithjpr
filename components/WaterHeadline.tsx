@@ -147,11 +147,21 @@ const WaterHeadline: React.FC<Props> = ({ lines, className = '' }) => {
         const sr = span.getBoundingClientRect();
         // Font-Shorthand inkl. line-height, damit Canvas exakt wie das DOM setzt
         ctx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize}/${cs.lineHeight} ${cs.fontFamily}`;
-        ctx.letterSpacing = cs.letterSpacing === 'normal' ? '0px' : cs.letterSpacing;
+        const ls = cs.letterSpacing === 'normal' ? '0px' : cs.letterSpacing;
+        const ctxAny = ctx as CanvasRenderingContext2D & { letterSpacing?: string };
+        const supportsLS = typeof ctxAny.letterSpacing === 'string';
+        if (supportsLS) ctxAny.letterSpacing = ls;
         ctx.textBaseline = 'alphabetic';
         ctx.textAlign = 'left';
 
-        const text = span.textContent || '';
+        // WICHTIG: text-transform wird von Canvas NICHT angewendet — vorher selbst umsetzen,
+        // sonst zeichnet das Canvas Kleinbuchstaben, während das DOM Großbuchstaben zeigt.
+        const raw = span.textContent || '';
+        const tt = cs.textTransform;
+        const text =
+          tt === 'uppercase' ? raw.toLocaleUpperCase('de-DE')
+          : tt === 'lowercase' ? raw.toLocaleLowerCase('de-DE')
+          : raw;
         const x = sr.left - rect.left;
         // Grundlinie aus den echten Font-Metriken statt geschätztem Faktor:
         // Zeilenkasten mittig um die Schriftbox, dann Ascent addieren.
@@ -161,15 +171,29 @@ const WaterHeadline: React.FC<Props> = ({ lines, className = '' }) => {
         const y = sr.top - rect.top + (sr.height - (ascent + descent)) / 2 + ascent;
 
         const kind = span.dataset.line;
+        const paintText = (fn: 'fill' | 'stroke') => {
+          if (supportsLS) {
+            if (fn === 'stroke') ctx.strokeText(text, x, y);
+            else ctx.fillText(text, x, y);
+            return;
+          }
+          // Fallback (Safari ohne ctx.letterSpacing): Zeichen einzeln mit Abstand
+          const step = parseFloat(ls) || 0;
+          let cx = x;
+          for (const ch of text) {
+            if (fn === 'stroke') ctx.strokeText(ch, cx, y);
+            else ctx.fillText(ch, cx, y);
+            cx += ctx.measureText(ch).width + step;
+          }
+        };
         if (kind === 'outline') {
-          // Strichstärke wie im CSS (-webkit-text-stroke: 2px), skaliert mit dpr-Scale
           ctx.lineWidth = 2;
           ctx.lineJoin = 'round';
           ctx.strokeStyle = '#f4f4f0';
-          ctx.strokeText(text, x, y);
+          paintText('stroke');
         } else {
           ctx.fillStyle = kind === 'accent' ? '#d4ff4f' : '#f4f4f0';
-          ctx.fillText(text, x, y);
+          paintText('fill');
         }
       });
 

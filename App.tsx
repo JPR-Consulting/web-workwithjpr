@@ -65,20 +65,53 @@ const ServiceCell: React.FC<{ idx: string; title: string; desc: string }> = ({ i
   );
 };
 
-/** [02] Projekte — Browser-Frame-Karte mit Bild-Maske-Reveal. */
+/** [02] Projekte — Karte rollt beim Scrollen wie von einer Rolle herein. */
 const ProjectCard: React.FC<{ url: string; href: string; title: string; tag: string; img: string }> = ({ url, href, title, tag, img }) => {
-  const shotRef = useReveal<HTMLDivElement>();
+  const wrapRef = useRef<HTMLAnchorElement>(null);
   const footRef = useReveal<HTMLDivElement>();
+
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.style.opacity = '1';
+      return;
+    }
+
+    let raf = 0;
+    const update = () => {
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // 0 = Karte betritt den Viewport von unten, 1 = sie hat die Ruhelage erreicht
+      const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.62)));
+      const eased = 1 - Math.pow(1 - p, 3);
+      const rot = (1 - eased) * 42;     // Grad, kippt aus der Tiefe hoch
+      const ty = (1 - eased) * 90;      // px, kommt von unten
+      const sc = 0.9 + eased * 0.1;     // wächst leicht auf
+      el.style.transform = `perspective(1400px) rotateX(${rot}deg) translateY(${ty}px) scale(${sc})`;
+      el.style.opacity = String(Math.min(1, 0.25 + eased * 1.1));
+      raf = requestAnimationFrame(update);
+    };
+    raf = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="card cursor-pointer group block">
-      <div className="border border-line bg-panel mb-[18px] transition-all duration-500 ease-[cubic-bezier(.19,1,.22,1)] group-hover:-translate-y-1.5 group-hover:border-accent/40 group-hover:shadow-[0_18px_40px_rgba(0,0,0,0.45)]">
+    <a
+      ref={wrapRef}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="card cursor-pointer group block will-change-transform origin-bottom opacity-0"
+    >
+      <div className="border border-line bg-panel mb-[18px] transition-[border-color,box-shadow] duration-500 ease-[cubic-bezier(.19,1,.22,1)] group-hover:border-accent/40 group-hover:shadow-[0_18px_40px_rgba(0,0,0,0.45)]">
         <div className="flex items-center gap-1.5 px-3.5 py-2.5 border-b border-line">
           <i className="w-2 h-2 rounded-full bg-[#2e2e33] inline-block" />
           <i className="w-2 h-2 rounded-full bg-[#2e2e33] inline-block" />
           <i className="w-2 h-2 rounded-full bg-[#2e2e33] inline-block" />
           <span className="ml-auto font-mono text-xs text-dim">{url}</span>
         </div>
-        <div ref={shotRef} className="mask-reveal h-[340px] bg-panel relative overflow-hidden">
+        <div className="h-[380px] md:h-[460px] bg-panel relative overflow-hidden">
           <div className="absolute inset-0 transition-transform duration-500 ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.045]">
             <img
               src={img}
@@ -90,7 +123,7 @@ const ProjectCard: React.FC<{ url: string; href: string; title: string; tag: str
         </div>
       </div>
       <div ref={footRef} className="reveal flex justify-between items-baseline gap-4">
-        <h3 className="font-syne font-bold text-[22px]">{title}</h3>
+        <h3 className="font-syne font-bold text-[22px] md:text-[26px]">{title}</h3>
         <div className="font-mono text-[13px] text-muted uppercase text-right">{tag}</div>
       </div>
     </a>
@@ -332,12 +365,21 @@ const App: React.FC = () => {
 
   const marqueeItems = (
     <>
-      <span>Muay Thai Subyen <b>— Kampfsportschule</b></span>
-      <span className="text-accent px-0">✦</span>
-      <span>Colombina <b>— Kochkurse &amp; Catering</b></span>
-      <span className="text-accent px-0">✦</span>
-      <span>RopeFX <b>— Höhenarbeiten</b></span>
-      <span className="text-accent px-0">✦</span>
+      <span className="inline-flex items-baseline gap-3 px-7">
+        <span className="text-ftext">Muay Thai Subyen</span>
+        <span className="font-body font-normal normal-case text-[15px] tracking-normal text-muted">Kampfsportschule</span>
+      </span>
+      <span className="text-accent self-center">✦</span>
+      <span className="inline-flex items-baseline gap-3 px-7">
+        <span className="text-ftext">Colombina</span>
+        <span className="font-body font-normal normal-case text-[15px] tracking-normal text-muted">Kochkurse &amp; Catering</span>
+      </span>
+      <span className="text-accent self-center">✦</span>
+      <span className="inline-flex items-baseline gap-3 px-7">
+        <span className="text-ftext">RopeFX</span>
+        <span className="font-body font-normal normal-case text-[15px] tracking-normal text-muted">Höhenarbeiten</span>
+      </span>
+      <span className="text-accent self-center">✦</span>
     </>
   );
 
@@ -462,7 +504,7 @@ const App: React.FC = () => {
         <section className="overflow-hidden border-b border-line" aria-label="Referenzen">
           <div className="font-mono text-[13px] text-accent uppercase pt-3.5 px-6 md:px-12">Unsere Kunden</div>
           <div className="flex whitespace-nowrap w-max pt-[14px] pb-[18px] overflow-hidden">
-            <div className="marquee-track flex whitespace-nowrap font-syne font-bold text-[22px] uppercase text-dim">
+            <div className="marquee-track flex items-baseline whitespace-nowrap font-syne font-bold text-[21px] uppercase tracking-[-0.01em] text-ftext">
               <span className="flex">
                 {marqueeItems}
                 {marqueeItems}
@@ -491,7 +533,7 @@ const App: React.FC = () => {
         <section id="projekte" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
           <Eyebrow>[02] — Ausgewählte Projekte</Eyebrow>
           <SectionTitle>Aktuelle Projekte.</SectionTitle>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="flex flex-col gap-20 md:gap-28 max-w-[900px] mx-auto">
             <ProjectCard url="muaythai-subyen.de" href="https://www.muaythai-subyen.de" title="Muay Thai Subyen" tag="Web-App / Mitgliederverwaltung" img="/portfolio-shots/subyen.jpg" />
             <ProjectCard url="colombina-kochkurse.vercel.app" href="https://colombina-kochkurse.vercel.app" title="Colombina Kochkurse" tag="Landingpage / Buchung" img="/portfolio-shots/colombina.jpg" />
             <ProjectCard url="ropefx.com" href="https://ropefx.com" title="RopeFX" tag="Website / Anfragen-Funnel" img="/portfolio-shots/ropefx.jpg" />
