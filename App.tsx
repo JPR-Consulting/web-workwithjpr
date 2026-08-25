@@ -416,9 +416,9 @@ const App: React.FC = () => {
 
       {/* Nav */}
       <nav
-        className={`nav-autohide ${navHidden ? 'hidden' : ''} fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 md:px-12 py-5 bg-ink/[0.82] backdrop-blur-md border-b border-line`}
+        className={`nav-autohide ${navHidden ? 'hidden' : ''} fixed top-0 left-0 right-0 z-50 flex justify-between items-center gap-3 px-4 md:px-12 py-4 md:py-5 bg-ink/[0.82] backdrop-blur-md border-b border-line`}
       >
-        <button onClick={scrollToTop} className="font-syne font-extrabold text-[19px] uppercase tracking-[0.01em] text-ftext">
+        <button onClick={scrollToTop} className="font-syne font-extrabold text-[16px] md:text-[19px] uppercase tracking-[0.01em] text-ftext whitespace-nowrap shrink-0">
           JPR <span className="text-accent">Studio</span>&reg;
         </button>
         <ul className="hidden md:flex gap-8 list-none font-mono text-[13px] uppercase">
@@ -438,7 +438,7 @@ const App: React.FC = () => {
         <MagneticButton
           as="button"
           onClick={openCalendly}
-          className="inline-flex items-center gap-2.5 font-mono text-[13px] font-medium uppercase bg-accent text-ink px-5 py-3 border border-accent hover:bg-transparent hover:text-accent transition-colors"
+          className="inline-flex items-center gap-2 font-mono text-[11px] md:text-[13px] font-medium uppercase bg-accent text-ink px-3 md:px-5 py-2.5 md:py-3 border border-accent hover:bg-transparent hover:text-accent transition-colors whitespace-nowrap shrink-0"
         >
           Entwurf anfragen →
         </MagneticButton>
@@ -446,7 +446,7 @@ const App: React.FC = () => {
 
       <main className="relative z-[1]">
         {/* Hero */}
-        <header className="px-6 md:px-12 border-b border-line pt-32 md:pt-[220px] pb-16 md:pb-[72px]">
+        <header className="px-4 md:px-12 border-b border-line pt-28 md:pt-[220px] pb-16 md:pb-[72px]">
           {waterReady ? (
             <WaterHeadline>
           <div className="flex justify-between font-mono text-[13px] text-muted uppercase mb-10 md:mb-14 flex-wrap gap-2">
@@ -780,7 +780,7 @@ const App: React.FC = () => {
       {/* Sticky-CTA-Leiste beim Scrollen */}
       {showStickyNav && (
         <div className="fixed top-0 left-0 right-0 z-50 bg-ink/95 backdrop-blur-md border-b border-line">
-          <div className="flex items-center justify-between gap-4 px-6 md:px-12 py-3">
+          <div className="flex items-center justify-between gap-3 px-4 md:px-12 py-3">
             <button onClick={scrollToTop} className="font-syne font-extrabold text-sm uppercase text-ftext">
               JPR <span className="text-accent">Studio</span>
             </button>
