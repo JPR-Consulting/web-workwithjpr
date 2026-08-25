@@ -138,13 +138,13 @@ const ProjectCard: React.FC<{ url: string; href: string; title: string; tag: str
           <i className="w-2 h-2 rounded-full bg-[#2e2e33] inline-block" />
           <span className="ml-auto font-mono text-xs text-dim">{url}</span>
         </div>
-        <div className="h-[380px] md:h-[460px] bg-panel relative overflow-hidden">
+        <div className="aspect-[900/463] md:h-[460px] md:aspect-auto bg-panel relative overflow-hidden">
           <div className="absolute inset-0 transition-transform duration-500 ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.045]">
             <img
               src={img}
               alt={`Website von ${title}`}
               loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover object-top grayscale-[35%] contrast-[1.02] transition-[filter] duration-500 group-hover:grayscale-0 group-hover:contrast-100"
+              className="absolute inset-0 w-full h-full object-contain md:object-cover object-top grayscale-[35%] contrast-[1.02] transition-[filter] duration-500 group-hover:grayscale-0 group-hover:contrast-100"
             />
           </div>
         </div>
@@ -677,7 +677,7 @@ const App: React.FC = () => {
 
         {/* Über mich */}
         <section id="jan" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
-          <Eyebrow>Wer dahinter steckt</Eyebrow>
+          <Eyebrow>Dein Ansprechpartner</Eyebrow>
           <div className="flex gap-16 items-center flex-wrap">
             <AboutPhoto />
             <AboutText />
@@ -733,18 +733,18 @@ const App: React.FC = () => {
         <section id="kontakt" className="px-6 md:px-12 border-b border-line bg-accent text-ink py-16 md:py-24">
           <div ref={ctaRef} className="reveal flex justify-between items-center gap-10 flex-wrap">
             <h2 className="font-syne font-extrabold text-[clamp(38px,6vw,78px)] leading-[1.04] uppercase tracking-[-0.015em] break-words max-w-full">
-              Bereit<br />loszulegen?
+              Bereit<br />zu starten?
             </h2>
             <div className="max-w-[380px]">
               <p className="text-[17px] leading-[1.6] mb-6">
-                30 Minuten Gespräch — der erste Entwurf ist kostenlos.
+                Erstgespräch und Entwurf sind kostenlos — 30 Minuten, unverbindlich.
               </p>
               <MagneticButton
                 as="button"
                 onClick={openCalendly}
                 className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-ink text-ftext px-7 py-4 border border-ink hover:bg-transparent hover:text-ink transition-colors"
               >
-                Kostenloser Entwurf →
+                Jetzt anfragen →
               </MagneticButton>
             </div>
           </div>
