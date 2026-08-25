@@ -15,15 +15,19 @@ const faqs = [
   },
   {
     q: 'Was passiert nach dem Launch?',
-    a: 'Wir lassen dich nicht im Stich. Je nach Paket bekommst du laufenden Support, Hosting und regelmäßige Updates. Wenn du etwas ändern oder erweitern möchtest, sind wir für dich da.',
+    a: 'Hosting, Updates, Backups und Erreichbarkeit übernehme ich ab 49 €/Monat — inklusive Support und kleiner Änderungen. Wenn du lieber selbst betreust, bekommst du alle Zugänge und den Code.',
   },
   {
     q: 'Könnt ihr auch bestehende Websites überarbeiten?',
     a: 'Ja, definitiv. Ob Redesign, Performance-Optimierung oder neue Funktionen — wir schauen uns an, was du hast, und machen daraus etwas Modernes.',
   },
   {
-    q: 'Nutzt ihr WordPress?',
-    a: 'Nein. Wir nutzen modernere Technik — das bedeutet: schnellere Ladezeiten, bessere Platzierung bei Google und keine Probleme durch veraltete Plugins.',
+    q: 'Kann ich Inhalte später selbst ändern?',
+    a: 'Ja. Du bekommst einen einfachen Redaktionsbereich für Texte, Bilder, Öffnungszeiten und Preise — ohne Technikkenntnisse. Nach dem Launch zeige ich dir in einer Einführung, wie es geht.',
+  },
+  {
+    q: 'Wem gehört die Website am Ende?',
+    a: 'Dir — vollständig. Du bekommst den kompletten Quellcode und die Zugänge zu Domain und Hosting. Kein Baukasten-Abo, keine Lizenzgebühren, keine Abhängigkeit von mir.',
   },
   {
     q: 'Arbeitet ihr nur mit Unternehmen in Berlin?',

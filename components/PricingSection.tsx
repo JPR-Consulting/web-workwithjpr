@@ -86,7 +86,7 @@ const PricingSection: React.FC<Props> = ({ openCalendly, showDetailsLink }) => {
       </div>
 
       <p className="mt-6 font-mono text-[13px] text-dim uppercase">
-        Alle Preise netto zzgl. MwSt. · Ratenzahlung möglich · Hosting ab 15 €/Monat
+        Alle Preise netto zzgl. MwSt. · Ratenzahlung möglich · Betreuung ab 49 €/Monat (Hosting, Updates, Backups, Support)
       </p>
       {showDetailsLink && (
         <p className="mt-4 text-sm font-mono">

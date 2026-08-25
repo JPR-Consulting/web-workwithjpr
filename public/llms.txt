@@ -4,7 +4,7 @@
 
 ## Über uns
 
-JPR Consulting ist eine Webdesign-Agentur in Berlin, gegründet von Jan Rojek. Wir erstellen moderne, schnelle Websites für Handwerker, Praxen, Gastronomen und lokale Dienstleister. Kein WordPress — wir bauen mit React und moderner Webtechnologie.
+JPR Consulting ist eine Webdesign-Agentur in Berlin, gegründet von Jan Rojek. Wir erstellen moderne, schnelle Websites für Handwerker, Praxen, Gastronomen und lokale Dienstleister. Der Code gehört dem Kunden: kompletter Quellcode und alle Zugänge, kein Baukasten-Abo und keine Lizenzgebühren. Inhalte pflegt der Kunde über einen einfachen Redaktionsbereich selbst.
 
 ## Leistungen
 

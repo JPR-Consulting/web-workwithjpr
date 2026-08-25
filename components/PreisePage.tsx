@@ -97,11 +97,9 @@ const PreisePage: React.FC<Props> = ({ onNavigate, openCalendly }) => {
         </div>
 
         <div className="mt-8 p-8 border border-line bg-panel">
-          <h3 className="font-syne font-bold text-lg mb-2">Warum kein WordPress?</h3>
+          <h3 className="font-syne font-bold text-lg mb-2">Dir gehört der Code</h3>
           <p className="text-muted text-sm leading-[1.6]">
-            Viele Agenturen wirken auf den ersten Blick günstiger, weil sie ein WordPress-Theme anpassen. Dafür zahlst du
-            später: Plugin-Lizenzen, Sicherheitsupdates, langsame Ladezeiten. Wir bauen mit moderner Webtechnologie —
-            schneller bei Google, keine Plugin-Wartung, keine laufenden Lizenzkosten.{' '}
+            Keine Baukasten-Abos, keine Lizenzgebühren, keine Abhängigkeit: Du bekommst den kompletten Quellcode und alle Zugänge. Inhalte pflegst du über einen einfachen Redaktionsbereich selbst, und wenn du willst, kann jederzeit jemand anderes weiterarbeiten. {' '}
             <button
               onClick={() => onNavigate('BLOG_POST', 'individuelles-backend-vs-wordpress')}
               className="text-accent hover:text-ftext transition-colors"

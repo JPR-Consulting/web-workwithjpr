@@ -374,15 +374,19 @@ const App: React.FC = () => {
     },
     {
       q: 'Was passiert nach dem Launch?',
-      a: 'Wir lassen dich nicht im Stich. Je nach Paket bekommst du laufenden Support, Hosting und regelmäßige Updates. Wenn du etwas ändern oder erweitern möchtest, sind wir für dich da.',
+      a: 'Deine Website läuft nicht von allein: Hosting, Updates, Backups und Erreichbarkeit müssen betreut werden. Das übernehme ich ab 49 €/Monat — inklusive Support und kleiner Änderungen. Wenn du lieber selbst betreust, bekommst du alle Zugänge und den Code.',
     },
     {
       q: 'Könnt ihr auch bestehende Websites überarbeiten?',
       a: 'Ja, definitiv. Ob Redesign, Performance-Optimierung oder neue Funktionen — wir schauen uns an, was du hast, und machen daraus etwas Modernes.',
     },
     {
-      q: 'Nutzt ihr WordPress?',
-      a: 'Nein. Wir nutzen modernere Technik — das bedeutet: schnellere Ladezeiten, bessere Platzierung bei Google und keine Probleme durch veraltete Plugins.',
+      q: 'Kann ich Inhalte später selbst ändern?',
+      a: 'Ja. Du bekommst einen einfachen Redaktionsbereich, in dem du Texte, Bilder, Öffnungszeiten und Preise selbst pflegst — ohne Technikkenntnisse. Nach dem Launch zeige ich dir in einer Einführung, wie es geht. Größere Umbauten übernehme ich auf Wunsch.',
+    },
+    {
+      q: 'Wem gehört die Website am Ende?',
+      a: 'Dir — vollständig. Du bekommst den kompletten Quellcode und die Zugänge zu Domain und Hosting. Kein Baukasten-Abo, keine Lizenzgebühren, keine Abhängigkeit von mir: Du könntest die Seite jederzeit von jemand anderem weiterbetreuen lassen.',
     },
     {
       q: 'Arbeitet ihr nur mit Unternehmen in Berlin?',
@@ -451,7 +455,7 @@ const App: React.FC = () => {
             <WaterHeadline>
           <div className="flex justify-between font-mono text-[13px] text-muted uppercase mb-10 md:mb-14 flex-wrap gap-2">
             <div data-line>Webdesign — Berlin</div>
-            <div data-line>Kein WordPress / React-Stack</div>
+            <div data-line>Dir gehört der Code — kein Lock-in</div>
           </div>
 
           <h1 className="font-syne font-extrabold uppercase text-[clamp(38px,8.4vw,132px)] leading-[1.02] tracking-[-0.015em] break-words">
@@ -471,7 +475,7 @@ const App: React.FC = () => {
 
           <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-8 mt-14 flex-wrap`}>
             <div className="font-mono text-[13px] text-muted leading-[1.9] uppercase">
-              <span data-line className="block">Für Handwerker, Praxen, Gyms</span>
+              <span data-line className="block">Für Gyms, Praxen, Handwerk</span>
               <span data-line className="block">und lokale Unternehmen</span>
             </div>
             <div className="flex flex-col items-start gap-6 max-w-[460px]">
@@ -521,7 +525,7 @@ const App: React.FC = () => {
             <>
           <div className="flex justify-between font-mono text-[13px] text-muted uppercase mb-10 md:mb-14 flex-wrap gap-2">
             <div data-line>Webdesign — Berlin</div>
-            <div data-line>Kein WordPress / React-Stack</div>
+            <div data-line>Dir gehört der Code — kein Lock-in</div>
           </div>
 
           <h1 className="font-syne font-extrabold uppercase text-[clamp(38px,8.4vw,132px)] leading-[1.02] tracking-[-0.015em] break-words">
@@ -541,7 +545,7 @@ const App: React.FC = () => {
 
           <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-8 mt-14 flex-wrap`}>
             <div className="font-mono text-[13px] text-muted leading-[1.9] uppercase">
-              <span data-line className="block">Für Handwerker, Praxen, Gyms</span>
+              <span data-line className="block">Für Gyms, Praxen, Handwerk</span>
               <span data-line className="block">und lokale Unternehmen</span>
             </div>
             <div className="flex flex-col items-start gap-6 max-w-[460px]">
@@ -612,7 +616,7 @@ const App: React.FC = () => {
           <Eyebrow>[01] — Leistungen</Eyebrow>
           <SectionTitle>Alles aus einer Hand.</SectionTitle>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line">
-            <ServiceCell idx="/ 001" title="Moderne Website" desc="Mobil optimiert, schnell, wird bei Google gefunden. React statt WordPress." />
+            <ServiceCell idx="/ 001" title="Moderne Website" desc="Mobil optimiert, schnell, wird bei Google gefunden. Der Code gehört dir — kein Baukasten-Abo." />
             <ServiceCell idx="/ 002" title="Online-Terminbuchung" desc="Deine Kunden buchen direkt online — Tag und Nacht, ohne Telefon." />
             <ServiceCell idx="/ 003" title="Shop & Web-Apps" desc="Zahlungsabwicklung, Kundenverwaltung, individuelle Funktionen." />
             <ServiceCell idx="/ 004" title="KI-Automatisierung" desc="Prozesse automatisieren — vom Angebot bis zur Rechnung." />
@@ -624,7 +628,7 @@ const App: React.FC = () => {
           <Eyebrow>[02] — Ausgewählte Projekte</Eyebrow>
           <SectionTitle>Aktuelle Projekte.</SectionTitle>
           <div className="flex flex-col gap-20 md:gap-28 max-w-[900px] mx-auto">
-            <ProjectCard url="muaythai-subyen.de" href="https://www.muaythai-subyen.de" title="Muay Thai Subyen" tag="Web-App / Mitgliederverwaltung" img="/portfolio-shots/subyen.jpg" />
+            <ProjectCard url="muaythai-subyen.de" href="https://www.muaythai-subyen.de" title="Muay Thai Subyen" tag="Gym-Website / Online-Mitgliedschaft" img="/portfolio-shots/subyen.jpg" />
             <ProjectCard url="colombina-kochkurse.vercel.app" href="https://colombina-kochkurse.vercel.app" title="Colombina Kochkurse" tag="Landingpage / Buchung" img="/portfolio-shots/colombina.jpg" />
             <ProjectCard url="ropefx.com" href="https://ropefx.com" title="RopeFX" tag="Website / Anfragen-Funnel" img="/portfolio-shots/ropefx.jpg" />
           </div>
@@ -706,7 +710,7 @@ const App: React.FC = () => {
             />
           </div>
           <p className="mt-6 font-mono text-[13px] text-dim uppercase">
-            Alle Preise netto zzgl. MwSt. · Ratenzahlung möglich · Hosting ab 15 €/Monat
+            Alle Preise netto zzgl. MwSt. · Ratenzahlung möglich · Betreuung ab 49 €/Monat (Hosting, Updates, Backups, Support)
           </p>
           <p className="mt-4 text-sm font-mono">
             <a href="/preise" className="text-accent hover:text-ftext transition-colors">
