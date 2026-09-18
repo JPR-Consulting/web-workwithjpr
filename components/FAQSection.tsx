@@ -31,7 +31,7 @@ const faqs = [
   },
   {
     q: 'Arbeitet ihr nur mit Unternehmen in Berlin?',
-    a: 'Wir sind in Berlin ansässig und spezialisiert auf lokale Unternehmen. Aber wir arbeiten auch remote — der Standort spielt für digitale Projekte keine Rolle.',
+    a: 'Nein — wir arbeiten mit Unternehmen in ganz Deutschland. Unser Sitz ist in Berlin, aber alles läuft online: Erstgespräch per Video, Entwurf per Link, Abstimmung per Telefon oder E-Mail. Du musst für kein einziges Treffen anreisen.',
   },
 ];
 

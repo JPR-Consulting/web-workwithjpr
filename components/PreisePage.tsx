@@ -68,7 +68,7 @@ const PreisePage: React.FC<Props> = ({ onNavigate, openCalendly }) => {
           <p className="text-lg text-muted leading-[1.7]">
             Eine professionelle Website kostet bei uns zwischen <strong className="text-ftext">1.500&nbsp;€</strong> und{' '}
             <strong className="text-ftext">5.000&nbsp;€+</strong> — je nach Umfang. Keine versteckten Kosten, keine
-            Agentur-Tagessätze: Du bekommst ein festes Angebot, bevor es losgeht. Und den ersten Entwurf gibt es kostenlos.
+            Agentur-Tagessätze: Du bekommst ein festes Angebot, bevor es losgeht. Und den ersten Entwurf gibt es kostenlos. Die Preise gelten deutschlandweit — alles läuft online, du musst nicht in Berlin sitzen.
           </p>
         </div>
       </div>

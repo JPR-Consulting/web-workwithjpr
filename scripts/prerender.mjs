@@ -131,7 +131,7 @@ for (const [route, title] of [['imprint', 'Impressum | JPR Consulting'], ['priva
   const rootHtml = shell(`
     <p><a href="/" style="color:#22d3ee">← Zur Startseite</a></p>
     <h1 style="color:#fff;font-size:2.2rem;line-height:1.2">Webdesign Preise in Berlin — transparent ab 1.500 €</h1>
-    <p>Eine professionelle Website kostet bei JPR Consulting zwischen <strong style="color:#fff">1.500 €</strong> und <strong style="color:#fff">5.000 €+</strong> — je nach Umfang. Keine versteckten Kosten, keine Agentur-Tagessätze: Du bekommst ein festes Angebot, bevor es losgeht. Der erste Entwurf ist kostenlos.</p>
+    <p>Eine professionelle Website kostet bei JPR Consulting zwischen <strong style="color:#fff">1.500 €</strong> und <strong style="color:#fff">5.000 €+</strong> — je nach Umfang. Keine versteckten Kosten, keine Agentur-Tagessätze: Du bekommst ein festes Angebot, bevor es losgeht. Der erste Entwurf ist kostenlos. Die Preise gelten deutschlandweit — alles läuft online, du musst nicht in Berlin sitzen.</p>
     ${tiers.map(t => `
     <h2 style="color:#fff">${t.name} — ab ${Number(t.price).toLocaleString('de-DE')} € (${t.label})</h2>
     <ul>${t.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`).join('')}

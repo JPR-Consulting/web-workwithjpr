@@ -300,7 +300,7 @@ const App: React.FC = () => {
     },
     {
       q: 'Arbeitet ihr nur mit Unternehmen in Berlin?',
-      a: 'Wir sind in Berlin ansässig und spezialisiert auf lokale Unternehmen. Aber wir arbeiten auch remote — der Standort spielt für digitale Projekte keine Rolle.',
+      a: 'Nein — wir arbeiten mit Unternehmen in ganz Deutschland. Unser Sitz ist in Berlin, aber alles läuft online: Erstgespräch per Video, Entwurf per Link, Abstimmung per Telefon oder E-Mail. Du musst für kein einziges Treffen anreisen.',
     },
   ];
 
@@ -336,7 +336,7 @@ const App: React.FC = () => {
   const heroContent = (
     <>
       <div className="flex justify-between font-mono text-[14px] text-muted uppercase mb-10 md:mb-14 flex-wrap gap-2">
-        <div>Webdesign — Berlin</div>
+        <div>Webdesign aus Berlin — für ganz Deutschland</div>
         <div>Dir gehört der Code — kein Lock-in</div>
       </div>
 
@@ -393,6 +393,10 @@ const App: React.FC = () => {
         <span className="inline-flex items-center gap-2.5">
           {checkIcon}
           <span>Erster Entwurf kostenlos</span>
+        </span>
+        <span className="inline-flex items-center gap-2.5">
+          {checkIcon}
+          <span>Deutschlandweit, alles läuft online</span>
         </span>
       </div>
 
@@ -585,7 +589,7 @@ const App: React.FC = () => {
             </h2>
             <div className="max-w-[380px]">
               <p className="text-[18px] leading-[1.6] mb-6">
-                Erstgespräch und Entwurf sind kostenlos — 30 Minuten, unverbindlich.
+                Erstgespräch und Entwurf sind kostenlos — 30 Minuten per Video, unverbindlich. Egal, wo in Deutschland du sitzt.
               </p>
               <MagneticButton
                 as="button"
