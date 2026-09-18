@@ -144,7 +144,6 @@ const WaterHeadline: React.FC<Props> = ({ children, className = '' }) => {
       const spans = Array.from(dom.querySelectorAll<HTMLElement>('[data-line]'));
       spans.forEach((span) => {
         const cs = getComputedStyle(span);
-        const sr = span.getBoundingClientRect();
         // Font-Shorthand inkl. line-height, damit Canvas exakt wie das DOM setzt
         ctx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize}/${cs.lineHeight} ${cs.fontFamily}`;
         const ls = cs.letterSpacing === 'normal' ? '0px' : cs.letterSpacing;
@@ -156,23 +155,47 @@ const WaterHeadline: React.FC<Props> = ({ children, className = '' }) => {
 
         // WICHTIG: text-transform wird von Canvas NICHT angewendet — vorher selbst umsetzen,
         // sonst zeichnet das Canvas Kleinbuchstaben, während das DOM Großbuchstaben zeigt.
-        const raw = span.textContent || '';
         const tt = cs.textTransform;
-        const text =
-          tt === 'uppercase' ? raw.toLocaleUpperCase('de-DE')
-          : tt === 'lowercase' ? raw.toLocaleLowerCase('de-DE')
-          : raw;
-        const x = sr.left - rect.left;
-        // Grundlinie aus den echten Font-Metriken statt geschätztem Faktor:
-        // Zeilenkasten mittig um die Schriftbox, dann Ascent addieren.
-        const m = ctx.measureText(text);
-        const ascent = m.actualBoundingBoxAscent || parseFloat(cs.fontSize) * 0.72;
-        const descent = m.actualBoundingBoxDescent || parseFloat(cs.fontSize) * 0.2;
-        const y = sr.top - rect.top + (sr.height - (ascent + descent)) / 2 + ascent;
+        const transform = (s: string) =>
+          tt === 'uppercase' ? s.toLocaleUpperCase('de-DE')
+          : tt === 'lowercase' ? s.toLocaleLowerCase('de-DE')
+          : s;
+
+        // Umbrüche wie im DOM übernehmen: Canvas bricht nicht um, deshalb jedes
+        // Wort vermessen und nach Zeile gruppieren. Sonst wird ein mehrzeiliger
+        // Absatz als eine lange Zeile gezeichnet und rechts abgeschnitten.
+        const lines: { text: string; left: number; top: number; height: number }[] = [];
+        const walker = document.createTreeWalker(span, NodeFilter.SHOW_TEXT);
+        const range = document.createRange();
+        let node: Node | null;
+        while ((node = walker.nextNode())) {
+          const content = node.textContent || '';
+          for (const m of content.matchAll(/\S+\s*/g)) {
+            range.setStart(node, m.index!);
+            range.setEnd(node, m.index! + m[0].trimEnd().length);
+            const r = range.getClientRects()[0];
+            if (!r) continue;
+            const last = lines[lines.length - 1];
+            if (last && Math.abs(r.top - last.top) < r.height / 2) last.text += m[0];
+            else lines.push({ text: m[0], left: r.left, top: r.top, height: r.height });
+          }
+        }
+        if (!lines.length) return;
 
         const stroke = cs.webkitTextStrokeWidth && parseFloat(cs.webkitTextStrokeWidth) > 0;
         const kind = stroke ? 'outline' : 'fill';
-        const paintText = (fn: 'fill' | 'stroke') => {
+        const paintLine = (line: (typeof lines)[number], fn: 'fill' | 'stroke') => {
+          const text = transform(line.text.trimEnd());
+          const x = line.left - rect.left;
+          // Grundlinie aus den echten Font-Metriken statt geschätztem Faktor:
+          // Zeilenkasten mittig um die Schriftbox, dann Ascent addieren.
+          const m = ctx.measureText(text);
+          const ascent = m.actualBoundingBoxAscent || parseFloat(cs.fontSize) * 0.72;
+          const descent = m.actualBoundingBoxDescent || parseFloat(cs.fontSize) * 0.2;
+          const y = line.top - rect.top + (line.height - (ascent + descent)) / 2 + ascent;
+          paintText(text, x, y, fn);
+        };
+        const paintText = (text: string, x: number, y: number, fn: 'fill' | 'stroke') => {
           if (supportsLS) {
             if (fn === 'stroke') ctx.strokeText(text, x, y);
             else ctx.fillText(text, x, y);
@@ -191,10 +214,10 @@ const WaterHeadline: React.FC<Props> = ({ children, className = '' }) => {
           ctx.lineWidth = parseFloat(cs.webkitTextStrokeWidth) || 2;
           ctx.lineJoin = 'round';
           ctx.strokeStyle = cs.webkitTextStrokeColor || '#f4f4f0';
-          paintText('stroke');
+          lines.forEach((l) => paintLine(l, 'stroke'));
         } else {
           ctx.fillStyle = cs.color;
-          paintText('fill');
+          lines.forEach((l) => paintLine(l, 'fill'));
         }
       });
 

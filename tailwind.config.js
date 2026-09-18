@@ -13,7 +13,7 @@ export default {
         line: '#26262a',
         ftext: '#f4f4f0',
         muted: '#b4b4bc',
-        dim: '#74747e',
+        dim: '#8e8e98',
         accent: '#d4ff4f',
       },
       fontFamily: {

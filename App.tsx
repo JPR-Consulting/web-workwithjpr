@@ -48,7 +48,7 @@ const SectionTitle: React.FC<{ children: React.ReactNode; className?: string }> 
 const Eyebrow: React.FC<{ children: string }> = ({ children }) => {
   const ref = useReveal<HTMLDivElement>();
   return (
-    <div ref={ref} className="reveal font-mono text-[13px] text-accent uppercase mb-5">
+    <div ref={ref} className="reveal font-mono text-[14px] text-accent uppercase mb-5">
       {children}
     </div>
   );
@@ -59,9 +59,9 @@ const ServiceCell: React.FC<{ idx: string; title: string; desc: string }> = ({ i
   const ref = useReveal<HTMLDivElement>();
   return (
     <div ref={ref} className="reveal bg-ink hover:bg-panel transition-colors p-10">
-      <div className="font-mono text-[13px] text-accent mb-[18px]">{idx}</div>
+      <div className="font-mono text-[14px] text-accent mb-[18px]">{idx}</div>
       <h3 className="font-syne font-bold text-[28px] mb-3">{title}</h3>
-      <p className="text-base leading-[1.6] text-muted">{desc}</p>
+      <p className="text-[17px] leading-[1.6] text-muted">{desc}</p>
     </div>
   );
 };
@@ -136,7 +136,7 @@ const ProjectCard: React.FC<{ url: string; href: string; title: string; tag: str
           <i className="w-2 h-2 rounded-full bg-[#2e2e33] inline-block" />
           <i className="w-2 h-2 rounded-full bg-[#2e2e33] inline-block" />
           <i className="w-2 h-2 rounded-full bg-[#2e2e33] inline-block" />
-          <span className="ml-auto font-mono text-xs text-dim">{url}</span>
+          <span className="ml-auto font-mono text-[13px] text-muted">{url}</span>
         </div>
         <div className="aspect-[900/463] md:h-[460px] md:aspect-auto bg-panel relative overflow-hidden">
           <div className="absolute inset-0 transition-transform duration-500 ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.045]">
@@ -151,7 +151,7 @@ const ProjectCard: React.FC<{ url: string; href: string; title: string; tag: str
       </div>
       <div ref={footRef} className="reveal flex justify-between items-baseline gap-4">
         <h3 className="font-syne font-bold text-[22px] md:text-[26px]">{title}</h3>
-        <div className="font-mono text-[13px] text-muted uppercase text-right">{tag}</div>
+        <div className="font-mono text-[14px] text-muted uppercase text-right">{tag}</div>
       </div>
     </a>
   );
@@ -162,10 +162,10 @@ const TestimonialCell: React.FC<{ quote: string; logo: string; alt: string; name
   const ref = useReveal<HTMLDivElement>();
   return (
     <div ref={ref} className="reveal bg-ink hover:bg-panel transition-colors p-9 flex flex-col justify-between">
-      <p className="text-[17px] leading-[1.65] text-[#d8d8de] mb-7">&bdquo;{quote}&ldquo;</p>
+      <p className="text-[18px] leading-[1.65] text-[#d8d8de] mb-7">&bdquo;{quote}&ldquo;</p>
       <div className="flex items-center gap-3.5">
         <img src={logo} alt={alt} className="h-10 w-auto max-w-[90px] object-contain" />
-        <div className="font-mono text-[13px] text-muted uppercase leading-[1.9]">
+        <div className="font-mono text-[14px] text-muted uppercase leading-[1.8]">
           {name}<br />{company}
         </div>
       </div>
@@ -184,7 +184,7 @@ const ProcessStep: React.FC<{ n: string; title: string; desc: string }> = ({ n, 
         {n}
       </div>
       <h3 className="font-syne font-bold text-[22px] mb-3">{title}</h3>
-      <p className="text-base leading-[1.6] text-muted">{desc}</p>
+      <p className="text-[17px] leading-[1.6] text-muted">{desc}</p>
     </div>
   );
 };
@@ -200,14 +200,14 @@ const PriceTier: React.FC<{
       className={`reveal bg-ink hover:bg-panel transition-colors p-10 flex flex-col relative ${reco ? 'outline outline-1 outline-accent -outline-offset-1' : ''}`}
     >
       {reco && (
-        <div className="absolute top-0 right-0 px-3.5 py-2 bg-accent text-ink font-mono text-[11px] font-medium uppercase">
+        <div className="absolute top-0 right-0 px-3.5 py-2 bg-accent text-ink font-mono text-[13px] font-medium uppercase">
           ✦ Empfohlen
         </div>
       )}
       <h3 className="font-syne font-bold text-[26px] mb-1.5">{name}</h3>
-      <div className="font-mono text-[13px] text-dim uppercase mb-6">{forWhom}</div>
+      <div className="font-mono text-[14px] text-muted uppercase mb-6">{forWhom}</div>
       <div className="font-syne font-extrabold text-[40px] text-accent mb-7">{price}</div>
-      <ul className="flex flex-col gap-2.5 text-[15px] text-muted flex-grow mb-7">
+      <ul className="flex flex-col gap-2.5 text-[17px] text-muted flex-grow mb-7">
         {features.map((f) => (
           <li key={f} className="flex gap-2.5 items-start">
             <span className="text-accent flex-shrink-0">→</span>
@@ -218,7 +218,7 @@ const PriceTier: React.FC<{
       <MagneticButton
         as="button"
         onClick={openCalendly}
-        className={`self-start inline-flex items-center gap-2.5 font-mono text-[13px] font-medium uppercase px-[22px] py-[13px] border transition-colors ${
+        className={`self-start inline-flex items-center gap-2.5 font-mono text-[14px] font-medium uppercase px-[22px] py-[13px] border transition-colors ${
           reco
             ? 'bg-accent text-ink border-accent hover:bg-transparent hover:text-accent'
             : 'bg-ink text-ftext border-line hover:bg-transparent'
@@ -394,23 +394,99 @@ const App: React.FC = () => {
     },
   ];
 
+  const references = [
+    { name: 'Muay Thai Subyen', what: 'Kampfsportschule' },
+    { name: 'Kampfwerk', what: 'Software für Kampfsportschulen' },
+    { name: 'RopeFX', what: 'Höhenarbeiten' },
+    { name: 'Nomads Digital', what: 'Games-Marketing' },
+    { name: 'Gamerfunnel', what: 'Spielbare Werbe-Funnels' },
+  ];
+
   const marqueeItems = (
     <>
-      <span className="inline-flex items-baseline gap-3 px-7">
-        <span className="text-ftext">Muay Thai Subyen</span>
-        <span className="font-body font-normal normal-case text-[15px] tracking-normal text-muted">Kampfsportschule</span>
-      </span>
-      <span className="text-accent self-center">✦</span>
-      <span className="inline-flex items-baseline gap-3 px-7">
-        <span className="text-ftext">Colombina</span>
-        <span className="font-body font-normal normal-case text-[15px] tracking-normal text-muted">Kochkurse &amp; Catering</span>
-      </span>
-      <span className="text-accent self-center">✦</span>
-      <span className="inline-flex items-baseline gap-3 px-7">
-        <span className="text-ftext">RopeFX</span>
-        <span className="font-body font-normal normal-case text-[15px] tracking-normal text-muted">Höhenarbeiten</span>
-      </span>
-      <span className="text-accent self-center">✦</span>
+      {references.map((r) => (
+        <React.Fragment key={r.name}>
+          <span className="inline-flex items-baseline gap-3 px-7">
+            <span className="text-ftext">{r.name}</span>
+            <span className="font-body font-normal normal-case text-[16px] tracking-normal text-muted">{r.what}</span>
+          </span>
+          <span className="text-accent self-center">✦</span>
+        </React.Fragment>
+      ))}
+    </>
+  );
+
+  const checkIcon = (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5} className="shrink-0"><path d="M4 12L10 18L20 6" /></svg>
+  );
+
+  // Einmal definiert, damit Wasser-Effekt und Fallback identisch gesetzt sind.
+  const heroContent = (
+    <>
+      <div className="flex justify-between font-mono text-[14px] text-muted uppercase mb-10 md:mb-14 flex-wrap gap-2">
+        <div data-line>Webdesign — Berlin</div>
+        <div data-line>Dir gehört der Code — kein Lock-in</div>
+      </div>
+
+      <h1 className="font-syne font-extrabold uppercase text-[clamp(38px,8.4vw,168px)] leading-[1.02] tracking-[-0.015em] break-words">
+        <span className={`hero-line ${heroIn ? 'in' : ''}`}>
+          <span data-line>Websites,</span>
+        </span>
+        <span className={`hero-line hero-line-2 text-accent ${heroIn ? 'in' : ''}`}>
+          <span data-line>die Kunden</span>
+        </span>
+        <span
+          className={`hero-line hero-line-3 ${heroIn ? 'in' : ''}`}
+          style={{ WebkitTextStroke: '2px #f4f4f0', color: 'transparent' }}
+        >
+          <span data-line>bringen.</span>
+        </span>
+      </h1>
+
+      <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-x-8 gap-y-6 mt-14 flex-wrap`}>
+        <p className="font-body text-[20px] md:text-[24px] leading-[1.4] text-ftext max-w-[520px]">
+          <span data-line>Für Gyms, Praxen, Handwerk und lokale Unternehmen.</span>
+        </p>
+        <p className="font-body text-[18px] md:text-[20px] leading-[1.55] text-[#d8d8de] max-w-[480px]">
+          <span data-line>Erster Entwurf kostenlos — du siehst vorab, was du bekommst. Festpreis ab 1.500&nbsp;€.</span>
+        </p>
+      </div>
+
+      <div className={`hero-foot ${heroIn ? 'in' : ''} flex gap-3.5 flex-wrap mt-12`}>
+        <MagneticButton
+          as="button"
+          onClick={openCalendly}
+          className="inline-flex items-center gap-2.5 font-mono text-[15px] font-medium uppercase bg-accent text-ink px-7 py-4 border border-accent hover:bg-transparent hover:text-accent transition-colors"
+        >
+          Kostenloser Entwurf anfragen →
+        </MagneticButton>
+        <MagneticButton
+          as="button"
+          onClick={() => scrollToSection('preise')}
+          className="inline-flex items-center gap-2.5 font-mono text-[15px] font-medium uppercase bg-transparent text-ftext px-7 py-4 border border-[#3a3a40] hover:border-accent hover:text-accent transition-colors"
+        >
+          Preise ansehen
+        </MagneticButton>
+      </div>
+
+      <div className={`hero-proof ${heroIn ? 'in' : ''} flex gap-x-8 gap-y-3 flex-wrap mt-10 pt-6 border-t border-line font-body text-[16px] md:text-[17px] text-muted`}>
+        <span className="inline-flex items-center gap-2.5">
+          {checkIcon}
+          <span data-line>Live in Tagen statt Monaten</span>
+        </span>
+        <span className="inline-flex items-center gap-2.5">
+          {checkIcon}
+          <span data-line>Festpreis vor Projektstart</span>
+        </span>
+        <span className="inline-flex items-center gap-2.5">
+          {checkIcon}
+          <span data-line>Erster Entwurf kostenlos</span>
+        </span>
+      </div>
+
+      <p className="mt-5 font-body text-[15px] md:text-[16px] text-muted">
+        <span data-line>Aktuell freie Kapazitäten — Projekt noch diesen Monat starten.</span>
+      </p>
     </>
   );
 
@@ -425,7 +501,7 @@ const App: React.FC = () => {
         <button onClick={scrollToTop} className="font-syne font-extrabold text-[16px] md:text-[19px] uppercase tracking-[0.01em] text-ftext whitespace-nowrap shrink-0">
           JPR <span className="text-accent">Studio</span>&reg;
         </button>
-        <ul className="hidden md:flex gap-8 list-none font-mono text-[13px] uppercase">
+        <ul className="hidden md:flex gap-8 list-none font-mono text-[14px] uppercase">
           {navLinks.map((link) => (
             <li key={link.id}>
               <ScrambleLabel
@@ -442,7 +518,7 @@ const App: React.FC = () => {
         <MagneticButton
           as="button"
           onClick={openCalendly}
-          className="inline-flex items-center gap-2 font-mono text-[11px] md:text-[13px] font-medium uppercase bg-accent text-ink px-3 md:px-5 py-2.5 md:py-3 border border-accent hover:bg-transparent hover:text-accent transition-colors whitespace-nowrap shrink-0"
+          className="inline-flex items-center gap-2 font-mono text-[12px] md:text-[14px] font-medium uppercase bg-accent text-ink px-3 md:px-5 py-2.5 md:py-3 border border-accent hover:bg-transparent hover:text-accent transition-colors whitespace-nowrap shrink-0"
         >
           Entwurf anfragen →
         </MagneticButton>
@@ -451,152 +527,12 @@ const App: React.FC = () => {
       <main className="relative z-[1]">
         {/* Hero */}
         <header className="px-4 md:px-12 border-b border-line pt-28 md:pt-[220px] pb-16 md:pb-[72px]">
-          {waterReady ? (
-            <WaterHeadline>
-          <div className="flex justify-between font-mono text-[13px] text-muted uppercase mb-10 md:mb-14 flex-wrap gap-2">
-            <div data-line>Webdesign — Berlin</div>
-            <div data-line>Dir gehört der Code — kein Lock-in</div>
-          </div>
-
-          <h1 className="font-syne font-extrabold uppercase text-[clamp(38px,8.4vw,132px)] leading-[1.02] tracking-[-0.015em] break-words">
-            <span className={`hero-line ${heroIn ? 'in' : ''}`}>
-              <span data-line>Websites,</span>
-            </span>
-            <span className={`hero-line hero-line-2 text-accent ${heroIn ? 'in' : ''}`}>
-              <span data-line>die Kunden</span>
-            </span>
-            <span
-              className={`hero-line hero-line-3 ${heroIn ? 'in' : ''}`}
-              style={{ WebkitTextStroke: '2px #f4f4f0', color: 'transparent' }}
-            >
-              <span data-line>bringen.</span>
-            </span>
-          </h1>
-
-          <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-8 mt-14 flex-wrap`}>
-            <div className="font-mono text-[13px] text-muted leading-[1.9] uppercase">
-              <span data-line className="block">Für Gyms, Praxen, Handwerk</span>
-              <span data-line className="block">und lokale Unternehmen</span>
-            </div>
-            <div className="flex flex-col items-start gap-6 max-w-[460px]">
-              <div data-line className="text-lg leading-[1.65] text-[#d8d8de]">
-                Erster Entwurf kostenlos — du siehst vorab, was du bekommst. Festpreis ab 1.500&nbsp;€.
-              </div>
-            </div>
-          </div>
-
-          <div className={`hero-foot ${heroIn ? 'in' : ''} flex gap-3.5 flex-wrap mt-12`}>
-                <MagneticButton
-                  as="button"
-                  onClick={openCalendly}
-                  className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-accent text-ink px-7 py-4 border border-accent hover:bg-transparent hover:text-accent transition-colors"
-                >
-                  Kostenloser Entwurf anfragen →
-                </MagneticButton>
-                <MagneticButton
-                  as="button"
-                  onClick={() => scrollToSection('preise')}
-                  className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-transparent text-ftext px-7 py-4 border border-[#3a3a40] hover:border-accent hover:text-accent transition-colors"
-                >
-                  Preise ansehen
-                </MagneticButton>
-          </div>
-
-          <div className={`hero-proof ${heroIn ? 'in' : ''} flex gap-7 flex-wrap mt-10 pt-6 border-t border-line font-mono text-[13px] text-muted uppercase`}>
-            <span className="inline-flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5}><path d="M4 12L10 18L20 6" /></svg>
-              <span data-line>Live in Tagen statt Monaten</span>
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5}><path d="M4 12L10 18L20 6" /></svg>
-              <span data-line>Festpreis vor Projektstart</span>
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5}><path d="M4 12L10 18L20 6" /></svg>
-              <span data-line>Erster Entwurf kostenlos</span>
-            </span>
-          </div>
-
-          <p className="mt-6 font-mono text-[13px] text-dim uppercase">
-            <span data-line>Aktuell freie Kapazitäten — Projekt noch diesen Monat starten</span>
-          </p>
-            </WaterHeadline>
-          ) : (
-            <>
-          <div className="flex justify-between font-mono text-[13px] text-muted uppercase mb-10 md:mb-14 flex-wrap gap-2">
-            <div data-line>Webdesign — Berlin</div>
-            <div data-line>Dir gehört der Code — kein Lock-in</div>
-          </div>
-
-          <h1 className="font-syne font-extrabold uppercase text-[clamp(38px,8.4vw,132px)] leading-[1.02] tracking-[-0.015em] break-words">
-            <span className={`hero-line ${heroIn ? 'in' : ''}`}>
-              <span data-line>Websites,</span>
-            </span>
-            <span className={`hero-line hero-line-2 text-accent ${heroIn ? 'in' : ''}`}>
-              <span data-line>die Kunden</span>
-            </span>
-            <span
-              className={`hero-line hero-line-3 ${heroIn ? 'in' : ''}`}
-              style={{ WebkitTextStroke: '2px #f4f4f0', color: 'transparent' }}
-            >
-              <span data-line>bringen.</span>
-            </span>
-          </h1>
-
-          <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-8 mt-14 flex-wrap`}>
-            <div className="font-mono text-[13px] text-muted leading-[1.9] uppercase">
-              <span data-line className="block">Für Gyms, Praxen, Handwerk</span>
-              <span data-line className="block">und lokale Unternehmen</span>
-            </div>
-            <div className="flex flex-col items-start gap-6 max-w-[460px]">
-              <div data-line className="text-lg leading-[1.65] text-[#d8d8de]">
-                Erster Entwurf kostenlos — du siehst vorab, was du bekommst. Festpreis ab 1.500&nbsp;€.
-              </div>
-            </div>
-          </div>
-
-          <div className={`hero-foot ${heroIn ? 'in' : ''} flex gap-3.5 flex-wrap mt-12`}>
-                <MagneticButton
-                  as="button"
-                  onClick={openCalendly}
-                  className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-accent text-ink px-7 py-4 border border-accent hover:bg-transparent hover:text-accent transition-colors"
-                >
-                  Kostenloser Entwurf anfragen →
-                </MagneticButton>
-                <MagneticButton
-                  as="button"
-                  onClick={() => scrollToSection('preise')}
-                  className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-transparent text-ftext px-7 py-4 border border-[#3a3a40] hover:border-accent hover:text-accent transition-colors"
-                >
-                  Preise ansehen
-                </MagneticButton>
-          </div>
-
-          <div className={`hero-proof ${heroIn ? 'in' : ''} flex gap-7 flex-wrap mt-10 pt-6 border-t border-line font-mono text-[13px] text-muted uppercase`}>
-            <span className="inline-flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5}><path d="M4 12L10 18L20 6" /></svg>
-              <span data-line>Live in Tagen statt Monaten</span>
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5}><path d="M4 12L10 18L20 6" /></svg>
-              <span data-line>Festpreis vor Projektstart</span>
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5}><path d="M4 12L10 18L20 6" /></svg>
-              <span data-line>Erster Entwurf kostenlos</span>
-            </span>
-          </div>
-
-          <p className="mt-6 font-mono text-[13px] text-dim uppercase">
-            <span data-line>Aktuell freie Kapazitäten — Projekt noch diesen Monat starten</span>
-          </p>
-            </>
-          )}
+          {waterReady ? <WaterHeadline>{heroContent}</WaterHeadline> : heroContent}
         </header>
 
         {/* Marquee */}
         <section className="overflow-hidden border-b border-line" aria-label="Referenzen">
-          <div className="font-mono text-[13px] text-accent uppercase pt-3.5 px-6 md:px-12">Unsere Kunden</div>
+          <div className="font-mono text-[14px] text-accent uppercase pt-3.5 px-6 md:px-12">Kunden &amp; Projekte</div>
           <div className="flex whitespace-nowrap w-max pt-[14px] pb-[18px] overflow-hidden">
             <div className="marquee-track flex items-baseline whitespace-nowrap font-syne font-bold text-[21px] uppercase tracking-[-0.01em] text-ftext">
               <span className="flex">
@@ -629,8 +565,10 @@ const App: React.FC = () => {
           <SectionTitle>Aktuelle Projekte.</SectionTitle>
           <div className="flex flex-col gap-20 md:gap-28 max-w-[900px] mx-auto">
             <ProjectCard url="muaythai-subyen.de" href="https://www.muaythai-subyen.de" title="Muay Thai Subyen" tag="Gym-Website / Online-Mitgliedschaft" img="/portfolio-shots/subyen.jpg" />
-            <ProjectCard url="colombina-kochkurse.vercel.app" href="https://colombina-kochkurse.vercel.app" title="Colombina Kochkurse" tag="Landingpage / Buchung" img="/portfolio-shots/colombina.jpg" />
+            <ProjectCard url="kampfwerk.com" href="https://kampfwerk.com" title="Kampfwerk" tag="Software für Kampfsportschulen / Website & Web-App" img="/portfolio-shots/kampfwerk.jpg" />
             <ProjectCard url="ropefx.com" href="https://ropefx.com" title="RopeFX" tag="Website / Anfragen-Funnel" img="/portfolio-shots/ropefx.jpg" />
+            <ProjectCard url="nomadsdigital.com" href="https://www.nomadsdigital.com" title="Nomads Digital" tag="Marketing-Agentur für Games / Website" img="/portfolio-shots/nomads.jpg" />
+            <ProjectCard url="gamerfunnel.com" href="https://gamerfunnel.com" title="Gamerfunnel" tag="Produktseite / Spielbare Werbe-Funnels" img="/portfolio-shots/gamerfunnel.jpg" />
           </div>
         </section>
 
@@ -638,14 +576,7 @@ const App: React.FC = () => {
         <section className="px-6 md:px-12 border-b border-line py-16 md:py-24">
           <Eyebrow>Kundenstimmen</Eyebrow>
           <SectionTitle>Das sagen unsere Kunden.</SectionTitle>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line">
-            <TestimonialCell
-              quote="Meine Kurstermine, Texte und Anfragen verwalte ich jetzt einfach selbst — und die Seite fühlt sich trotzdem hundertprozentig nach meiner Marke an. Dass das alles an einem Tag entstanden ist, kann ich immer noch nicht ganz glauben."
-              logo="/logos/colombina.webp"
-              alt="Colombina Logo"
-              name="Diana Römer Duque"
-              company="Colombina — Catering & Kochkurse"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line">
             <TestimonialCell
               quote="Die Website stand innerhalb weniger Tage. Seitdem bekommen wir regelmäßig Anfragen darüber — und sie sieht richtig professionell aus. Unkompliziert und auf den Punkt."
               logo="/logos/ropefx.webp"
@@ -661,7 +592,7 @@ const App: React.FC = () => {
               company="Muay Thai Subyen e.V."
             />
           </div>
-          <p className="mt-7 font-mono text-[13px] uppercase">
+          <p className="mt-7 font-mono text-[14px] uppercase">
             <a href="https://g.page/r/Cbent0mi4nueEAE/review" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-ftext transition-colors">
               Auch zufrieden? Bewertung auf Google hinterlassen →
             </a>
@@ -709,10 +640,10 @@ const App: React.FC = () => {
               openCalendly={openCalendly}
             />
           </div>
-          <p className="mt-6 font-mono text-[13px] text-dim uppercase">
+          <p className="mt-6 font-body text-[16px] text-muted">
             Alle Preise netto zzgl. MwSt. · Ratenzahlung möglich · Betreuung ab 49 €/Monat (Hosting, Updates, Backups, Support)
           </p>
-          <p className="mt-4 text-sm font-mono">
+          <p className="mt-4 text-[15px] font-mono">
             <a href="/preise" className="text-accent hover:text-ftext transition-colors">
               Alle Webdesign-Preise in Berlin im Detail →
             </a>
@@ -740,7 +671,7 @@ const App: React.FC = () => {
               Bereit<br />zu starten?
             </h2>
             <div className="max-w-[380px]">
-              <p className="text-[17px] leading-[1.6] mb-6">
+              <p className="text-[18px] leading-[1.6] mb-6">
                 Erstgespräch und Entwurf sind kostenlos — 30 Minuten, unverbindlich.
               </p>
               <MagneticButton
@@ -755,8 +686,8 @@ const App: React.FC = () => {
         </section>
 
         {/* Footer */}
-        <footer className="px-6 md:px-12 flex flex-col md:flex-row md:justify-between md:items-center gap-5 py-8 font-mono text-[13px] text-muted uppercase">
-          <div className="leading-[1.7] normal-case md:uppercase">JPR Studio ist eine Marke der JPR Consulting GmbH · Letteallee 91 · 13409 Berlin</div>
+        <footer className="px-6 md:px-12 flex flex-col md:flex-row md:justify-between md:items-center gap-5 py-8 font-mono text-[14px] text-muted uppercase">
+          <div className="leading-[1.7] normal-case">JPR Studio ist eine Marke der JPR Consulting GmbH · Letteallee 91 · 13409 Berlin</div>
           <div className="flex gap-x-6 gap-y-3 items-center flex-wrap">
             <button onClick={scrollToTop} className="text-muted hover:text-accent transition-colors">Nach oben</button>
             <button onClick={() => navigate('BLOG')} className="text-muted hover:text-accent transition-colors">Blog</button>
@@ -793,7 +724,7 @@ const App: React.FC = () => {
                 <button
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
-                  className="font-mono text-[12px] text-muted hover:text-accent uppercase transition-colors"
+                  className="font-mono text-[13px] text-muted hover:text-accent uppercase transition-colors"
                 >
                   {link.label}
                 </button>
@@ -801,7 +732,7 @@ const App: React.FC = () => {
             </div>
             <button
               onClick={openCalendly}
-              className="font-mono text-[12px] font-medium uppercase bg-accent text-ink px-4 py-2.5 border border-accent hover:bg-transparent hover:text-accent transition-colors"
+              className="font-mono text-[13px] font-medium uppercase bg-accent text-ink px-4 py-2.5 border border-accent hover:bg-transparent hover:text-accent transition-colors"
             >
               Entwurf anfragen
             </button>
@@ -825,7 +756,7 @@ const AboutPhoto: React.FC = () => {
         intensity={0.4}
         className="w-full h-full grayscale contrast-[1.05] transition-[filter] duration-500 group-hover:grayscale-0 group-hover:contrast-100"
       />
-      <div className="absolute bottom-0 left-0 px-4 py-2.5 bg-accent text-ink font-mono text-[11px] font-medium uppercase">
+      <div className="absolute bottom-0 left-0 px-4 py-2.5 bg-accent text-ink font-mono text-[13px] font-medium uppercase">
         Berlin / Gründer
       </div>
     </div>
@@ -839,16 +770,16 @@ const AboutText: React.FC = () => {
       <h2 className="font-syne font-extrabold uppercase text-[clamp(30px,3.6vw,48px)] tracking-[-0.015em] mb-6">
         Hi, ich bin <span className="text-accent">Jan.</span>
       </h2>
-      <p className="text-base leading-[1.7] text-muted mb-4">
+      <p className="text-[17px] leading-[1.7] text-muted mb-4">
         Seit über 7 Jahren baue ich Websites und digitale Lösungen — von Websites für lokale Unternehmen bis zu Automatisierungssystemen für internationale Firmen.
       </p>
-      <p className="text-base leading-[1.7] text-muted mb-4">
+      <p className="text-[17px] leading-[1.7] text-muted mb-4">
         Was mich antreibt: Wenn ein Handwerker plötzlich über seine Website Anfragen bekommt. Oder eine Praxis ihre Terminbuchung online hat und das Telefon nicht mehr ständig klingelt.
       </p>
-      <p className="text-base leading-[1.7] text-ftext font-medium mb-4">
+      <p className="text-[17px] leading-[1.7] text-ftext font-medium mb-4">
         Ich spreche deine Sprache — nicht die von Entwicklern. Du sagst mir, was dein Business braucht, und ich baue es.
       </p>
-      <div className="flex gap-7 flex-wrap mt-7 pt-[22px] border-t border-line font-mono text-xs text-muted uppercase">
+      <div className="flex gap-7 flex-wrap mt-7 pt-[22px] border-t border-line font-mono text-[14px] text-muted uppercase">
         <span>7+ Jahre Webentwicklung</span>
         <span>Du sprichst direkt mit dem, der baut</span>
         <span>
@@ -898,7 +829,7 @@ const FaqItem: React.FC<{ q: string; a: string; isOpen: boolean; onToggle: () =>
         style={{ maxHeight: isOpen ? `${height || 600}px` : '0px' }}
       >
         <div ref={contentRef}>
-          <p className="pb-[26px] pr-10 text-[15px] leading-[1.7] text-muted max-w-[760px]">{a}</p>
+          <p className="pb-[26px] pr-10 text-[17px] leading-[1.7] text-muted max-w-[760px]">{a}</p>
         </div>
       </div>
     </div>
