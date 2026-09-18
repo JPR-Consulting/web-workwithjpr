@@ -7,6 +7,7 @@ import MagneticButton from './components/MagneticButton';
 import WaterHeadline from './components/WaterHeadline';
 import WaterImage from './components/WaterImage';
 import ScrambleLabel from './components/ScrambleLabel';
+import ProjectCarousel from './components/ProjectCarousel';
 import BlogIndex from './components/BlogIndex';
 import BlogPostView from './components/BlogPost';
 import PreisePage from './components/PreisePage';
@@ -63,97 +64,6 @@ const ServiceCell: React.FC<{ idx: string; title: string; desc: string }> = ({ i
       <h3 className="font-syne font-bold text-[28px] mb-3">{title}</h3>
       <p className="text-[17px] leading-[1.6] text-muted">{desc}</p>
     </div>
-  );
-};
-
-/** [02] Projekte — Karte rollt beim Scrollen wie von einer Rolle herein. */
-const ProjectCard: React.FC<{ url: string; href: string; title: string; tag: string; img: string }> = ({ url, href, title, tag, img }) => {
-  const wrapRef = useRef<HTMLAnchorElement>(null);
-  const footRef = useReveal<HTMLDivElement>();
-
-  useEffect(() => {
-    const el = wrapRef.current;
-    if (!el) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      el.style.opacity = '1';
-      return;
-    }
-
-    let raf = 0;
-    const update = () => {
-      const r = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-
-      // Fortschritt der Karte durch den Viewport: 0 = Unterkante betritt das Bild,
-      // 1 = Karte ist oben komplett hinausgelaufen.
-      const total = vh + r.height;
-      const travelled = Math.min(total, Math.max(0, vh - r.top));
-      const t = travelled / total;
-
-      // Zwei Phasen: hereinrollen (unten) und wieder wegrollen (oben).
-      const IN = 0.42;   // bis hierhin richtet sich die Karte auf
-      const OUT = 0.62;  // ab hier kippt sie nach hinten weg
-      let rot: number;
-      let ty: number;
-      let op: number;
-      if (t < IN) {
-        const p = t / IN;
-        const e = 1 - Math.pow(1 - p, 3);
-        rot = (1 - e) * 46;          // aus der Tiefe hochkippen
-        ty = (1 - e) * 90;
-        op = 0.2 + e * 0.8;
-      } else if (t > OUT) {
-        const p = Math.min(1, (t - OUT) / (1 - OUT));
-        const e = Math.pow(p, 2.2);
-        rot = -e * 46;               // nach hinten oben wegrollen
-        ty = -e * 70;
-        op = 1 - e * 0.85;
-      } else {
-        rot = 0;
-        ty = 0;
-        op = 1;
-      }
-
-      const sc = 0.92 + (1 - Math.abs(rot) / 46) * 0.08;
-      el.style.transform = `perspective(1300px) rotateX(${rot}deg) translateY(${ty}px) scale(${sc})`;
-      el.style.opacity = String(Math.max(0, Math.min(1, op)));
-      raf = requestAnimationFrame(update);
-    };
-    raf = requestAnimationFrame(update);
-    return () => cancelAnimationFrame(raf);
-  }, []);
-
-  return (
-    <a
-      ref={wrapRef}
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="card cursor-pointer group block will-change-transform opacity-0"
-    >
-      <div className="border border-line bg-panel mb-[18px] transition-[border-color,box-shadow] duration-500 ease-[cubic-bezier(.19,1,.22,1)] group-hover:border-accent/40 group-hover:shadow-[0_18px_40px_rgba(0,0,0,0.45)]">
-        <div className="flex items-center gap-1.5 px-3.5 py-2.5 border-b border-line">
-          <i className="w-2 h-2 rounded-full bg-[#2e2e33] inline-block" />
-          <i className="w-2 h-2 rounded-full bg-[#2e2e33] inline-block" />
-          <i className="w-2 h-2 rounded-full bg-[#2e2e33] inline-block" />
-          <span className="ml-auto font-mono text-[13px] text-muted">{url}</span>
-        </div>
-        <div className="aspect-[900/463] md:h-[460px] md:aspect-auto bg-panel relative overflow-hidden">
-          <div className="absolute inset-0 transition-transform duration-500 ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.045]">
-            <img
-              src={img}
-              alt={`Website von ${title}`}
-              loading="lazy"
-              className="absolute inset-0 w-full h-full object-contain md:object-cover object-top grayscale-[35%] contrast-[1.02] transition-[filter] duration-500 group-hover:grayscale-0 group-hover:contrast-100"
-            />
-          </div>
-        </div>
-      </div>
-      <div ref={footRef} className="reveal flex justify-between items-baseline gap-4">
-        <h3 className="font-syne font-bold text-[22px] md:text-[26px]">{title}</h3>
-        <div className="font-mono text-[14px] text-muted uppercase text-right">{tag}</div>
-      </div>
-    </a>
   );
 };
 
@@ -421,11 +331,13 @@ const App: React.FC = () => {
   );
 
   // Einmal definiert, damit Wasser-Effekt und Fallback identisch gesetzt sind.
+  // Nur die Headline-Zeilen tragen data-line und laufen durch den Effekt;
+  // kleine Texte bleiben echtes DOM, sonst werden sie in der Textur unscharf.
   const heroContent = (
     <>
       <div className="flex justify-between font-mono text-[14px] text-muted uppercase mb-10 md:mb-14 flex-wrap gap-2">
-        <div data-line>Webdesign — Berlin</div>
-        <div data-line>Dir gehört der Code — kein Lock-in</div>
+        <div>Webdesign — Berlin</div>
+        <div>Dir gehört der Code — kein Lock-in</div>
       </div>
 
       <h1 className="font-syne font-extrabold uppercase text-[clamp(38px,8.4vw,168px)] leading-[1.02] tracking-[-0.015em] break-words">
@@ -445,10 +357,10 @@ const App: React.FC = () => {
 
       <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-x-8 gap-y-6 mt-14 flex-wrap`}>
         <p className="font-body text-[20px] md:text-[24px] leading-[1.4] text-ftext max-w-[520px]">
-          <span data-line>Für Gyms, Praxen, Handwerk und lokale Unternehmen.</span>
+          <span>Für Gyms, Praxen, Handwerk und lokale Unternehmen.</span>
         </p>
         <p className="font-body text-[18px] md:text-[20px] leading-[1.55] text-[#d8d8de] max-w-[480px]">
-          <span data-line>Erster Entwurf kostenlos — du siehst vorab, was du bekommst. Festpreis ab 1.500&nbsp;€.</span>
+          <span>Erster Entwurf kostenlos — du siehst vorab, was du bekommst. Festpreis ab 1.500&nbsp;€.</span>
         </p>
       </div>
 
@@ -472,26 +384,26 @@ const App: React.FC = () => {
       <div className={`hero-proof ${heroIn ? 'in' : ''} flex gap-x-8 gap-y-3 flex-wrap mt-10 pt-6 border-t border-line font-body text-[16px] md:text-[17px] text-muted`}>
         <span className="inline-flex items-center gap-2.5">
           {checkIcon}
-          <span data-line>Live in Tagen statt Monaten</span>
+          <span>Live in Tagen statt Monaten</span>
         </span>
         <span className="inline-flex items-center gap-2.5">
           {checkIcon}
-          <span data-line>Festpreis vor Projektstart</span>
+          <span>Festpreis vor Projektstart</span>
         </span>
         <span className="inline-flex items-center gap-2.5">
           {checkIcon}
-          <span data-line>Erster Entwurf kostenlos</span>
+          <span>Erster Entwurf kostenlos</span>
         </span>
       </div>
 
       <p className="mt-5 font-body text-[15px] md:text-[16px] text-muted">
-        <span data-line>Aktuell freie Kapazitäten — Projekt noch diesen Monat starten.</span>
+        <span>Aktuell freie Kapazitäten — Projekt noch diesen Monat starten.</span>
       </p>
     </>
   );
 
   return (
-    <div className="bg-texture bg-ink text-ftext font-body overflow-x-hidden selection:bg-accent selection:text-ink">
+    <div className="bg-texture bg-ink text-ftext font-body overflow-x-clip selection:bg-accent selection:text-ink">
       <CustomCursor />
 
       {/* Nav */}
@@ -560,16 +472,17 @@ const App: React.FC = () => {
         </section>
 
         {/* [02] Projekte */}
-        <section id="projekte" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
-          <Eyebrow>[02] — Ausgewählte Projekte</Eyebrow>
-          <SectionTitle>Aktuelle Projekte.</SectionTitle>
-          <div className="flex flex-col gap-20 md:gap-28 max-w-[900px] mx-auto">
-            <ProjectCard url="muaythai-subyen.de" href="https://www.muaythai-subyen.de" title="Muay Thai Subyen" tag="Gym-Website / Online-Mitgliedschaft" img="/portfolio-shots/subyen.jpg" />
-            <ProjectCard url="kampfwerk.com" href="https://kampfwerk.com" title="Kampfwerk" tag="Software für Kampfsportschulen / Website & Web-App" img="/portfolio-shots/kampfwerk.jpg" />
-            <ProjectCard url="ropefx.com" href="https://ropefx.com" title="RopeFX" tag="Website / Anfragen-Funnel" img="/portfolio-shots/ropefx.jpg" />
-            <ProjectCard url="nomadsdigital.com" href="https://www.nomadsdigital.com" title="Nomads Digital" tag="Marketing-Agentur für Games / Website" img="/portfolio-shots/nomads.jpg" />
-            <ProjectCard url="gamerfunnel.com" href="https://gamerfunnel.com" title="Gamerfunnel" tag="Produktseite / Spielbare Werbe-Funnels" img="/portfolio-shots/gamerfunnel.jpg" />
-          </div>
+        <section id="projekte" className="border-b border-line py-16 md:py-0">
+          <ProjectCarousel
+            header={<><Eyebrow>[02] — Ausgewählte Projekte</Eyebrow><SectionTitle className="!mb-8">Aktuelle Projekte.</SectionTitle></>}
+            projects={[
+              { url: 'muaythai-subyen.de', href: 'https://www.muaythai-subyen.de', title: 'Muay Thai Subyen', tag: 'Gym-Website / Online-Mitgliedschaft', img: '/portfolio-shots/subyen.jpg' },
+              { url: 'kampfwerk.com', href: 'https://kampfwerk.com', title: 'Kampfwerk', tag: 'Software für Kampfsportschulen', img: '/portfolio-shots/kampfwerk.jpg' },
+              { url: 'ropefx.com', href: 'https://ropefx.com', title: 'RopeFX', tag: 'Website / Anfragen-Funnel', img: '/portfolio-shots/ropefx.jpg' },
+              { url: 'nomadsdigital.com', href: 'https://www.nomadsdigital.com', title: 'Nomads Digital', tag: 'Marketing für Games / Website', img: '/portfolio-shots/nomads.jpg' },
+              { url: 'gamerfunnel.com', href: 'https://gamerfunnel.com', title: 'Gamerfunnel', tag: 'Spielbare Werbe-Funnels', img: '/portfolio-shots/gamerfunnel.jpg' },
+            ]}
+          />
         </section>
 
         {/* Kundenstimmen */}
