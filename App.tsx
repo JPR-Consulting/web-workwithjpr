@@ -305,11 +305,11 @@ const App: React.FC = () => {
   ];
 
   const references = [
-    { name: 'Muay Thai Subyen', what: 'Kampfsportschule' },
     { name: 'Kampfwerk', what: 'Software für Kampfsportschulen' },
-    { name: 'RopeFX', what: 'Höhenarbeiten' },
-    { name: 'Nomads Digital', what: 'Games-Marketing' },
+    { name: 'Muay Thai Subyen', what: 'Kampfsportschule' },
     { name: 'Gamerfunnel', what: 'Spielbare Werbe-Funnels' },
+    { name: 'Nomads Digital', what: 'Games-Marketing' },
+    { name: 'RopeFX', what: 'Höhenarbeiten' },
   ];
 
   const marqueeItems = (
@@ -368,9 +368,9 @@ const App: React.FC = () => {
         <MagneticButton
           as="button"
           onClick={openCalendly}
-          className="inline-flex items-center gap-2.5 font-mono text-[15px] font-medium uppercase bg-accent text-ink px-7 py-4 border border-accent hover:bg-transparent hover:text-accent transition-colors"
+          className="cta-glow inline-flex items-center gap-2.5 font-mono text-[13px] sm:text-[15px] font-medium uppercase min-[380px]:whitespace-nowrap bg-accent text-ink px-5 sm:px-7 py-4 border border-accent hover:bg-transparent hover:text-accent transition-colors"
         >
-          Kostenloser Entwurf anfragen →
+          Jetzt kostenlosen Entwurf anfragen →
         </MagneticButton>
         <MagneticButton
           as="button"
@@ -476,11 +476,11 @@ const App: React.FC = () => {
           <ProjectCarousel
             header={<><Eyebrow>[02] — Ausgewählte Projekte</Eyebrow><SectionTitle className="!mb-8">Aktuelle Projekte.</SectionTitle></>}
             projects={[
-              { url: 'muaythai-subyen.de', href: 'https://www.muaythai-subyen.de', title: 'Muay Thai Subyen', tag: 'Gym-Website / Online-Mitgliedschaft', img: '/portfolio-shots/subyen.jpg' },
               { url: 'kampfwerk.com', href: 'https://kampfwerk.com', title: 'Kampfwerk', tag: 'Software für Kampfsportschulen', img: '/portfolio-shots/kampfwerk.jpg' },
-              { url: 'ropefx.com', href: 'https://ropefx.com', title: 'RopeFX', tag: 'Website / Anfragen-Funnel', img: '/portfolio-shots/ropefx.jpg' },
-              { url: 'nomadsdigital.com', href: 'https://www.nomadsdigital.com', title: 'Nomads Digital', tag: 'Marketing für Games / Website', img: '/portfolio-shots/nomads.jpg' },
+              { url: 'muaythai-subyen.de', href: 'https://www.muaythai-subyen.de', title: 'Muay Thai Subyen', tag: 'Gym-Website / Online-Mitgliedschaft', img: '/portfolio-shots/subyen.jpg' },
               { url: 'gamerfunnel.com', href: 'https://gamerfunnel.com', title: 'Gamerfunnel', tag: 'Spielbare Werbe-Funnels', img: '/portfolio-shots/gamerfunnel.jpg' },
+              { url: 'nomadsdigital.com', href: 'https://www.nomadsdigital.com', title: 'Nomads Digital', tag: 'Marketing für Games / Website', img: '/portfolio-shots/nomads.jpg' },
+              { url: 'ropefx.com', href: 'https://ropefx.com', title: 'RopeFX', tag: 'Website / Anfragen-Funnel', img: '/portfolio-shots/ropefx.jpg' },
             ]}
           />
         </section>

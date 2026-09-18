@@ -97,7 +97,10 @@ const ProjectCarousel: React.FC<Props> = ({ projects, header }) => {
         const vw = window.innerWidth;
         const firstC = cards[0].offsetLeft + cards[0].offsetWidth / 2;
         const lastC = cards[cards.length - 1].offsetLeft + cards[cards.length - 1].offsetWidth / 2;
-        const x = vw / 2 - firstC - p * (lastC - firstC);
+        // Auch die erste Karte fährt herein: Start mit ihr am rechten Rand,
+        // Ende mit der letzten Karte in der Mitte.
+        const intro = vw * 0.45;
+        const x = vw / 2 - firstC + intro - p * (lastC - firstC + intro);
         track.style.transform = `translate3d(${x}px,0,0)`;
 
         let best = 0;
@@ -188,7 +191,7 @@ const ProjectCarousel: React.FC<Props> = ({ projects, header }) => {
   }
 
   return (
-    <div ref={outerRef} className="relative" style={{ height: `${projects.length * VH_PER_CARD + 70}vh` }}>
+    <div ref={outerRef} className="relative" style={{ height: `${projects.length * VH_PER_CARD + 110}vh` }}>
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center pt-16">
         <div className="px-12">{header}</div>
         <div ref={trackRef} className="relative flex items-start gap-[3vw] will-change-transform">

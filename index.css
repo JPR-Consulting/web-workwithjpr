@@ -207,3 +207,31 @@
 @media (prefers-reduced-motion: reduce) {
   .bg-texture::after { opacity: 0.14; }
 }
+
+/* Haupt-CTA im Hero: ruhiges Leuchten in Akzentfarbe plus ein Ring, der
+   sanft nach aussen auslaeuft. Nur box-shadow animiert, weil der
+   MagneticButton selbst transform setzt. */
+.cta-glow {
+  animation: ctaGlow 2.8s ease-in-out infinite;
+}
+.cta-glow:hover {
+  animation: none;
+  box-shadow: 0 0 36px rgba(212, 255, 79, 0.45);
+}
+@keyframes ctaGlow {
+  0% {
+    box-shadow: 0 0 18px rgba(212, 255, 79, 0.18), 0 0 0 0 rgba(212, 255, 79, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 42px rgba(212, 255, 79, 0.42), 0 0 0 0 rgba(212, 255, 79, 0.25);
+  }
+  100% {
+    box-shadow: 0 0 18px rgba(212, 255, 79, 0.18), 0 0 0 14px rgba(212, 255, 79, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-glow {
+    animation: none;
+    box-shadow: 0 0 28px rgba(212, 255, 79, 0.3);
+  }
+}
