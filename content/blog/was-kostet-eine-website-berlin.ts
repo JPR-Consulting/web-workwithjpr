@@ -1,52 +1,26 @@
 export const post = {
   slug: 'was-kostet-eine-website-berlin',
-  title: 'Was kostet eine Website in Berlin? Preise 2026 (ab 1.500 €)',
-  description: 'Konkrete Zahlen statt „kommt drauf an": One-Pager ab 1.500 €, Website mit Terminbuchung ab 3.000 €, Shop ab 5.000 €. Alle Preisfaktoren und versteckten Kosten im Überblick.',
+  title: 'Was kostet eine Website in Berlin? Kostenfaktoren & versteckte Kosten erklärt',
+  description: 'Wovon der Preis einer Website abhängt, welche laufenden Kosten dazukommen und woran du ein faires Angebot erkennst — ehrlich erklärt von einem Berliner Webentwickler.',
   date: '2026-03-08',
-  tags: ['Webdesign', 'Berlin', 'Preise'],
+  tags: ['Webdesign', 'Berlin', 'Kosten'],
   readTime: '6 min',
   content: `
 ## Die kurze Antwort
 
 Eine professionelle Website für ein lokales Unternehmen in Berlin kostet zwischen **1.500€ und 5.000€+** — je nach Umfang. Aber was bekommst du für welchen Preis? Und worauf solltest du achten, damit du nicht zu viel zahlst?
 
-## Preise im Überblick
+## Grobe Einordnung
 
-Die aktuelle Preisliste mit allen Paketen findest du übrigens jederzeit auf unserer [Preisseite](/preise).
+Als Faustregel für lokale Unternehmen in Berlin:
 
-### One-Page Website (ab 1.500€)
-Ideal für Handwerker, Freelancer oder kleine Dienstleister, die eine professionelle Online-Präsenz brauchen.
+- **Einfache One-Page Website:** ab etwa 1.500 € — für Handwerker, Berater und kleine Dienstleister
+- **Mehrseitige Website mit Online-Terminbuchung:** ab etwa 3.000 € — für Praxen, Studios und Salons
+- **Online-Shop oder Web-App:** ab etwa 5.000 € — für Vereine, Shops und alles mit eigener Logik
 
-**Was du bekommst:**
-- Moderne, mobil optimierte Website
-- Kontaktformular
-- Basis-SEO (damit Google dich findet)
-- SSL-Zertifikat und Hosting-Einrichtung
+Was genau in welchem Paket steckt, steht auf unserer Seite **[Webdesign Preise Berlin](/preise)** — mit allen Leistungen, Festpreisen und dem kostenlosen ersten Entwurf.
 
-**Für wen:** Friseure, Handwerker, Berater, die "einfach eine gute Website" brauchen.
-
-### Mehrseitige Website (ab 3.000€)
-Für Unternehmen, die mehr als eine Visitenkarte im Netz brauchen.
-
-**Was du bekommst:**
-- Mehrere Unterseiten (Leistungen, Team, Kontakt, etc.)
-- Online-Terminbuchung
-- Erweiterte SEO-Optimierung
-- Google Analytics Integration
-- Content-Management (du kannst Inhalte selbst ändern)
-
-**Für wen:** Praxen, Salons, Restaurants, mittelständische Dienstleister.
-
-### Web-App oder Online-Shop (ab 5.000€)
-Individuelle Lösungen mit eigener Logik — von der Mitgliederverwaltung bis zum vollwertigen Shop.
-
-**Was du bekommst:**
-- Individuelle Funktionen (Buchungssystem, Kundenverwaltung, Dashboard)
-- Online-Shop mit Zahlungsabwicklung
-- Backend-Entwicklung
-- Automatisierungen und Schnittstellen
-
-**Für wen:** Vereine, E-Commerce, Unternehmen mit speziellen Anforderungen.
+Wichtiger als die Paketnamen ist aber, *warum* eine Website mehr oder weniger kostet. Darum geht es hier.
 
 ## Was den Preis beeinflusst
 
@@ -94,7 +68,7 @@ Viele Agenturen in Berlin arbeiten mit WordPress. Das hat Vorteile (große Commu
 
 ## Fazit
 
-Für eine professionelle Website in Berlin zahlst du realistisch zwischen 1.500€ und 5.000€. Der Preis hängt vom Umfang ab — nicht vom Buzzword-Level der Agentur.
+Für eine professionelle Website in Berlin zahlst du realistisch zwischen 1.500€ und 5.000€. Der Preis hängt vom Umfang ab — nicht vom Buzzword-Level der Agentur. Unsere konkreten Pakete findest du unter [Webdesign Preise Berlin](/preise).
 
 **Unser Angebot bei JPR Consulting:** Wir erstellen dir einen ersten Entwurf kostenlos — damit du vorab siehst, was du bekommst. Keine Verpflichtung, kein Risiko.
 `

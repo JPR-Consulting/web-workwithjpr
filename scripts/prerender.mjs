@@ -123,6 +123,11 @@ for (const [route, title] of [['imprint', 'Impressum | JPR Consulting'], ['priva
     { name: 'Professional', price: '3000', label: 'Mehrseitige Website + Online-Terminbuchung', items: ['Team- & Leistungsseiten', 'Erweiterte SEO-Optimierung', 'Google Analytics', 'Galerie / Portfolio', '3 Korrekturschleifen', 'Einführung & Support'] },
     { name: 'Business', price: '5000', label: 'Online-Shop oder Web-App', items: ['Alles aus Professional', 'Kundenverwaltung / Backend', 'Individuelle Funktionen', 'Automatisierungen', 'Laufender Support'] },
   ];
+  // Gleicher Wortlaut wie in components/FAQSection.tsx, die auf /preise sichtbar ist.
+  const priceFaqs = [
+    { q: 'Was kostet eine Website?', a: 'Das hängt vom Umfang ab. Eine einfache One-Page Website beginnt ab 1.500 €, eine mehrseitige Website mit Buchungssystem ab 3.000 €. Im kostenlosen Erstgespräch bekommst du ein individuelles Angebot — transparent, ohne versteckte Kosten.' },
+    { q: 'Was passiert nach dem Launch?', a: 'Hosting, Updates, Backups und Erreichbarkeit übernehme ich ab 49 €/Monat — inklusive Support und kleiner Änderungen. Wenn du lieber selbst betreust, bekommst du alle Zugänge und den Code.' },
+  ];
   const rootHtml = shell(`
     <p><a href="/" style="color:#22d3ee">← Zur Startseite</a></p>
     <h1 style="color:#fff;font-size:2.2rem;line-height:1.2">Webdesign Preise in Berlin — transparent ab 1.500 €</h1>
@@ -137,8 +142,10 @@ for (const [route, title] of [['imprint', 'Impressum | JPR Consulting'], ['priva
       <li><strong style="color:#fff">Funktionen & Schnittstellen</strong> — Terminbuchung, Bezahlung, Kundenverwaltung, Anbindungen.</li>
       <li><strong style="color:#fff">Inhalte & Pflege</strong> — Texte/Bilder liefern oder erstellen lassen, mit oder ohne laufende Betreuung.</li>
     </ul>
-    <p>Alle Preise netto zzgl. MwSt. · Ratenzahlung möglich · Hosting ab 15 €/Monat</p>
-    <p>Ausführlicher Ratgeber: <a href="/blog/was-kostet-eine-website-berlin" style="color:#22d3ee">Was kostet eine Website in Berlin?</a></p>
+    <p>Alle Preise netto zzgl. MwSt. · Ratenzahlung möglich · Betreuung ab 49 €/Monat (Hosting, Updates, Backups, Support)</p>
+    <h2 style="color:#fff">Häufige Fragen zu den Preisen</h2>
+    ${priceFaqs.map(f => `<h3 style="color:#fff">${esc(f.q)}</h3><p>${esc(f.a)}</p>`).join("")}
+    <p>Ratgeber: <a href="/blog/was-kostet-eine-website-berlin" style="color:#22d3ee">Wovon der Preis einer Website abhängt — Kostenfaktoren &amp; versteckte Kosten</a></p>
     <p><a href="/" style="color:#22d3ee">JPR Consulting — Webdesign Berlin</a></p>`);
   const jsonLd = [
     {
@@ -166,6 +173,11 @@ for (const [route, title] of [['imprint', 'Impressum | JPR Consulting'], ['priva
         { '@type': 'ListItem', position: 1, name: 'Start', item: SITE },
         { '@type': 'ListItem', position: 2, name: 'Preise', item: url },
       ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: priceFaqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
     },
   ];
   mkdirSync(`${DIST}/preise`, { recursive: true });
