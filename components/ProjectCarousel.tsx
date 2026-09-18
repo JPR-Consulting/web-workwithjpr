@@ -106,8 +106,12 @@ const ProjectCarousel: React.FC<Props> = ({ projects, header }) => {
           const d = (c.offsetLeft + c.offsetWidth / 2 + x - vw / 2) / c.offsetWidth;
           const ad = Math.min(Math.abs(d), 1.5);
           const tilt = Math.max(-1, Math.min(1, d)) * -24;
-          c.style.transform = `perspective(1600px) rotateY(${tilt}deg) scale(${1 - ad * 0.16})`;
-          c.style.opacity = String(1 - ad * 0.4);
+          // Nachbarn deutlich kleiner (~60 % bei einer Kartenbreite Abstand) und
+          // ein Stück zur Mitte gezogen, damit durch das Schrumpfen keine Lücken entstehen.
+          const scale = 1 - ad * 0.4;
+          const pull = -Math.sign(d) * ad * c.offsetWidth * 0.14;
+          c.style.transform = `translateX(${pull}px) perspective(1600px) rotateY(${tilt}deg) scale(${scale})`;
+          c.style.opacity = String(1 - ad * 0.45);
           c.style.zIndex = String(100 - Math.round(ad * 10));
           if (Math.abs(d) < bestD) {
             bestD = Math.abs(d);
