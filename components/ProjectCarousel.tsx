@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useCopy } from '../i18n';
 
 export interface Project {
   url: string;
@@ -17,8 +18,8 @@ interface Props {
 /** Scrollstrecke pro Karte im gepinnten Modus (in vh). */
 const VH_PER_CARD = 60;
 
-const ProjectCard = React.forwardRef<HTMLAnchorElement, { p: Project; focused: boolean; style?: React.CSSProperties; className?: string }>(
-  ({ p, focused, style, className = '' }, ref) => (
+const ProjectCard = React.forwardRef<HTMLAnchorElement, { p: Project; focused: boolean; altPrefix: string; style?: React.CSSProperties; className?: string }>(
+  ({ p, focused, altPrefix, style, className = '' }, ref) => (
     <a
       ref={ref}
       href={p.href}
@@ -41,7 +42,7 @@ const ProjectCard = React.forwardRef<HTMLAnchorElement, { p: Project; focused: b
         <div className="aspect-[1200/617] relative overflow-hidden bg-panel">
           <img
             src={p.img}
-            alt={`Website von ${p.title}`}
+            alt={`${altPrefix} ${p.title}`}
             loading="lazy"
             className={`absolute inset-0 w-full h-full object-cover object-top transition-[filter,transform] duration-700 ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.03] ${
               focused ? 'grayscale-0' : 'grayscale-[70%] brightness-75'
@@ -72,6 +73,7 @@ const ProjectCarousel: React.FC<Props> = ({ projects, header }) => {
   const swipeRef = useRef<HTMLDivElement>(null);
   const [pinned, setPinned] = useState(false);
   const [active, setActive] = useState(0);
+  const t = useCopy().projects;
 
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 768px) and (prefers-reduced-motion: no-preference)');
@@ -173,6 +175,7 @@ const ProjectCarousel: React.FC<Props> = ({ projects, header }) => {
               ref={(el) => { cardRefs.current[i] = el; }}
               p={p}
               focused={i === active}
+              altPrefix={t.altPrefix}
               className="w-[86vw] snap-center"
             />
           ))}
@@ -184,7 +187,7 @@ const ProjectCarousel: React.FC<Props> = ({ projects, header }) => {
               <span key={p.href} className={`h-1 transition-all duration-300 ${i === active ? 'w-6 bg-accent' : 'w-3 bg-line'}`} />
             ))}
           </div>
-          <span className="ml-auto font-mono text-[13px] text-muted uppercase">Wischen →</span>
+          <span className="ml-auto font-mono text-[13px] text-muted uppercase">{t.swipeHint}</span>
         </div>
       </div>
     );
@@ -201,6 +204,7 @@ const ProjectCarousel: React.FC<Props> = ({ projects, header }) => {
               ref={(el) => { cardRefs.current[i] = el; }}
               p={p}
               focused={i === active}
+              altPrefix={t.altPrefix}
               className="will-change-transform"
               style={{ width: 'min(58vw, 860px, calc((100vh - 330px) * 1.85))' }}
             />
@@ -211,7 +215,7 @@ const ProjectCarousel: React.FC<Props> = ({ projects, header }) => {
           <div className="flex-1 h-px bg-line relative overflow-hidden">
             <div ref={barRef} className="absolute inset-0 bg-accent origin-left" style={{ transform: 'scaleX(0)' }} />
           </div>
-          <span className="font-mono text-[13px] text-muted uppercase whitespace-nowrap">Weiterscrollen ↓</span>
+          <span className="font-mono text-[13px] text-muted uppercase whitespace-nowrap">{t.scrollHint}</span>
         </div>
       </div>
     </div>

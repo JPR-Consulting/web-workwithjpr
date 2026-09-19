@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useCopy } from '../i18n';
 
 const GA_ID = 'G-YC81Z6SB25';
 const FB_PIXEL_ID = '842051572153086';
@@ -64,6 +65,7 @@ function loadTrackingScripts() {
 
 const CookieBanner: React.FC = () => {
   const [show, setShow] = useState(false);
+  const t = useCopy().cookie;
 
   useEffect(() => {
     const consent = localStorage.getItem('cookieConsent');
@@ -88,8 +90,7 @@ const CookieBanner: React.FC = () => {
     <div className="fixed bottom-0 left-0 right-0 z-50 p-4 animate-slide-up">
       <div className="container mx-auto max-w-4xl bg-panel border border-line p-6 font-body">
         <p className="text-muted text-sm mb-4 leading-relaxed">
-          Wir verwenden Cookies und Tracking-Technologien (Google Analytics, Facebook Pixel), um unsere Website zu verbessern und Werbeanzeigen zu optimieren.
-          Mehr dazu in unserer{' '}
+          {t.text}{' '}
           <button
             onClick={() => {
               window.history.pushState({}, '', '/privacy');
@@ -97,15 +98,15 @@ const CookieBanner: React.FC = () => {
             }}
             className="text-accent hover:text-ftext underline transition-colors"
           >
-            Datenschutzerklärung
+            {t.privacy}
           </button>.
         </p>
         <div className="flex flex-wrap gap-3 font-mono text-[13px] uppercase">
           <button onClick={() => accept('all')} className="px-5 py-3 bg-accent text-ink font-medium border border-accent hover:bg-transparent hover:text-accent transition-colors">
-            Alle akzeptieren
+            {t.accept}
           </button>
           <button onClick={() => accept('necessary')} className="px-5 py-3 bg-transparent text-ftext font-medium border border-line hover:border-accent hover:text-accent transition-colors">
-            Nur notwendige
+            {t.necessary}
           </button>
         </div>
       </div>

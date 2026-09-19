@@ -14,11 +14,35 @@ execSync('npx esbuild content/blog/index.ts --bundle --format=esm --outfile=.pre
 const { blogPosts } = await import(new URL('../.prerender-content.mjs', import.meta.url));
 rmSync('.prerender-content.mjs');
 
-const template = readFileSync(`${DIST}/index.html`, 'utf8');
+// Texte von Start- und Preisseite (DE/EN) — dieselbe Quelle wie die App
+execSync('npx esbuild content/site-copy.ts --bundle --format=esm --outfile=.prerender-copy.mjs', { stdio: 'inherit' });
+const { copy, paths } = await import(new URL('../.prerender-copy.mjs', import.meta.url));
+rmSync('.prerender-copy.mjs');
+
+const fullTemplate = readFileSync(`${DIST}/index.html`, 'utf8');
+// index.html bringt ein FAQ-Schema mit. Es gehört nur zur Startseite und wird
+// dort aus site-copy neu erzeugt; alle anderen Seiten bekommen es nicht.
+const FAQ_LD = /<script type="application\/ld\+json">(?:(?!<\/script>)[\s\S])*?"FAQPage"[\s\S]*?<\/script>\s*/;
+if (!FAQ_LD.test(fullTemplate)) throw new Error('FAQPage-Block in index.html nicht gefunden');
+const template = fullTemplate.replace(FAQ_LD, '');
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-function renderPage({ title, description, canonical, ogType, rootHtml, jsonLd }) {
+const url = (p) => `${SITE}${p}`;
+const hreflang = (alt) =>
+  `<link rel="alternate" hreflang="de" href="${url(alt.de)}" />\n` +
+  `<link rel="alternate" hreflang="en" href="${url(alt.en)}" />\n` +
+  `<link rel="alternate" hreflang="x-default" href="${url(alt.de)}" />\n`;
+const faqLd = (items) => ({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+
+function renderPage({ title, description, canonical, ogType, rootHtml, jsonLd, lang = 'de', alternates = null }) {
   let html = template;
+  html = html.replace(/<html lang="[^"]*"/, `<html lang="${lang}"`);
+  html = html.replace(/(<meta property="og:locale" content=")[^"]*(")/, `$1${lang === 'en' ? 'en_GB' : 'de_DE'}$2`);
+  if (alternates) html = html.replace('</head>', `${hreflang(alternates)}</head>`);
   html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)}</title>`);
   html = html.replace(/(<meta name="description" content=")[^"]*(")/, `$1${esc(description)}$2`);
   html = html.replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${canonical}$2`);
@@ -115,54 +139,43 @@ for (const [route, title] of [['imprint', 'Impressum | JPR Consulting'], ['priva
 }
 
 
-// --- Preisseite /preise (Commercial-Intent-Landingpage) ---
-{
-  const url = `${SITE}/preise`;
-  const tiers = [
-    { name: 'Starter', price: '1500', label: 'One-Page Website', items: ['Mobil optimiert', 'Kontaktformular', 'Google Maps', 'Basis-SEO', '1 Korrekturschleife'] },
-    { name: 'Professional', price: '3000', label: 'Mehrseitige Website + Online-Terminbuchung', items: ['Team- & Leistungsseiten', 'Erweiterte SEO-Optimierung', 'Google Analytics', 'Galerie / Portfolio', '3 Korrekturschleifen', 'Einführung & Support'] },
-    { name: 'Business', price: '5000', label: 'Online-Shop oder Web-App', items: ['Alles aus Professional', 'Kundenverwaltung / Backend', 'Individuelle Funktionen', 'Automatisierungen', 'Laufender Support'] },
-  ];
-  // Gleicher Wortlaut wie in components/FAQSection.tsx, die auf /preise sichtbar ist.
-  const priceFaqs = [
-    { q: 'Was kostet eine Website?', a: 'Das hängt vom Umfang ab. Eine einfache One-Page Website beginnt ab 1.500 €, eine mehrseitige Website mit Buchungssystem ab 3.000 €. Im kostenlosen Erstgespräch bekommst du ein individuelles Angebot — transparent, ohne versteckte Kosten.' },
-    { q: 'Was passiert nach dem Launch?', a: 'Hosting, Updates, Backups und Erreichbarkeit übernehme ich ab 49 €/Monat — inklusive Support und kleiner Änderungen. Wenn du lieber selbst betreust, bekommst du alle Zugänge und den Code.' },
-  ];
+// --- Preisseiten /preise und /en/pricing (Commercial-Intent-Landingpage) ---
+const alternatesPricing = { de: paths.pricing.de, en: paths.pricing.en };
+for (const lang of ['de', 'en']) {
+  const t = copy[lang];
+  const p = t.pricingPage;
+  const pageUrl = url(paths.pricing[lang]);
+  const priceNum = (price) => price.replace(/[^\d]/g, '');
   const rootHtml = shell(`
-    <p><a href="/" style="color:#22d3ee">← Zur Startseite</a></p>
-    <h1 style="color:#fff;font-size:2.2rem;line-height:1.2">Webdesign Preise in Berlin — transparent ab 1.500 €</h1>
-    <p>Eine professionelle Website kostet bei JPR Consulting zwischen <strong style="color:#fff">1.500 €</strong> und <strong style="color:#fff">5.000 €+</strong> — je nach Umfang. Keine versteckten Kosten, keine Agentur-Tagessätze: Du bekommst ein festes Angebot, bevor es losgeht. Der erste Entwurf ist kostenlos. Die Preise gelten deutschlandweit — alles läuft online, du musst nicht in Berlin sitzen.</p>
-    ${tiers.map(t => `
-    <h2 style="color:#fff">${t.name} — ab ${Number(t.price).toLocaleString('de-DE')} € (${t.label})</h2>
-    <ul>${t.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`).join('')}
-    <h2 style="color:#fff">Was den Preis beeinflusst</h2>
-    <ul>
-      <li><strong style="color:#fff">Umfang & Seitenanzahl</strong> — ein One-Pager ist schneller gebaut als zehn Unterseiten.</li>
-      <li><strong style="color:#fff">Design-Anspruch</strong> — Standard-Design inklusive, individuelle Animationen und Branding kosten extra.</li>
-      <li><strong style="color:#fff">Funktionen & Schnittstellen</strong> — Terminbuchung, Bezahlung, Kundenverwaltung, Anbindungen.</li>
-      <li><strong style="color:#fff">Inhalte & Pflege</strong> — Texte/Bilder liefern oder erstellen lassen, mit oder ohne laufende Betreuung.</li>
-    </ul>
-    <p>Alle Preise netto zzgl. MwSt. · Ratenzahlung möglich · Betreuung ab 49 €/Monat (Hosting, Updates, Backups, Support)</p>
-    <h2 style="color:#fff">Häufige Fragen zu den Preisen</h2>
-    ${priceFaqs.map(f => `<h3 style="color:#fff">${esc(f.q)}</h3><p>${esc(f.a)}</p>`).join("")}
-    <p>Ratgeber: <a href="/blog/was-kostet-eine-website-berlin" style="color:#22d3ee">Wovon der Preis einer Website abhängt — Kostenfaktoren &amp; versteckte Kosten</a></p>
-    <p><a href="/" style="color:#22d3ee">JPR Consulting — Webdesign Berlin</a></p>`);
+    <p><a href="${paths.home[lang]}" style="color:#22d3ee">← ${esc(p.back)}</a></p>
+    <h1 style="color:#fff;font-size:2.2rem;line-height:1.2">${esc(p.h1.join(' '))}</h1>
+    <p>${esc(p.intro)}</p>
+    ${t.pricing.tiers.map(tier => `
+    <h2 style="color:#fff">${esc(tier.name)} — ${esc(tier.price)} (${esc(tier.for)})</h2>
+    <ul>${tier.features.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`).join('')}
+    <p>${esc(t.pricing.note)}</p>
+    <h2 style="color:#fff">${esc(p.factorsTitle)}</h2>
+    <ul>${p.factors.map(fa => `<li><strong style="color:#fff">${esc(fa.title)}</strong> — ${esc(fa.text)}</li>`).join('')}</ul>
+    <h2 style="color:#fff">${esc(t.faq.title)}</h2>
+    ${t.faq.items.map(fq => `<h3 style="color:#fff">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
+    ${lang === 'de' ? `<p>Ratgeber: <a href="/blog/was-kostet-eine-website-berlin" style="color:#22d3ee">Wovon der Preis einer Website abhängt — Kostenfaktoren &amp; versteckte Kosten</a></p>` : ''}
+    <p><a href="${paths.home[lang]}" style="color:#22d3ee">JPR Studio — ${lang === 'de' ? 'Webdesign Berlin' : 'Web design Berlin'}</a></p>`);
   const jsonLd = [
     {
       '@context': 'https://schema.org',
       '@type': 'Service',
-      name: 'Webdesign Berlin',
-      serviceType: 'Webdesign',
-      areaServed: { '@type': 'City', name: 'Berlin' },
+      name: lang === 'de' ? 'Webdesign Berlin' : 'Web design Berlin',
+      serviceType: lang === 'de' ? 'Webdesign' : 'Web design',
+      areaServed: [{ '@type': 'City', name: 'Berlin' }, { '@type': 'Country', name: 'Deutschland' }],
       provider: { '@type': 'ProfessionalService', name: 'JPR Consulting GmbH', url: SITE, telephone: '+4917631504123', address: { '@type': 'PostalAddress', streetAddress: 'Letteallee 91', postalCode: '13409', addressLocality: 'Berlin', addressCountry: 'DE' } },
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
-        name: 'Webdesign Pakete',
-        itemListElement: tiers.map(t => ({
+        name: lang === 'de' ? 'Webdesign Pakete' : 'Web design packages',
+        itemListElement: t.pricing.tiers.map(tier => ({
           '@type': 'Offer',
-          name: `${t.name} — ${t.label}`,
-          priceSpecification: { '@type': 'PriceSpecification', minPrice: t.price, priceCurrency: 'EUR' },
-          url,
+          name: `${tier.name} — ${tier.for}`,
+          priceSpecification: { '@type': 'PriceSpecification', minPrice: priceNum(tier.price), priceCurrency: 'EUR' },
+          url: pageUrl,
         })),
       },
     },
@@ -170,26 +183,77 @@ for (const [route, title] of [['imprint', 'Impressum | JPR Consulting'], ['priva
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Start', item: SITE },
-        { '@type': 'ListItem', position: 2, name: 'Preise', item: url },
+        { '@type': 'ListItem', position: 1, name: lang === 'de' ? 'Start' : 'Home', item: url(paths.home[lang]) },
+        { '@type': 'ListItem', position: 2, name: t.pricing.pageEyebrow, item: pageUrl },
       ],
     },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: priceFaqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-    },
+    faqLd(t.faq.items),
   ];
-  mkdirSync(`${DIST}/preise`, { recursive: true });
-  writeFileSync(`${DIST}/preise/index.html`, renderPage({
-    title: 'Webdesign Preise Berlin 2026 — Website ab 1.500 € | JPR Consulting',
-    description: 'Transparente Preisliste: One-Page Website ab 1.500 €, Website mit Terminbuchung ab 3.000 €, Shop oder Web-App ab 5.000 €. Festes Angebot im kostenlosen Erstgespräch.',
-    canonical: url,
+  mkdirSync(`${DIST}${paths.pricing[lang]}`, { recursive: true });
+  writeFileSync(`${DIST}${paths.pricing[lang]}/index.html`, renderPage({
+    title: t.meta.pricingTitle,
+    description: t.meta.pricingDesc,
+    canonical: pageUrl,
     ogType: 'website',
     rootHtml,
     jsonLd,
+    lang,
+    alternates: alternatesPricing,
   }));
-  console.log('✓ /preise');
+  console.log(`✓ ${paths.pricing[lang]}`);
 }
 
-console.log(`Prerender fertig: ${blogPosts.length} Artikel + Blog-Index + 2 Rechtsseiten.`);
+// --- Startseiten / und /en ---
+// Der erste Bildschirm bildet den echten Hero nach (sonst blitzt vor dem
+// Mount eine schmale Textspalte auf); der Rest bleibt für Crawler lesbar.
+const mono = "font-family:'IBM Plex Mono',ui-monospace,monospace";
+const homeFallback = (t, lang) => `<div style="min-height:100vh;background:#101012;color:#f4f4f0;font-family:'Syne','Space Grotesk',system-ui,-apple-system,sans-serif">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 48px;border-bottom:1px solid #26262a">
+        <div style="font-weight:800;font-size:19px;text-transform:uppercase;letter-spacing:.01em">JPR <span style="color:#d4ff4f">Studio</span>&reg;</div>
+        <div style="${mono};font-size:13px;background:#d4ff4f;color:#101012;padding:13px 22px;text-transform:uppercase">${esc(t.nav.cta)}</div>
+      </div>
+      <header style="padding:120px 48px 72px 48px;box-sizing:border-box">
+        <div style="display:flex;justify-content:space-between;${mono};font-size:13px;color:#b4b4bc;text-transform:uppercase;margin-bottom:48px">
+          <span>${esc(t.hero.topLeft)}</span><span>${esc(t.hero.topRight)}</span>
+        </div>
+        <h1 style="margin:0;font-weight:800;text-transform:uppercase;font-size:clamp(52px,9vw,132px);line-height:.95;letter-spacing:-.02em">
+          <span style="display:block">${esc(t.hero.h1[0])}</span>
+          <span style="display:block;color:#d4ff4f">${esc(t.hero.h1[1])}</span>
+          <span style="display:block;-webkit-text-stroke:2px #f4f4f0;color:transparent">${esc(t.hero.h1[2])}</span>
+        </h1>
+        <p style="margin:56px 0 0;font-size:18px;line-height:1.65;color:#d8d8de;max-width:460px">${esc(t.hero.offer)}</p>
+        <p style="margin:28px 0 0;font-size:20px;color:#f4f4f0">${esc(t.hero.audience)}</p>
+      </header>
+      <main style="padding:0 48px 64px 48px;box-sizing:border-box;color:#b4b4bc;font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.7">
+        <h2 style="font-weight:800;text-transform:uppercase;color:#f4f4f0">${esc(t.services.title)}</h2>
+        <ul>${t.services.items.map(i => `<li><strong style="color:#f4f4f0">${esc(i.title)}</strong> — ${esc(i.desc)}</li>`).join('')}</ul>
+        <h2 style="font-weight:800;text-transform:uppercase;color:#f4f4f0">${esc(t.projects.title)}</h2>
+        <ul>${t.projects.items.map(i => `<li><a href="${i.href}" style="color:#d4ff4f">${esc(i.title)}</a> — ${esc(i.tag)}</li>`).join('')}</ul>
+        <h2 style="font-weight:800;text-transform:uppercase;color:#f4f4f0">${esc(t.pricing.title)}</h2>
+        <p>${t.pricing.tiers.map(tier => `${esc(tier.name)} ${esc(tier.price)}`).join(' &middot; ')}. ${esc(t.pricing.note)} <a href="${paths.pricing[lang]}" style="color:#d4ff4f">${esc(t.pricing.detailsLink)}</a></p>
+        <h2 style="font-weight:800;text-transform:uppercase;color:#f4f4f0">${esc(t.faq.title)}</h2>
+        ${t.faq.items.map(fq => `<h3 style="color:#f4f4f0">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
+        <p>${esc(t.footer.company)} &middot; info@workwithjpr.com &middot; +49 176 31 50 4123</p>
+        <p><a href="${paths.home[lang === 'de' ? 'en' : 'de']}" style="color:#d4ff4f">${lang === 'de' ? 'English version' : 'Deutsche Version'}</a>${lang === 'de' ? ' &middot; <a href="/blog" style="color:#d4ff4f">Blog</a>' : ''}</p>
+      </main>
+    </div>`;
+
+const alternatesHome = { de: paths.home.de, en: paths.home.en };
+for (const lang of ['en', 'de']) {
+  const t = copy[lang];
+  const out = lang === 'de' ? `${DIST}/index.html` : `${DIST}${paths.home.en}/index.html`;
+  mkdirSync(out.replace(/\/index\.html$/, ''), { recursive: true });
+  writeFileSync(out, renderPage({
+    title: t.meta.homeTitle,
+    description: t.meta.homeDesc,
+    canonical: lang === 'de' ? `${SITE}/` : url(paths.home.en),
+    ogType: 'website',
+    rootHtml: homeFallback(t, lang),
+    jsonLd: faqLd(t.faq.items),
+    lang,
+    alternates: alternatesHome,
+  }));
+  console.log(`✓ ${paths.home[lang]}`);
+}
+
+console.log(`Prerender fertig: ${blogPosts.length} Artikel + Blog-Index + 2 Rechtsseiten + Start/Preise in DE und EN.`);

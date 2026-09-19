@@ -1,56 +1,37 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useReveal } from '../hooks/useReveal';
+import { useCopy } from '../i18n';
 
-const faqs = [
-  {
-    q: 'Was kostet eine Website?',
-    a: 'Das hängt vom Umfang ab. Eine einfache One-Page Website beginnt ab 1.500 €, eine mehrseitige Website mit Buchungssystem ab 3.000 €. Im kostenlosen Erstgespräch bekommst du ein individuelles Angebot — transparent, ohne versteckte Kosten.',
-  },
-  {
-    q: 'Wie lange dauert es, bis meine Website fertig ist?',
-    a: 'Eine einfache Website ist in wenigen Tagen fertig. Komplexere Projekte mit Shop oder individuellen Funktionen dauern 1–2 Wochen. Kein monatelanges Warten — wir setzen schnell um.',
-  },
-  {
-    q: 'Brauche ich technisches Wissen?',
-    a: 'Nein, überhaupt nicht. Wir kümmern uns um alles Technische. Nach dem Launch zeigen wir dir in einer Einführung, wie du einfache Änderungen selbst vornehmen kannst — falls gewünscht.',
-  },
-  {
-    q: 'Was passiert nach dem Launch?',
-    a: 'Hosting, Updates, Backups und Erreichbarkeit übernehme ich ab 49 €/Monat — inklusive Support und kleiner Änderungen. Wenn du lieber selbst betreust, bekommst du alle Zugänge und den Code.',
-  },
-  {
-    q: 'Könnt ihr auch bestehende Websites überarbeiten?',
-    a: 'Ja, definitiv. Ob Redesign, Performance-Optimierung oder neue Funktionen — wir schauen uns an, was du hast, und machen daraus etwas Modernes.',
-  },
-  {
-    q: 'Kann ich Inhalte später selbst ändern?',
-    a: 'Ja. Du bekommst einen einfachen Redaktionsbereich für Texte, Bilder, Öffnungszeiten und Preise — ohne Technikkenntnisse. Nach dem Launch zeige ich dir in einer Einführung, wie es geht.',
-  },
-  {
-    q: 'Wem gehört die Website am Ende?',
-    a: 'Dir — vollständig. Du bekommst den kompletten Quellcode und die Zugänge zu Domain und Hosting. Kein Baukasten-Abo, keine Lizenzgebühren, keine Abhängigkeit von mir.',
-  },
-  {
-    q: 'Arbeitet ihr nur mit Unternehmen in Berlin?',
-    a: 'Nein — wir arbeiten mit Unternehmen in ganz Deutschland. Unser Sitz ist in Berlin, aber alles läuft online: Erstgespräch per Video, Entwurf per Link, Abstimmung per Telefon oder E-Mail. Du musst für kein einziges Treffen anreisen.',
-  },
-];
+interface Props {
+  /** Startseite: Anker-ID und Nummern-Eyebrow. */
+  onHome?: boolean;
+}
 
-const FAQSection: React.FC = () => {
+const FAQSection: React.FC<Props> = ({ onHome }) => {
+  const t = useCopy().faq;
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const eyebrowRef = useReveal<HTMLDivElement>();
+  const titleRef = useReveal<HTMLHeadingElement>();
+  const listRef = useReveal<HTMLDivElement>();
 
   return (
-    <section className="px-6 md:px-12 border-b border-line py-16 md:py-24">
-      <div className="font-mono text-[13px] text-accent uppercase mb-5">FAQ</div>
-      <h2 className="font-syne font-extrabold uppercase text-[clamp(34px,4.5vw,60px)] tracking-[-0.015em] leading-[1.02] mb-[52px]">
-        Häufige Fragen.
+    <section id={onHome ? 'faq' : undefined} className="px-6 md:px-12 border-b border-line py-16 md:py-24">
+      <div ref={eyebrowRef} className="reveal font-mono text-[14px] text-accent uppercase mb-5">
+        {onHome ? t.eyebrow : 'FAQ'}
+      </div>
+      <h2
+        ref={titleRef}
+        className="font-syne font-extrabold uppercase text-[clamp(34px,4.5vw,60px)] tracking-[-0.015em] leading-[1.02] mb-[52px] sec-title-line"
+      >
+        <span>{t.title}</span>
       </h2>
 
-      <div className="border-t border-line max-w-[980px]">
-        {faqs.map((faq, idx) => (
-          <FAQItem
+      <div ref={listRef} className="reveal border-t border-line max-w-[980px]">
+        {t.items.map((faq, idx) => (
+          <FaqItem
             key={faq.q}
-            question={faq.q}
-            answer={faq.a}
+            q={faq.q}
+            a={faq.a}
             isOpen={openIndex === idx}
             onToggle={() => setOpenIndex(openIndex === idx ? null : idx)}
           />
@@ -60,22 +41,32 @@ const FAQSection: React.FC = () => {
   );
 };
 
-const FAQItem: React.FC<{
-  question: string;
-  answer: string;
-  isOpen: boolean;
-  onToggle: () => void;
-}> = ({ question, answer, isOpen, onToggle }) => {
+/** Akkordeon-Eintrag (+ dreht zu × via rotate 45deg, max-height-Transition). */
+const FaqItem: React.FC<{ q: string; a: string; isOpen: boolean; onToggle: () => void }> = ({ q, a, isOpen, onToggle }) => {
   const contentRef = useRef<HTMLDivElement>(null);
+  // Hoehe messen statt beim ersten Render zu raten: scrollHeight ist vor dem
+  // Layout 0, wodurch die Antwort zugeklappt blieb. Auch bei Resize neu messen.
+  const [height, setHeight] = useState(0);
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+    const measure = () => setHeight(el.scrollHeight);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    if (document.fonts?.ready) document.fonts.ready.then(measure);
+    return () => ro.disconnect();
+  }, [a]);
 
   return (
     <div className="border-b border-line">
       <button
         type="button"
         onClick={onToggle}
+        aria-expanded={isOpen}
         className="w-full flex justify-between items-center gap-6 py-[26px] bg-transparent border-none cursor-pointer text-left font-syne font-bold text-xl text-ftext hover:text-accent transition-colors"
       >
-        {question}
+        {q}
         <span
           className="font-mono text-xl text-accent flex-shrink-0 transition-transform duration-300"
           style={{ transform: isOpen ? 'rotate(45deg)' : 'none' }}
@@ -85,10 +76,10 @@ const FAQItem: React.FC<{
       </button>
       <div
         className="overflow-hidden transition-[max-height] duration-500 ease-[cubic-bezier(.19,1,.22,1)]"
-        style={{ maxHeight: isOpen ? `${contentRef.current?.scrollHeight ?? 500}px` : '0px' }}
+        style={{ maxHeight: isOpen ? `${height || 600}px` : '0px' }}
       >
         <div ref={contentRef}>
-          <p className="pb-[26px] pr-10 text-[15px] leading-[1.7] text-muted max-w-[760px]">{answer}</p>
+          <p className="pb-[26px] pr-10 text-[17px] leading-[1.7] text-muted max-w-[760px]">{a}</p>
         </div>
       </div>
     </div>

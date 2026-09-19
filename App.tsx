@@ -8,12 +8,17 @@ import WaterHeadline from './components/WaterHeadline';
 import WaterImage from './components/WaterImage';
 import ScrambleLabel from './components/ScrambleLabel';
 import ProjectCarousel from './components/ProjectCarousel';
+import PricingSection from './components/PricingSection';
+import TestimonialsSection from './components/TestimonialsSection';
+import FAQSection from './components/FAQSection';
 import BlogIndex from './components/BlogIndex';
 import BlogPostView from './components/BlogPost';
 import PreisePage from './components/PreisePage';
 import { useLenis } from './hooks/useLenis';
 import { useReveal } from './hooks/useReveal';
 import { getPostBySlug } from './content/blog';
+import { copy, paths, type Lang } from './content/site-copy';
+import { LangContext, LangSwitch, useCopy } from './i18n';
 
 declare global {
   interface Window {
@@ -25,13 +30,32 @@ declare global {
 
 type ViewState = 'HOME' | 'IMPRINT' | 'PRIVACY' | 'BLOG' | 'BLOG_POST' | 'PREISE';
 
-const navLinks = [
-  { label: '[01] Leistungen', id: 'leistungen' },
-  { label: '[02] Projekte', id: 'projekte' },
-  { label: '[03] Prozess', id: 'prozess' },
-  { label: '[04] Preise', id: 'preise' },
-  { label: '[05] FAQ', id: 'faq' },
-];
+const SITE = 'https://workwithjpr.com';
+
+/**
+ * Adresse -> Ansicht. `lang` ist nur bei Seiten gesetzt, die es in beiden
+ * Sprachen gibt (Start, Preise); Blog und Rechtstexte sind nur deutsch und
+ * ändern die gewählte Sprache nicht.
+ */
+function parseLocation(path: string): { view: ViewState; slug: string; lang: Lang | null } {
+  if (path === paths.home.en || path === `${paths.home.en}/`) return { view: 'HOME', slug: '', lang: 'en' };
+  if (path === paths.pricing.en) return { view: 'PREISE', slug: '', lang: 'en' };
+  if (path === paths.pricing.de) return { view: 'PREISE', slug: '', lang: 'de' };
+  if (path === '/imprint' || path === '/impressum') return { view: 'IMPRINT', slug: '', lang: null };
+  if (path === '/privacy' || path === '/datenschutz') return { view: 'PRIVACY', slug: '', lang: null };
+  if (path === '/blog') return { view: 'BLOG', slug: '', lang: null };
+  if (path.startsWith('/blog/')) return { view: 'BLOG_POST', slug: path.replace('/blog/', ''), lang: null };
+  return { view: 'HOME', slug: '', lang: path.startsWith('/en/') ? 'en' : 'de' };
+}
+
+function pathFor(view: ViewState, lang: Lang, slug: string): string {
+  if (view === 'HOME') return paths.home[lang];
+  if (view === 'PREISE') return paths.pricing[lang];
+  if (view === 'IMPRINT') return '/imprint';
+  if (view === 'PRIVACY') return '/privacy';
+  if (view === 'BLOG') return '/blog';
+  return slug ? `/blog/${slug}` : '/blog';
+}
 
 /** Sektions-Headline mit Zeilen-Reveal (aus jpr-prototyp.html .sec-title). */
 const SectionTitle: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className }) => {
@@ -67,23 +91,7 @@ const ServiceCell: React.FC<{ idx: string; title: string; desc: string }> = ({ i
   );
 };
 
-/** Kundenstimmen — Hairline-Grid-Zelle mit Reveal. */
-const TestimonialCell: React.FC<{ quote: string; logo: string; alt: string; name: string; company: string }> = ({ quote, logo, alt, name, company }) => {
-  const ref = useReveal<HTMLDivElement>();
-  return (
-    <div ref={ref} className="reveal bg-ink hover:bg-panel transition-colors p-9 flex flex-col justify-between">
-      <p className="text-[18px] leading-[1.65] text-[#d8d8de] mb-7">&bdquo;{quote}&ldquo;</p>
-      <div className="flex items-center gap-3.5">
-        <img src={logo} alt={alt} className="h-10 w-auto max-w-[90px] object-contain" />
-        <div className="font-mono text-[14px] text-muted uppercase leading-[1.8]">
-          {name}<br />{company}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-/** Prozess — Schritt mit großer Outline-Zahl (Hover → lime). */
+/** Prozess — Schritt mit großer Zahl. */
 const ProcessStep: React.FC<{ n: string; title: string; desc: string }> = ({ n, title, desc }) => {
   const ref = useReveal<HTMLDivElement>();
   return (
@@ -99,54 +107,29 @@ const ProcessStep: React.FC<{ n: string; title: string; desc: string }> = ({ n, 
   );
 };
 
-/** Preise — Tier-Karte mit Reveal, Professional mit Lime-Outline. */
-const PriceTier: React.FC<{
-  name: string; for: string; price: string; reco: boolean; features: string[]; openCalendly: () => void;
-}> = ({ name, for: forWhom, price, reco, features, openCalendly }) => {
-  const ref = useReveal<HTMLDivElement>();
-  return (
-    <div
-      ref={ref}
-      className={`reveal bg-ink hover:bg-panel transition-colors p-10 flex flex-col relative ${reco ? 'outline outline-1 outline-accent -outline-offset-1' : ''}`}
-    >
-      {reco && (
-        <div className="absolute top-0 right-0 px-3.5 py-2 bg-accent text-ink font-mono text-[13px] font-medium uppercase">
-          ✦ Empfohlen
-        </div>
-      )}
-      <h3 className="font-syne font-bold text-[26px] mb-1.5">{name}</h3>
-      <div className="font-mono text-[14px] text-muted uppercase mb-6">{forWhom}</div>
-      <div className="font-syne font-extrabold text-[40px] text-accent mb-7">{price}</div>
-      <ul className="flex flex-col gap-2.5 text-[17px] text-muted flex-grow mb-7">
-        {features.map((f) => (
-          <li key={f} className="flex gap-2.5 items-start">
-            <span className="text-accent flex-shrink-0">→</span>
-            {f}
-          </li>
-        ))}
-      </ul>
-      <MagneticButton
-        as="button"
-        onClick={openCalendly}
-        className={`self-start inline-flex items-center gap-2.5 font-mono text-[14px] font-medium uppercase px-[22px] py-[13px] border transition-colors ${
-          reco
-            ? 'bg-accent text-ink border-accent hover:bg-transparent hover:text-accent'
-            : 'bg-ink text-ftext border-line hover:bg-transparent'
-        }`}
-      >
-        Entwurf anfragen
-      </MagneticButton>
-    </div>
-  );
-};
+/** Title, Description, Canonical und html-lang passend zu Ansicht und Sprache. */
+function useDocumentMeta(view: ViewState, lang: Lang) {
+  useEffect(() => {
+    const localized = view === 'HOME' || view === 'PREISE';
+    document.documentElement.lang = localized ? lang : 'de';
+    if (!localized) return;
+    const m = copy[lang].meta;
+    const isHome = view === 'HOME';
+    document.title = isHome ? m.homeTitle : m.pricingTitle;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', isHome ? m.homeDesc : m.pricingDesc);
+    const path = isHome ? paths.home[lang] : paths.pricing[lang];
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', `${SITE}${path === '/' ? '/' : path}`);
+  }, [view, lang]);
+}
 
 const App: React.FC = () => {
+  const initial = parseLocation(window.location.pathname);
   const [showStickyNav, setShowStickyNav] = useState(false);
   const [navHidden, setNavHidden] = useState(false);
-  const [currentView, setCurrentView] = useState<ViewState>('HOME');
-  const [currentSlug, setCurrentSlug] = useState<string>('');
+  const [currentView, setCurrentView] = useState<ViewState>(initial.view);
+  const [currentSlug, setCurrentSlug] = useState<string>(initial.slug);
+  const [lang, setLang] = useState<Lang>(initial.lang ?? 'de');
   const [heroIn, setHeroIn] = useState(false);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
   // Wasser-Shader erst nach dem Hero-Intro aktivieren, damit der
   // Zeilen-Reveal beim Laden sichtbar bleibt.
   const [waterReady, setWaterReady] = useState(false);
@@ -154,11 +137,12 @@ const App: React.FC = () => {
     const t = setTimeout(() => setWaterReady(true), 1500);
     return () => clearTimeout(t);
   }, []);
-  const faqRef = useReveal<HTMLDivElement>();
   const ctaRef = useReveal<HTMLDivElement>();
   const lastScrollY = useRef(0);
+  const t = copy[lang];
 
   useLenis();
+  useDocumentMeta(currentView, lang);
 
   // Hero-Intro-Stagger beim Mount
   useEffect(() => {
@@ -203,39 +187,21 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handlePopState = () => {
-      const path = window.location.pathname;
-      if (path === '/imprint' || path === '/impressum') {
-        setCurrentView('IMPRINT');
-      } else if (path === '/privacy' || path === '/datenschutz') {
-        setCurrentView('PRIVACY');
-      } else if (path === '/preise') {
-        setCurrentView('PREISE');
-      } else if (path === '/blog') {
-        setCurrentView('BLOG');
-      } else if (path.startsWith('/blog/')) {
-        const slug = path.replace('/blog/', '');
-        setCurrentSlug(slug);
-        setCurrentView('BLOG_POST');
-      } else {
-        setCurrentView('HOME');
-      }
+      const loc = parseLocation(window.location.pathname);
+      setCurrentView(loc.view);
+      setCurrentSlug(loc.slug);
+      if (loc.lang) setLang(loc.lang);
     };
-    handlePopState();
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   useEffect(() => {
-    let path = '/';
-    if (currentView === 'IMPRINT') path = '/imprint';
-    else if (currentView === 'PRIVACY') path = '/privacy';
-    else if (currentView === 'PREISE') path = '/preise';
-    else if (currentView === 'BLOG') path = '/blog';
-    else if (currentView === 'BLOG_POST' && currentSlug) path = `/blog/${currentSlug}`;
+    const path = pathFor(currentView, lang, currentSlug);
     if (window.location.pathname !== path) {
       window.history.pushState({}, '', path);
     }
-  }, [currentView, currentSlug]);
+  }, [currentView, currentSlug, lang]);
 
   const openCalendly = () => {
     if (window.Calendly) {
@@ -259,62 +225,27 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (currentView === 'IMPRINT') return <Imprint onBack={() => navigate('HOME')} />;
-  if (currentView === 'PRIVACY') return <Privacy onBack={() => navigate('HOME')} />;
-  if (currentView === 'PREISE') return <PreisePage onNavigate={navigate} openCalendly={openCalendly} />;
-  if (currentView === 'BLOG') return <BlogIndex onNavigate={navigate} />;
-  if (currentView === 'BLOG_POST') {
-    const post = getPostBySlug(currentSlug);
-    if (post) return <BlogPostView post={post} onNavigate={navigate} openCalendly={openCalendly} />;
-    return <BlogIndex onNavigate={navigate} />;
-  }
+  const changeLang = (l: Lang) => setLang(l);
 
-  const faqs = [
-    {
-      q: 'Was kostet eine Website?',
-      a: 'Das hängt vom Umfang ab. Eine einfache One-Page Website beginnt ab 1.500 €, eine mehrseitige Website mit Buchungssystem ab 3.000 €. Im kostenlosen Erstgespräch bekommst du ein individuelles Angebot — transparent, ohne versteckte Kosten.',
-    },
-    {
-      q: 'Wie lange dauert es, bis meine Website fertig ist?',
-      a: 'Eine einfache Website ist in wenigen Tagen fertig. Komplexere Projekte mit Shop oder individuellen Funktionen dauern 1–2 Wochen. Kein monatelanges Warten — wir setzen schnell um.',
-    },
-    {
-      q: 'Brauche ich technisches Wissen?',
-      a: 'Nein, überhaupt nicht. Wir kümmern uns um alles Technische. Nach dem Launch zeigen wir dir in einer Einführung, wie du einfache Änderungen selbst vornehmen kannst — falls gewünscht.',
-    },
-    {
-      q: 'Was passiert nach dem Launch?',
-      a: 'Deine Website läuft nicht von allein: Hosting, Updates, Backups und Erreichbarkeit müssen betreut werden. Das übernehme ich ab 49 €/Monat — inklusive Support und kleiner Änderungen. Wenn du lieber selbst betreust, bekommst du alle Zugänge und den Code.',
-    },
-    {
-      q: 'Könnt ihr auch bestehende Websites überarbeiten?',
-      a: 'Ja, definitiv. Ob Redesign, Performance-Optimierung oder neue Funktionen — wir schauen uns an, was du hast, und machen daraus etwas Modernes.',
-    },
-    {
-      q: 'Kann ich Inhalte später selbst ändern?',
-      a: 'Ja. Du bekommst einen einfachen Redaktionsbereich, in dem du Texte, Bilder, Öffnungszeiten und Preise selbst pflegst — ohne Technikkenntnisse. Nach dem Launch zeige ich dir in einer Einführung, wie es geht. Größere Umbauten übernehme ich auf Wunsch.',
-    },
-    {
-      q: 'Wem gehört die Website am Ende?',
-      a: 'Dir — vollständig. Du bekommst den kompletten Quellcode und die Zugänge zu Domain und Hosting. Kein Baukasten-Abo, keine Lizenzgebühren, keine Abhängigkeit von mir: Du könntest die Seite jederzeit von jemand anderem weiterbetreuen lassen.',
-    },
-    {
-      q: 'Arbeitet ihr nur mit Unternehmen in Berlin?',
-      a: 'Nein — wir arbeiten mit Unternehmen in ganz Deutschland. Unser Sitz ist in Berlin, aber alles läuft online: Erstgespräch per Video, Entwurf per Link, Abstimmung per Telefon oder E-Mail. Du musst für kein einziges Treffen anreisen.',
-    },
-  ];
+  const renderView = () => {
+    if (currentView === 'IMPRINT') return <Imprint onBack={() => navigate('HOME')} />;
+    if (currentView === 'PRIVACY') return <Privacy onBack={() => navigate('HOME')} />;
+    if (currentView === 'PREISE') return <PreisePage onNavigate={navigate} openCalendly={openCalendly} onLangChange={changeLang} />;
+    if (currentView === 'BLOG') return <BlogIndex onNavigate={navigate} />;
+    if (currentView === 'BLOG_POST') {
+      const post = getPostBySlug(currentSlug);
+      if (post) return <BlogPostView post={post} onNavigate={navigate} openCalendly={openCalendly} />;
+      return <BlogIndex onNavigate={navigate} />;
+    }
+    return null;
+  };
 
-  const references = [
-    { name: 'Kampfwerk', what: 'Software für Kampfsportschulen' },
-    { name: 'Muay Thai Subyen', what: 'Kampfsportschule' },
-    { name: 'Gamerfunnel', what: 'Spielbare Werbe-Funnels' },
-    { name: 'Nomads Digital', what: 'Games-Marketing' },
-    { name: 'RopeFX', what: 'Höhenarbeiten' },
-  ];
+  const other = renderView();
+  if (other) return <LangContext.Provider value={lang}>{other}</LangContext.Provider>;
 
   const marqueeItems = (
     <>
-      {references.map((r) => (
+      {t.refs.items.map((r) => (
         <React.Fragment key={r.name}>
           <span className="inline-flex items-baseline gap-3 px-7">
             <span className="text-ftext">{r.name}</span>
@@ -335,32 +266,32 @@ const App: React.FC = () => {
   // kleine Texte bleiben echtes DOM, sonst werden sie in der Textur unscharf.
   const heroContent = (
     <>
-      <div className="flex justify-between font-mono text-[14px] text-muted uppercase mb-10 md:mb-14 flex-wrap gap-2">
-        <div>Webdesign aus Berlin — für ganz Deutschland</div>
-        <div>Dir gehört der Code — kein Lock-in</div>
+      <div className="flex justify-between items-center font-mono text-[14px] text-muted uppercase mb-10 md:mb-14 flex-wrap gap-2">
+        <div>{t.hero.topLeft}</div>
+        <div>{t.hero.topRight}</div>
       </div>
 
       <h1 className="font-syne font-extrabold uppercase text-[clamp(38px,8.4vw,168px)] leading-[1.02] tracking-[-0.015em] break-words">
         <span className={`hero-line ${heroIn ? 'in' : ''}`}>
-          <span data-line>Websites,</span>
+          <span data-line>{t.hero.h1[0]}</span>
         </span>
         <span className={`hero-line hero-line-2 text-accent ${heroIn ? 'in' : ''}`}>
-          <span data-line>die Kunden</span>
+          <span data-line>{t.hero.h1[1]}</span>
         </span>
         <span
           className={`hero-line hero-line-3 ${heroIn ? 'in' : ''}`}
           style={{ WebkitTextStroke: '2px #f4f4f0', color: 'transparent' }}
         >
-          <span data-line>bringen.</span>
+          <span data-line>{t.hero.h1[2]}</span>
         </span>
       </h1>
 
       <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-x-8 gap-y-6 mt-14 flex-wrap`}>
         <p className="font-body text-[20px] md:text-[24px] leading-[1.4] text-ftext max-w-[520px]">
-          <span>Für Gyms, Praxen, Handwerk und lokale Unternehmen.</span>
+          <span>{t.hero.audience}</span>
         </p>
         <p className="font-body text-[18px] md:text-[20px] leading-[1.55] text-[#d8d8de] max-w-[480px]">
-          <span>Erster Entwurf kostenlos — du siehst vorab, was du bekommst. Festpreis ab 1.500&nbsp;€.</span>
+          <span>{t.hero.offer}</span>
         </p>
       </div>
 
@@ -370,43 +301,34 @@ const App: React.FC = () => {
           onClick={openCalendly}
           className="cta-glow inline-flex items-center gap-2.5 font-mono text-[13px] sm:text-[15px] font-medium uppercase min-[380px]:whitespace-nowrap bg-accent text-ink px-5 sm:px-7 py-4 border border-accent hover:bg-transparent hover:text-accent transition-colors"
         >
-          Jetzt kostenlosen Entwurf anfragen →
+          {t.hero.ctaPrimary}
         </MagneticButton>
         <MagneticButton
           as="button"
           onClick={() => scrollToSection('preise')}
           className="inline-flex items-center gap-2.5 font-mono text-[15px] font-medium uppercase bg-transparent text-ftext px-7 py-4 border border-[#3a3a40] hover:border-accent hover:text-accent transition-colors"
         >
-          Preise ansehen
+          {t.hero.ctaSecondary}
         </MagneticButton>
       </div>
 
       <div className={`hero-proof ${heroIn ? 'in' : ''} flex gap-x-8 gap-y-3 flex-wrap mt-10 pt-6 border-t border-line font-body text-[16px] md:text-[17px] text-muted`}>
-        <span className="inline-flex items-center gap-2.5">
-          {checkIcon}
-          <span>Live in Tagen statt Monaten</span>
-        </span>
-        <span className="inline-flex items-center gap-2.5">
-          {checkIcon}
-          <span>Festpreis vor Projektstart</span>
-        </span>
-        <span className="inline-flex items-center gap-2.5">
-          {checkIcon}
-          <span>Erster Entwurf kostenlos</span>
-        </span>
-        <span className="inline-flex items-center gap-2.5">
-          {checkIcon}
-          <span>Deutschlandweit, alles läuft online</span>
-        </span>
+        {t.hero.proofs.map((proof) => (
+          <span key={proof} className="inline-flex items-center gap-2.5">
+            {checkIcon}
+            <span>{proof}</span>
+          </span>
+        ))}
       </div>
 
       <p className="mt-5 font-body text-[15px] md:text-[16px] text-muted">
-        <span>Aktuell freie Kapazitäten — Projekt noch diesen Monat starten.</span>
+        <span>{t.hero.capacity}</span>
       </p>
     </>
   );
 
   return (
+    <LangContext.Provider value={lang}>
     <div className="bg-texture bg-ink text-ftext font-body overflow-x-clip selection:bg-accent selection:text-ink">
       <CustomCursor />
 
@@ -418,7 +340,7 @@ const App: React.FC = () => {
           JPR <span className="text-accent">Studio</span>&reg;
         </button>
         <ul className="hidden md:flex gap-8 list-none font-mono text-[14px] uppercase">
-          {navLinks.map((link) => (
+          {t.nav.links.map((link) => (
             <li key={link.id}>
               <ScrambleLabel
                 as="span"
@@ -431,24 +353,29 @@ const App: React.FC = () => {
             </li>
           ))}
         </ul>
-        <MagneticButton
-          as="button"
-          onClick={openCalendly}
-          className="inline-flex items-center gap-2 font-mono text-[12px] md:text-[14px] font-medium uppercase bg-accent text-ink px-3 md:px-5 py-2.5 md:py-3 border border-accent hover:bg-transparent hover:text-accent transition-colors whitespace-nowrap shrink-0"
-        >
-          Entwurf anfragen →
-        </MagneticButton>
+        <div className="flex items-center gap-6 shrink-0">
+          <LangSwitch onChange={changeLang} className="hidden md:flex" />
+          <MagneticButton
+            as="button"
+            onClick={openCalendly}
+            className="inline-flex items-center gap-2 font-mono text-[12px] md:text-[14px] font-medium uppercase bg-accent text-ink px-3 md:px-5 py-2.5 md:py-3 border border-accent hover:bg-transparent hover:text-accent transition-colors whitespace-nowrap shrink-0"
+          >
+            {t.nav.cta}
+          </MagneticButton>
+        </div>
       </nav>
 
       <main className="relative z-[1]">
         {/* Hero */}
         <header className="px-4 md:px-12 border-b border-line pt-28 md:pt-[220px] pb-16 md:pb-[72px]">
+          {/* Mobil ist in der Navigation kein Platz für den Umschalter */}
+          <LangSwitch onChange={changeLang} className="md:hidden mb-6" />
           {waterReady ? <WaterHeadline>{heroContent}</WaterHeadline> : heroContent}
         </header>
 
         {/* Marquee */}
-        <section className="overflow-hidden border-b border-line" aria-label="Referenzen">
-          <div className="font-mono text-[14px] text-accent uppercase pt-3.5 px-6 md:px-12">Kunden &amp; Projekte</div>
+        <section className="overflow-hidden border-b border-line" aria-label={t.refs.ariaLabel}>
+          <div className="font-mono text-[14px] text-accent uppercase pt-3.5 px-6 md:px-12">{t.refs.label}</div>
           <div className="flex whitespace-nowrap w-max pt-[14px] pb-[18px] overflow-hidden">
             <div className="marquee-track flex items-baseline whitespace-nowrap font-syne font-bold text-[21px] uppercase tracking-[-0.01em] text-ftext">
               <span className="flex">
@@ -465,138 +392,62 @@ const App: React.FC = () => {
 
         {/* [01] Leistungen */}
         <section id="leistungen" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
-          <Eyebrow>[01] — Leistungen</Eyebrow>
-          <SectionTitle>Alles aus einer Hand.</SectionTitle>
+          <Eyebrow>{t.services.eyebrow}</Eyebrow>
+          <SectionTitle>{t.services.title}</SectionTitle>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line">
-            <ServiceCell idx="/ 001" title="Moderne Website" desc="Mobil optimiert, schnell, wird bei Google gefunden. Der Code gehört dir — kein Baukasten-Abo." />
-            <ServiceCell idx="/ 002" title="Online-Terminbuchung" desc="Deine Kunden buchen direkt online — Tag und Nacht, ohne Telefon." />
-            <ServiceCell idx="/ 003" title="Shop & Web-Apps" desc="Zahlungsabwicklung, Kundenverwaltung, individuelle Funktionen." />
-            <ServiceCell idx="/ 004" title="KI-Automatisierung" desc="Prozesse automatisieren — vom Angebot bis zur Rechnung." />
+            {t.services.items.map((s, i) => (
+              <ServiceCell key={s.title} idx={`/ 00${i + 1}`} title={s.title} desc={s.desc} />
+            ))}
           </div>
         </section>
 
         {/* [02] Projekte */}
         <section id="projekte" className="border-b border-line py-16 md:py-0">
           <ProjectCarousel
-            header={<><Eyebrow>[02] — Ausgewählte Projekte</Eyebrow><SectionTitle className="!mb-8">Aktuelle Projekte.</SectionTitle></>}
-            projects={[
-              { url: 'kampfwerk.com', href: 'https://kampfwerk.com', title: 'Kampfwerk', tag: 'Software für Kampfsportschulen', img: '/portfolio-shots/kampfwerk.jpg' },
-              { url: 'muaythai-subyen.de', href: 'https://www.muaythai-subyen.de', title: 'Muay Thai Subyen', tag: 'Gym-Website / Online-Mitgliedschaft', img: '/portfolio-shots/subyen.jpg' },
-              { url: 'gamerfunnel.com', href: 'https://gamerfunnel.com', title: 'Gamerfunnel', tag: 'Spielbare Werbe-Funnels', img: '/portfolio-shots/gamerfunnel.jpg' },
-              { url: 'nomadsdigital.com', href: 'https://www.nomadsdigital.com', title: 'Nomads Digital', tag: 'Marketing für Games / Website', img: '/portfolio-shots/nomads.jpg' },
-              { url: 'ropefx.com', href: 'https://ropefx.com', title: 'RopeFX', tag: 'Website / Anfragen-Funnel', img: '/portfolio-shots/ropefx.jpg' },
-            ]}
+            header={<><Eyebrow>{t.projects.eyebrow}</Eyebrow><SectionTitle className="!mb-8">{t.projects.title}</SectionTitle></>}
+            projects={t.projects.items}
           />
         </section>
 
-        {/* Kundenstimmen */}
-        <section className="px-6 md:px-12 border-b border-line py-16 md:py-24">
-          <Eyebrow>Kundenstimmen</Eyebrow>
-          <SectionTitle>Das sagen unsere Kunden.</SectionTitle>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line">
-            <TestimonialCell
-              quote="Die Website stand innerhalb weniger Tage. Seitdem bekommen wir regelmäßig Anfragen darüber — und sie sieht richtig professionell aus. Unkompliziert und auf den Punkt."
-              logo="/logos/ropefx.webp"
-              alt="RopeFX Logo"
-              name="Michael Nüske"
-              company="RopeFX — Industriekletterer Berlin"
-            />
-            <TestimonialCell
-              quote="Innerhalb einer Woche hatten wir eine komplette Website mit Trainingsplan, Mitgliederverwaltung und Online-Vertragsabschluss. Das hätte ich so schnell nicht erwartet."
-              logo="/logos/muay-thai-subyen.webp"
-              alt="Muay Thai Subyen Logo"
-              name="Sven Markulla"
-              company="Muay Thai Subyen e.V."
-            />
-          </div>
-          <p className="mt-7 font-mono text-[14px] uppercase">
-            <a href="https://g.page/r/Cbent0mi4nueEAE/review" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-ftext transition-colors">
-              Auch zufrieden? Bewertung auf Google hinterlassen →
-            </a>
-          </p>
-        </section>
+        <TestimonialsSection />
 
         {/* [03] Prozess */}
         <section id="prozess" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
-          <Eyebrow>[03] — Prozess</Eyebrow>
-          <SectionTitle>So funktioniert's.</SectionTitle>
+          <Eyebrow>{t.process.eyebrow}</Eyebrow>
+          <SectionTitle>{t.process.title}</SectionTitle>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line">
-            <ProcessStep n="01" title="Kostenloses Erstgespräch" desc="Wir besprechen dein Geschäft, deine Ziele und was du brauchst. 30 Minuten, unverbindlich." />
-            <ProcessStep n="02" title="Kostenloser Entwurf" desc="Du bekommst einen ersten Entwurf deiner Website — komplett kostenlos. Erst wenn du zufrieden bist, geht's weiter." />
-            <ProcessStep n="03" title="Umsetzung & Launch" desc="Wir bauen, du gibst Feedback, wir gehen live. Du bekommst eine Einführung und laufenden Support." />
+            {t.process.steps.map((s, i) => (
+              <ProcessStep key={s.title} n={`0${i + 1}`} title={s.title} desc={s.desc} />
+            ))}
           </div>
         </section>
 
         {/* Über mich */}
         <section id="jan" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
-          <Eyebrow>Dein Ansprechpartner</Eyebrow>
+          <Eyebrow>{t.about.eyebrow}</Eyebrow>
           <div className="flex gap-16 items-center flex-wrap">
             <AboutPhoto />
             <AboutText />
           </div>
         </section>
 
-        {/* [04] Preise */}
-        <section id="preise" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
-          <Eyebrow>[04] — Preise / Festpreis vor Start</Eyebrow>
-          <SectionTitle>Transparent. Ohne Tagessätze.</SectionTitle>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line">
-            <PriceTier
-              name="Starter" for="Für den Start" price="ab 1.500 €" reco={false}
-              features={['One-Page Website', 'Mobil optimiert', 'Kontaktformular', 'Google Maps Einbindung', 'Basis-SEO', '1 Korrekturschleife']}
-              openCalendly={openCalendly}
-            />
-            <PriceTier
-              name="Professional" for="Unser beliebtestes Paket" price="ab 3.000 €" reco={true}
-              features={['Mehrseitige Website', 'Online-Terminbuchung', 'Team- & Leistungsseiten', 'Erweiterte SEO-Optimierung', 'Google Analytics', '3 Korrekturschleifen', 'Einführung & Support']}
-              openCalendly={openCalendly}
-            />
-            <PriceTier
-              name="Business" for="Für anspruchsvolle Projekte" price="ab 5.000 €" reco={false}
-              features={['Alles aus Professional', 'Online-Shop oder Web-App', 'Kundenverwaltung / Backend', 'Individuelle Funktionen', 'Automatisierungen', 'Unbegrenzte Korrekturen']}
-              openCalendly={openCalendly}
-            />
-          </div>
-          <p className="mt-6 font-body text-[16px] text-muted">
-            Alle Preise netto zzgl. MwSt. · Ratenzahlung möglich · Betreuung ab 49 €/Monat (Hosting, Updates, Backups, Support)
-          </p>
-          <p className="mt-4 text-[15px] font-mono">
-            <a href="/preise" className="text-accent hover:text-ftext transition-colors">
-              Alle Webdesign-Preise in Berlin im Detail →
-            </a>
-          </p>
-        </section>
-
-        {/* [05] FAQ */}
-        <section id="faq" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
-          <Eyebrow>[05] — FAQ</Eyebrow>
-          <SectionTitle>Häufige Fragen.</SectionTitle>
-          <div ref={faqRef} className="reveal border-t border-line max-w-[980px]">
-            {faqs.map((faq, idx) => {
-              const isOpen = openFaq === idx;
-              return (
-                <FaqItem key={faq.q} q={faq.q} a={faq.a} isOpen={isOpen} onToggle={() => setOpenFaq(isOpen ? null : idx)} />
-              );
-            })}
-          </div>
-        </section>
+        <PricingSection openCalendly={openCalendly} onHome />
+        <FAQSection onHome />
 
         {/* CTA */}
         <section id="kontakt" className="px-6 md:px-12 border-b border-line bg-accent text-ink py-16 md:py-24">
           <div ref={ctaRef} className="reveal flex justify-between items-center gap-10 flex-wrap">
             <h2 className="font-syne font-extrabold text-[clamp(38px,6vw,78px)] leading-[1.04] uppercase tracking-[-0.015em] break-words max-w-full">
-              Bereit<br />zu starten?
+              {t.cta.title[0]}<br />{t.cta.title[1]}
             </h2>
             <div className="max-w-[380px]">
-              <p className="text-[18px] leading-[1.6] mb-6">
-                Erstgespräch und Entwurf sind kostenlos — 30 Minuten per Video, unverbindlich. Egal, wo in Deutschland du sitzt.
-              </p>
+              <p className="text-[18px] leading-[1.6] mb-6">{t.cta.text}</p>
               <MagneticButton
                 as="button"
                 onClick={openCalendly}
                 className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-ink text-ftext px-7 py-4 border border-ink hover:bg-transparent hover:text-ink transition-colors"
               >
-                Jetzt anfragen →
+                {t.cta.button}
               </MagneticButton>
             </div>
           </div>
@@ -604,12 +455,15 @@ const App: React.FC = () => {
 
         {/* Footer */}
         <footer className="px-6 md:px-12 flex flex-col md:flex-row md:justify-between md:items-center gap-5 py-8 font-mono text-[14px] text-muted uppercase">
-          <div className="leading-[1.7] normal-case">JPR Studio ist eine Marke der JPR Consulting GmbH · Letteallee 91 · 13409 Berlin</div>
+          <div className="leading-[1.7] normal-case">{t.footer.company}</div>
           <div className="flex gap-x-6 gap-y-3 items-center flex-wrap">
-            <button onClick={scrollToTop} className="text-muted hover:text-accent transition-colors">Nach oben</button>
-            <button onClick={() => navigate('BLOG')} className="text-muted hover:text-accent transition-colors">Blog</button>
-            <button onClick={() => navigate('IMPRINT')} className="text-muted hover:text-accent transition-colors">Impressum</button>
-            <button onClick={() => navigate('PRIVACY')} className="text-muted hover:text-accent transition-colors">Datenschutz</button>
+            <LangSwitch onChange={changeLang} />
+            <button onClick={scrollToTop} className="text-muted hover:text-accent transition-colors">{t.footer.top}</button>
+            {t.footer.blog && (
+              <button onClick={() => navigate('BLOG')} className="text-muted hover:text-accent transition-colors">{t.footer.blog}</button>
+            )}
+            <button onClick={() => navigate('IMPRINT')} className="text-muted hover:text-accent transition-colors">{t.footer.imprint}</button>
+            <button onClick={() => navigate('PRIVACY')} className="text-muted hover:text-accent transition-colors">{t.footer.privacy}</button>
             <a href="https://www.linkedin.com/in/jan-rojek-b31474a" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent transition-colors">LinkedIn</a>
             <a
               href="https://g.page/r/Cbent0mi4nueEAE/review"
@@ -623,7 +477,7 @@ const App: React.FC = () => {
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
-              Bewertung auf Google
+              {t.footer.review}
             </a>
           </div>
         </footer>
@@ -637,7 +491,7 @@ const App: React.FC = () => {
               JPR <span className="text-accent">Studio</span>
             </button>
             <div className="hidden md:flex items-center gap-6">
-              {navLinks.map((link) => (
+              {t.nav.links.map((link) => (
                 <button
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
@@ -647,34 +501,39 @@ const App: React.FC = () => {
                 </button>
               ))}
             </div>
-            <button
-              onClick={openCalendly}
-              className="font-mono text-[13px] font-medium uppercase bg-accent text-ink px-4 py-2.5 border border-accent hover:bg-transparent hover:text-accent transition-colors"
-            >
-              Entwurf anfragen
-            </button>
+            <div className="flex items-center gap-5">
+              <LangSwitch onChange={changeLang} className="hidden md:flex" />
+              <button
+                onClick={openCalendly}
+                className="font-mono text-[13px] font-medium uppercase bg-accent text-ink px-4 py-2.5 border border-accent hover:bg-transparent hover:text-accent transition-colors"
+              >
+                {t.nav.stickyCta}
+              </button>
+            </div>
           </div>
         </div>
       )}
 
       <CookieBanner />
     </div>
+    </LangContext.Provider>
   );
 };
 
 /** Über-mich Foto mit Clip-Path-Reveal + Grayscale→Farbe bei Hover. */
 const AboutPhoto: React.FC = () => {
   const ref = useReveal<HTMLDivElement>();
+  const t = useCopy().about;
   return (
     <div ref={ref} className="mask-reveal group w-[320px] h-[380px] flex-shrink-0 relative overflow-hidden">
       <WaterImage
         src="/jan-rojek.webp"
-        alt="Jan Rojek, Gründer von JPR Studio"
+        alt={t.photoAlt}
         intensity={0.4}
         className="w-full h-full grayscale contrast-[1.05] transition-[filter] duration-500 group-hover:grayscale-0 group-hover:contrast-100"
       />
       <div className="absolute bottom-0 left-0 px-4 py-2.5 bg-accent text-ink font-mono text-[13px] font-medium uppercase">
-        Berlin / Gründer
+        {t.badge}
       </div>
     </div>
   );
@@ -682,72 +541,25 @@ const AboutPhoto: React.FC = () => {
 
 const AboutText: React.FC = () => {
   const ref = useReveal<HTMLDivElement>();
+  const t = useCopy().about;
   return (
     <div ref={ref} className="reveal flex-1 min-w-[300px] max-w-[640px]">
       <h2 className="font-syne font-extrabold uppercase text-[clamp(30px,3.6vw,48px)] tracking-[-0.015em] mb-6">
-        Hi, ich bin <span className="text-accent">Jan.</span>
+        {t.hello} <span className="text-accent">{t.name}</span>
       </h2>
-      <p className="text-[17px] leading-[1.7] text-muted mb-4">
-        Seit über 7 Jahren baue ich Websites und digitale Lösungen — von Websites für lokale Unternehmen bis zu Automatisierungssystemen für internationale Firmen.
-      </p>
-      <p className="text-[17px] leading-[1.7] text-muted mb-4">
-        Was mich antreibt: Wenn ein Handwerker plötzlich über seine Website Anfragen bekommt. Oder eine Praxis ihre Terminbuchung online hat und das Telefon nicht mehr ständig klingelt.
-      </p>
-      <p className="text-[17px] leading-[1.7] text-ftext font-medium mb-4">
-        Ich spreche deine Sprache — nicht die von Entwicklern. Du sagst mir, was dein Business braucht, und ich baue es.
-      </p>
+      {t.paragraphs.map((p) => (
+        <p key={p} className="text-[17px] leading-[1.7] text-muted mb-4">{p}</p>
+      ))}
+      <p className="text-[17px] leading-[1.7] text-ftext font-medium mb-4">{t.highlight}</p>
       <div className="flex gap-7 flex-wrap mt-7 pt-[22px] border-t border-line font-mono text-[14px] text-muted uppercase">
-        <span>7+ Jahre Webentwicklung</span>
-        <span>Du sprichst direkt mit dem, der baut</span>
+        {t.facts.map((f) => (
+          <span key={f}>{f}</span>
+        ))}
         <span>
           <a href="https://www.linkedin.com/in/jan-rojek-b31474a" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-ftext transition-colors">
             LinkedIn →
           </a>
         </span>
-      </div>
-    </div>
-  );
-};
-
-/** FAQ-Akkordeon-Item (+ dreht zu × via rotate 45deg, max-height-Transition). */
-const FaqItem: React.FC<{ q: string; a: string; isOpen: boolean; onToggle: () => void }> = ({ q, a, isOpen, onToggle }) => {
-  const contentRef = useRef<HTMLDivElement>(null);
-  // Hoehe messen statt beim ersten Render zu raten: scrollHeight ist vor dem
-  // Layout 0, wodurch die Antwort zugeklappt blieb. Auch bei Resize neu messen.
-  const [height, setHeight] = useState(0);
-  useEffect(() => {
-    const el = contentRef.current;
-    if (!el) return;
-    const measure = () => setHeight(el.scrollHeight);
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    if (document.fonts?.ready) document.fonts.ready.then(measure);
-    return () => ro.disconnect();
-  }, [a]);
-
-  return (
-    <div className="border-b border-line">
-      <button
-        type="button"
-        onClick={onToggle}
-        className="w-full flex justify-between items-center gap-6 py-[26px] bg-transparent border-none cursor-pointer text-left font-syne font-bold text-xl text-ftext hover:text-accent transition-colors"
-      >
-        {q}
-        <span
-          className="font-mono text-xl text-accent flex-shrink-0 transition-transform duration-300"
-          style={{ transform: isOpen ? 'rotate(45deg)' : 'none' }}
-        >
-          +
-        </span>
-      </button>
-      <div
-        className="overflow-hidden transition-[max-height] duration-500 ease-[cubic-bezier(.19,1,.22,1)]"
-        style={{ maxHeight: isOpen ? `${height || 600}px` : '0px' }}
-      >
-        <div ref={contentRef}>
-          <p className="pb-[26px] pr-10 text-[17px] leading-[1.7] text-muted max-w-[760px]">{a}</p>
-        </div>
       </div>
     </div>
   );
