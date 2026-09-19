@@ -54,7 +54,7 @@ const Privacy: React.FC<Props> = ({ onBack }) => {
 
           <div>
             <h2 className="text-xl font-bold text-ftext mb-2">8. Google Analytics</h2>
-            <p>Diese Website nutzt Google Analytics 4 (Mess-ID: G-0EETZ8V1K4), einen Webanalysedienst der Google Ireland Limited. Google Analytics wird <strong className="text-ftext">nur geladen, wenn Sie über das Cookie-Banner aktiv zugestimmt haben</strong>. Ohne Ihre Einwilligung findet kein Tracking statt.</p>
+            <p>Diese Website nutzt Google Analytics 4 (Mess-ID: G-YC81Z6SB25), einen Webanalysedienst der Google Ireland Limited. Google Analytics wird <strong className="text-ftext">nur geladen, wenn Sie über das Cookie-Banner aktiv zugestimmt haben</strong>. Ohne Ihre Einwilligung findet kein Tracking statt.</p>
             <p className="mt-2">Die IP-Anonymisierung ist aktiviert (anonymize_ip). Ihre IP-Adresse wird innerhalb der EU gekürzt, bevor sie an Google-Server übermittelt wird. Die Verarbeitung erfolgt auf Grundlage Ihrer Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO.</p>
             <p className="mt-2">Sie können Ihre Einwilligung jederzeit über das Cookie-Banner widerrufen oder das Browser-Add-on zur Deaktivierung von Google Analytics nutzen: <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">tools.google.com/dlpage/gaoptout</a></p>
           </div>

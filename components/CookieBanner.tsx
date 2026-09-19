@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const GA_ID = 'G-0EETZ8V1K4';
+const GA_ID = 'G-YC81Z6SB25';
 const FB_PIXEL_ID = '842051572153086';
 
 declare global {
@@ -20,7 +20,10 @@ function loadGoogleAnalytics() {
   document.head.appendChild(script);
 
   window.dataLayer = window.dataLayer || [];
-  function gtag(...args: unknown[]) { window.dataLayer.push(args); }
+  // gtag.js verarbeitet nur echte arguments-Objekte. Ein Array (...args) wird
+  // stillschweigend ignoriert — dann laedt das Skript, sendet aber nie Daten.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-rest-params
+  function gtag(..._args: unknown[]) { window.dataLayer.push(arguments); }
   gtag('js', new Date());
   gtag('config', GA_ID, { anonymize_ip: true });
 }
