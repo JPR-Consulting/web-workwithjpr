@@ -37,6 +37,11 @@ const Imprint: React.FC<Props> = ({ onBack }) => {
           </div>
 
           <div>
+            <h2 className="text-xl font-bold text-ftext mb-2">Umsatzsteuer-ID</h2>
+            <p>Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz:<br />DE325110304</p>
+          </div>
+
+          <div>
             <h2 className="text-xl font-bold text-ftext mb-2">EU-Streitschlichtung</h2>
             <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">https://ec.europa.eu/consumers/odr/</a></p>
             <p className="mt-2">Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
