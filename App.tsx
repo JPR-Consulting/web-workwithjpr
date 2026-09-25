@@ -14,6 +14,8 @@ import FAQSection from './components/FAQSection';
 import BlogIndex from './components/BlogIndex';
 import BlogPostView from './components/BlogPost';
 import PreisePage from './components/PreisePage';
+import DraftDialog from './components/DraftDialog';
+import HeroDraftForm from './components/HeroDraftForm';
 import { useLenis } from './hooks/useLenis';
 import { useReveal } from './hooks/useReveal';
 import { getPostBySlug } from './content/blog';
@@ -211,6 +213,21 @@ const App: React.FC = () => {
     }
   };
 
+  // Entwurf-Dialog: der Hauptweg für Anfragen, Calendly nur noch für „lieber erst sprechen“.
+  const [draftOpen, setDraftOpen] = useState(false);
+  const [draftWebsite, setDraftWebsite] = useState('');
+  const openDraft = (website = '') => {
+    setDraftWebsite(website);
+    setDraftOpen(true);
+  };
+  const callInstead = () => {
+    setDraftOpen(false);
+    openCalendly();
+  };
+  const draftDialog = (
+    <DraftDialog open={draftOpen} initialWebsite={draftWebsite} onClose={() => setDraftOpen(false)} onCall={callInstead} />
+  );
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -230,7 +247,7 @@ const App: React.FC = () => {
   const renderView = () => {
     if (currentView === 'IMPRINT') return <Imprint onBack={() => navigate('HOME')} />;
     if (currentView === 'PRIVACY') return <Privacy onBack={() => navigate('HOME')} />;
-    if (currentView === 'PREISE') return <PreisePage onNavigate={navigate} openCalendly={openCalendly} onLangChange={changeLang} />;
+    if (currentView === 'PREISE') return <PreisePage onNavigate={navigate} onRequestDraft={() => openDraft()} onLangChange={changeLang} />;
     if (currentView === 'BLOG') return <BlogIndex onNavigate={navigate} />;
     if (currentView === 'BLOG_POST') {
       const post = getPostBySlug(currentSlug);
@@ -241,7 +258,7 @@ const App: React.FC = () => {
   };
 
   const other = renderView();
-  if (other) return <LangContext.Provider value={lang}>{other}</LangContext.Provider>;
+  if (other) return <LangContext.Provider value={lang}>{other}{draftDialog}</LangContext.Provider>;
 
   const marqueeItems = (
     <>
@@ -271,7 +288,7 @@ const App: React.FC = () => {
         <div>{t.hero.topRight}</div>
       </div>
 
-      <h1 className="font-syne font-extrabold uppercase text-[clamp(38px,8.4vw,168px)] leading-[1.02] tracking-[-0.015em] break-words">
+      <h1 className="font-syne font-extrabold uppercase text-[clamp(30px,8.4vw,168px)] leading-[1.02] tracking-[-0.015em] break-words">
         <span className={`hero-line ${heroIn ? 'in' : ''}`}>
           <span data-line>{t.hero.h1[0]}</span>
         </span>
@@ -285,7 +302,13 @@ const App: React.FC = () => {
           <span data-line>{t.hero.h1[2]}</span>
         </span>
       </h1>
+    </>
+  );
 
+  // Außerhalb des Wasser-Effekts: der tauscht nach dem Intro seinen Baum aus und würde
+  // Eingaben im Formular verlieren.
+  const heroFoot = (
+    <>
       <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-x-8 gap-y-6 mt-14 flex-wrap`}>
         <p className="font-body text-[20px] md:text-[24px] leading-[1.4] text-ftext max-w-[520px]">
           <span>{t.hero.audience}</span>
@@ -295,21 +318,8 @@ const App: React.FC = () => {
         </p>
       </div>
 
-      <div className={`hero-foot ${heroIn ? 'in' : ''} flex gap-3.5 flex-wrap mt-12`}>
-        <MagneticButton
-          as="button"
-          onClick={openCalendly}
-          className="cta-glow inline-flex items-center gap-2.5 font-mono text-[13px] sm:text-[15px] font-medium uppercase min-[380px]:whitespace-nowrap bg-accent text-ink px-5 sm:px-7 py-4 border border-accent hover:bg-transparent hover:text-accent transition-colors"
-        >
-          {t.hero.ctaPrimary}
-        </MagneticButton>
-        <MagneticButton
-          as="button"
-          onClick={() => scrollToSection('preise')}
-          className="inline-flex items-center gap-2.5 font-mono text-[15px] font-medium uppercase bg-transparent text-ftext px-7 py-4 border border-[#3a3a40] hover:border-accent hover:text-accent transition-colors"
-        >
-          {t.hero.ctaSecondary}
-        </MagneticButton>
+      <div className={`hero-foot ${heroIn ? 'in' : ''} mt-12`}>
+        <HeroDraftForm onStart={openDraft} onPricing={() => scrollToSection('preise')} />
       </div>
 
       <div className={`hero-proof ${heroIn ? 'in' : ''} flex gap-x-8 gap-y-3 flex-wrap mt-10 pt-6 border-t border-line font-body text-[16px] md:text-[17px] text-muted`}>
@@ -357,7 +367,7 @@ const App: React.FC = () => {
           <LangSwitch onChange={changeLang} className="hidden md:flex" />
           <MagneticButton
             as="button"
-            onClick={openCalendly}
+            onClick={() => openDraft()}
             className="inline-flex items-center gap-2 font-mono text-[12px] md:text-[14px] font-medium uppercase bg-accent text-ink px-3 md:px-5 py-2.5 md:py-3 border border-accent hover:bg-transparent hover:text-accent transition-colors whitespace-nowrap shrink-0"
           >
             {t.nav.cta}
@@ -371,6 +381,7 @@ const App: React.FC = () => {
           {/* Mobil ist in der Navigation kein Platz für den Umschalter */}
           <LangSwitch onChange={changeLang} className="md:hidden mb-6" />
           {waterReady ? <WaterHeadline>{heroContent}</WaterHeadline> : heroContent}
+          {heroFoot}
         </header>
 
         {/* Marquee */}
@@ -431,7 +442,7 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        <PricingSection openCalendly={openCalendly} onHome />
+        <PricingSection onRequestDraft={() => openDraft()} onHome />
         <FAQSection onHome />
 
         {/* CTA */}
@@ -444,11 +455,14 @@ const App: React.FC = () => {
               <p className="text-[18px] leading-[1.6] mb-6">{t.cta.text}</p>
               <MagneticButton
                 as="button"
-                onClick={openCalendly}
+                onClick={() => openDraft()}
                 className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-ink text-ftext px-7 py-4 border border-ink hover:bg-transparent hover:text-ink transition-colors"
               >
                 {t.cta.button}
               </MagneticButton>
+              <button type="button" onClick={openCalendly} className="block mt-5 text-[16px] underline underline-offset-4 hover:opacity-70 transition-opacity">
+                {t.cta.call}
+              </button>
             </div>
           </div>
         </section>
@@ -504,7 +518,7 @@ const App: React.FC = () => {
             <div className="flex items-center gap-5">
               <LangSwitch onChange={changeLang} className="hidden md:flex" />
               <button
-                onClick={openCalendly}
+                onClick={() => openDraft()}
                 className="font-mono text-[13px] font-medium uppercase bg-accent text-ink px-4 py-2.5 border border-accent hover:bg-transparent hover:text-accent transition-colors"
               >
                 {t.nav.stickyCta}
@@ -515,6 +529,7 @@ const App: React.FC = () => {
       )}
 
       <CookieBanner />
+      {draftDialog}
     </div>
     </LangContext.Provider>
   );

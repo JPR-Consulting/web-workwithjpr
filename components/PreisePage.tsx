@@ -9,13 +9,13 @@ import type { Lang } from '../content/site-copy';
 
 interface Props {
   onNavigate: (view: string, slug?: string) => void;
-  openCalendly: () => void;
+  onRequestDraft: () => void;
   onLangChange: (lang: Lang) => void;
 }
 
 const factorIcons = [Layers, Palette, Plug, RefreshCw];
 
-const PreisePage: React.FC<Props> = ({ onNavigate, openCalendly, onLangChange }) => {
+const PreisePage: React.FC<Props> = ({ onNavigate, onRequestDraft, onLangChange }) => {
   const t = useCopy();
   const p = t.pricingPage;
 
@@ -43,7 +43,7 @@ const PreisePage: React.FC<Props> = ({ onNavigate, openCalendly, onLangChange })
         </div>
       </div>
 
-      <PricingSection openCalendly={openCalendly} />
+      <PricingSection onRequestDraft={onRequestDraft} />
 
       {/* Was den Preis beeinflusst */}
       <section className="px-6 md:px-12 border-b border-line py-16 md:py-24">
@@ -109,7 +109,7 @@ const PreisePage: React.FC<Props> = ({ onNavigate, openCalendly, onLangChange })
         <p className="text-lg mb-8 max-w-xl mx-auto">{p.ctaText}</p>
         <MagneticButton
           as="button"
-          onClick={openCalendly}
+          onClick={onRequestDraft}
           className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-ink text-ftext px-7 py-4 border border-ink hover:bg-transparent hover:text-ink transition-colors"
         >
           {p.ctaButton}

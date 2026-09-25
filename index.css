@@ -128,6 +128,22 @@
   }
 }
 
+/* Entwurf-Dialog */
+.draft-dialog::backdrop {
+  background: rgba(8, 8, 10, 0.8);
+  backdrop-filter: blur(4px);
+}
+.draft-dialog[open] {
+  animation: draftIn 0.28s cubic-bezier(0.19, 1, 0.22, 1);
+}
+@keyframes draftIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .draft-dialog[open] { animation: none; }
+}
+
 /* Nav autohide */
 .nav-autohide {
   transition: transform 0.45s cubic-bezier(0.19, 1, 0.22, 1);

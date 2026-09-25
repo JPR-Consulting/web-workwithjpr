@@ -5,13 +5,13 @@ import { useCopy, useLang } from '../i18n';
 import { paths, type Tier } from '../content/site-copy';
 
 interface Props {
-  openCalendly: () => void;
+  onRequestDraft: () => void;
   /** Startseite: Anker-ID, Nummern-Eyebrow und Link zur Preisseite. */
   onHome?: boolean;
 }
 
-const PriceTier: React.FC<Tier & { openCalendly: () => void; recoLabel: string; ctaLabel: string }> = ({
-  name, for: forWhom, price, reco, features, openCalendly, recoLabel, ctaLabel,
+const PriceTier: React.FC<Tier & { onRequestDraft: () => void; recoLabel: string; ctaLabel: string }> = ({
+  name, for: forWhom, price, reco, features, onRequestDraft, recoLabel, ctaLabel,
 }) => {
   const ref = useReveal<HTMLDivElement>();
   return (
@@ -37,7 +37,7 @@ const PriceTier: React.FC<Tier & { openCalendly: () => void; recoLabel: string; 
       </ul>
       <MagneticButton
         as="button"
-        onClick={openCalendly}
+        onClick={onRequestDraft}
         className={`self-start inline-flex items-center gap-2.5 font-mono text-[14px] font-medium uppercase px-[22px] py-[13px] border transition-colors ${
           reco
             ? 'bg-accent text-ink border-accent hover:bg-transparent hover:text-accent'
@@ -50,7 +50,7 @@ const PriceTier: React.FC<Tier & { openCalendly: () => void; recoLabel: string; 
   );
 };
 
-const PricingSection: React.FC<Props> = ({ openCalendly, onHome }) => {
+const PricingSection: React.FC<Props> = ({ onRequestDraft, onHome }) => {
   const t = useCopy().pricing;
   const lang = useLang();
   const eyebrowRef = useReveal<HTMLDivElement>();
@@ -72,7 +72,7 @@ const PricingSection: React.FC<Props> = ({ openCalendly, onHome }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line">
         {t.tiers.map((tier) => (
-          <PriceTier key={tier.name} {...tier} openCalendly={openCalendly} recoLabel={t.reco} ctaLabel={t.cta} />
+          <PriceTier key={tier.name} {...tier} onRequestDraft={onRequestDraft} recoLabel={t.reco} ctaLabel={t.cta} />
         ))}
       </div>
 
