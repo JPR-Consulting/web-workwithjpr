@@ -3,6 +3,8 @@ import { useCopy } from '../i18n';
 
 const GA_ID = 'G-YC81Z6SB25';
 const FB_PIXEL_ID = '842051572153086';
+// Google Ads Conversion-Tracking (Konto JPR Consulting GmbH), Ziel „Entwurf-Anfrage (Website)“
+const ADS_ID = 'AW-18450517572';
 
 declare global {
   interface Window {
@@ -27,6 +29,7 @@ function loadGoogleAnalytics() {
   function gtag(..._args: unknown[]) { window.dataLayer.push(arguments); }
   gtag('js', new Date());
   gtag('config', GA_ID, { anonymize_ip: true });
+  gtag('config', ADS_ID);
 }
 
 function loadFacebookPixel() {

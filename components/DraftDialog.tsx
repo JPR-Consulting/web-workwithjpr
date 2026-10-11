@@ -35,6 +35,8 @@ function trackLead() {
       // gtag.js verarbeitet nur echte arguments-Objekte (siehe CookieBanner).
       // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-rest-params
       (function gtag(..._args: unknown[]) { window.dataLayer.push(arguments); })('event', 'generate_lead', { form: 'entwurf', page: window.location.pathname });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-rest-params
+      (function gtag(..._args: unknown[]) { window.dataLayer.push(arguments); })('event', 'conversion', { send_to: 'AW-18450517572/MplhCNStyJkdEMSc8t1E' });
     }
     window.fbq?.('track', 'Lead');
   } catch {

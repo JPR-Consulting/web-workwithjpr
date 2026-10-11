@@ -68,7 +68,7 @@ export const handwerk = {
       { q: 'Ich habe keine guten Fotos.', a: 'Handyfotos von deinen Baustellen reichen völlig. Wir wählen aus, schneiden zu und bearbeiten sie. Fehlt etwas, nutzen wir passende Bilder, bis du eigene hast.' },
       { q: 'Lohnt sich das, ich habe doch genug Arbeit?', a: 'Gerade dann. Wer genug Anfragen hat, kann sich die besseren Aufträge aussuchen — in deinem Gebiet, zu deinen Preisen. Und eine gute Website hilft auch beim Finden von Personal.' },
       { q: 'Was ist mit Vermittlungsportalen?', a: 'Portale können ein Zusatz sein. Aber dort zahlst du pro Kontakt und stehst im direkten Preisvergleich. Anfragen über deine eigene Website kosten dich nichts extra und kommen nur zu dir.' },
-      { q: 'Was kostet die Website?', a: 'Eine One-Page-Website beginnt bei 1.500 €, eine mehrseitige Website mit Anfrageformular und Referenzen bei 3.000 € — jeweils netto, Ratenzahlung möglich. Nach dem kostenlosen Entwurf bekommst du einen Festpreis.' },
+      { q: 'Was kostet die Website?', a: 'Eine One-Page-Website beginnt bei 1.500 €, eine mehrseitige Website mit Anfrageformular und Referenzen bei 3.000 € — jeweils netto. Nach dem kostenlosen Entwurf bekommst du einen Festpreis.' },
       { q: 'Wem gehört die Website am Ende?', a: 'Dir — vollständig. Du bekommst Code, Domain und alle Zugänge. Kein Baukasten-Abo, keine Lizenzgebühren. Betreuung ab 49 €/Monat ist möglich, aber kein Muss.' },
       { q: 'Arbeitet ihr auch außerhalb von Berlin?', a: 'Ja, deutschlandweit. Alles läuft online: Entwurf per Link, Abstimmung per Telefon, Video oder Mail.' },
     ],

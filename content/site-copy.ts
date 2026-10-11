@@ -124,7 +124,7 @@ const de = {
     title: 'Transparent. Ohne Tagessätze.',
     reco: '✦ Empfohlen',
     cta: 'Entwurf anfragen',
-    note: 'Alle Preise netto zzgl. MwSt. · Ratenzahlung möglich · Betreuung ab 49 €/Monat (Hosting, Updates, Backups, Support)',
+    note: 'Alle Preise netto zzgl. MwSt. · Betreuung ab 49 €/Monat (Hosting, Updates, Backups, Support)',
     detailsLink: 'Alle Webdesign-Preise in Berlin im Detail →',
     tiers: [
       { name: 'Starter', for: 'Für den Start', price: 'ab 1.500 €', reco: false, features: ['One-Page Website', 'Mobil optimiert', 'Kontaktformular', 'Google Maps Einbindung', 'Basis-SEO', '1 Korrekturschleife'] },
@@ -162,7 +162,7 @@ const de = {
     review: 'Bewertung auf Google',
   },
   cookie: {
-    text: 'Wir verwenden Cookies und Tracking-Technologien (Google Analytics, Facebook Pixel), um unsere Website zu verbessern und Werbeanzeigen zu optimieren. Mehr dazu in unserer',
+    text: 'Wir verwenden Cookies und Tracking-Technologien (Google Analytics, Google Ads, Facebook Pixel), um unsere Website zu verbessern und Werbeanzeigen zu optimieren. Mehr dazu in unserer',
     privacy: 'Datenschutzerklärung',
     accept: 'Alle akzeptieren',
     necessary: 'Nur notwendige',
@@ -357,7 +357,7 @@ const en: SiteCopy = {
     title: 'Transparent. No day rates.',
     reco: '✦ Recommended',
     cta: 'Request a draft',
-    note: 'All prices net plus VAT · Instalments possible · Care plan from €49/month (hosting, updates, backups, support)',
+    note: 'All prices net plus VAT · Care plan from €49/month (hosting, updates, backups, support)',
     detailsLink: 'All prices in detail →',
     tiers: [
       { name: 'Starter', for: 'For getting started', price: 'from €1,500', reco: false, features: ['One-page website', 'Mobile-optimised', 'Contact form', 'Google Maps integration', 'Basic SEO', '1 revision round'] },
@@ -396,7 +396,7 @@ const en: SiteCopy = {
     review: 'Review us on Google',
   },
   cookie: {
-    text: 'We use cookies and tracking technologies (Google Analytics, Facebook Pixel) to improve our website and optimise our ads. Learn more in our',
+    text: 'We use cookies and tracking technologies (Google Analytics, Google Ads, Facebook Pixel) to improve our website and optimise our ads. Learn more in our',
     privacy: 'privacy policy (German)',
     accept: 'Accept all',
     necessary: 'Only necessary',

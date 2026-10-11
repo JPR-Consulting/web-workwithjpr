@@ -60,13 +60,19 @@ const Privacy: React.FC<Props> = ({ onBack }) => {
           </div>
 
           <div>
-            <h2 className="text-xl font-bold text-ftext mb-2">9. Facebook Pixel</h2>
+            <h2 className="text-xl font-bold text-ftext mb-2">9. Google Ads Conversion-Tracking</h2>
+            <p>Wir schalten Anzeigen über Google Ads (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland). Um zu messen, ob eine Anfrage über unser Entwurf-Formular auf eine Anzeige zurückgeht, nutzen wir das Conversion-Tracking von Google Ads (ID: AW-18450517572). Es wird <strong className="text-ftext">nur geladen, wenn Sie über das Cookie-Banner aktiv zugestimmt haben</strong> (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG).</p>
+            <p className="mt-2">Haben Sie auf eine unserer Anzeigen geklickt und senden danach das Formular ab, erfahren Google und wir, dass eine Anfrage zustande kam. Wir erhalten dabei keine Daten, mit denen wir Sie persönlich identifizieren können. Dabei können Daten an Google LLC in den USA übermittelt werden; Google ist unter dem EU-US Data Privacy Framework zertifiziert. Sie können Ihre Einwilligung jederzeit über das Cookie-Banner widerrufen. Mehr dazu: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">policies.google.com/privacy</a></p>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-bold text-ftext mb-2">10. Facebook Pixel</h2>
             <p>Diese Website nutzt das Facebook Pixel (ID: 842051572153086) von Meta Platforms Ireland Limited. Das Pixel wird <strong className="text-ftext">nur geladen, wenn Sie über das Cookie-Banner aktiv zugestimmt haben</strong>. Ohne Ihre Einwilligung findet kein Tracking durch Facebook statt.</p>
             <p className="mt-2">Das Facebook Pixel erfasst anonymisierte Daten über Ihr Nutzungsverhalten, um die Effektivität von Werbeanzeigen zu messen. Die Verarbeitung erfolgt auf Grundlage Ihrer Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO. Weitere Informationen: <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">facebook.com/privacy/policy</a></p>
           </div>
 
           <div>
-            <h2 className="text-xl font-bold text-ftext mb-2">10. Calendly</h2>
+            <h2 className="text-xl font-bold text-ftext mb-2">11. Calendly</h2>
             <p>Für die Online-Terminbuchung binden wir den Dienst Calendly (Calendly LLC, USA) als Iframe ein. Wenn Sie den Buchungsbereich nutzen, werden Daten direkt an Calendly übermittelt. Dies umfasst die von Ihnen eingegebenen Kontaktdaten sowie technische Daten (IP-Adresse, Browser). Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung). Weitere Informationen: <a href="https://calendly.com/privacy" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">calendly.com/privacy</a></p>
           </div>
 
