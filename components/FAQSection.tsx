@@ -5,10 +5,15 @@ import { useCopy } from '../i18n';
 interface Props {
   /** Startseite: Anker-ID und Nummern-Eyebrow. */
   onHome?: boolean;
+  /** Eigene Einträge/Überschrift (z. B. Landingpages); sonst die Texte der Startseite. */
+  items?: { q: string; a: string }[];
+  eyebrow?: string;
+  title?: string;
 }
 
-const FAQSection: React.FC<Props> = ({ onHome }) => {
-  const t = useCopy().faq;
+const FAQSection: React.FC<Props> = ({ onHome, items, eyebrow, title }) => {
+  const base = useCopy().faq;
+  const t = { ...base, items: items ?? base.items, eyebrow: eyebrow ?? base.eyebrow, title: title ?? base.title };
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const eyebrowRef = useReveal<HTMLDivElement>();
   const titleRef = useReveal<HTMLHeadingElement>();

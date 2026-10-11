@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Check, X } from 'lucide-react';
 import { useCopy, useLang } from '../i18n';
+import { attributionLine } from '../attribution';
 
 /**
  * „Kostenloser Entwurf in 48 Stunden“: Website-Adresse + 4 kurze Fragen, ganz ohne Termin.
@@ -18,6 +19,10 @@ interface Props {
   initialWebsite: string;
   onClose: () => void;
   onCall: () => void;
+  /** Index in q2.options, der beim Öffnen vorgewählt wird (z. B. Handwerk = 2). */
+  presetIndustry?: number;
+  /** Wird an `source` angehängt, z. B. „lp-handwerk“. */
+  sourceTag?: string;
 }
 
 type Errors = Partial<Record<'company' | 'industry' | 'name' | 'email', string>>;
@@ -29,7 +34,7 @@ function trackLead() {
     if (document.getElementById('ga-script') && window.dataLayer) {
       // gtag.js verarbeitet nur echte arguments-Objekte (siehe CookieBanner).
       // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-rest-params
-      (function gtag(..._args: unknown[]) { window.dataLayer.push(arguments); })('event', 'generate_lead', { form: 'entwurf' });
+      (function gtag(..._args: unknown[]) { window.dataLayer.push(arguments); })('event', 'generate_lead', { form: 'entwurf', page: window.location.pathname });
     }
     window.fbq?.('track', 'Lead');
   } catch {
@@ -69,7 +74,7 @@ const Choice: React.FC<{ type: 'radio' | 'checkbox'; name: string; label: string
   </label>
 );
 
-const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall }) => {
+const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall, presetIndustry, sourceTag }) => {
   const t = useCopy().draft;
   const lang = useLang();
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -95,6 +100,7 @@ const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall })
       }
       setStep(1);
       setErrors({});
+      if (presetIndustry !== undefined) setData((d) => (d.industry < 0 ? { ...d, industry: presetIndustry } : d));
       if (initialWebsite) setData((d) => ({ ...d, website: initialWebsite }));
       if (!dlg.open) dlg.showModal();
       document.documentElement.style.overflow = 'hidden';
@@ -133,6 +139,7 @@ const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall })
       `Branche: ${t.q2.options[data.industry] ?? '–'}`,
       `Ziele: ${goals || '–'}`,
       data.note.trim() ? `Notiz: ${data.note.trim()}` : '',
+      attributionLine(),
     ].filter(Boolean).join('\n');
     try {
       const res = await fetch(WEBHOOK_URL, {
@@ -146,7 +153,7 @@ const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall })
           website: data.website.trim(),
           message,
           timestamp: new Date().toISOString(),
-          source: 'workwithjpr.com · Entwurf-Formular',
+          source: `workwithjpr.com · Entwurf-Formular${sourceTag ? ` · ${sourceTag}` : ''}`,
         }),
         signal: AbortSignal.timeout(12000),
       });

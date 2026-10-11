@@ -16,8 +16,12 @@ import BlogPostView from './components/BlogPost';
 import PreisePage from './components/PreisePage';
 import DraftDialog from './components/DraftDialog';
 import HeroDraftForm from './components/HeroDraftForm';
+import HandwerkPage from './components/HandwerkPage';
+import { captureAttribution } from './attribution';
+import { handwerk, handwerkPath } from './content/handwerk-copy';
 import { useLenis } from './hooks/useLenis';
 import { useReveal } from './hooks/useReveal';
+import { SectionTitle, Eyebrow, ServiceCell, ProcessStep } from './components/SectionParts';
 import { getPostBySlug } from './content/blog';
 import { copy, paths, type Lang } from './content/site-copy';
 import { LangContext, LangSwitch, useCopy } from './i18n';
@@ -30,7 +34,7 @@ declare global {
   }
 }
 
-type ViewState = 'HOME' | 'IMPRINT' | 'PRIVACY' | 'BLOG' | 'BLOG_POST' | 'PREISE';
+type ViewState = 'HOME' | 'IMPRINT' | 'PRIVACY' | 'BLOG' | 'BLOG_POST' | 'PREISE' | 'HANDWERK';
 
 const SITE = 'https://workwithjpr.com';
 
@@ -43,6 +47,7 @@ function parseLocation(path: string): { view: ViewState; slug: string; lang: Lan
   if (path === paths.home.en || path === `${paths.home.en}/`) return { view: 'HOME', slug: '', lang: 'en' };
   if (path === paths.pricing.en) return { view: 'PREISE', slug: '', lang: 'en' };
   if (path === paths.pricing.de) return { view: 'PREISE', slug: '', lang: 'de' };
+  if (path === handwerkPath) return { view: 'HANDWERK', slug: '', lang: 'de' };
   if (path === '/imprint' || path === '/impressum') return { view: 'IMPRINT', slug: '', lang: null };
   if (path === '/privacy' || path === '/datenschutz') return { view: 'PRIVACY', slug: '', lang: null };
   if (path === '/blog') return { view: 'BLOG', slug: '', lang: null };
@@ -53,65 +58,23 @@ function parseLocation(path: string): { view: ViewState; slug: string; lang: Lan
 function pathFor(view: ViewState, lang: Lang, slug: string): string {
   if (view === 'HOME') return paths.home[lang];
   if (view === 'PREISE') return paths.pricing[lang];
+  if (view === 'HANDWERK') return handwerkPath;
   if (view === 'IMPRINT') return '/imprint';
   if (view === 'PRIVACY') return '/privacy';
   if (view === 'BLOG') return '/blog';
   return slug ? `/blog/${slug}` : '/blog';
 }
 
-/** Sektions-Headline mit Zeilen-Reveal (aus jpr-prototyp.html .sec-title). */
-const SectionTitle: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className }) => {
-  const ref = useReveal<HTMLHeadingElement>();
-  return (
-    <h2
-      ref={ref}
-      className={`font-syne font-extrabold uppercase text-[clamp(34px,4.5vw,60px)] tracking-[-0.015em] leading-[1.02] mb-[52px] sec-title-line ${className ?? ''}`}
-    >
-      <span>{children}</span>
-    </h2>
-  );
-};
-
-const Eyebrow: React.FC<{ children: string }> = ({ children }) => {
-  const ref = useReveal<HTMLDivElement>();
-  return (
-    <div ref={ref} className="reveal font-mono text-[14px] text-accent uppercase mb-5">
-      {children}
-    </div>
-  );
-};
-
-/** [01] Leistungen — Grid-Zelle mit Reveal. */
-const ServiceCell: React.FC<{ idx: string; title: string; desc: string }> = ({ idx, title, desc }) => {
-  const ref = useReveal<HTMLDivElement>();
-  return (
-    <div ref={ref} className="reveal bg-ink hover:bg-panel transition-colors p-10">
-      <div className="font-mono text-[14px] text-accent mb-[18px]">{idx}</div>
-      <h3 className="font-syne font-bold text-[28px] mb-3">{title}</h3>
-      <p className="text-[17px] leading-[1.6] text-muted">{desc}</p>
-    </div>
-  );
-};
-
-/** Prozess — Schritt mit großer Zahl. */
-const ProcessStep: React.FC<{ n: string; title: string; desc: string }> = ({ n, title, desc }) => {
-  const ref = useReveal<HTMLDivElement>();
-  return (
-    <div ref={ref} className="reveal group bg-ink hover:bg-panel transition-colors p-10 relative">
-      <div
-        className="font-syne font-extrabold text-[64px] leading-none mb-6 text-accent transition-opacity opacity-90 group-hover:opacity-100"
-      >
-        {n}
-      </div>
-      <h3 className="font-syne font-bold text-[22px] mb-3">{title}</h3>
-      <p className="text-[17px] leading-[1.6] text-muted">{desc}</p>
-    </div>
-  );
-};
-
 /** Title, Description, Canonical und html-lang passend zu Ansicht und Sprache. */
 function useDocumentMeta(view: ViewState, lang: Lang) {
   useEffect(() => {
+    if (view === 'HANDWERK') {
+      document.documentElement.lang = 'de';
+      document.title = handwerk.meta.title;
+      document.querySelector('meta[name="description"]')?.setAttribute('content', handwerk.meta.desc);
+      document.querySelector('link[rel="canonical"]')?.setAttribute('href', `${SITE}${handwerkPath}`);
+      return;
+    }
     const localized = view === 'HOME' || view === 'PREISE';
     document.documentElement.lang = localized ? lang : 'de';
     if (!localized) return;
@@ -144,6 +107,7 @@ const App: React.FC = () => {
   const t = copy[lang];
 
   useLenis();
+  useEffect(captureAttribution, []);
   useDocumentMeta(currentView, lang);
 
   // Hero-Intro-Stagger beim Mount
@@ -225,7 +189,14 @@ const App: React.FC = () => {
     openCalendly();
   };
   const draftDialog = (
-    <DraftDialog open={draftOpen} initialWebsite={draftWebsite} onClose={() => setDraftOpen(false)} onCall={callInstead} />
+    <DraftDialog
+      open={draftOpen}
+      initialWebsite={draftWebsite}
+      onClose={() => setDraftOpen(false)}
+      onCall={callInstead}
+      presetIndustry={currentView === 'HANDWERK' ? 2 : undefined}
+      sourceTag={currentView === 'HANDWERK' ? 'lp-handwerk' : undefined}
+    />
   );
 
   const scrollToTop = () => {
@@ -245,6 +216,7 @@ const App: React.FC = () => {
   const changeLang = (l: Lang) => setLang(l);
 
   const renderView = () => {
+    if (currentView === 'HANDWERK') return <HandwerkPage onRequestDraft={openDraft} onCall={openCalendly} />;
     if (currentView === 'IMPRINT') return <Imprint onBack={() => navigate('HOME')} />;
     if (currentView === 'PRIVACY') return <Privacy onBack={() => navigate('HOME')} />;
     if (currentView === 'PREISE') return <PreisePage onNavigate={navigate} onRequestDraft={() => openDraft()} onLangChange={changeLang} />;
@@ -258,7 +230,7 @@ const App: React.FC = () => {
   };
 
   const other = renderView();
-  if (other) return <LangContext.Provider value={lang}>{other}{draftDialog}</LangContext.Provider>;
+  if (other) return <LangContext.Provider value={currentView === 'HANDWERK' ? 'de' : lang}>{other}{draftDialog}</LangContext.Provider>;
 
   const marqueeItems = (
     <>

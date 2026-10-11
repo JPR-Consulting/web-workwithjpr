@@ -1,0 +1,81 @@
+// Texte der Landingpage /website-fuer-handwerker (nur Deutsch, Ziel der Google-Ads-Suchkampagne).
+// Wird von der Komponente (components/HandwerkPage.tsx) und vom Prerender (scripts/prerender.mjs)
+// gelesen — sichtbarer Text, vorgerendertes HTML und FAQ-Schema bleiben so im selben Wortlaut.
+
+export const handwerkPath = '/website-fuer-handwerker';
+
+export const handwerk = {
+  meta: {
+    title: 'Website für Handwerker — mehr Anfragen, Festpreis ab 1.500 € | JPR Studio',
+    desc: 'Websites für Handwerksbetriebe: bei Google gefunden, Anfrageformular mit Fotos, Referenzgalerie. Kostenloser Entwurf in 48 Stunden, Festpreis ab 1.500 €, alles gehört dir.',
+  },
+  nav: { cta: 'Entwurf anfragen →' },
+  hero: {
+    topLeft: 'Websites für Handwerksbetriebe — deutschlandweit',
+    topRight: 'Festpreis · Entwurf kostenlos',
+    h1: ['Website für', 'Handwerker,', 'die Aufträge bringt.'],
+    audience: 'Für Elektriker, SHK, Maler, Dachdecker, Tischler, Fliesenleger und alle anderen Gewerke.',
+    offer: 'Trag deine Website ein. In 48 Stunden schicken wir dir einen anklickbaren Entwurf deiner neuen Seite — kostenlos. Danach entscheidest du. Festpreis ab 1.500 €.',
+    proofs: ['Entwurf in 48 Stunden', 'Festpreis vor Projektstart', 'Kein Abo, kein Lock-in', 'Du musst keine Texte schreiben'],
+  },
+  problem: {
+    eyebrow: '[01] — Kennst du das?',
+    title: 'Gute Arbeit. Falsche Anfragen.',
+    items: [
+      { title: 'Das Handy klingelt auf der Baustelle', desc: 'Jede Anfrage ist ein Anruf, mitten in der Arbeit. Und die Hälfte will nur wissen, ob du „auch mal kurz“ vorbeikommen kannst.' },
+      { title: 'Anfragen ohne jede Info', desc: '„Was kostet ein neues Bad?“ — ohne Maße, ohne Fotos, ohne Ort. Du telefonierst hinterher, statt gleich ein Angebot zu schreiben.' },
+      { title: 'Die Website ist von 2015', desc: 'Am Handy unlesbar, keine Referenzen, kein Formular. Kunden vergleichen drei Betriebe — und rufen den an, der professionell aussieht.' },
+      { title: 'Portale kosten pro Anfrage', desc: 'Auf Vermittlungsportalen zahlst du für jeden Kontakt und bietest gegen fünf andere. Über die eigene Website kommt die Anfrage direkt zu dir.' },
+    ],
+  },
+  features: {
+    eyebrow: '[02] — Was deine neue Website kann',
+    title: 'Gebaut für Betriebe.',
+    items: [
+      { title: 'Anfrage mit Fotos', desc: 'Kunden wählen die Leistung, laden Fotos hoch und geben ihre PLZ an. Du bekommst eine vollständige Anfrage per Mail — und rufst nur zurück, wenn es passt.' },
+      { title: 'Deine Arbeit im Schaufenster', desc: 'Referenzen und Vorher-Nachher-Bilder, sortiert nach Leistung. Handyfotos reichen — wir bereiten sie auf.' },
+      { title: 'Bei Google in deiner Region', desc: 'Eigene Seiten für deine Leistungen und dein Einzugsgebiet, sauber eingerichtetes Google-Unternehmensprofil. So findet man dich, wenn man „Elektriker + Ort“ sucht.' },
+      { title: 'Auch für Bewerber', desc: 'Eine Karriereseite, die Gesellen und Azubis zeigt, warum sie bei dir arbeiten sollen — mit Kurzbewerbung in zwei Minuten.' },
+    ],
+  },
+  reference: {
+    eyebrow: '[03] — Aus der Praxis',
+    title: 'Beispiel: RopeFX.',
+    text: 'RopeFX führt Höhenarbeiten und Industrieklettern in Berlin aus. Wir haben Website und Anfrage-Strecke gebaut: Leistungen auf einen Blick, Referenzen, und ein Formular, das die wichtigsten Infos zum Auftrag gleich mit abfragt.',
+    href: 'https://ropefx.com',
+    url: 'ropefx.com',
+    img: '/portfolio-shots/ropefx.jpg',
+    alt: 'Screenshot der Website ropefx.com',
+    link: 'ropefx.com ansehen →',
+  },
+  process: {
+    eyebrow: '[04] — Ablauf',
+    title: 'In drei Schritten online.',
+    steps: [
+      { title: 'Website eintragen', desc: '2 Minuten, 4 kurze Fragen, ganz ohne Termin. Keine Website? Auch kein Problem.' },
+      { title: 'Entwurf in 48 Stunden', desc: 'Du bekommst einen anklickbaren Entwurf per Mail — schau ihn dir abends in Ruhe am Handy an.' },
+      { title: 'Festpreis & Launch', desc: 'Gefällt er dir, bekommst du einen Festpreis. Texte schreiben wir, du gibst nur Feedback. In 1–2 Wochen bist du online.' },
+    ],
+  },
+  pricingEyebrow: 'Preise — Festpreis vor Start',
+  faq: {
+    eyebrow: '[05] — FAQ',
+    title: 'Fragen von Handwerkern.',
+    items: [
+      { q: 'Ich hab keine Zeit für Website-Kram.', a: 'Musst du auch nicht. Du trägst deine Website ein und beantwortest 4 Fragen. Texte, Bilder und Technik übernehmen wir. Insgesamt brauchst du vielleicht eine Stunde — verteilt auf ein paar Rückmeldungen per Mail oder Telefon.' },
+      { q: 'Ich habe keine guten Fotos.', a: 'Handyfotos von deinen Baustellen reichen völlig. Wir wählen aus, schneiden zu und bearbeiten sie. Fehlt etwas, nutzen wir passende Bilder, bis du eigene hast.' },
+      { q: 'Lohnt sich das, ich habe doch genug Arbeit?', a: 'Gerade dann. Wer genug Anfragen hat, kann sich die besseren Aufträge aussuchen — in deinem Gebiet, zu deinen Preisen. Und eine gute Website hilft auch beim Finden von Personal.' },
+      { q: 'Was ist mit Vermittlungsportalen?', a: 'Portale können ein Zusatz sein. Aber dort zahlst du pro Kontakt und stehst im direkten Preisvergleich. Anfragen über deine eigene Website kosten dich nichts extra und kommen nur zu dir.' },
+      { q: 'Was kostet die Website?', a: 'Eine One-Page-Website beginnt bei 1.500 €, eine mehrseitige Website mit Anfrageformular und Referenzen bei 3.000 € — jeweils netto, Ratenzahlung möglich. Nach dem kostenlosen Entwurf bekommst du einen Festpreis.' },
+      { q: 'Wem gehört die Website am Ende?', a: 'Dir — vollständig. Du bekommst Code, Domain und alle Zugänge. Kein Baukasten-Abo, keine Lizenzgebühren. Betreuung ab 49 €/Monat ist möglich, aber kein Muss.' },
+      { q: 'Arbeitet ihr auch außerhalb von Berlin?', a: 'Ja, deutschlandweit. Alles läuft online: Entwurf per Link, Abstimmung per Telefon, Video oder Mail.' },
+    ],
+  },
+  cta: {
+    title: ['Mehr Aufträge,', 'weniger Telefon.'],
+    text: 'Trag deine Website ein — in 48 Stunden hast du einen kostenlosen Entwurf im Postfach.',
+    button: 'Entwurf anfordern →',
+    call: 'Lieber erst sprechen? 30 Minuten per Video →',
+  },
+  sticky: 'Kostenloser Entwurf →',
+};

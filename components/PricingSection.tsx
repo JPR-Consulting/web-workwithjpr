@@ -8,6 +8,8 @@ interface Props {
   onRequestDraft: () => void;
   /** Startseite: Anker-ID, Nummern-Eyebrow und Link zur Preisseite. */
   onHome?: boolean;
+  /** Eyebrow überschreiben (Landingpages mit eigener Nummerierung). */
+  eyebrow?: string;
 }
 
 const PriceTier: React.FC<Tier & { onRequestDraft: () => void; recoLabel: string; ctaLabel: string }> = ({
@@ -50,7 +52,7 @@ const PriceTier: React.FC<Tier & { onRequestDraft: () => void; recoLabel: string
   );
 };
 
-const PricingSection: React.FC<Props> = ({ onRequestDraft, onHome }) => {
+const PricingSection: React.FC<Props> = ({ onRequestDraft, onHome, eyebrow }) => {
   const t = useCopy().pricing;
   const lang = useLang();
   const eyebrowRef = useReveal<HTMLDivElement>();
@@ -60,7 +62,7 @@ const PricingSection: React.FC<Props> = ({ onRequestDraft, onHome }) => {
       {/* Auf der Preisseite steht das Stichwort schon über der H1 */}
       {onHome && (
         <div ref={eyebrowRef} className="reveal font-mono text-[14px] text-accent uppercase mb-5">
-          {t.eyebrow}
+          {eyebrow ?? t.eyebrow}
         </div>
       )}
       <h2
