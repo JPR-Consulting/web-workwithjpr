@@ -126,7 +126,7 @@ const HandwerkPage: React.FC<Props> = ({ onRequestDraft, onCall }) => {
         <section className="overflow-hidden border-b border-line" aria-label={t.trades.ariaLabel}>
           <div className="font-mono text-[14px] text-accent uppercase pt-3.5 px-6 md:px-12">{t.trades.label}</div>
           <div className="flex whitespace-nowrap w-max pt-[14px] pb-[18px] overflow-hidden">
-            <div className="marquee-track flex items-baseline whitespace-nowrap font-syne font-bold text-[21px] uppercase tracking-[-0.01em] text-ftext">
+            <div className="marquee-track flex items-baseline whitespace-nowrap font-syne font-bold text-[21px] uppercase tracking-[-0.01em] text-ftext" style={{ animationDuration: "80s" }}>
               {[0, 1].map((half) => (
                 <span key={half} className="flex" aria-hidden={half === 1 ? true : undefined}>
                   {[0, 1].map((rep) => (
