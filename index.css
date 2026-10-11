@@ -94,6 +94,15 @@
   animation: marquee-scroll 32s linear infinite;
 }
 
+/* Handwerker-Hero: sehr langsamer Ken-Burns-Zoom */
+@keyframes kenburns {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+.kenburns {
+  animation: kenburns 26s ease-in-out infinite alternate;
+}
+
 /* Custom Cursor */
 .cursor-dot,
 .cursor-ring {
@@ -172,7 +181,8 @@
     clip-path: none !important;
     transition: none !important;
   }
-  .marquee-track {
+  .marquee-track,
+  .kenburns {
     animation: none !important;
   }
 }

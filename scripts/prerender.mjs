@@ -43,10 +43,11 @@ const faqLd = (items) => ({
   mainEntity: items.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
 });
 
-function renderPage({ title, description, canonical, ogType, rootHtml, jsonLd, lang = 'de', alternates = null }) {
+function renderPage({ title, description, canonical, ogType, rootHtml, jsonLd, lang = 'de', alternates = null, headExtra = '' }) {
   let html = template;
   html = html.replace(/<html lang="[^"]*"/, `<html lang="${lang}"`);
   html = html.replace(/(<meta property="og:locale" content=")[^"]*(")/, `$1${lang === 'en' ? 'en_GB' : 'de_DE'}$2`);
+  if (headExtra) html = html.replace('</head>', `${headExtra}\n</head>`);
   if (alternates) html = html.replace('</head>', `${hreflang(alternates)}</head>`);
   html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)}</title>`);
   html = html.replace(/(<meta name="description" content=")[^"]*(")/, `$1${esc(description)}$2`);
@@ -307,6 +308,8 @@ for (const lang of ['en', 'de']) {
     ogType: 'website',
     rootHtml,
     jsonLd: faqLd(h.faq.items),
+    // Hero-Foto früh laden (LCP): gleiche Breiten/sizes wie das <img> in HandwerkPage
+    headExtra: '<link rel="preload" as="image" type="image/webp" fetchpriority="high" imagesrcset="/handwerk/elektriker-480.webp 480w, /handwerk/elektriker-768.webp 768w, /handwerk/elektriker-1024.webp 1024w" imagesizes="(min-width: 1024px) 700px, 660px">',
   }));
   console.log(`✓ ${handwerkPath}`);
 }

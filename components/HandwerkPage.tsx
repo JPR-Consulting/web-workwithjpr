@@ -26,6 +26,7 @@ const HandwerkPage: React.FC<Props> = ({ onRequestDraft, onCall }) => {
   const [heroIn, setHeroIn] = useState(false);
   const ctaRef = useReveal<HTMLDivElement>();
   const refRef = useReveal<HTMLDivElement>();
+  const aboutRef = useReveal<HTMLDivElement>();
 
   useEffect(() => {
     const raf = requestAnimationFrame(() => requestAnimationFrame(() => setHeroIn(true)));
@@ -33,6 +34,8 @@ const HandwerkPage: React.FC<Props> = ({ onRequestDraft, onCall }) => {
   }, []);
 
   const footer = copy.de.footer;
+  const about = copy.de.about;
+  const otherProjects = copy.de.projects.items.filter((p) => p.title !== 'RopeFX');
 
   return (
     <div className="bg-texture bg-ink text-ftext font-body overflow-x-clip selection:bg-accent selection:text-ink">
@@ -40,26 +43,51 @@ const HandwerkPage: React.FC<Props> = ({ onRequestDraft, onCall }) => {
         <a href="/" className="font-syne font-extrabold text-[16px] md:text-[19px] uppercase tracking-[0.01em] text-ftext whitespace-nowrap shrink-0">
           JPR <span className="text-accent">Studio</span>&reg;
         </a>
-        <MagneticButton
-          as="button"
-          onClick={() => onRequestDraft()}
-          className="inline-flex items-center gap-2 font-mono text-[12px] md:text-[14px] font-medium uppercase bg-accent text-ink px-3 md:px-5 py-2.5 md:py-3 border border-accent hover:bg-transparent hover:text-accent transition-colors whitespace-nowrap shrink-0"
-        >
-          <span className="md:hidden">{t.nav.ctaShort}</span>
-          <span className="hidden md:inline">{t.nav.cta}</span>
-        </MagneticButton>
+        <div className="flex items-center gap-6 lg:gap-8">
+          <a href="/" className="hidden md:inline font-mono text-[14px] uppercase text-muted hover:text-accent transition-colors whitespace-nowrap">
+            {t.nav.all}
+          </a>
+          <MagneticButton
+            as="button"
+            onClick={() => onRequestDraft()}
+            className="inline-flex items-center gap-2 font-mono text-[12px] md:text-[14px] font-medium uppercase bg-accent text-ink px-3 md:px-5 py-2.5 md:py-3 border border-accent hover:bg-transparent hover:text-accent transition-colors whitespace-nowrap shrink-0"
+          >
+            <span className="md:hidden">{t.nav.ctaShort}</span>
+            <span className="hidden md:inline">{t.nav.cta}</span>
+          </MagneticButton>
+        </div>
       </nav>
 
       <main className="relative z-[1]">
         {/* Hero */}
-        <header className="px-4 md:px-12 border-b border-line pt-[88px] md:pt-[112px] pb-12 md:pb-14">
+        <header className="relative isolate overflow-hidden px-4 md:px-12 border-b border-line pt-[88px] md:pt-[112px] pb-12 md:pb-14">
+          {/* Foto: auf Mobil als Hintergrund hinter allem, ab lg als Quadrat rechts der Headline */}
+          <div
+            className="absolute inset-0 -z-10 lg:inset-y-0 lg:left-auto lg:right-[20%] lg:w-auto lg:h-full lg:aspect-square overflow-hidden lg:[mask-image:linear-gradient(to_right,transparent,#000_30%,#000_70%,transparent)]"
+          >
+            <div className="w-full h-full -scale-x-100">
+            <img
+              src="/handwerk/elektriker-768.webp"
+              srcSet="/handwerk/elektriker-480.webp 480w, /handwerk/elektriker-768.webp 768w, /handwerk/elektriker-1024.webp 1024w"
+              sizes="(min-width: 1024px) 700px, 660px"
+              width={1024}
+              height={1024}
+              alt={t.hero.imgAlt}
+              fetchPriority="high"
+              decoding="async"
+              className="kenburns w-full h-full object-cover object-[35%_20%] lg:object-center"
+            />
+            </div>
+          </div>
+          <div className="absolute inset-0 -z-10 bg-ink/[0.68] lg:bg-[linear-gradient(to_right,rgba(16,16,18,0.94)_0%,rgba(16,16,18,0.82)_38%,rgba(16,16,18,0.45)_62%,rgba(16,16,18,0.2)_100%)]" aria-hidden="true" />
+          <div className="absolute inset-x-0 bottom-0 h-24 -z-10 bg-gradient-to-t from-ink to-transparent" aria-hidden="true" />
           <div className="hidden md:flex justify-between items-center font-mono text-[14px] text-muted uppercase mb-8 gap-2">
             <div>{t.hero.topLeft}</div>
             <div>{t.hero.topRight}</div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_440px] gap-6 lg:gap-14 items-center">
-            <div className="min-w-0">
+            <div className="min-w-0 [text-shadow:0_2px_18px_rgba(16,16,18,0.7)]">
               <h1 className="font-syne font-extrabold uppercase text-[clamp(24px,6.4vw,92px)] lg:text-[clamp(30px,calc((100vw-620px)/13.5),80px)] leading-[1.02] tracking-[-0.015em] break-words">
                 <span className={`hero-line ${heroIn ? 'in' : ''}`}><span>{t.hero.h1[0]}</span></span>
                 <span className={`hero-line hero-line-2 text-accent ${heroIn ? 'in' : ''}`}><span>{t.hero.h1[1]}</span></span>
@@ -72,7 +100,7 @@ const HandwerkPage: React.FC<Props> = ({ onRequestDraft, onCall }) => {
               </p>
             </div>
 
-            <div id="entwurf" className={`hero-foot ${heroIn ? 'in' : ''} bg-panel border border-line p-5 md:p-7`}>
+            <div id="entwurf" className={`hero-foot ${heroIn ? 'in' : ''} bg-panel/[0.92] backdrop-blur-md border border-line p-5 md:p-7`}>
               <h2 className="font-syne font-bold text-[20px] md:text-[24px] leading-tight mb-2">{t.hero.formTitle}</h2>
               <p className="font-body text-[16px] leading-[1.5] text-[#d8d8de] mb-5">{t.hero.offer}</p>
               <HeroDraftForm
@@ -93,6 +121,29 @@ const HandwerkPage: React.FC<Props> = ({ onRequestDraft, onCall }) => {
             ))}
           </div>
         </header>
+
+        {/* Gewerke-Marquee */}
+        <section className="overflow-hidden border-b border-line" aria-label={t.trades.ariaLabel}>
+          <div className="font-mono text-[14px] text-accent uppercase pt-3.5 px-6 md:px-12">{t.trades.label}</div>
+          <div className="flex whitespace-nowrap w-max pt-[14px] pb-[18px] overflow-hidden">
+            <div className="marquee-track flex items-baseline whitespace-nowrap font-syne font-bold text-[21px] uppercase tracking-[-0.01em] text-ftext">
+              {[0, 1].map((half) => (
+                <span key={half} className="flex" aria-hidden={half === 1 ? true : undefined}>
+                  {[0, 1].map((rep) => (
+                    <React.Fragment key={rep}>
+                      {t.trades.items.map((name) => (
+                        <React.Fragment key={name}>
+                          <span className="px-7">{name}</span>
+                          <span className="text-accent self-center" aria-hidden="true">✦</span>
+                        </React.Fragment>
+                      ))}
+                    </React.Fragment>
+                  ))}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* [01] Problem */}
         <section className="px-6 md:px-12 border-b border-line py-16 md:py-24">
@@ -156,6 +207,66 @@ const HandwerkPage: React.FC<Props> = ({ onRequestDraft, onCall }) => {
               </a>
             </div>
           </div>
+
+          <div className="mt-14 md:mt-16 pt-8 border-t border-line">
+            <div className="font-mono text-[14px] text-muted uppercase mb-6">{t.reference.moreLabel}</div>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 list-none p-0">
+              {otherProjects.map((p) => (
+                <li key={p.title}>
+                  <a
+                    href={p.href}
+                    target="_blank"
+                    rel="noopener"
+                    className="group block border border-line bg-panel hover:border-accent transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                  >
+                    <img
+                      src={p.img}
+                      alt={`${copy.de.projects.altPrefix} ${p.title}`}
+                      width={1200}
+                      height={750}
+                      loading="lazy"
+                      decoding="async"
+                      className="block w-full aspect-[16/10] object-cover object-top"
+                    />
+                    <div className="p-4">
+                      <div className="font-syne font-bold text-[18px] mb-1">{p.title}</div>
+                      <div className="text-[15px] leading-[1.5] text-muted mb-2">{p.tag}</div>
+                      <div className="font-mono text-[13px] uppercase text-accent group-hover:text-ftext transition-colors">{p.url} →</div>
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* Über mich (Kurzfassung) */}
+        <section className="px-6 md:px-12 border-b border-line py-16 md:py-24">
+          <Eyebrow>{t.about.eyebrow}</Eyebrow>
+          <div ref={aboutRef} className="reveal flex gap-8 md:gap-14 items-center flex-wrap">
+            <div className="relative w-[200px] h-[240px] md:w-[280px] md:h-[330px] flex-shrink-0 overflow-hidden group">
+              <img
+                src="/jan-rojek.webp"
+                alt={about.photoAlt}
+                width={1024}
+                height={1024}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover grayscale contrast-[1.05] transition-[filter] duration-500 group-hover:grayscale-0"
+              />
+              <div className="absolute bottom-0 left-0 px-3 py-2 bg-accent text-ink font-mono text-[12px] md:text-[13px] font-medium uppercase">
+                {about.badge}
+              </div>
+            </div>
+            <div className="flex-1 min-w-[260px] max-w-[620px]">
+              <h2 className="font-syne font-extrabold uppercase text-[clamp(30px,3.6vw,48px)] tracking-[-0.015em] mb-5">
+                {about.hello} <span className="text-accent">{about.name}</span>
+              </h2>
+              <p className="text-[17px] leading-[1.7] text-muted mb-4">{about.paragraphs[1]}</p>
+              <p className="text-[17px] leading-[1.7] text-ftext font-medium mb-4">{about.highlight}</p>
+              <div className="mt-6 pt-5 border-t border-line font-mono text-[14px] text-muted uppercase">{t.about.fact}</div>
+            </div>
+          </div>
         </section>
 
         {/* [04] Ablauf */}
@@ -198,6 +309,9 @@ const HandwerkPage: React.FC<Props> = ({ onRequestDraft, onCall }) => {
         <footer className="px-6 md:px-12 flex flex-col md:flex-row md:justify-between md:items-center gap-5 pt-8 pb-28 md:pb-8 font-mono text-[14px] text-muted uppercase">
           <div className="leading-[1.7] normal-case">{footer.company}</div>
           <div className="flex gap-x-6 gap-y-3 items-center flex-wrap">
+            <a href="/" className="text-muted hover:text-accent transition-colors">{t.footer.home}</a>
+            <a href="/preise" className="text-muted hover:text-accent transition-colors">{t.footer.pricing}</a>
+            <a href="/blog" className="text-muted hover:text-accent transition-colors">{t.footer.blog}</a>
             <a href="/impressum" className="text-muted hover:text-accent transition-colors">{footer.imprint}</a>
             <a href="/datenschutz" className="text-muted hover:text-accent transition-colors">{footer.privacy}</a>
           </div>

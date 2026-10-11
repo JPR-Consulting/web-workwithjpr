@@ -9,16 +9,22 @@ export const handwerk = {
     title: 'Website für Handwerker — mehr Anfragen, Festpreis ab 1.500 € | JPR Studio',
     desc: 'Websites für Handwerksbetriebe: bei Google gefunden, Anfrageformular mit Fotos, Referenzgalerie. Kostenloser Entwurf in 48 Stunden, Festpreis ab 1.500 €, alles gehört dir.',
   },
-  nav: { cta: 'Kostenlosen Entwurf anfragen →', ctaShort: 'Entwurf anfragen →' },
+  nav: { cta: 'Kostenlosen Entwurf anfragen →', ctaShort: 'Entwurf anfragen →', all: 'Alle Leistungen' },
   hero: {
     topLeft: 'Websites für Handwerksbetriebe — deutschlandweit',
     topRight: 'Festpreis · Entwurf kostenlos',
     h1: ['Website für', 'Handwerker,', 'die Aufträge bringt.'],
+    imgAlt: 'Elektriker in einem Neubau-Raum mit Kabeln und Leiter, der lächelnd auf sein Smartphone schaut',
     audience: 'Für Elektriker, SHK, Maler, Dachdecker, Tischler, Fliesenleger und alle anderen Gewerke.',
     formTitle: 'Kostenloser Entwurf in 48 Stunden',
     offer: 'Trag deine Website ein. Wir schicken dir einen anklickbaren Entwurf deiner neuen Seite. Danach entscheidest du, Festpreis ab 1.500 €.',
     cta: 'Kostenlosen Entwurf anfragen →',
     proofs: ['Entwurf in 48 Stunden', 'Festpreis vor Projektstart', 'Kein Abo, kein Lock-in', 'Du musst keine Texte schreiben'],
+  },
+  trades: {
+    ariaLabel: 'Gewerke',
+    label: 'Für jedes Gewerk',
+    items: ['Elektriker', 'SHK', 'Maler', 'Dachdecker', 'Tischler', 'Fliesenleger', 'Zimmerei', 'Metallbau', 'Gartenbau', 'Trockenbau'],
   },
   problem: {
     eyebrow: '[01] — Kennst du das?',
@@ -49,6 +55,7 @@ export const handwerk = {
     img: '/portfolio-shots/ropefx.jpg',
     alt: 'Screenshot der Website ropefx.com',
     link: 'ropefx.com ansehen →',
+    moreLabel: 'Weitere Projekte',
   },
   process: {
     eyebrow: '[04] — Ablauf',
@@ -79,5 +86,7 @@ export const handwerk = {
     button: 'Kostenlosen Entwurf anfragen →',
     call: 'Lieber erst sprechen? 30 Minuten per Video →',
   },
+  about: { eyebrow: 'Dein Ansprechpartner', fact: 'Du sprichst direkt mit dem, der baut' },
+  footer: { home: 'Startseite', pricing: 'Preise', blog: 'Blog' },
   sticky: 'Kostenlosen Entwurf anfragen →',
 };
