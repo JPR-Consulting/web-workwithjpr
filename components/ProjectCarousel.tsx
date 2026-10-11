@@ -99,10 +99,9 @@ const ProjectCarousel: React.FC<Props> = ({ projects, header }) => {
         const vw = window.innerWidth;
         const firstC = cards[0].offsetLeft + cards[0].offsetWidth / 2;
         const lastC = cards[cards.length - 1].offsetLeft + cards[cards.length - 1].offsetWidth / 2;
-        // Auch die erste Karte fährt herein: Start mit ihr am rechten Rand,
+        // Start mit der ersten Karte in der Mitte (sofort sichtbar),
         // Ende mit der letzten Karte in der Mitte.
-        const intro = vw * 0.45;
-        const x = vw / 2 - firstC + intro - p * (lastC - firstC + intro);
+        const x = vw / 2 - firstC - p * (lastC - firstC);
         track.style.transform = `translate3d(${x}px,0,0)`;
 
         let best = 0;
