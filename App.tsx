@@ -255,12 +255,12 @@ const App: React.FC = () => {
   // kleine Texte bleiben echtes DOM, sonst werden sie in der Textur unscharf.
   const heroContent = (
     <>
-      <div className="flex justify-between items-center font-mono text-[14px] text-muted uppercase mb-10 md:mb-14 flex-wrap gap-2">
+      <div className="flex justify-between items-center font-mono text-[14px] text-muted uppercase mb-8 md:mb-10 flex-wrap gap-2">
         <div>{t.hero.topLeft}</div>
         <div>{t.hero.topRight}</div>
       </div>
 
-      <h1 className="font-syne font-extrabold uppercase text-[clamp(30px,8.4vw,168px)] leading-[1.02] tracking-[-0.015em] break-words">
+      <h1 className="font-syne font-extrabold uppercase text-[clamp(30px,7.6vw,150px)] leading-[1.02] tracking-[-0.015em] break-words">
         <span className={`hero-line ${heroIn ? 'in' : ''}`}>
           <span data-line>{t.hero.h1[0]}</span>
         </span>
@@ -281,7 +281,11 @@ const App: React.FC = () => {
   // Eingaben im Formular verlieren.
   const heroFoot = (
     <>
-      <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-x-8 gap-y-6 mt-14 flex-wrap`}>
+      <div className={`hero-foot ${heroIn ? 'in' : ''} mt-8 md:mt-12`}>
+        <HeroDraftForm onStart={openDraft} onPricing={() => scrollToSection('preise')} />
+      </div>
+
+      <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-x-8 gap-y-6 mt-10 md:mt-12 flex-wrap`}>
         <p className="font-body text-[20px] md:text-[24px] leading-[1.4] text-ftext max-w-[520px]">
           <span>{t.hero.audience}</span>
         </p>
@@ -290,9 +294,6 @@ const App: React.FC = () => {
         </p>
       </div>
 
-      <div className={`hero-foot ${heroIn ? 'in' : ''} mt-12`}>
-        <HeroDraftForm onStart={openDraft} onPricing={() => scrollToSection('preise')} />
-      </div>
 
       <div className={`hero-proof ${heroIn ? 'in' : ''} flex gap-x-8 gap-y-3 flex-wrap mt-10 pt-6 border-t border-line font-body text-[16px] md:text-[17px] text-muted`}>
         {t.hero.proofs.map((proof) => (
@@ -349,7 +350,7 @@ const App: React.FC = () => {
 
       <main className="relative z-[1]">
         {/* Hero */}
-        <header className="px-4 md:px-12 border-b border-line pt-28 md:pt-[220px] pb-16 md:pb-[72px]">
+        <header className="px-4 md:px-12 border-b border-line pt-24 md:pt-[140px] pb-16 md:pb-[72px]">
           {/* Mobil ist in der Navigation kein Platz für den Umschalter */}
           <LangSwitch onChange={changeLang} className="md:hidden mb-6" />
           {waterReady ? <WaterHeadline>{heroContent}</WaterHeadline> : heroContent}

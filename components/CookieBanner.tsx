@@ -87,9 +87,9 @@ const CookieBanner: React.FC = () => {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 animate-slide-up">
-      <div className="container mx-auto max-w-4xl bg-panel border border-line p-6 font-body">
-        <p className="text-muted text-sm mb-4 leading-relaxed">
+    <div className="fixed bottom-0 left-0 right-0 md:left-auto md:w-[460px] z-50 p-2 md:p-4 animate-slide-up">
+      <div className="bg-panel border border-line p-4 md:p-6 font-body">
+        <p className="text-muted text-[13px] md:text-sm mb-3 md:mb-4 leading-snug md:leading-relaxed">
           {t.text}{' '}
           <button
             onClick={() => {
@@ -101,11 +101,11 @@ const CookieBanner: React.FC = () => {
             {t.privacy}
           </button>.
         </p>
-        <div className="flex flex-wrap gap-3 font-mono text-[13px] uppercase">
-          <button onClick={() => accept('all')} className="px-5 py-3 bg-accent text-ink font-medium border border-accent hover:bg-transparent hover:text-accent transition-colors">
+        <div className="flex gap-2 md:gap-3 font-mono text-[12px] md:text-[13px] uppercase">
+          <button onClick={() => accept('all')} className="flex-1 md:flex-none px-3 md:px-5 py-3 bg-accent text-ink font-medium border border-accent hover:bg-transparent hover:text-accent transition-colors">
             {t.accept}
           </button>
-          <button onClick={() => accept('necessary')} className="px-5 py-3 bg-transparent text-ftext font-medium border border-line hover:border-accent hover:text-accent transition-colors">
+          <button onClick={() => accept('necessary')} className="flex-1 md:flex-none px-3 md:px-5 py-3 bg-transparent text-ftext font-medium border border-line hover:border-accent hover:text-accent transition-colors">
             {t.necessary}
           </button>
         </div>

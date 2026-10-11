@@ -9,13 +9,15 @@ export const handwerk = {
     title: 'Website für Handwerker — mehr Anfragen, Festpreis ab 1.500 € | JPR Studio',
     desc: 'Websites für Handwerksbetriebe: bei Google gefunden, Anfrageformular mit Fotos, Referenzgalerie. Kostenloser Entwurf in 48 Stunden, Festpreis ab 1.500 €, alles gehört dir.',
   },
-  nav: { cta: 'Entwurf anfragen →' },
+  nav: { cta: 'Kostenlosen Entwurf anfragen →', ctaShort: 'Entwurf anfragen →' },
   hero: {
     topLeft: 'Websites für Handwerksbetriebe — deutschlandweit',
     topRight: 'Festpreis · Entwurf kostenlos',
     h1: ['Website für', 'Handwerker,', 'die Aufträge bringt.'],
     audience: 'Für Elektriker, SHK, Maler, Dachdecker, Tischler, Fliesenleger und alle anderen Gewerke.',
-    offer: 'Trag deine Website ein. In 48 Stunden schicken wir dir einen anklickbaren Entwurf deiner neuen Seite — kostenlos. Danach entscheidest du. Festpreis ab 1.500 €.',
+    formTitle: 'Kostenloser Entwurf in 48 Stunden',
+    offer: 'Trag deine Website ein. Wir schicken dir einen anklickbaren Entwurf deiner neuen Seite. Danach entscheidest du, Festpreis ab 1.500 €.',
+    cta: 'Kostenlosen Entwurf anfragen →',
     proofs: ['Entwurf in 48 Stunden', 'Festpreis vor Projektstart', 'Kein Abo, kein Lock-in', 'Du musst keine Texte schreiben'],
   },
   problem: {
@@ -74,8 +76,8 @@ export const handwerk = {
   cta: {
     title: ['Mehr Aufträge,', 'weniger Telefon.'],
     text: 'Trag deine Website ein — in 48 Stunden hast du einen kostenlosen Entwurf im Postfach.',
-    button: 'Entwurf anfordern →',
+    button: 'Kostenlosen Entwurf anfragen →',
     call: 'Lieber erst sprechen? 30 Minuten per Video →',
   },
-  sticky: 'Kostenloser Entwurf →',
+  sticky: 'Kostenlosen Entwurf anfragen →',
 };

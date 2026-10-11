@@ -45,39 +45,46 @@ const HandwerkPage: React.FC<Props> = ({ onRequestDraft, onCall }) => {
           onClick={() => onRequestDraft()}
           className="inline-flex items-center gap-2 font-mono text-[12px] md:text-[14px] font-medium uppercase bg-accent text-ink px-3 md:px-5 py-2.5 md:py-3 border border-accent hover:bg-transparent hover:text-accent transition-colors whitespace-nowrap shrink-0"
         >
-          {t.nav.cta}
+          <span className="md:hidden">{t.nav.ctaShort}</span>
+          <span className="hidden md:inline">{t.nav.cta}</span>
         </MagneticButton>
       </nav>
 
       <main className="relative z-[1]">
         {/* Hero */}
-        <header className="px-4 md:px-12 border-b border-line pt-28 md:pt-[180px] pb-16 md:pb-[72px]">
-          <div className="flex justify-between items-center font-mono text-[14px] text-muted uppercase mb-10 md:mb-14 flex-wrap gap-2">
+        <header className="px-4 md:px-12 border-b border-line pt-[88px] md:pt-[112px] pb-12 md:pb-14">
+          <div className="hidden md:flex justify-between items-center font-mono text-[14px] text-muted uppercase mb-8 gap-2">
             <div>{t.hero.topLeft}</div>
             <div>{t.hero.topRight}</div>
           </div>
 
-          <h1 className="font-syne font-extrabold uppercase text-[clamp(22px,6.2vw,120px)] leading-[1.02] tracking-[-0.015em] break-words">
-            <span className={`hero-line ${heroIn ? 'in' : ''}`}><span>{t.hero.h1[0]}</span></span>
-            <span className={`hero-line hero-line-2 text-accent ${heroIn ? 'in' : ''}`}><span>{t.hero.h1[1]}</span></span>
-            <span className={`hero-line hero-line-3 ${heroIn ? 'in' : ''}`} style={{ WebkitTextStroke: '2px #f4f4f0', color: 'transparent' }}>
-              <span>{t.hero.h1[2]}</span>
-            </span>
-          </h1>
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_440px] gap-6 lg:gap-14 items-center">
+            <div className="min-w-0">
+              <h1 className="font-syne font-extrabold uppercase text-[clamp(24px,6.4vw,92px)] lg:text-[clamp(30px,calc((100vw-620px)/13.5),80px)] leading-[1.02] tracking-[-0.015em] break-words">
+                <span className={`hero-line ${heroIn ? 'in' : ''}`}><span>{t.hero.h1[0]}</span></span>
+                <span className={`hero-line hero-line-2 text-accent ${heroIn ? 'in' : ''}`}><span>{t.hero.h1[1]}</span></span>
+                <span className={`hero-line hero-line-3 ${heroIn ? 'in' : ''}`} style={{ WebkitTextStroke: '2px #f4f4f0', color: 'transparent' }}>
+                  <span>{t.hero.h1[2]}</span>
+                </span>
+              </h1>
+              <p className={`hero-foot ${heroIn ? 'in' : ''} font-body text-[17px] md:text-[22px] leading-[1.45] text-ftext max-w-[560px] mt-4 md:mt-8`}>
+                {t.hero.audience}
+              </p>
+            </div>
 
-          <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-x-8 gap-y-6 mt-14 flex-wrap`}>
-            <p className="font-body text-[20px] md:text-[24px] leading-[1.4] text-ftext max-w-[520px]">{t.hero.audience}</p>
-            <p className="font-body text-[18px] md:text-[20px] leading-[1.55] text-[#d8d8de] max-w-[480px]">{t.hero.offer}</p>
+            <div id="entwurf" className={`hero-foot ${heroIn ? 'in' : ''} bg-panel border border-line p-5 md:p-7`}>
+              <h2 className="font-syne font-bold text-[20px] md:text-[24px] leading-tight mb-2">{t.hero.formTitle}</h2>
+              <p className="font-body text-[16px] leading-[1.5] text-[#d8d8de] mb-5">{t.hero.offer}</p>
+              <HeroDraftForm
+                stacked
+                ctaLabel={t.hero.cta}
+                onStart={onRequestDraft}
+                onPricing={() => document.getElementById('preise')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              />
+            </div>
           </div>
 
-          <div className={`hero-foot ${heroIn ? 'in' : ''} mt-12`}>
-            <HeroDraftForm
-              onStart={onRequestDraft}
-              onPricing={() => document.getElementById('preise')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-            />
-          </div>
-
-          <div className={`hero-proof ${heroIn ? 'in' : ''} flex gap-x-8 gap-y-3 flex-wrap mt-10 pt-6 border-t border-line font-body text-[16px] md:text-[17px] text-muted`}>
+          <div className={`hero-proof ${heroIn ? 'in' : ''} flex gap-x-8 gap-y-3 flex-wrap mt-8 md:mt-10 pt-6 border-t border-line font-body text-[16px] md:text-[17px] text-muted`}>
             {t.hero.proofs.map((proof) => (
               <span key={proof} className="inline-flex items-center gap-2.5">
                 {checkIcon}
