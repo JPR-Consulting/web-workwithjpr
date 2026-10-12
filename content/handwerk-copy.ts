@@ -5,6 +5,9 @@
 export const handwerkPath = '/website-fuer-handwerker';
 
 export const handwerk = {
+  theme: 'dark' as 'dark' | 'light',
+  sourceTag: 'lp-handwerk',
+  presetIndustry: 2,
   meta: {
     title: 'Website für Handwerker — mehr Anfragen, Festpreis ab 1.500 € | JPR Studio',
     desc: 'Websites für Handwerksbetriebe: bei Google gefunden, Anfrageformular mit Fotos, Referenzgalerie. Kostenloser Entwurf in 48 Stunden, Festpreis ab 1.500 €, alles gehört dir.',
@@ -14,6 +17,7 @@ export const handwerk = {
     topLeft: 'Websites für Handwerksbetriebe — deutschlandweit',
     topRight: 'Festpreis · Entwurf kostenlos',
     h1: ['Website für', 'Handwerker,', 'die Aufträge bringt.'],
+    img: { base: '/handwerk/elektriker', flip: true, pos: 'object-[35%_20%] lg:object-center' },
     imgAlt: 'Elektriker in einem Neubau-Raum mit Kabeln und Leiter, der lächelnd auf sein Smartphone schaut',
     audience: 'Für Elektriker, SHK, Maler, Dachdecker, Tischler, Fliesenleger und alle anderen Gewerke.',
     formTitle: 'Kostenloser Entwurf in 48 Stunden',
@@ -56,6 +60,7 @@ export const handwerk = {
     alt: 'Screenshot der Website ropefx.com',
     link: 'ropefx.com ansehen →',
     moreLabel: 'Weitere Projekte',
+    exclude: 'RopeFX',
   },
   process: {
     eyebrow: '[04] — Ablauf',
@@ -90,3 +95,6 @@ export const handwerk = {
   footer: { home: 'Startseite', pricing: 'Preise', blog: 'Blog' },
   sticky: 'Kostenlosen Entwurf anfragen →',
 };
+
+/** Gemeinsame Form aller Branchen-Landingpages (Handwerk, Praxis, …). */
+export type LandingCopy = typeof handwerk;

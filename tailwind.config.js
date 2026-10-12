@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./*.{tsx,ts}", "./components/**/*.{tsx,ts}"],
+  content: ["./index.html", "./*.{tsx,ts}", "./components/**/*.{tsx,ts}", "./content/*.ts"],
   theme: {
     extend: {
       colors: {
@@ -8,13 +8,15 @@ export default {
           cyan: '#06b6d4',
           dark: '#000000'
         },
-        ink: '#101012',
-        panel: '#1a1a1e',
-        line: '#26262a',
-        ftext: '#f4f4f0',
-        muted: '#b4b4bc',
-        dim: '#8e8e98',
-        accent: '#d4ff4f',
+        // Farben als CSS-Variablen (Werte in index.css): dunkel ist Standard,
+        // .theme-light auf <html> schaltet die Praxis-Landingpage hell.
+        ink: 'rgb(var(--c-ink) / <alpha-value>)',
+        panel: 'rgb(var(--c-panel) / <alpha-value>)',
+        line: 'rgb(var(--c-line) / <alpha-value>)',
+        ftext: 'rgb(var(--c-ftext) / <alpha-value>)',
+        muted: 'rgb(var(--c-muted) / <alpha-value>)',
+        dim: 'rgb(var(--c-dim) / <alpha-value>)',
+        accent: 'rgb(var(--c-accent) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['Outfit', 'sans-serif'],

@@ -5,9 +5,35 @@
 /* ===== JPR Studio Redesign — Design-System Utilities ===== */
 /* Werte 1:1 aus jpr-redesign-mockups/jpr-prototyp.html übernommen */
 
+/* Farb-Tokens (RGB-Tripel, damit Tailwind-Deckkraft wie bg-ink/80 funktioniert) */
+:root {
+  --c-ink: 16 16 18;
+  --c-panel: 26 26 30;
+  --c-line: 38 38 42;
+  --c-ftext: 244 244 240;
+  --c-muted: 180 180 188;
+  --c-dim: 142 142 152;
+  --c-accent: 212 255 79;
+}
+/* Helles Thema: Praxis-Landingpage. Akzent ist ein ruhiges Petrol, das als Text
+   auf Hell und als Knopf mit heller Schrift AA-Kontrast hat. */
+html.theme-light {
+  --c-ink: 247 247 243;
+  --c-panel: 255 255 255;
+  --c-line: 222 226 221;
+  --c-ftext: 18 32 29;
+  --c-muted: 72 86 82;
+  --c-dim: 104 116 111;
+  --c-accent: 15 118 110;
+}
+html.theme-light body {
+  background: rgb(var(--c-ink));
+  color: rgb(var(--c-ftext));
+}
+
 ::selection {
-  background: #d4ff4f;
-  color: #101012;
+  background: rgb(var(--c-accent));
+  color: rgb(var(--c-ink));
 }
 
 /* Reveal-on-Scroll: Sektionen/Karten */
@@ -117,18 +143,18 @@
 .cursor-dot {
   width: 6px;
   height: 6px;
-  background: #d4ff4f;
+  background: rgb(var(--c-accent));
 }
 .cursor-ring {
   width: 36px;
   height: 36px;
-  border: 1px solid rgba(212, 255, 79, 0.5);
+  border: 1px solid rgb(var(--c-accent) / 0.5);
   transition: width 0.25s, height 0.25s, background 0.25s;
 }
 .cursor-ring.big {
   width: 64px;
   height: 64px;
-  background: rgba(212, 255, 79, 0.08);
+  background: rgb(var(--c-accent) / 0.08);
 }
 @media (pointer: coarse) {
   .cursor-dot,
@@ -213,8 +239,8 @@
 /* Raster: 64px-Gitter aus Hairlines, zum unteren Rand hin ausblendend */
 .bg-texture::before {
   background-image:
-    linear-gradient(to right, rgba(244, 244, 240, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(244, 244, 240, 0.045) 1px, transparent 1px);
+    linear-gradient(to right, rgb(var(--c-ftext) / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--c-ftext) / 0.045) 1px, transparent 1px);
   background-size: 64px 64px;
   -webkit-mask-image: radial-gradient(120% 85% at 50% 0%, #000 35%, transparent 100%);
   mask-image: radial-gradient(120% 85% at 50% 0%, #000 35%, transparent 100%);
@@ -242,22 +268,31 @@
 }
 .cta-glow:hover {
   animation: none;
-  box-shadow: 0 0 36px rgba(212, 255, 79, 0.45);
+  box-shadow: 0 0 36px rgb(var(--c-accent) / 0.45);
 }
 @keyframes ctaGlow {
   0% {
-    box-shadow: 0 0 18px rgba(212, 255, 79, 0.18), 0 0 0 0 rgba(212, 255, 79, 0.5);
+    box-shadow: 0 0 18px rgb(var(--c-accent) / 0.18), 0 0 0 0 rgb(var(--c-accent) / 0.5);
   }
   50% {
-    box-shadow: 0 0 42px rgba(212, 255, 79, 0.42), 0 0 0 0 rgba(212, 255, 79, 0.25);
+    box-shadow: 0 0 42px rgb(var(--c-accent) / 0.42), 0 0 0 0 rgb(var(--c-accent) / 0.25);
   }
   100% {
-    box-shadow: 0 0 18px rgba(212, 255, 79, 0.18), 0 0 0 14px rgba(212, 255, 79, 0);
+    box-shadow: 0 0 18px rgb(var(--c-accent) / 0.18), 0 0 0 14px rgb(var(--c-accent) / 0);
   }
 }
 @media (prefers-reduced-motion: reduce) {
   .cta-glow {
     animation: none;
-    box-shadow: 0 0 28px rgba(212, 255, 79, 0.3);
+    box-shadow: 0 0 28px rgb(var(--c-accent) / 0.3);
+  }
+}
+
+/* Helles Thema: Rauschen auf Hell dezenter, sonst wirkt die Flaeche grau */
+html.theme-light .bg-texture::after { opacity: 0.08; mix-blend-mode: multiply; }
+/* Helles Thema: Foto im Hero auf dem Rechner sichtbarer (helle Fotos verschwinden sonst im Weiss) */
+@media (min-width: 1024px) {
+  html.theme-light .lp-shade {
+    background: linear-gradient(to right, rgb(var(--c-ink) / 0.97) 0%, rgb(var(--c-ink) / 0.88) 40%, rgb(var(--c-ink) / 0.15) 64%, rgb(var(--c-ink) / 0) 100%);
   }
 }

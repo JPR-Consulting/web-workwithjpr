@@ -228,7 +228,7 @@ const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall, p
             <h2 id="draft-title" className="font-syne font-extrabold uppercase text-[clamp(28px,5vw,38px)] leading-[1.05] tracking-[-0.01em] mb-4">
               {t.success.title.replace('{name}', firstName)}
             </h2>
-            <p className="text-[18px] leading-[1.6] text-[#d8d8de] mb-9 max-w-[460px]">
+            <p className="text-[18px] leading-[1.6] text-ftext/85 mb-9 max-w-[460px]">
               {t.success.text.replace('{email}', data.email.trim())}
             </p>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-4">

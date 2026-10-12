@@ -19,10 +19,13 @@ execSync('npx esbuild content/site-copy.ts --bundle --format=esm --outfile=.prer
 const { copy, paths } = await import(new URL('../.prerender-copy.mjs', import.meta.url));
 rmSync('.prerender-copy.mjs');
 
-// Texte der Handwerker-Landingpage (Google Ads)
+// Texte der Branchen-Landingpages (Google Ads)
 execSync('npx esbuild content/handwerk-copy.ts --bundle --format=esm --outfile=.prerender-handwerk.mjs', { stdio: 'inherit' });
 const { handwerk, handwerkPath } = await import(new URL('../.prerender-handwerk.mjs', import.meta.url));
 rmSync('.prerender-handwerk.mjs');
+execSync('npx esbuild content/praxis-copy.ts --bundle --format=esm --outfile=.prerender-praxis.mjs', { stdio: 'inherit' });
+const { praxis, praxisPath } = await import(new URL('../.prerender-praxis.mjs', import.meta.url));
+rmSync('.prerender-praxis.mjs');
 
 const fullTemplate = readFileSync(`${DIST}/index.html`, 'utf8');
 // index.html bringt ein FAQ-Schema mit. Es gehört nur zur Startseite und wird
@@ -262,56 +265,64 @@ for (const lang of ['en', 'de']) {
   console.log(`✓ ${paths.home[lang]}`);
 }
 
-// --- Landingpage /website-fuer-handwerker (Ziel der Google-Ads-Suchkampagne) ---
-{
-  const h = handwerk;
-  const pageUrl = url(handwerkPath);
-  const hMain = (tt) => `<h2 style="font-weight:800;text-transform:uppercase;color:#f4f4f0">${esc(tt)}</h2>`;
-  const cells = (items) => `<ul>${items.map(i => `<li><strong style="color:#f4f4f0">${esc(i.title)}</strong> — ${esc(i.desc)}</li>`).join('')}</ul>`;
-  const rootHtml = `<div style="min-height:100vh;background:#101012;color:#f4f4f0;font-family:'Syne','Space Grotesk',system-ui,-apple-system,sans-serif">
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 48px;border-bottom:1px solid #26262a">
-        <div style="font-weight:800;font-size:19px;text-transform:uppercase;letter-spacing:.01em">JPR <span style="color:#d4ff4f">Studio</span>&reg;</div>
-        <div style="${mono};font-size:13px;background:#d4ff4f;color:#101012;padding:13px 22px;text-transform:uppercase">${esc(h.nav.cta)}</div>
+// --- Branchen-Landingpages (Ziel der Google-Ads-Suchkampagnen) ---
+// Farben je Thema; Werte wie die Tokens in index.css.
+const LANDING_COLORS = {
+  dark: { bg: '${c.bg}', line: '${c.line}', text: '${c.text}', muted: '${c.muted}', soft: '${c.soft}', accent: '${c.accent}', onAccent: '${c.bg}' },
+  light: { bg: '#f7f7f3', line: '#dee2dd', text: '#12201d', muted: '#485652', soft: '#2c3a36', accent: '#0f766e', onAccent: '#f7f7f3' },
+};
+for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]]) {
+  const c = LANDING_COLORS[h.theme];
+  const pageUrl = url(landingPath);
+  const hMain = (tt) => `<h2 style="font-weight:800;text-transform:uppercase;color:${c.text}">${esc(tt)}</h2>`;
+  const cells = (items) => `<ul>${items.map(i => `<li><strong style="color:${c.text}">${esc(i.title)}</strong> — ${esc(i.desc)}</li>`).join('')}</ul>`;
+  const rootHtml = `<div style="min-height:100vh;background:${c.bg};color:${c.text};font-family:'Syne','Space Grotesk',system-ui,-apple-system,sans-serif">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 48px;border-bottom:1px solid ${c.line}">
+        <div style="font-weight:800;font-size:19px;text-transform:uppercase;letter-spacing:.01em">JPR <span style="color:${c.accent}">Studio</span>&reg;</div>
+        <div style="${mono};font-size:13px;background:${c.accent};color:${c.onAccent};padding:13px 22px;text-transform:uppercase">${esc(h.nav.cta)}</div>
       </div>
       <header style="padding:120px 48px 72px 48px;box-sizing:border-box">
-        <div style="display:flex;justify-content:space-between;${mono};font-size:13px;color:#b4b4bc;text-transform:uppercase;margin-bottom:48px">
+        <div style="display:flex;justify-content:space-between;${mono};font-size:13px;color:${c.muted};text-transform:uppercase;margin-bottom:48px">
           <span>${esc(h.hero.topLeft)}</span><span>${esc(h.hero.topRight)}</span>
         </div>
         <h1 style="margin:0;font-weight:800;text-transform:uppercase;font-size:clamp(40px,7vw,100px);line-height:1;letter-spacing:-.02em">
           <span style="display:block">${esc(h.hero.h1[0])}</span>
-          <span style="display:block;color:#d4ff4f">${esc(h.hero.h1[1])}</span>
-          <span style="display:block;-webkit-text-stroke:2px #f4f4f0;color:transparent">${esc(h.hero.h1[2])}</span>
+          <span style="display:block;color:${c.accent}">${esc(h.hero.h1[1])}</span>
+          <span style="display:block;-webkit-text-stroke:2px ${c.text};color:transparent">${esc(h.hero.h1[2])}</span>
         </h1>
-        <p style="margin:40px 0 0;font-size:20px;color:#f4f4f0">${esc(h.hero.audience)}</p>
-        <p style="margin:20px 0 0;font-size:18px;line-height:1.65;color:#d8d8de;max-width:520px">${esc(h.hero.offer)}</p>
-        <ul style="margin:28px 0 0;padding:0;list-style:none;color:#b4b4bc;font-family:'Space Grotesk',system-ui,sans-serif">${h.hero.proofs.map(pr => `<li>&#10003; ${esc(pr)}</li>`).join('')}</ul>
+        <p style="margin:40px 0 0;font-size:20px;color:${c.text}">${esc(h.hero.audience)}</p>
+        <p style="margin:20px 0 0;font-size:18px;line-height:1.65;color:${c.soft};max-width:520px">${esc(h.hero.offer)}</p>
+        <ul style="margin:28px 0 0;padding:0;list-style:none;color:${c.muted};font-family:'Space Grotesk',system-ui,sans-serif">${h.hero.proofs.map(pr => `<li>&#10003; ${esc(pr)}</li>`).join('')}</ul>
       </header>
-      <main style="padding:0 48px 64px 48px;box-sizing:border-box;color:#b4b4bc;font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.7">
+      <main style="padding:0 48px 64px 48px;box-sizing:border-box;color:${c.muted};font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.7">
         ${hMain(h.problem.title)}${cells(h.problem.items)}
         ${hMain(h.features.title)}${cells(h.features.items)}
-        ${hMain(h.reference.title)}<p><a href="${h.reference.href}" style="color:#d4ff4f">${esc(h.reference.url)}</a> — ${esc(h.reference.text)}</p>
+        ${hMain(h.reference.title)}<p><a href="${h.reference.href}" style="color:${c.accent}">${esc(h.reference.url)}</a> — ${esc(h.reference.text)}</p>
         ${hMain(h.process.title)}${cells(h.process.steps)}
         ${hMain(copy.de.pricing.title)}
         <p>${copy.de.pricing.tiers.map(tier => `${esc(tier.name)} ${esc(tier.price)}`).join(' &middot; ')}. ${esc(copy.de.pricing.note)}</p>
         ${hMain(h.faq.title)}
-        ${h.faq.items.map(fq => `<h3 style="color:#f4f4f0">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
+        ${h.faq.items.map(fq => `<h3 style="color:${c.text}">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
         ${hMain(h.cta.title.join(' '))}<p>${esc(h.cta.text)}</p>
         <p>${esc(copy.de.footer.company)} &middot; info@workwithjpr.com &middot; +49 176 31 50 4123</p>
-        <p><a href="/impressum" style="color:#d4ff4f">Impressum</a> &middot; <a href="/datenschutz" style="color:#d4ff4f">Datenschutz</a></p>
+        <p><a href="/impressum" style="color:${c.accent}">Impressum</a> &middot; <a href="/datenschutz" style="color:${c.accent}">Datenschutz</a></p>
       </main>
     </div>`;
-  mkdirSync(`${DIST}${handwerkPath}`, { recursive: true });
-  writeFileSync(`${DIST}${handwerkPath}/index.html`, renderPage({
+  mkdirSync(`${DIST}${landingPath}`, { recursive: true });
+  let page = renderPage({
     title: h.meta.title,
     description: h.meta.desc,
     canonical: pageUrl,
     ogType: 'website',
     rootHtml,
     jsonLd: faqLd(h.faq.items),
-    // Hero-Foto früh laden (LCP): gleiche Breiten/sizes wie das <img> in HandwerkPage
-    headExtra: '<link rel="preload" as="image" type="image/webp" fetchpriority="high" imagesrcset="/handwerk/elektriker-480.webp 480w, /handwerk/elektriker-768.webp 768w, /handwerk/elektriker-1024.webp 1024w" imagesizes="(min-width: 1024px) 700px, 660px">',
-  }));
-  console.log(`✓ ${handwerkPath}`);
+    // Hero-Foto früh laden (LCP): gleiche Breiten/sizes wie das <img> in LandingPage
+    headExtra: `<link rel="preload" as="image" type="image/webp" fetchpriority="high" imagesrcset="${h.hero.img.base}-480.webp 480w, ${h.hero.img.base}-768.webp 768w, ${h.hero.img.base}-1024.webp 1024w" imagesizes="(min-width: 1024px) 700px, 660px">`,
+  });
+  // Helles Thema schon im HTML setzen, sonst blitzt beim Laden die dunkle Seite auf
+  if (h.theme === 'light') page = page.replace(/<html([^>]*?) class="([^"]*)"/, '<html$1 class="$2 theme-light"');
+  writeFileSync(`${DIST}${landingPath}/index.html`, page);
+  console.log(`✓ ${landingPath}`);
 }
 
-console.log(`Prerender fertig: ${blogPosts.length} Artikel + Blog-Index + 2 Rechtsseiten + Start/Preise in DE und EN + Handwerker-Landingpage.`);
+console.log(`Prerender fertig: ${blogPosts.length} Artikel + Blog-Index + 2 Rechtsseiten + Start/Preise in DE und EN + Landingpages Handwerk und Praxis.`);

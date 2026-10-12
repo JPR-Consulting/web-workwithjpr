@@ -16,9 +16,10 @@ import BlogPostView from './components/BlogPost';
 import PreisePage from './components/PreisePage';
 import DraftDialog from './components/DraftDialog';
 import HeroDraftForm from './components/HeroDraftForm';
-import HandwerkPage from './components/HandwerkPage';
+import LandingPage from './components/LandingPage';
 import { captureAttribution } from './attribution';
-import { handwerk, handwerkPath } from './content/handwerk-copy';
+import { handwerk, handwerkPath, type LandingCopy } from './content/handwerk-copy';
+import { praxis, praxisPath } from './content/praxis-copy';
 import { useLenis } from './hooks/useLenis';
 import { useReveal } from './hooks/useReveal';
 import { SectionTitle, Eyebrow, ServiceCell, ProcessStep } from './components/SectionParts';
@@ -34,7 +35,13 @@ declare global {
   }
 }
 
-type ViewState = 'HOME' | 'IMPRINT' | 'PRIVACY' | 'BLOG' | 'BLOG_POST' | 'PREISE' | 'HANDWERK';
+type ViewState = 'HOME' | 'IMPRINT' | 'PRIVACY' | 'BLOG' | 'BLOG_POST' | 'PREISE' | 'HANDWERK' | 'PRAXIS';
+
+/** Branchen-Landingpages der Google-Ads-Kampagnen: Ansicht -> Adresse + Texte. */
+const LANDINGS: Partial<Record<ViewState, { path: string; t: LandingCopy }>> = {
+  HANDWERK: { path: handwerkPath, t: handwerk },
+  PRAXIS: { path: praxisPath, t: praxis },
+};
 
 const SITE = 'https://workwithjpr.com';
 
@@ -48,6 +55,7 @@ function parseLocation(path: string): { view: ViewState; slug: string; lang: Lan
   if (path === paths.pricing.en) return { view: 'PREISE', slug: '', lang: 'en' };
   if (path === paths.pricing.de) return { view: 'PREISE', slug: '', lang: 'de' };
   if (path === handwerkPath) return { view: 'HANDWERK', slug: '', lang: 'de' };
+  if (path === praxisPath) return { view: 'PRAXIS', slug: '', lang: 'de' };
   if (path === '/imprint' || path === '/impressum') return { view: 'IMPRINT', slug: '', lang: null };
   if (path === '/privacy' || path === '/datenschutz') return { view: 'PRIVACY', slug: '', lang: null };
   if (path === '/blog') return { view: 'BLOG', slug: '', lang: null };
@@ -58,7 +66,8 @@ function parseLocation(path: string): { view: ViewState; slug: string; lang: Lan
 function pathFor(view: ViewState, lang: Lang, slug: string): string {
   if (view === 'HOME') return paths.home[lang];
   if (view === 'PREISE') return paths.pricing[lang];
-  if (view === 'HANDWERK') return handwerkPath;
+  const landing = LANDINGS[view];
+  if (landing) return landing.path;
   if (view === 'IMPRINT') return '/imprint';
   if (view === 'PRIVACY') return '/privacy';
   if (view === 'BLOG') return '/blog';
@@ -68,11 +77,13 @@ function pathFor(view: ViewState, lang: Lang, slug: string): string {
 /** Title, Description, Canonical und html-lang passend zu Ansicht und Sprache. */
 function useDocumentMeta(view: ViewState, lang: Lang) {
   useEffect(() => {
-    if (view === 'HANDWERK') {
+    const landing = LANDINGS[view];
+    document.documentElement.classList.toggle('theme-light', landing?.t.theme === 'light');
+    if (landing) {
       document.documentElement.lang = 'de';
-      document.title = handwerk.meta.title;
-      document.querySelector('meta[name="description"]')?.setAttribute('content', handwerk.meta.desc);
-      document.querySelector('link[rel="canonical"]')?.setAttribute('href', `${SITE}${handwerkPath}`);
+      document.title = landing.t.meta.title;
+      document.querySelector('meta[name="description"]')?.setAttribute('content', landing.t.meta.desc);
+      document.querySelector('link[rel="canonical"]')?.setAttribute('href', `${SITE}${landing.path}`);
       return;
     }
     const localized = view === 'HOME' || view === 'PREISE';
@@ -194,8 +205,8 @@ const App: React.FC = () => {
       initialWebsite={draftWebsite}
       onClose={() => setDraftOpen(false)}
       onCall={callInstead}
-      presetIndustry={currentView === 'HANDWERK' ? 2 : undefined}
-      sourceTag={currentView === 'HANDWERK' ? 'lp-handwerk' : undefined}
+      presetIndustry={LANDINGS[currentView]?.t.presetIndustry}
+      sourceTag={LANDINGS[currentView]?.t.sourceTag}
     />
   );
 
@@ -216,7 +227,8 @@ const App: React.FC = () => {
   const changeLang = (l: Lang) => setLang(l);
 
   const renderView = () => {
-    if (currentView === 'HANDWERK') return <HandwerkPage onRequestDraft={openDraft} onCall={openCalendly} />;
+    const landing = LANDINGS[currentView];
+    if (landing) return <LandingPage t={landing.t} onRequestDraft={openDraft} onCall={openCalendly} />;
     if (currentView === 'IMPRINT') return <Imprint onBack={() => navigate('HOME')} />;
     if (currentView === 'PRIVACY') return <Privacy onBack={() => navigate('HOME')} />;
     if (currentView === 'PREISE') return <PreisePage onNavigate={navigate} onRequestDraft={() => openDraft()} onLangChange={changeLang} />;
@@ -230,7 +242,7 @@ const App: React.FC = () => {
   };
 
   const other = renderView();
-  if (other) return <LangContext.Provider value={currentView === 'HANDWERK' ? 'de' : lang}>{other}{draftDialog}</LangContext.Provider>;
+  if (other) return <LangContext.Provider value={LANDINGS[currentView] ? 'de' : lang}>{other}{draftDialog}</LangContext.Provider>;
 
   const marqueeItems = (
     <>

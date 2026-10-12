@@ -6,23 +6,25 @@ import PricingSection from './PricingSection';
 import FAQSection from './FAQSection';
 import { Eyebrow, SectionTitle, ServiceCell, ProcessStep } from './SectionParts';
 import { useReveal } from '../hooks/useReveal';
-import { handwerk as t } from '../content/handwerk-copy';
+import type { LandingCopy } from '../content/handwerk-copy';
 import { copy } from '../content/site-copy';
 
 interface Props {
+  t: LandingCopy;
   onRequestDraft: (website?: string) => void;
   onCall: () => void;
 }
 
 const checkIcon = (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4ff4f" strokeWidth={2.5} className="shrink-0" aria-hidden="true"><path d="M4 12L10 18L20 6" /></svg>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="shrink-0 text-accent" aria-hidden="true"><path d="M4 12L10 18L20 6" /></svg>
 );
 
 /**
- * Landingpage für die Google-Ads-Suchkampagne „Handwerker“.
- * Schlanker als die Startseite: kein Wasser-Shader, kein Karussell, keine Navigationsliste.
+ * Branchen-Landingpage für Google-Ads-Suchkampagnen (Handwerk, Praxis, …); Texte, Hero-Foto
+ * und Thema kommen aus dem Copy-Objekt. Schlanker als die Startseite: kein Wasser-Shader,
+ * kein Karussell, keine Navigationsliste.
  */
-const HandwerkPage: React.FC<Props> = ({ onRequestDraft, onCall }) => {
+const LandingPage: React.FC<Props> = ({ t, onRequestDraft, onCall }) => {
   const [heroIn, setHeroIn] = useState(false);
   const ctaRef = useReveal<HTMLDivElement>();
   const refRef = useReveal<HTMLDivElement>();
@@ -35,7 +37,8 @@ const HandwerkPage: React.FC<Props> = ({ onRequestDraft, onCall }) => {
 
   const footer = copy.de.footer;
   const about = copy.de.about;
-  const otherProjects = copy.de.projects.items.filter((p) => p.title !== 'RopeFX');
+  const otherProjects = copy.de.projects.items.filter((p) => p.title !== t.reference.exclude);
+  const img = t.hero.img;
 
   return (
     <div className="bg-texture bg-ink text-ftext font-body overflow-x-clip selection:bg-accent selection:text-ink">
@@ -65,21 +68,21 @@ const HandwerkPage: React.FC<Props> = ({ onRequestDraft, onCall }) => {
           <div
             className="absolute inset-0 -z-10 lg:inset-y-0 lg:left-auto lg:right-[20%] lg:w-auto lg:h-full lg:aspect-square overflow-hidden lg:[mask-image:linear-gradient(to_right,transparent,#000_30%,#000_70%,transparent)]"
           >
-            <div className="w-full h-full -scale-x-100">
+            <div className={`w-full h-full ${img.flip ? '-scale-x-100' : ''}`}>
             <img
-              src="/handwerk/elektriker-768.webp"
-              srcSet="/handwerk/elektriker-480.webp 480w, /handwerk/elektriker-768.webp 768w, /handwerk/elektriker-1024.webp 1024w"
+              src={`${img.base}-768.webp`}
+              srcSet={`${img.base}-480.webp 480w, ${img.base}-768.webp 768w, ${img.base}-1024.webp 1024w`}
               sizes="(min-width: 1024px) 700px, 660px"
               width={1024}
               height={1024}
               alt={t.hero.imgAlt}
               fetchPriority="high"
               decoding="async"
-              className="kenburns w-full h-full object-cover object-[35%_20%] lg:object-center"
+              className={`kenburns w-full h-full object-cover ${img.pos}`}
             />
             </div>
           </div>
-          <div className="absolute inset-0 -z-10 bg-ink/[0.68] lg:bg-[linear-gradient(to_right,rgba(16,16,18,0.94)_0%,rgba(16,16,18,0.82)_38%,rgba(16,16,18,0.45)_62%,rgba(16,16,18,0.2)_100%)]" aria-hidden="true" />
+          <div className="lp-shade absolute inset-0 -z-10 bg-ink/[0.68] lg:bg-[linear-gradient(to_right,rgb(var(--c-ink)/0.94)_0%,rgb(var(--c-ink)/0.82)_38%,rgb(var(--c-ink)/0.45)_62%,rgb(var(--c-ink)/0.2)_100%)]" aria-hidden="true" />
           <div className="absolute inset-x-0 bottom-0 h-24 -z-10 bg-gradient-to-t from-ink to-transparent" aria-hidden="true" />
           <div className="hidden md:flex justify-between items-center font-mono text-[14px] text-muted uppercase mb-8 gap-2">
             <div>{t.hero.topLeft}</div>
@@ -87,11 +90,11 @@ const HandwerkPage: React.FC<Props> = ({ onRequestDraft, onCall }) => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_440px] gap-6 lg:gap-14 items-center">
-            <div className="min-w-0 [text-shadow:0_2px_18px_rgba(16,16,18,0.7)]">
+            <div className="min-w-0 [text-shadow:0_2px_18px_rgb(var(--c-ink)/0.7)]">
               <h1 className="font-syne font-extrabold uppercase text-[clamp(24px,6.4vw,92px)] lg:text-[clamp(30px,calc((100vw-620px)/13.5),80px)] leading-[1.02] tracking-[-0.015em] break-words">
                 <span className={`hero-line ${heroIn ? 'in' : ''}`}><span>{t.hero.h1[0]}</span></span>
                 <span className={`hero-line hero-line-2 text-accent ${heroIn ? 'in' : ''}`}><span>{t.hero.h1[1]}</span></span>
-                <span className={`hero-line hero-line-3 ${heroIn ? 'in' : ''}`} style={{ WebkitTextStroke: '2px #f4f4f0', color: 'transparent' }}>
+                <span className={`hero-line hero-line-3 ${heroIn ? 'in' : ''}`} style={{ WebkitTextStroke: '2px rgb(var(--c-ftext))', color: 'transparent' }}>
                   <span>{t.hero.h1[2]}</span>
                 </span>
               </h1>
@@ -102,7 +105,7 @@ const HandwerkPage: React.FC<Props> = ({ onRequestDraft, onCall }) => {
 
             <div id="entwurf" className={`hero-foot ${heroIn ? 'in' : ''} bg-panel/[0.92] backdrop-blur-md border border-line p-5 md:p-7`}>
               <h2 className="font-syne font-bold text-[20px] md:text-[24px] leading-tight mb-2">{t.hero.formTitle}</h2>
-              <p className="font-body text-[16px] leading-[1.5] text-[#d8d8de] mb-5">{t.hero.offer}</p>
+              <p className="font-body text-[16px] leading-[1.5] text-ftext/85 mb-5">{t.hero.offer}</p>
               <HeroDraftForm
                 stacked
                 ctaLabel={t.hero.cta}
@@ -334,4 +337,4 @@ const HandwerkPage: React.FC<Props> = ({ onRequestDraft, onCall }) => {
   );
 };
 
-export default HandwerkPage;
+export default LandingPage;
