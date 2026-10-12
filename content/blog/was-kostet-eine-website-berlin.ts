@@ -18,6 +18,8 @@ Als Faustregel für lokale Unternehmen in Berlin:
 - **Mehrseitige Website mit Online-Terminbuchung:** ab etwa 3.000 € — für Praxen, Studios und Salons
 - **Online-Shop oder Web-App:** ab etwa 5.000 € — für Vereine, Shops und alles mit eigener Logik
 
+Was eine Handwerker-Website konkret können muss, steht in [Website für Handwerker in Berlin](/blog/website-fuer-handwerker-berlin). Was eine Online-Terminbuchung für Praxen kostet und worauf es bei der DSGVO ankommt, in [Online-Terminbuchung für Praxen](/blog/online-terminbuchung-praxis).
+
 Was genau in welchem Paket steckt, steht auf unserer Seite **[Webdesign Preise Berlin](/preise)** — mit allen Leistungen, Festpreisen und dem kostenlosen ersten Entwurf.
 
 Wichtiger als die Paketnamen ist aber, *warum* eine Website mehr oder weniger kostet. Darum geht es hier.
@@ -57,6 +59,8 @@ Viele Agenturen in Berlin arbeiten mit WordPress. Das hat Vorteile (große Commu
 | SEO | Gut (mit Plugins) | Sehr gut (nativ) |
 | Wartung | Plugins brechen regelmäßig | Wartungsarm |
 | Flexibilität | Begrenzt durch Themes | Unbegrenzt |
+
+Wann sich welche Technik lohnt, steht ausführlich in[Individuelles Backend vs. WordPress](/blog/individuelles-backend-vs-wordpress).
 
 ## Worauf du bei der Agentur-Wahl achten solltest
 

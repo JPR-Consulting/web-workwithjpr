@@ -39,7 +39,7 @@ Für große Praxen mit viel Budget und geringem Anpassungsbedarf eine solide Wah
 **Pro:** Volle Kontrolle, keine monatlichen Kosten nach Einrichtung, eigenes Branding, Patientendaten bleiben bei dir.
 **Contra:** Höhere Einmal-Kosten, Entwicklung dauert ein paar Wochen.
 
-Diese Variante empfehlen wir für die meisten Praxen. Einmal zahlen, dauerhaft nutzen.
+Diese Variante empfehlen wir für die meisten Praxen. Einmal zahlen, dauerhaft nutzen. Wie so eine Praxis-Website mit eigener Terminbuchung aussieht, zeigen wir auf der Seite [Website für Praxen](/website-fuer-praxen).
 
 ### 3. Hybrid (z.B. Cal.com, Calendly + Custom Integration)
 
@@ -72,6 +72,8 @@ Wer das ignoriert, riskiert Bußgelder bis zu 20 Millionen Euro. Ernsthaft.
 - Mit Praxissoftware-Integration: **4.000-8.000€**
 - Plus Hosting: 10-30€/Monat
 
+Was eine Website mit Online-Terminbuchung bei uns kostet, steht mit Festpreis-Paketen auf unserer [Preisseite](/preise).
+
 Rechne kurz nach: Nach 18-36 Monaten hat sich eine eigene Lösung amortisiert — und du bist unabhängig.
 
 ## Integration mit bestehender Praxissoftware
@@ -87,6 +89,8 @@ Online-Terminbuchung ist 2026 kein Luxus mehr, sondern Standard. Patienten erwar
 Die Frage ist nur: **Eigene Lösung (einmal zahlen) oder fertige Plattform (dauerhafte Abhängigkeit)?**
 
 Für die meisten Praxen ist eine eigene Lösung auf der eigenen Website der bessere Weg — besonders wenn es um DSGVO und Patientendaten geht.
+
+Die Terminbuchung ist oft nur der erste Schritt. Welche Abläufe sich in kleinen Betrieben sonst noch automatisieren lassen, steht in [Automatisierung für kleine Unternehmen](/blog/automatisierung-fuer-kleine-unternehmen).
 
 **Willst du ein unverbindliches Angebot für deine Praxis?** Wir schauen uns deine aktuelle Situation an und schlagen die passende Lösung vor. [Termin buchen →](https://calendly.com/workwithjpr/30min)
 `

@@ -36,6 +36,8 @@ Kunden buchen direkt auf deiner Website. Du bekommst eine Benachrichtigung, der 
 
 **Kosten:** 0-30€/Monat (Calendly, Cal.com)
 
+Wie das in einer Arztpraxis aussieht — inklusive DSGVO und Praxissoftware — steht in [Online-Terminbuchung für Praxen](/blog/online-terminbuchung-praxis).
+
 ### 2. E-Mail-Automatisierung
 Automatische Antworten auf Kontaktformulare, Follow-up-Mails nach Terminen, Erinnerungen vor Ablauf von Fristen.
 
@@ -60,7 +62,7 @@ Das Ergebnis: Der Vereinsvorstand spart sich den gesamten Papierkram und kann si
 
 Nein. Die meisten Automatisierungen kosten nichts extra — sie sind Teil einer gut gebauten Website. Wenn du bei JPR Consulting eine Website bestellst, ist die Grundautomatisierung (Terminbuchung, Kontaktformular, E-Mail-Bestätigungen) bereits im Preis enthalten.
 
-Für fortgeschrittene Automatisierung (CRM-Integration, Rechnungsverarbeitung, individuelle Workflows) erstellen wir ein individuelles Angebot.
+Für fortgeschrittene Automatisierung (CRM-Integration, Rechnungsverarbeitung, individuelle Workflows) erstellen wir ein individuelles Angebot. Was in welchem Paket steckt, steht auf unserer [Preisseite](/preise).
 
 ## Fazit
 

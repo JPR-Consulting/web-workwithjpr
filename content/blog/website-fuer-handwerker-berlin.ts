@@ -63,7 +63,7 @@ Eine gute, funktionierende Handwerker-Website kostet in Berlin **zwischen 1.500�
 
 Wenn dir jemand 10.000€ für eine Handwerker-Website anbietet, läuft etwas schief. Genauso wie wenn jemand 299€ verspricht — dann bekommst du eine Template-Seite, die wie 10.000 andere aussieht.
 
-Siehe auch: [Was kostet eine Website in Berlin?](/blog/was-kostet-eine-website-berlin)
+Siehe auch: [Was kostet eine Website in Berlin?](/blog/was-kostet-eine-website-berlin) — und unsere Pakete mit Festpreis auf der [Preisseite](/preise).
 
 ## Case Study: ropeFX — Industriekletterer Berlin
 
@@ -79,6 +79,8 @@ Ergebnis: Regelmäßige Anfragen über die Website seit Launch. [ropefx.com](htt
 ## Fazit
 
 Als Handwerker brauchst du keine Award-Website. Du brauchst eine Seite, die dein Handwerk verkauft — klar, schnell, vertrauenswürdig. Die Basics richtig gemacht schlagen jedes Design-Feuerwerk.
+
+Wie wir das für Handwerksbetriebe umsetzen — mit Anfrageformular, Referenzgalerie und kostenlosem Entwurf in 48 Stunden — zeigt die Seite [Website für Handwerker](/website-fuer-handwerker).
 
 **Willst du wissen, wie deine aktuelle Seite performt?** Wir schauen sie uns kostenlos an und zeigen dir konkret, was verbessert werden kann. [Termin buchen →](https://calendly.com/workwithjpr/30min)
 `
