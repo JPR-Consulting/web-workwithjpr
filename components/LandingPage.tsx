@@ -174,73 +174,98 @@ const LandingPage: React.FC<Props> = ({ t, onRequestDraft, onCall }) => {
         <section className="px-6 md:px-12 border-b border-line py-16 md:py-24">
           <Eyebrow>{t.reference.eyebrow}</Eyebrow>
           <SectionTitle>{t.reference.title}</SectionTitle>
-          <div ref={refRef} className="reveal grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8 lg:gap-14 items-center">
-            <a
-              href={t.reference.href}
-              target="_blank"
-              rel="noopener"
-              aria-label={t.reference.link}
-              className="group block border border-line bg-panel focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-            >
-              <div className="flex items-center gap-2 px-4 h-10 border-b border-line">
-                <span className="w-2.5 h-2.5 rounded-full bg-line" aria-hidden="true" />
-                <span className="w-2.5 h-2.5 rounded-full bg-line" aria-hidden="true" />
-                <span className="w-2.5 h-2.5 rounded-full bg-line" aria-hidden="true" />
-                <span className="ml-3 font-mono text-[13px] text-muted truncate">{t.reference.url}</span>
-              </div>
-              <img
-                src={t.reference.img}
-                alt={t.reference.alt}
-                width={1200}
-                height={750}
-                loading="lazy"
-                decoding="async"
-                className="block w-full h-auto"
-              />
-            </a>
-            <div>
-              <p className="text-[18px] leading-[1.7] text-muted mb-6 max-w-[520px]">{t.reference.text}</p>
+          {t.reference.demos.length > 0 ? (
+            <div ref={refRef} className="reveal">
+              <p className="text-[18px] leading-[1.7] text-muted mb-10 max-w-[680px]">{t.reference.text}</p>
+              <ul className="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-6 list-none p-0">
+                {t.reference.demos.map((d) => (
+                  <li key={d.title} className="border border-line bg-panel">
+                    <div className="flex items-center gap-2 px-4 h-9 border-b border-line">
+                      <span className="w-2.5 h-2.5 rounded-full bg-line" aria-hidden="true" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-line" aria-hidden="true" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-line" aria-hidden="true" />
+                      <span className="ml-auto font-mono text-[12px] uppercase text-accent">{t.reference.demoBadge}</span>
+                    </div>
+                    <img src={d.img} alt={d.alt} width={1200} height={750} loading="lazy" decoding="async" className="block w-full h-auto" />
+                    <div className="p-4 border-t border-line">
+                      <div className="font-syne font-bold text-[18px] mb-1">{d.title}</div>
+                      <div className="text-[15px] leading-[1.5] text-muted">{d.tag}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <>
+            <div ref={refRef} className="reveal grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8 lg:gap-14 items-center">
               <a
                 href={t.reference.href}
                 target="_blank"
                 rel="noopener"
-                className="font-mono text-[14px] uppercase text-accent hover:text-ftext transition-colors py-2 inline-block"
+                aria-label={t.reference.link}
+                className="group block border border-line bg-panel focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
-                {t.reference.link}
+                <div className="flex items-center gap-2 px-4 h-10 border-b border-line">
+                  <span className="w-2.5 h-2.5 rounded-full bg-line" aria-hidden="true" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-line" aria-hidden="true" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-line" aria-hidden="true" />
+                  <span className="ml-3 font-mono text-[13px] text-muted truncate">{t.reference.url}</span>
+                </div>
+                <img
+                  src={t.reference.img}
+                  alt={t.reference.alt}
+                  width={1200}
+                  height={750}
+                  loading="lazy"
+                  decoding="async"
+                  className="block w-full h-auto"
+                />
               </a>
+              <div>
+                <p className="text-[18px] leading-[1.7] text-muted mb-6 max-w-[520px]">{t.reference.text}</p>
+                <a
+                  href={t.reference.href}
+                  target="_blank"
+                  rel="noopener"
+                  className="font-mono text-[14px] uppercase text-accent hover:text-ftext transition-colors py-2 inline-block"
+                >
+                  {t.reference.link}
+                </a>
+              </div>
             </div>
-          </div>
 
-          <div className="mt-14 md:mt-16 pt-8 border-t border-line">
-            <div className="font-mono text-[14px] text-muted uppercase mb-6">{t.reference.moreLabel}</div>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 list-none p-0">
-              {otherProjects.map((p) => (
-                <li key={p.title}>
-                  <a
-                    href={p.href}
-                    target="_blank"
-                    rel="noopener"
-                    className="group block border border-line bg-panel hover:border-accent transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-                  >
-                    <img
-                      src={p.img}
-                      alt={`${copy.de.projects.altPrefix} ${p.title}`}
-                      width={1200}
-                      height={750}
-                      loading="lazy"
-                      decoding="async"
-                      className="block w-full aspect-[16/10] object-cover object-top"
-                    />
-                    <div className="p-4">
-                      <div className="font-syne font-bold text-[18px] mb-1">{p.title}</div>
-                      <div className="text-[15px] leading-[1.5] text-muted mb-2">{p.tag}</div>
-                      <div className="font-mono text-[13px] uppercase text-accent group-hover:text-ftext transition-colors">{p.url} →</div>
-                    </div>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+            <div className="mt-14 md:mt-16 pt-8 border-t border-line">
+              <div className="font-mono text-[14px] text-muted uppercase mb-6">{t.reference.moreLabel}</div>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 list-none p-0">
+                {otherProjects.map((p) => (
+                  <li key={p.title}>
+                    <a
+                      href={p.href}
+                      target="_blank"
+                      rel="noopener"
+                      className="group block border border-line bg-panel hover:border-accent transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                    >
+                      <img
+                        src={p.img}
+                        alt={`${copy.de.projects.altPrefix} ${p.title}`}
+                        width={1200}
+                        height={750}
+                        loading="lazy"
+                        decoding="async"
+                        className="block w-full aspect-[16/10] object-cover object-top"
+                      />
+                      <div className="p-4">
+                        <div className="font-syne font-bold text-[18px] mb-1">{p.title}</div>
+                        <div className="text-[15px] leading-[1.5] text-muted mb-2">{p.tag}</div>
+                        <div className="font-mono text-[13px] uppercase text-accent group-hover:text-ftext transition-colors">{p.url} →</div>
+                      </div>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            </>
+          )}
         </section>
 
         {/* Über mich (Kurzfassung) */}

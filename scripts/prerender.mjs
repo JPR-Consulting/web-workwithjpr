@@ -297,7 +297,9 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
       <main style="padding:0 48px 64px 48px;box-sizing:border-box;color:${c.muted};font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.7">
         ${hMain(h.problem.title)}${cells(h.problem.items)}
         ${hMain(h.features.title)}${cells(h.features.items)}
-        ${hMain(h.reference.title)}<p><a href="${h.reference.href}" style="color:${c.accent}">${esc(h.reference.url)}</a> — ${esc(h.reference.text)}</p>
+        ${hMain(h.reference.title)}${h.reference.demos.length
+          ? `<p>${esc(h.reference.text)}</p><ul>${h.reference.demos.map(d => `<li><strong style="color:${c.text}">${esc(d.title)}</strong> — ${esc(d.tag)} (${esc(h.reference.demoBadge)})</li>`).join('')}</ul>`
+          : `<p><a href="${h.reference.href}" style="color:${c.accent}">${esc(h.reference.url)}</a> — ${esc(h.reference.text)}</p>`}
         ${hMain(h.process.title)}${cells(h.process.steps)}
         ${hMain(copy.de.pricing.title)}
         <p>${copy.de.pricing.tiers.map(tier => `${esc(tier.name)} ${esc(tier.price)}`).join(' &middot; ')}. ${esc(copy.de.pricing.note)}</p>

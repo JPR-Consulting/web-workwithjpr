@@ -61,6 +61,9 @@ export const handwerk = {
     link: 'ropefx.com ansehen →',
     moreLabel: 'Weitere Projekte',
     exclude: 'RopeFX',
+    // Beispiel-Entwürfe statt echter Referenz (z. B. Praxis); leer = echte Referenz + weitere Projekte
+    demos: [] as { title: string; tag: string; img: string; alt: string }[],
+    demoBadge: '',
   },
   process: {
     eyebrow: '[04] — Ablauf',
