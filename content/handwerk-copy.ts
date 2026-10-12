@@ -86,7 +86,7 @@ export const handwerk = {
   reference: {
     eyebrow: '[04] — So sieht dein Entwurf aus',
     title: 'Drei Beispiel-Entwürfe.',
-    text: 'So sieht ein Entwurf aus, wie du ihn nach 48 Stunden bekommst. Die drei Betriebe hier sind erfunden. Deiner zeigt deine Leistungen, deine Baustellen und dein Team.',
+    text: 'So sieht ein Entwurf aus, wie du ihn nach 48 Stunden bekommst. Deiner zeigt deine Leistungen, deine Baustellen und dein Team.',
     // Echte Referenz unter den Beispiel-Entwürfen (leer = keine)
     realText: 'RopeFX führt Höhenarbeiten und Industrieklettern in Berlin aus. Wir haben Website und Anfrage-Strecke gebaut: Leistungen auf einen Blick, Referenzen, und ein Formular, das die wichtigsten Infos zum Auftrag gleich mit abfragt.',
     href: 'https://ropefx.com',
@@ -94,15 +94,15 @@ export const handwerk = {
     img: '/portfolio-shots/ropefx.jpg',
     alt: 'Screenshot der Website ropefx.com',
     link: 'ropefx.com ansehen →',
-    moreLabel: 'Echtes Projekt',
+    moreLabel: 'Aus der Praxis',
     exclude: 'RopeFX',
     // Beispiel-Entwürfe statt echter Referenz (z. B. Praxis); leer = echte Referenz + weitere Projekte
     demos: [
-      { title: 'Bad & Wärme Krüger', tag: 'SHK · klar und vertrauensvoll', img: '/handwerk/demo-shk.jpg', alt: 'Beispiel-Entwurf der Website eines fiktiven SHK-Betriebs mit Anfrageformular für Fotos' },
-      { title: 'Malerei Hoffmann', tag: 'Maler · warm und hochwertig', img: '/handwerk/demo-maler.jpg', alt: 'Beispiel-Entwurf der Website eines fiktiven Malerbetriebs' },
-      { title: 'Dachtechnik Brandt', tag: 'Dachdecker · kräftig und direkt', img: '/handwerk/demo-dach.jpg', alt: 'Beispiel-Entwurf der Website eines fiktiven Dachdeckerbetriebs' },
+      { title: 'Bad & Wärme Krüger', tag: 'SHK · klar und vertrauensvoll', img: '/handwerk/demo-shk.jpg', alt: 'Beispiel-Entwurf der Website eines SHK-Betriebs mit Anfrageformular für Fotos' },
+      { title: 'Malerei Hoffmann', tag: 'Maler · warm und hochwertig', img: '/handwerk/demo-maler.jpg', alt: 'Beispiel-Entwurf der Website eines Malerbetriebs' },
+      { title: 'Dachtechnik Brandt', tag: 'Dachdecker · kräftig und direkt', img: '/handwerk/demo-dach.jpg', alt: 'Beispiel-Entwurf der Website eines Dachdeckerbetriebs' },
     ] as { title: string; tag: string; img: string; alt: string }[],
-    demoBadge: 'Beispiel-Entwurf · fiktiver Betrieb',
+    demoBadge: 'Beispiel-Entwurf',
   },
   process: {
     eyebrow: '[05] — Ablauf',
