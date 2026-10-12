@@ -101,7 +101,7 @@ export const praxis: LandingCopy = {
     button: 'Kostenlosen Entwurf anfragen →',
     call: 'Lieber erst sprechen? 30 Minuten per Video →',
   },
-  about: { eyebrow: 'Dein Ansprechpartner', fact: 'Du sprichst direkt mit dem, der baut' },
+  about: { eyebrow: 'Dein Ansprechpartner', fact: 'Du sprichst direkt mit dem, der baut', text: '', highlight: '' },
   footer: { home: 'Startseite', pricing: 'Preise', blog: 'Blog' },
   sticky: 'Kostenlosen Entwurf anfragen →',
 };

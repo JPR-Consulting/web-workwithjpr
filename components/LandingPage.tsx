@@ -363,8 +363,8 @@ const LandingPage: React.FC<Props> = ({ t, onRequestDraft, onCall }) => {
               <h2 className="font-syne font-extrabold uppercase text-[clamp(30px,3.6vw,48px)] tracking-[-0.015em] mb-5">
                 {about.hello} <span className="text-accent">{about.name}</span>
               </h2>
-              <p className="text-[17px] leading-[1.7] text-muted mb-4">{about.paragraphs[1]}</p>
-              <p className="text-[17px] leading-[1.7] text-ftext font-medium mb-4">{about.highlight}</p>
+              <p className="text-[17px] leading-[1.7] text-muted mb-4">{t.about.text || about.paragraphs[1]}</p>
+              <p className="text-[17px] leading-[1.7] text-ftext font-medium mb-4">{t.about.highlight || about.highlight}</p>
               <div className="mt-6 pt-5 border-t border-line font-mono text-[14px] text-muted uppercase">{t.about.fact}</div>
             </div>
           </div>

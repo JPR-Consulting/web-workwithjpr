@@ -134,7 +134,13 @@ export const handwerk = {
     button: 'Kostenlosen Entwurf anfragen →',
     call: 'Lieber erst sprechen? 30 Minuten per Video →',
   },
-  about: { eyebrow: 'Dein Ansprechpartner', fact: 'Du sprichst direkt mit dem, der baut' },
+  about: {
+    eyebrow: 'Dein Ansprechpartner',
+    fact: 'Du sprichst direkt mit dem, der baut',
+    // Eigener Text für diese Seite; leer = Text der Startseite
+    text: 'Ich baue Websites und die Abläufe dahinter: Anfrage, Angebot, Nachfassen, Rechnung. Für Betriebe, in denen der Chef tagsüber auf der Baustelle steht und abends keine zwei Stunden Büro mehr machen will.',
+    highlight: 'Kein Agentur-Deutsch, kein Technik-Gerede. Du erzählst mir, wie dein Tag läuft, und ich baue, was dir Zeit spart.',
+  },
   footer: { home: 'Startseite', pricing: 'Preise', blog: 'Blog' },
   sticky: 'Kostenlosen Entwurf anfragen →',
 };
