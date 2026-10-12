@@ -27,6 +27,7 @@ import { SectionTitle, Eyebrow, ServiceCell, ProcessStep } from './components/Se
 import { getPostBySlug } from './content/blog';
 import { copy, paths, type Lang } from './content/site-copy';
 import { LangContext, LangSwitch, useCopy } from './i18n';
+import { trackEvent } from './tracking';
 
 declare global {
   interface Window {
@@ -182,6 +183,7 @@ const App: React.FC = () => {
   }, [currentView, currentSlug, lang]);
 
   const openCalendly = () => {
+    trackEvent('call_click', { form: 'calendly' }, 'GespraechGeklickt');
     if (window.Calendly) {
       window.Calendly.initPopupWidget({
         url: 'https://calendly.com/workwithjpr/30min?hide_gdpr_banner=1&background_color=101012&text_color=f4f4f0&primary_color=d4ff4f'

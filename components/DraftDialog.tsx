@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Check, X } from 'lucide-react';
 import { useCopy, useLang } from '../i18n';
 import { attributionLine } from '../attribution';
+import { trackEvent, trackLead } from '../tracking';
 
 /**
  * „Kostenloser Entwurf in 48 Stunden“: Website-Adresse + 4 kurze Fragen, ganz ohne Termin.
@@ -29,20 +30,8 @@ type Errors = Partial<Record<'company' | 'industry' | 'name' | 'email', string>>
 
 const EMPTY = { company: '', website: '', industry: -1, goals: [] as number[], note: '', name: '', email: '', phone: '', website2: '' };
 
-function trackLead() {
-  try {
-    if (document.getElementById('ga-script') && window.dataLayer) {
-      // gtag.js verarbeitet nur echte arguments-Objekte (siehe CookieBanner).
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-rest-params
-      (function gtag(..._args: unknown[]) { window.dataLayer.push(arguments); })('event', 'generate_lead', { form: 'entwurf', page: window.location.pathname });
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-rest-params
-      (function gtag(..._args: unknown[]) { window.dataLayer.push(arguments); })('event', 'conversion', { send_to: 'AW-18450517572/MplhCNStyJkdEMSc8t1E' });
-    }
-    window.fbq?.('track', 'Lead');
-  } catch {
-    /* Messung ist Nebensache */
-  }
-}
+// Namen der vier Schritte für die Messung (Reihenfolge wie im Formular)
+const STEP_NAMES = ['betrieb', 'branche', 'ziele', 'kontakt'];
 
 const fieldClass = (invalid: boolean) =>
   `w-full h-14 px-4 bg-panel border ${invalid ? 'border-[#ff7a7a]' : 'border-line'} text-ftext text-[17px] font-body placeholder:text-dim transition-colors focus:border-accent focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`;
@@ -106,6 +95,7 @@ const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall, p
       if (initialWebsite) setData((d) => ({ ...d, website: initialWebsite }));
       if (!dlg.open) dlg.showModal();
       document.documentElement.style.overflow = 'hidden';
+      trackEvent('form_open', { form: 'entwurf', source: sourceTag || 'start' }, 'EntwurfGeoeffnet');
     } else if (dlg.open) {
       dlg.close();
     }
@@ -181,8 +171,16 @@ const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall, p
       bodyRef.current?.querySelector<HTMLElement>(`[data-field="${firstKey}"]`)?.focus();
       return;
     }
-    if (step < TOTAL) setStep(step + 1);
-    else void submit();
+    if (step < TOTAL) {
+      trackEvent('form_step', { form: 'entwurf', step: step + 1, step_name: STEP_NAMES[step] }, 'EntwurfSchritt');
+      setStep(step + 1);
+    } else void submit();
+  };
+
+  // Schließen ohne Absenden messen: an welchem Schritt steigen die Leute aus?
+  const close = () => {
+    if (status !== 'done') trackEvent('form_close', { form: 'entwurf', step, step_name: STEP_NAMES[step - 1] }, 'EntwurfAbgebrochen');
+    onClose();
   };
 
   const firstName = data.name.trim().split(/\s+/)[0] ?? '';
@@ -192,8 +190,8 @@ const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall, p
       ref={dialogRef}
       data-lenis-prevent
       aria-labelledby="draft-title"
-      onCancel={(e) => { e.preventDefault(); onClose(); }}
-      onClick={(e) => { if (e.target === dialogRef.current) onClose(); }}
+      onCancel={(e) => { e.preventDefault(); close(); }}
+      onClick={(e) => { if (e.target === dialogRef.current) close(); }}
       className="draft-dialog m-0 md:m-auto p-0 w-full h-[100dvh] max-w-none max-h-none md:w-[600px] md:h-fit md:max-h-[calc(100dvh-48px)] bg-ink text-ftext font-body md:border md:border-line"
     >
       <div className="flex flex-col h-full md:max-h-[calc(100dvh-48px)]">
@@ -207,7 +205,7 @@ const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall, p
           </div>
           <button
             type="button"
-            onClick={onClose}
+            onClick={close}
             aria-label={t.close}
             className="grid place-items-center w-11 h-11 text-muted hover:text-accent transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
           >
@@ -234,7 +232,7 @@ const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall, p
             <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
               <button
                 type="button"
-                onClick={onClose}
+                onClick={close}
                 className="inline-flex items-center font-mono text-[14px] font-medium uppercase bg-accent text-ink px-7 h-12 border border-accent hover:bg-transparent hover:text-accent transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
                 {t.success.close}
