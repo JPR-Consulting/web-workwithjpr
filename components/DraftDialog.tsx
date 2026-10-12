@@ -384,7 +384,7 @@ const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall, p
                   </div>
                   <p className="text-[14px] leading-[1.6] text-dim">
                     {t.q4.privacy}{' '}
-                    <a href="/datenschutz" target="_blank" rel="noopener" className="text-muted underline underline-offset-4 hover:text-accent">
+                    <a href="/privacy" target="_blank" rel="noopener" className="text-muted underline underline-offset-4 hover:text-accent">
                       {t.q4.privacyLink}
                     </a>
                     .

@@ -312,7 +312,7 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
         ${h.faq.items.map(fq => `<h3 style="color:${c.text}">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
         ${hMain(h.cta.title.join(' '))}<p>${esc(h.cta.text)}</p>
         <p>${esc(copy.de.footer.company)} &middot; info@workwithjpr.com &middot; +49 176 31 50 4123</p>
-        <p><a href="/impressum" style="color:${c.accent}">Impressum</a> &middot; <a href="/datenschutz" style="color:${c.accent}">Datenschutz</a></p>
+        <p><a href="/imprint" style="color:${c.accent}">Impressum</a> &middot; <a href="/privacy" style="color:${c.accent}">Datenschutz</a></p>
       </main>
     </div>`;
   mkdirSync(`${DIST}${landingPath}`, { recursive: true });

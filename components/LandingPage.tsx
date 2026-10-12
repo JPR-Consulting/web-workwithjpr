@@ -413,8 +413,8 @@ const LandingPage: React.FC<Props> = ({ t, onRequestDraft, onCall }) => {
             <a href="/" className="text-muted hover:text-accent transition-colors">{t.footer.home}</a>
             <a href="/preise" className="text-muted hover:text-accent transition-colors">{t.footer.pricing}</a>
             <a href="/blog" className="text-muted hover:text-accent transition-colors">{t.footer.blog}</a>
-            <a href="/impressum" className="text-muted hover:text-accent transition-colors">{footer.imprint}</a>
-            <a href="/datenschutz" className="text-muted hover:text-accent transition-colors">{footer.privacy}</a>
+            <a href="/imprint" className="text-muted hover:text-accent transition-colors">{footer.imprint}</a>
+            <a href="/privacy" className="text-muted hover:text-accent transition-colors">{footer.privacy}</a>
           </div>
         </footer>
       </main>
