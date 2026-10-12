@@ -87,14 +87,14 @@ export const handwerk = {
     eyebrow: '[04] — So sieht dein Entwurf aus',
     title: 'Drei Beispiel-Entwürfe.',
     text: 'So sieht ein Entwurf aus, wie du ihn nach 48 Stunden bekommst. Deiner zeigt deine Leistungen, deine Baustellen und dein Team.',
-    // Echte Referenz unter den Beispiel-Entwürfen (leer = keine)
-    realText: 'RopeFX führt Höhenarbeiten und Industrieklettern in Berlin aus. Wir haben Website und Anfrage-Strecke gebaut: Leistungen auf einen Blick, Referenzen, und ein Formular, das die wichtigsten Infos zum Auftrag gleich mit abfragt.',
-    href: 'https://ropefx.com',
-    url: 'ropefx.com',
-    img: '/portfolio-shots/ropefx.jpg',
-    alt: 'Screenshot der Website ropefx.com',
-    link: 'ropefx.com ansehen →',
-    moreLabel: 'Aus der Praxis',
+    // Echte Referenz unter den Beispiel-Entwürfen (leer = keine; RopeFX am 12.10. auf Jans Wunsch raus)
+    realText: '',
+    href: '',
+    url: '',
+    img: '',
+    alt: '',
+    link: '',
+    moreLabel: '',
     exclude: 'RopeFX',
     // Beispiel-Entwürfe statt echter Referenz (z. B. Praxis); leer = echte Referenz + weitere Projekte
     demos: [
