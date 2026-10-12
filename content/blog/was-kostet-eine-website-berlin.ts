@@ -3,6 +3,9 @@ export const post = {
   title: 'Was kostet eine Website in Berlin? Kostenfaktoren & versteckte Kosten erklärt',
   description: 'Wovon der Preis einer Website abhängt, welche laufenden Kosten dazukommen und woran du ein faires Angebot erkennst — ehrlich erklärt von einem Berliner Webentwickler.',
   date: '2026-03-08',
+  updated: '2026-10-12',
+  seoTitle: 'Was kostet eine Website in Berlin? Preise 2026 ab 1.500 €',
+  seoDescription: 'Ehrliche Einordnung: One-Page ab ca. 1.500 €, mit Terminbuchung ab ca. 3.000 €, Shop ab ca. 5.000 € – plus laufende Kosten und woran du ein faires Angebot erkennst.',
   tags: ['Webdesign', 'Berlin', 'Kosten'],
   readTime: '6 min',
   content: `

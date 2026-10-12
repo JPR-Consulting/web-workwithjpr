@@ -13,8 +13,8 @@ export interface Testimonial { quote: string; logo: string; name: string; compan
 
 const de = {
   meta: {
-    homeTitle: 'Webdesign Berlin — Moderne Websites für lokale Unternehmen | JPR Consulting',
-    homeDesc: 'Websites mit Online-Terminbuchung für Gyms, Praxen und Handwerk — aus Berlin, für ganz Deutschland. Kostenloser Entwurf in 48 Stunden, Festpreis ab 1.500 €, der Code gehört dir.',
+    homeTitle: 'Webdesign Berlin – Website ab 1.500 €, Entwurf gratis | JPR Studio',
+    homeDesc: 'Kostenloser Entwurf deiner neuen Startseite in 48 Stunden. Festpreis ab 1.500 €, Online-Terminbuchung auf Wunsch, der Code gehört dir – für Handwerk, Praxen und Gyms.',
     pricingTitle: 'Webdesign Preise Berlin 2026 — Website ab 1.500 € | JPR Consulting',
     pricingDesc: 'Transparente Preisliste: One-Page Website ab 1.500 €, Website mit Terminbuchung ab 3.000 €, Shop oder Web-App ab 5.000 €. Festes Angebot nach dem kostenlosen Entwurf.',
   },
@@ -252,8 +252,8 @@ export type SiteCopy = typeof de;
 
 const en: SiteCopy = {
   meta: {
-    homeTitle: 'Web Design Berlin — Websites for Local Businesses | JPR Consulting',
-    homeDesc: 'Websites with online booking for gyms, practices and trades — built in Berlin, for clients across Germany. Fixed prices from €1,500, you own the code. First draft free.',
+    homeTitle: 'Web Design Berlin – Websites from €1,500, Free Draft | JPR Studio',
+    homeDesc: 'A free draft of your new homepage within 48 hours. Fixed price from €1,500, online booking if you want it, you own the code – for trades, practices and gyms.',
     pricingTitle: 'Web Design Prices Berlin 2026 — Websites from €1,500 | JPR Consulting',
     pricingDesc: 'Transparent pricing: one-page website from €1,500, website with online booking from €3,000, shop or web app from €5,000. Fixed quote in a free intro call.',
   },

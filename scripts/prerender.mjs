@@ -5,13 +5,15 @@
 import { execSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { marked } from 'marked';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 const SITE = 'https://workwithjpr.com';
 const DIST = 'dist';
 
 // Blog-Inhalte laden (TS → ESM via esbuild)
 execSync('npx esbuild content/blog/index.ts --bundle --format=esm --outfile=.prerender-content.mjs', { stdio: 'inherit' });
-const { blogPosts } = await import(new URL('../.prerender-content.mjs', import.meta.url));
+const { blogPosts, blogPostTitle, blogIntro } = await import(new URL('../.prerender-content.mjs', import.meta.url));
 rmSync('.prerender-content.mjs');
 
 // Texte von Start- und Preisseite (DE/EN) — dieselbe Quelle wie die App
@@ -91,21 +93,36 @@ for (const post of blogPosts) {
       <strong style="color:#fff">Jan Rojek</strong> — Gründer &amp; Webentwickler bei JPR Consulting GmbH.
       Über 7 Jahre Erfahrung in Webentwicklung, Performance Marketing und KI-Automatisierung.</p>
     <p><a href="/" style="color:#22d3ee">JPR Consulting — Webdesign Berlin</a></p>`);
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.description,
-    url,
-    datePublished: post.date,
-    author: { '@type': 'Person', name: 'Jan Rojek', url: 'https://www.linkedin.com/in/jan-rojek-b31474a', jobTitle: 'Gründer & Webentwickler', worksFor: { '@type': 'Organization', name: 'JPR Consulting GmbH' } },
-    publisher: { '@type': 'Organization', name: 'JPR Consulting GmbH', logo: { '@type': 'ImageObject', url: `${SITE}/JPR1.png` } },
-    mainEntityOfPage: url,
-  };
+  const description = post.seoDescription ?? post.description;
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description,
+      url,
+      image: `${SITE}/og-image.png`,
+      inLanguage: 'de-DE',
+      datePublished: post.date,
+      dateModified: post.updated ?? post.date,
+      author: { '@type': 'Person', name: 'Jan Rojek', url: 'https://www.linkedin.com/in/jan-rojek-b31474a', jobTitle: 'Gründer & Webentwickler', worksFor: { '@type': 'Organization', name: 'JPR Consulting GmbH' } },
+      publisher: { '@type': 'Organization', name: 'JPR Consulting GmbH', logo: { '@type': 'ImageObject', url: `${SITE}/JPR1.png` } },
+      mainEntityOfPage: url,
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Start', item: `${SITE}/` },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE}/blog` },
+        { '@type': 'ListItem', position: 3, name: post.title, item: url },
+      ],
+    },
+  ];
   mkdirSync(`${DIST}/blog/${post.slug}`, { recursive: true });
   writeFileSync(`${DIST}/blog/${post.slug}/index.html`, renderPage({
-    title: `${post.title} | JPR Consulting`,
-    description: post.description,
+    title: blogPostTitle(post),
+    description,
     canonical: url,
     ogType: 'article',
     rootHtml,
@@ -117,6 +134,10 @@ for (const post of blogPosts) {
 // --- Blog-Übersicht (mit crawlbaren Links) ---
 const listHtml = shell(`
   <h1 style="color:#fff;font-size:2.2rem">Blog — Webdesign, SEO &amp; Online-Marketing für lokale Unternehmen</h1>
+  ${blogIntro.paragraphs.map(p => `<p>${esc(p)}</p>`).join('')}
+  ${blogIntro.groups.map(g => `<h2 style="color:#fff;font-size:1.1rem">${esc(g.title)}</h2>
+  <ul>${g.links.map(l => `<li><a href="${l.href}" style="color:#22d3ee">${esc(l.label)}</a></li>`).join('')}</ul>`).join('')}
+  <h2 style="color:#fff;font-size:1.4rem">Alle Artikel</h2>
   <ul style="list-style:none;padding:0">${blogPosts.map(p => `
     <li style="margin:24px 0;border-bottom:1px solid #27272a;padding-bottom:24px">
       <a href="/blog/${p.slug}" style="color:#fff;font-size:1.2rem;font-weight:600;text-decoration:none">${esc(p.title)}</a>
@@ -126,23 +147,34 @@ const listHtml = shell(`
   <p><a href="/" style="color:#22d3ee">JPR Consulting — Webdesign Berlin</a></p>`);
 mkdirSync(`${DIST}/blog`, { recursive: true });
 writeFileSync(`${DIST}/blog/index.html`, renderPage({
-  title: 'Blog: Webdesign, SEO & Online-Marketing Tipps | JPR Consulting Berlin',
-  description: 'Praktische Tipps für lokale Unternehmen: Was kostet eine Website, SEO-Basics, Online-Kundengewinnung und mehr — vom Berliner Webdesign-Team.',
+  title: blogIntro.title,
+  description: blogIntro.description,
   canonical: `${SITE}/blog`,
   ogType: 'website',
   rootHtml: listHtml,
 }));
 console.log('✓ /blog');
 
-// --- Imprint & Privacy (nur korrekte Meta/Canonical, noindex-frei) ---
-for (const [route, title] of [['imprint', 'Impressum | JPR Consulting'], ['privacy', 'Datenschutzerklärung | JPR Consulting']]) {
+// --- Imprint & Privacy: echter Rechtstext im HTML ---
+// Die React-Komponenten selbst werden statisch gerendert — so steht im Quelltext
+// derselbe Text wie in der App, und die Startseiten-Hero-Kopie taucht hier nicht auf.
+for (const [route, title, file] of [
+  ['imprint', 'Impressum | JPR Consulting', 'Imprint'],
+  ['privacy', 'Datenschutzerklärung | JPR Consulting', 'Privacy'],
+]) {
+  const tmp = `.prerender-${route}.mjs`;
+  execSync(`npx esbuild components/${file}.tsx --bundle --format=esm --platform=node --jsx=automatic --packages=external --outfile=${tmp}`, { stdio: 'inherit' });
+  const { default: Component } = await import(new URL(`../${tmp}`, import.meta.url));
+  rmSync(tmp);
+  const rootHtml = renderToStaticMarkup(createElement(Component, { onBack: () => {} }));
+  if (!rootHtml.includes('<h1')) throw new Error(`/${route}: keine H1 im vorgerenderten Rechtstext`);
   mkdirSync(`${DIST}/${route}`, { recursive: true });
   writeFileSync(`${DIST}/${route}/index.html`, renderPage({
     title,
     description: `${title.split(' | ')[0]} der JPR Consulting GmbH, Berlin.`,
     canonical: `${SITE}/${route}`,
     ogType: 'website',
-    rootHtml: null,
+    rootHtml,
   }));
   console.log(`✓ /${route}`);
 }

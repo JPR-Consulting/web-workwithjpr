@@ -1,29 +1,15 @@
 import React, { useEffect } from 'react';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import { ArrowLeft, Clock, Calendar } from 'lucide-react';
-import { BlogPost as BlogPostType } from '../content/blog';
+import { BlogPost as BlogPostType, blogPostTitle } from '../content/blog';
+import { copy } from '../content/site-copy';
 import MagneticButton from './MagneticButton';
 import { spaLink } from './spaLink';
 
-/**
- * Interne Links im Artikel (/preise, /blog/…) wechseln die Ansicht ohne Neuladen:
- * Adresse setzen und popstate auslösen, App liest daraus die passende Ansicht.
- */
+/** Interne Links im Artikel (/preise, /blog/…) wechseln die Ansicht ohne Neuladen. */
 const markdownComponents: Components = {
-  a: ({ href = '', children }) => {
-    if (!href.startsWith('/')) return <a href={href}>{children}</a>;
-    return (
-      <a
-        {...spaLink(href, () => {
-          window.history.pushState({}, '', href);
-          window.dispatchEvent(new PopStateEvent('popstate'));
-          window.scrollTo({ top: 0 });
-        })}
-      >
-        {children}
-      </a>
-    );
-  },
+  a: ({ href = '', children }) =>
+    href.startsWith('/') ? <a {...spaLink(href)}>{children}</a> : <a href={href}>{children}</a>,
 };
 
 interface Props {
@@ -34,12 +20,12 @@ interface Props {
 
 const BlogPost: React.FC<Props> = ({ post, onNavigate, openCalendly }) => {
   useEffect(() => {
-    document.title = `${post.title} | JPR Consulting`;
+    document.title = blogPostTitle(post);
     const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute('content', post.description);
+    if (metaDesc) metaDesc.setAttribute('content', post.seoDescription ?? post.description);
 
     return () => {
-      document.title = 'Webdesign Berlin — Moderne Websites für lokale Unternehmen | JPR Consulting';
+      document.title = copy.de.meta.homeTitle;
     };
   }, [post]);
 

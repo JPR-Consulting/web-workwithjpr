@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ArrowRight, Clock, ArrowLeft } from 'lucide-react';
-import { blogPosts } from '../content/blog';
+import { blogPosts, blogIntro } from '../content/blog';
 import { spaLink } from './spaLink';
 
 interface Props {
@@ -8,6 +8,11 @@ interface Props {
 }
 
 const BlogIndex: React.FC<Props> = ({ onNavigate }) => {
+  useEffect(() => {
+    document.title = blogIntro.title;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', blogIntro.description);
+  }, []);
+
   return (
     <div className="min-h-[100dvh] bg-ink text-ftext font-body">
       <div className="px-6 md:px-12 py-20 max-w-4xl mx-auto">
@@ -27,7 +32,28 @@ const BlogIndex: React.FC<Props> = ({ onNavigate }) => {
           <p className="text-muted text-lg max-w-[55ch]">
             Tipps zu Webdesign, SEO und digitaler Sichtbarkeit für lokale Unternehmen in Berlin.
           </p>
+          {blogIntro.paragraphs.map((p) => (
+            <p key={p} className="text-muted text-[17px] leading-[1.7] max-w-[65ch] mt-5">{p}</p>
+          ))}
         </div>
+
+        {/* Themen-Wegweiser: Preise, Branchenseiten und die wichtigsten Artikel */}
+        <nav aria-label="Themen" className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line mb-16">
+          {blogIntro.groups.map((g) => (
+            <div key={g.title} className="bg-ink p-7 md:p-8">
+              <h2 className="font-mono text-[13px] text-accent uppercase mb-4">{g.title}</h2>
+              <ul className="flex flex-col gap-1">
+                {g.links.map((l) => (
+                  <li key={l.href}>
+                    <a {...spaLink(l.href)} className="inline-block py-1.5 text-[16px] leading-[1.5] text-ftext hover:text-accent transition-colors">
+                      {l.label} <span className="text-accent" aria-hidden="true">→</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
 
         <div className="border-t border-line">
           {blogPosts.map((post) => (

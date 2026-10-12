@@ -3,6 +3,9 @@ export const post = {
   title: 'Online-Terminbuchung für Praxen: So funktioniert\'s ohne Frust',
   description: 'Online-Terminbuchung entlastet Praxen und Patienten. Was ein gutes System können muss, welche Lösungen es gibt und was eine Integration wirklich kostet.',
   date: '2026-03-13',
+  updated: '2026-10-12',
+  seoTitle: 'Online-Terminbuchung für Praxen: Kosten, DSGVO & Praxissoftware',
+  seoDescription: 'Doctolib, Samedi oder eigene Lösung? Was Online-Terminbuchung für die Praxis kostet, was sie können muss und worauf du bei DSGVO und Praxissoftware achtest.',
   tags: ['Praxis', 'Automation', 'Booking'],
   readTime: '8 min',
   content: `

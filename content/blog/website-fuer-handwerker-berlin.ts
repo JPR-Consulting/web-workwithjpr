@@ -3,6 +3,9 @@ export const post = {
   title: 'Website für Handwerker in Berlin — was du wirklich brauchst',
   description: 'Was eine Handwerker-Website in Berlin leisten muss: Google-Sichtbarkeit, Vertrauensaufbau, Anfragen ohne Aufwand. Was wichtig ist — und was überflüssig.',
   date: '2026-03-09',
+  updated: '2026-10-12',
+  seoTitle: 'Website für Handwerker in Berlin: Was sie können muss',
+  seoDescription: 'Gefunden werden, Vertrauen aufbauen, Anfragen bekommen: was eine Handwerker-Website in Berlin braucht, was überflüssig ist und was sie kosten sollte.',
   tags: ['Handwerk', 'Berlin', 'Webdesign'],
   readTime: '7 min',
   content: `

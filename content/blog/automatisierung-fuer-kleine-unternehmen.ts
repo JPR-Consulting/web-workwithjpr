@@ -3,6 +3,9 @@ export const post = {
   title: 'Automatisierung für kleine Unternehmen: Was bringt das wirklich?',
   description: 'Wie lokale Unternehmen in Berlin mit einfacher Automatisierung Zeit sparen und mehr Kunden gewinnen. Ohne Technik-Wissen.',
   date: '2026-03-11',
+  updated: '2026-10-12',
+  seoTitle: 'Automatisierung für kleine Unternehmen: Was sich lohnt (mit Beispiel)',
+  seoDescription: 'Welche Automatisierung kleinen Betrieben Zeit spart, was Tools wie n8n oder Make kosten – plus ein echtes Beispiel aus einem Kampfsportverein.',
   tags: ['Automatisierung', 'Berlin', 'Kleine Unternehmen'],
   readTime: '5 min',
   content: `
