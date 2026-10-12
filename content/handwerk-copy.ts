@@ -4,6 +4,19 @@
 
 export const handwerkPath = '/website-fuer-handwerker';
 
+/** Block „Und danach: dein Büro läuft von selbst“ — nur Seiten, die ihn zeigen; sonst null. */
+export type AutopilotCopy = {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  flowLabel: string;
+  steps: { time: string; title: string; desc: string }[];
+  moreLabel: string;
+  more: { title: string; desc: string }[];
+  note: string;
+  cta: string;
+};
+
 export const handwerk = {
   theme: 'dark' as 'dark' | 'light',
   sourceTag: 'lp-handwerk',
@@ -50,23 +63,49 @@ export const handwerk = {
       { title: 'Auch für Bewerber', desc: 'Eine Karriereseite, die Gesellen und Azubis zeigt, warum sie bei dir arbeiten sollen — mit Kurzbewerbung in zwei Minuten.' },
     ],
   },
+  autopilot: {
+    eyebrow: '[03] — Und danach',
+    title: 'Dein Büro läuft von selbst.',
+    intro: 'Die Website holt die Anfrage. Was danach kommt, kostet dich heute die Abende am Schreibtisch. Das bauen wir dir dazu, passend zu deinem Betrieb.',
+    flowLabel: 'Beispiel: eine Badsanierung in Leipzig',
+    steps: [
+      { time: 'Mo 07:12', title: 'Die Anfrage kommt rein', desc: 'Der Kunde wählt „Bad sanieren“, lädt drei Fotos hoch und gibt seine PLZ an. Er bekommt sofort eine Bestätigung.' },
+      { time: 'Mo 07:13', title: 'Das Angebot ist vorgeschrieben', desc: 'Aus Anfrage, Fotos und deinen Preisen entsteht ein Angebotsentwurf. Du prüfst, änderst und schickst ab.' },
+      { time: 'Do 18:00', title: 'Der Kunde wird erinnert', desc: 'Keine Antwort aufs Angebot? Nach drei Tagen geht eine freundliche Nachfrage raus, in deinem Namen.' },
+      { time: 'Nach dem Auftrag', title: 'Die Bewertung wird angefragt', desc: 'Der Kunde bekommt einen Link zu deinem Google-Profil. Mehr Sterne bringen mehr Anfragen.' },
+    ],
+    moreLabel: 'Und mehr, je nachdem, was du brauchst',
+    more: [
+      { title: 'Belege sortieren sich', desc: 'Rechnungen aus dem Postfach landen geordnet beim Steuerberater, ohne Abtippen.' },
+      { title: 'Morgens ein Bericht aufs Handy', desc: 'Offene Anfragen, ausstehende Angebote, unbezahlte Rechnungen. Alles auf einen Blick.' },
+      { title: 'Deine eigene Software', desc: 'Aufträge, Kundenkartei, Terminplan: so gebaut, wie dein Betrieb arbeitet, nicht umgekehrt.' },
+    ],
+    note: 'Wir schauen uns an, wie dein Betrieb heute arbeitet, und bauen genau die Teile, die dir Zeit sparen. Festpreis vorher, wie bei der Website.',
+    cta: 'Erzähl mir, was dich Zeit kostet →',
+  } as AutopilotCopy | null,
   reference: {
-    eyebrow: '[03] — Aus der Praxis',
-    title: 'Beispiel: RopeFX.',
-    text: 'RopeFX führt Höhenarbeiten und Industrieklettern in Berlin aus. Wir haben Website und Anfrage-Strecke gebaut: Leistungen auf einen Blick, Referenzen, und ein Formular, das die wichtigsten Infos zum Auftrag gleich mit abfragt.',
+    eyebrow: '[04] — So sieht dein Entwurf aus',
+    title: 'Drei Beispiel-Entwürfe.',
+    text: 'So sieht ein Entwurf aus, wie du ihn nach 48 Stunden bekommst. Die drei Betriebe hier sind erfunden. Deiner zeigt deine Leistungen, deine Baustellen und dein Team.',
+    // Echte Referenz unter den Beispiel-Entwürfen (leer = keine)
+    realText: 'RopeFX führt Höhenarbeiten und Industrieklettern in Berlin aus. Wir haben Website und Anfrage-Strecke gebaut: Leistungen auf einen Blick, Referenzen, und ein Formular, das die wichtigsten Infos zum Auftrag gleich mit abfragt.',
     href: 'https://ropefx.com',
     url: 'ropefx.com',
     img: '/portfolio-shots/ropefx.jpg',
     alt: 'Screenshot der Website ropefx.com',
     link: 'ropefx.com ansehen →',
-    moreLabel: 'Weitere Projekte',
+    moreLabel: 'Echtes Projekt',
     exclude: 'RopeFX',
     // Beispiel-Entwürfe statt echter Referenz (z. B. Praxis); leer = echte Referenz + weitere Projekte
-    demos: [] as { title: string; tag: string; img: string; alt: string }[],
-    demoBadge: '',
+    demos: [
+      { title: 'Bad & Wärme Krüger', tag: 'SHK · klar und vertrauensvoll', img: '/handwerk/demo-shk.jpg', alt: 'Beispiel-Entwurf der Website eines fiktiven SHK-Betriebs mit Anfrageformular für Fotos' },
+      { title: 'Malerei Hoffmann', tag: 'Maler · warm und hochwertig', img: '/handwerk/demo-maler.jpg', alt: 'Beispiel-Entwurf der Website eines fiktiven Malerbetriebs' },
+      { title: 'Dachtechnik Brandt', tag: 'Dachdecker · kräftig und direkt', img: '/handwerk/demo-dach.jpg', alt: 'Beispiel-Entwurf der Website eines fiktiven Dachdeckerbetriebs' },
+    ] as { title: string; tag: string; img: string; alt: string }[],
+    demoBadge: 'Beispiel-Entwurf · fiktiver Betrieb',
   },
   process: {
-    eyebrow: '[04] — Ablauf',
+    eyebrow: '[05] — Ablauf',
     title: 'In drei Schritten online.',
     steps: [
       { title: 'Website eintragen', desc: '2 Minuten, 4 kurze Fragen, ganz ohne Termin. Keine Website? Auch kein Problem.' },
@@ -76,12 +115,13 @@ export const handwerk = {
   },
   pricingEyebrow: 'Preise — Festpreis vor Start',
   faq: {
-    eyebrow: '[05] — FAQ',
+    eyebrow: '[06] — FAQ',
     title: 'Fragen von Handwerkern.',
     items: [
       { q: 'Ich hab keine Zeit für Website-Kram.', a: 'Musst du auch nicht. Du trägst deine Website ein und beantwortest 4 Fragen. Texte, Bilder und Technik übernehmen wir. Insgesamt brauchst du vielleicht eine Stunde — verteilt auf ein paar Rückmeldungen per Mail oder Telefon.' },
       { q: 'Ich habe keine guten Fotos.', a: 'Handyfotos von deinen Baustellen reichen völlig. Wir wählen aus, schneiden zu und bearbeiten sie. Fehlt etwas, nutzen wir passende Bilder, bis du eigene hast.' },
       { q: 'Lohnt sich das, ich habe doch genug Arbeit?', a: 'Gerade dann. Wer genug Anfragen hat, kann sich die besseren Aufträge aussuchen — in deinem Gebiet, zu deinen Preisen. Und eine gute Website hilft auch beim Finden von Personal.' },
+      { q: 'Geht das auch ohne neue Website?', a: 'Ja. Angebotsentwurf, Nachfassen oder Belege lassen sich auch an deine bestehende Seite und dein Postfach anschließen. Wir schauen zuerst, was du schon nutzt.' },
       { q: 'Was ist mit Vermittlungsportalen?', a: 'Portale können ein Zusatz sein. Aber dort zahlst du pro Kontakt und stehst im direkten Preisvergleich. Anfragen über deine eigene Website kosten dich nichts extra und kommen nur zu dir.' },
       { q: 'Was kostet die Website?', a: 'Eine One-Page-Website beginnt bei 1.500 €, eine mehrseitige Website mit Anfrageformular und Referenzen bei 3.000 € — jeweils netto. Nach dem kostenlosen Entwurf bekommst du einen Festpreis.' },
       { q: 'Wem gehört die Website am Ende?', a: 'Dir — vollständig. Du bekommst Code, Domain und alle Zugänge. Kein Baukasten-Abo, keine Lizenzgebühren. Betreuung ab 49 €/Monat ist möglich, aber kein Muss.' },

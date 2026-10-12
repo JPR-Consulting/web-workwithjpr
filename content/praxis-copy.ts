@@ -52,10 +52,12 @@ export const praxis: LandingCopy = {
       { title: 'Rechtlich sauber', desc: 'Impressum mit den Pflichtangaben für Heilberufe, Datenschutzerklärung, Cookie-Hinweis. Keine Google Fonts von fremden Servern.' },
     ],
   },
+  autopilot: null,
   reference: {
     eyebrow: '[03] — So sieht dein Entwurf aus',
     title: 'Drei Beispiel-Entwürfe.',
     text: 'So sieht ein Entwurf aus, wie du ihn nach 48 Stunden bekommst. Die drei Praxen hier sind erfunden. Deiner zeigt deine Leistungen, dein Team und deine Räume.',
+    realText: '',
     href: '',
     url: '',
     img: '',

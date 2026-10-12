@@ -170,7 +170,51 @@ const LandingPage: React.FC<Props> = ({ t, onRequestDraft, onCall }) => {
           </div>
         </section>
 
-        {/* [03] Referenz */}
+        {/* [03] Büro-Autopilot (nur Seiten mit autopilot-Block) */}
+        {t.autopilot && (
+          <section className="px-6 md:px-12 border-b border-line py-16 md:py-24">
+            <Eyebrow>{t.autopilot.eyebrow}</Eyebrow>
+            <SectionTitle>{t.autopilot.title}</SectionTitle>
+            <p className="text-[18px] leading-[1.7] text-muted -mt-6 mb-10 max-w-[680px]">{t.autopilot.intro}</p>
+
+            <div className="font-mono text-[14px] text-accent uppercase mb-4">{t.autopilot.flowLabel}</div>
+            <ol className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-px bg-line border border-line list-none p-0 m-0">
+              {t.autopilot.steps.map((s, i) => (
+                <li key={s.title} className="relative bg-ink p-7 md:p-8">
+                  <div className="flex items-center justify-between gap-3 mb-5">
+                    <span className="font-mono text-[13px] uppercase text-ink bg-accent px-2.5 py-1">{s.time}</span>
+                    <span className="font-syne font-extrabold text-[28px] leading-none text-line" aria-hidden="true">0{i + 1}</span>
+                  </div>
+                  <h3 className="font-syne font-bold text-[22px] leading-tight mb-3">{s.title}</h3>
+                  <p className="text-[16px] leading-[1.6] text-muted">{s.desc}</p>
+                </li>
+              ))}
+            </ol>
+
+            <div className="font-mono text-[14px] text-muted uppercase mt-12 mb-4">{t.autopilot.moreLabel}</div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line">
+              {t.autopilot.more.map((m) => (
+                <div key={m.title} className="bg-ink p-7 md:p-8">
+                  <h3 className="font-syne font-bold text-[20px] leading-tight mb-2">{m.title}</h3>
+                  <p className="text-[16px] leading-[1.6] text-muted">{m.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+              <p className="text-[17px] leading-[1.6] text-ftext max-w-[620px]">{t.autopilot.note}</p>
+              <button
+                type="button"
+                onClick={onCall}
+                className="self-start md:self-auto inline-flex items-center min-h-[48px] font-mono text-[14px] font-medium uppercase text-accent border border-accent px-6 py-3 hover:bg-accent hover:text-ink transition-colors whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              >
+                {t.autopilot.cta}
+              </button>
+            </div>
+          </section>
+        )}
+
+        {/* [04] Referenz */}
         <section className="px-6 md:px-12 border-b border-line py-16 md:py-24">
           <Eyebrow>{t.reference.eyebrow}</Eyebrow>
           <SectionTitle>{t.reference.title}</SectionTitle>
@@ -194,6 +238,35 @@ const LandingPage: React.FC<Props> = ({ t, onRequestDraft, onCall }) => {
                   </li>
                 ))}
               </ul>
+
+              {/* Echte Referenz unter den Beispiel-Entwürfen (z. B. RopeFX auf der Handwerk-Seite) */}
+              {t.reference.href && (
+                <div className="mt-14 md:mt-16 pt-8 border-t border-line">
+                  <div className="font-mono text-[14px] text-muted uppercase mb-6">{t.reference.moreLabel}</div>
+                  <div className="grid grid-cols-1 md:grid-cols-[minmax(0,420px)_1fr] gap-6 md:gap-10 items-center">
+                    <a
+                      href={t.reference.href}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label={t.reference.link}
+                      className="block border border-line bg-panel hover:border-accent transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                    >
+                      <img src={t.reference.img} alt={t.reference.alt} width={1200} height={750} loading="lazy" decoding="async" className="block w-full h-auto" />
+                    </a>
+                    <div>
+                      <p className="text-[17px] leading-[1.7] text-muted mb-4 max-w-[560px]">{t.reference.realText}</p>
+                      <a
+                        href={t.reference.href}
+                        target="_blank"
+                        rel="noopener"
+                        className="font-mono text-[14px] uppercase text-accent hover:text-ftext transition-colors py-3 inline-block"
+                      >
+                        {t.reference.link}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <>
@@ -222,7 +295,7 @@ const LandingPage: React.FC<Props> = ({ t, onRequestDraft, onCall }) => {
                 />
               </a>
               <div>
-                <p className="text-[18px] leading-[1.7] text-muted mb-6 max-w-[520px]">{t.reference.text}</p>
+                <p className="text-[18px] leading-[1.7] text-muted mb-6 max-w-[520px]">{t.reference.realText || t.reference.text}</p>
                 <a
                   href={t.reference.href}
                   target="_blank"

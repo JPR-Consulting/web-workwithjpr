@@ -297,9 +297,14 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
       <main style="padding:0 48px 64px 48px;box-sizing:border-box;color:${c.muted};font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.7">
         ${hMain(h.problem.title)}${cells(h.problem.items)}
         ${hMain(h.features.title)}${cells(h.features.items)}
+        ${h.autopilot
+          ? `${hMain(h.autopilot.title)}<p>${esc(h.autopilot.intro)}</p><p>${esc(h.autopilot.flowLabel)}</p><ol>${h.autopilot.steps.map(s => `<li><strong style="color:${c.text}">${esc(s.time)}: ${esc(s.title)}</strong> — ${esc(s.desc)}</li>`).join('')}</ol>${cells(h.autopilot.more)}<p>${esc(h.autopilot.note)}</p>`
+          : ''}
         ${hMain(h.reference.title)}${h.reference.demos.length
-          ? `<p>${esc(h.reference.text)}</p><ul>${h.reference.demos.map(d => `<li><strong style="color:${c.text}">${esc(d.title)}</strong> — ${esc(d.tag)} (${esc(h.reference.demoBadge)})</li>`).join('')}</ul>`
-          : `<p><a href="${h.reference.href}" style="color:${c.accent}">${esc(h.reference.url)}</a> — ${esc(h.reference.text)}</p>`}
+          ? `<p>${esc(h.reference.text)}</p><ul>${h.reference.demos.map(d => `<li><strong style="color:${c.text}">${esc(d.title)}</strong> — ${esc(d.tag)} (${esc(h.reference.demoBadge)})</li>`).join('')}</ul>${h.reference.href
+            ? `<p>${esc(h.reference.moreLabel)}: <a href="${h.reference.href}" style="color:${c.accent}">${esc(h.reference.url)}</a> — ${esc(h.reference.realText)}</p>`
+            : ''}`
+          : `<p><a href="${h.reference.href}" style="color:${c.accent}">${esc(h.reference.url)}</a> — ${esc(h.reference.realText || h.reference.text)}</p>`}
         ${hMain(h.process.title)}${cells(h.process.steps)}
         ${hMain(copy.de.pricing.title)}
         <p>${copy.de.pricing.tiers.map(tier => `${esc(tier.name)} ${esc(tier.price)}`).join(' &middot; ')}. ${esc(copy.de.pricing.note)}</p>
