@@ -236,6 +236,7 @@ const homeFallback = (t, lang) => `<div style="min-height:100vh;background:#1010
       <main style="padding:0 48px 64px 48px;box-sizing:border-box;color:#b4b4bc;font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.7">
         <h2 style="font-weight:800;text-transform:uppercase;color:#f4f4f0">${esc(t.services.title)}</h2>
         <ul>${t.services.items.map(i => `<li><strong style="color:#f4f4f0">${esc(i.title)}</strong> — ${esc(i.desc)}</li>`).join('')}</ul>
+        ${t.industries ? `<p>${esc(t.industries.label)} <a href="${handwerkPath}" style="color:#d4ff4f">${esc(t.industries.handwerk)} →</a> &middot; <a href="${praxisPath}" style="color:#d4ff4f">${esc(t.industries.praxis)} →</a></p>` : ''}
         <h2 style="font-weight:800;text-transform:uppercase;color:#f4f4f0">${esc(t.projects.title)}</h2>
         <ul>${t.projects.items.map(i => `<li><a href="${i.href}" style="color:#d4ff4f">${esc(i.title)}</a> — ${esc(i.tag)}</li>`).join('')}</ul>
         <h2 style="font-weight:800;text-transform:uppercase;color:#f4f4f0">${esc(t.pricing.title)}</h2>
@@ -243,7 +244,7 @@ const homeFallback = (t, lang) => `<div style="min-height:100vh;background:#1010
         <h2 style="font-weight:800;text-transform:uppercase;color:#f4f4f0">${esc(t.faq.title)}</h2>
         ${t.faq.items.map(fq => `<h3 style="color:#f4f4f0">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
         <p>${esc(t.footer.company)} &middot; info@workwithjpr.com &middot; +49 176 31 50 4123</p>
-        <p><a href="${paths.home[lang === 'de' ? 'en' : 'de']}" style="color:#d4ff4f">${lang === 'de' ? 'English version' : 'Deutsche Version'}</a>${lang === 'de' ? ' &middot; <a href="/blog" style="color:#d4ff4f">Blog</a>' : ''}</p>
+        <p><a href="${paths.home[lang === 'de' ? 'en' : 'de']}" style="color:#d4ff4f">${lang === 'de' ? 'English version' : 'Deutsche Version'}</a>${lang === 'de' ? ' &middot; <a href="/blog" style="color:#d4ff4f">Blog</a>' : ''}${t.industries ? ` &middot; <a href="${handwerkPath}" style="color:#d4ff4f">${esc(t.industries.handwerk)}</a> &middot; <a href="${praxisPath}" style="color:#d4ff4f">${esc(t.industries.praxis)}</a>` : ''} &middot; <a href="/imprint" style="color:#d4ff4f">${esc(t.footer.imprint)}</a> &middot; <a href="/privacy" style="color:#d4ff4f">${esc(t.footer.privacy)}</a></p>
       </main>
     </div>`;
 
@@ -268,7 +269,7 @@ for (const lang of ['en', 'de']) {
 // --- Branchen-Landingpages (Ziel der Google-Ads-Suchkampagnen) ---
 // Farben je Thema; Werte wie die Tokens in index.css.
 const LANDING_COLORS = {
-  dark: { bg: '${c.bg}', line: '${c.line}', text: '${c.text}', muted: '${c.muted}', soft: '${c.soft}', accent: '${c.accent}', onAccent: '${c.bg}' },
+  dark: { bg: '#101012', line: '#26262a', text: '#f4f4f0', muted: '#b4b4bc', soft: '#d8d8de', accent: '#d4ff4f', onAccent: '#101012' },
   light: { bg: '#f7f7f3', line: '#dee2dd', text: '#12201d', muted: '#485652', soft: '#2c3a36', accent: '#0f766e', onAccent: '#f7f7f3' },
 };
 for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]]) {
@@ -307,7 +308,7 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
           : `<p><a href="${h.reference.href}" style="color:${c.accent}">${esc(h.reference.url)}</a> — ${esc(h.reference.realText || h.reference.text)}</p>`}
         ${hMain(h.process.title)}${cells(h.process.steps)}
         ${hMain(copy.de.pricing.title)}
-        <p>${copy.de.pricing.tiers.map(tier => `${esc(tier.name)} ${esc(tier.price)}`).join(' &middot; ')}. ${esc(copy.de.pricing.note)}</p>
+        <p>${copy.de.pricing.tiers.map(tier => `${esc(tier.name)} ${esc(tier.price)}`).join(' &middot; ')}. ${esc(copy.de.pricing.note)} <a href="${paths.pricing.de}" style="color:${c.accent}">${esc(copy.de.pricing.detailsLink)}</a></p>
         ${hMain(h.faq.title)}
         ${h.faq.items.map(fq => `<h3 style="color:${c.text}">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
         ${hMain(h.cta.title.join(' '))}<p>${esc(h.cta.text)}</p>
