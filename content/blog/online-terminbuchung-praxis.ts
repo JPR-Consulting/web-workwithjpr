@@ -11,7 +11,7 @@ export const post = {
   content: `
 ## Das Problem: Telefon klingelt, Sprechstundenhilfe stirbt
 
-In einer typischen Berliner Arztpraxis klingelt das Telefon zwischen 8 und 12 Uhr im 90-Sekunden-Takt. Die Sprechstundenhilfe jongliert Telefonate, Wartezimmer-Patienten und Kollegen, die rufen: "Kann Frau Müller am Donnerstag kommen?". Gleichzeitig hängen 30% der Patienten in der Warteschleife oder rufen gar nicht erst an.
+In einer typischen Berliner Arztpraxis klingelt das Telefon zwischen 8 und 12 Uhr fast ohne Pause. Die Sprechstundenhilfe jongliert Telefonate, Wartezimmer-Patienten und Kollegen, die rufen: "Kann Frau Müller am Donnerstag kommen?". Gleichzeitig hängen 30% der Patienten in der Warteschleife oder rufen gar nicht erst an.
 
 Das Ergebnis: Frustrierte Patienten, genervte Mitarbeiter, verpasste Termine. Dabei gibt es seit Jahren eine simple Lösung — Online-Terminbuchung.
 
@@ -21,12 +21,12 @@ Ein gutes Buchungssystem übernimmt die Aufgaben, die am Telefon Zeit fressen:
 
 - **Verfügbare Termine anzeigen** — Patient sieht sofort, wann frei ist
 - **Termin direkt buchen** — ohne Rückruf oder Warteschleife
-- **Erinnerungen senden** — SMS oder E-Mail 24 Stunden vorher (reduziert No-Shows um bis zu 50%)
+- **Erinnerungen senden** — SMS oder E-Mail 24 Stunden vorher, damit weniger Termine verfallen
 - **Stornierungen ermöglichen** — Patient kann selbst absagen, Platz wird sofort wieder frei
 - **Patientendaten erfassen** — Versicherung, Anliegen, Notizen vor dem Termin
 - **Mit Praxissoftware synchronisieren** — kein doppeltes Eintragen
 
-Das spart der Praxis im Schnitt **6-10 Stunden pro Woche** — Zeit, die anders genutzt werden kann.
+Das spart der Praxis jede Woche **viele Stunden am Telefon** — Zeit, die anders genutzt werden kann.
 
 ## Die 3 Lösungsansätze
 
@@ -66,9 +66,8 @@ Wer das ignoriert, riskiert Bußgelder bis zu 20 Millionen Euro. Ernsthaft.
 ## Was so ein System kosten sollte
 
 ### Fertige Lösungen (monatlich)
-- Doctolib: ~109€/Monat + Einrichtung
-- jameda Premium: ~140€/Monat
-- Samedi: ab 80€/Monat
+- Doctolib, jameda, Samedi & Co.: monatliche Gebühr pro Praxis, je nach Paket, teils plus Einrichtung
+- Die aktuellen Preise stehen beim jeweiligen Anbieter, sie ändern sich regelmäßig
 
 ### Eigene Lösung (einmalig)
 - Einfaches Buchungssystem auf der Website: **2.000-4.000€**
@@ -77,7 +76,7 @@ Wer das ignoriert, riskiert Bußgelder bis zu 20 Millionen Euro. Ernsthaft.
 
 Was eine Website mit Online-Terminbuchung bei uns kostet, steht mit Festpreis-Paketen auf unserer [Preisseite](/preise).
 
-Rechne kurz nach: Nach 18-36 Monaten hat sich eine eigene Lösung amortisiert — und du bist unabhängig.
+Rechne mit deinen eigenen Zahlen nach: Eine Abo-Gebühr läuft jeden Monat weiter, eine eigene Lösung bezahlst du einmal — und du bist unabhängig.
 
 ## Integration mit bestehender Praxissoftware
 

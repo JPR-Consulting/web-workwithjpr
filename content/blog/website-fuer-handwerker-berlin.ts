@@ -9,7 +9,7 @@ export const post = {
   tags: ['Handwerk', 'Berlin', 'Webdesign'],
   readTime: '7 min',
   content: `
-## Warum 80% der Handwerker-Websites nicht funktionieren
+## Warum so viele Handwerker-Websites nicht funktionieren
 
 Die meisten Handwerker-Websites in Berlin haben zwei Probleme: Sie werden von Google nicht gefunden — und wenn doch, überzeugen sie nicht. Entweder sind sie 15 Jahre alt und wirken unseriös, oder sie sehen schick aus, aber die Telefonnummer ist versteckt und es gibt keinen Grund, anzurufen.
 
@@ -22,9 +22,9 @@ Wenn jemand "Elektriker Berlin Pankow" googelt, willst du auf Seite 1 erscheinen
 - **Google Business Profil** — kostenlos, aber oft vernachlässigt. Muss vollständig ausgefüllt sein mit Adresse, Öffnungszeiten, Fotos und idealerweise 10+ Bewertungen.
 - **Lokale Keywords auf der Website** — nicht nur "Elektriker", sondern "Elektriker in Berlin-Pankow", "Elektroinstallation Weißensee" etc.
 - **Strukturierte Daten (Schema.org)** — damit Google versteht, was dein Unternehmen macht und wo es sitzt.
-- **Mobile Ladezeit unter 3 Sekunden** — 60% der Suchen passieren auf dem Handy. Langsam = weg.
+- **Mobile Ladezeit unter 3 Sekunden** — Die meisten Suchen passieren auf dem Handy. Langsam = weg.
 
-Diese Basics kosten nichts extra, werden aber von 90% der Webdesigner ignoriert.
+Diese Basics kosten nichts extra, werden aber von vielen Webdesignern ignoriert.
 
 ## 2. Vertrauen aufbauen — sofort
 

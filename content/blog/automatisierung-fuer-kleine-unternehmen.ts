@@ -63,7 +63,7 @@ Das Ergebnis: Der Vereinsvorstand spart sich den gesamten Papierkram und kann si
 
 ## Muss das teuer sein?
 
-Nein. Die meisten Automatisierungen kosten nichts extra — sie sind Teil einer gut gebauten Website. Wenn du bei JPR Consulting eine Website bestellst, ist die Grundautomatisierung (Terminbuchung, Kontaktformular, E-Mail-Bestätigungen) bereits im Preis enthalten.
+Nein. Die meisten Automatisierungen kosten nichts extra — sie sind Teil einer gut gebauten Website. Wenn du bei JPR Consulting eine Website bestellst, sind Kontaktformular und E-Mail-Bestätigungen bereits im Preis enthalten, die Online-Terminbuchung ab dem Paket Professional.
 
 Für fortgeschrittene Automatisierung (CRM-Integration, Rechnungsverarbeitung, individuelle Workflows) erstellen wir ein individuelles Angebot. Was in welchem Paket steckt, steht auf unserer [Preisseite](/preise).
 
