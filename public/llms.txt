@@ -24,8 +24,10 @@ Erster Entwurf kostenlos — du siehst vorab, was du bekommst.
 
 Aktuelle Preisliste: https://workwithjpr.com/preise
 
-Website für Handwerker (Elektriker, SHK, Maler, Dachdecker u. a.): https://workwithjpr.com/website-fuer-handwerker
-Website für Praxen (Arztpraxis, Zahnarzt, Physiotherapie, Psychotherapie u. a.): https://workwithjpr.com/website-fuer-praxen
+## Branchen
+
+- Website für Handwerker (Elektriker, SHK, Maler, Dachdecker u. a.): https://workwithjpr.com/website-fuer-handwerker
+- Website für Praxen (Arztpraxis, Zahnarzt, Physiotherapie, Psychotherapie u. a.): https://workwithjpr.com/website-fuer-praxen
 
 ## Kontakt
 
@@ -53,3 +55,5 @@ Website für Praxen (Arztpraxis, Zahnarzt, Physiotherapie, Psychotherapie u. a.)
 - Warum dein Kampfsport-Gym eine moderne Website braucht: https://workwithjpr.com/blog/website-fuer-kampfsport-gyms
 - Online-Kundengewinnung für lokale Unternehmen: https://workwithjpr.com/blog/online-kundengewinnung
 - Was Vibe-Coding deinem Unternehmen bringt: https://workwithjpr.com/blog/vibe-coding-unternehmen
+- Warum deine Werbeanzeigen nicht funktionieren (Spoiler: Es liegt selten an den Anzeigen): https://workwithjpr.com/blog/warum-werbeanzeigen-nicht-funktionieren
+- Blog-Übersicht mit Themen-Wegweiser: https://workwithjpr.com/blog
