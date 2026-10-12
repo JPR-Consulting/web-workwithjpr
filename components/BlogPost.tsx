@@ -1,8 +1,30 @@
 import React, { useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown, { type Components } from 'react-markdown';
 import { ArrowLeft, Clock, Calendar } from 'lucide-react';
 import { BlogPost as BlogPostType } from '../content/blog';
 import MagneticButton from './MagneticButton';
+import { spaLink } from './spaLink';
+
+/**
+ * Interne Links im Artikel (/preise, /blog/…) wechseln die Ansicht ohne Neuladen:
+ * Adresse setzen und popstate auslösen, App liest daraus die passende Ansicht.
+ */
+const markdownComponents: Components = {
+  a: ({ href = '', children }) => {
+    if (!href.startsWith('/')) return <a href={href}>{children}</a>;
+    return (
+      <a
+        {...spaLink(href, () => {
+          window.history.pushState({}, '', href);
+          window.dispatchEvent(new PopStateEvent('popstate'));
+          window.scrollTo({ top: 0 });
+        })}
+      >
+        {children}
+      </a>
+    );
+  },
+};
 
 interface Props {
   post: BlogPostType;
@@ -24,13 +46,13 @@ const BlogPost: React.FC<Props> = ({ post, onNavigate, openCalendly }) => {
   return (
     <div className="min-h-[100dvh] bg-ink text-ftext font-body">
       <div className="px-6 md:px-12 py-20 max-w-3xl mx-auto">
-        <button
-          onClick={() => onNavigate('BLOG')}
+        <a
+          {...spaLink('/blog', () => onNavigate('BLOG'))}
           className="flex items-center gap-2 text-muted hover:text-accent transition-colors mb-12 font-mono text-sm uppercase"
         >
           <ArrowLeft className="w-4 h-4" />
           Alle Artikel
-        </button>
+        </a>
 
         <article>
           <div className="flex flex-wrap gap-2 mb-6">
@@ -68,7 +90,7 @@ const BlogPost: React.FC<Props> = ({ post, onNavigate, openCalendly }) => {
             prose-th:text-left prose-th:text-muted prose-th:font-medium prose-th:border-b prose-th:border-line prose-th:pb-2
             prose-td:border-b prose-td:border-line prose-td:py-2 prose-td:text-muted
           ">
-            <ReactMarkdown>{post.content}</ReactMarkdown>
+            <ReactMarkdown components={markdownComponents}>{post.content}</ReactMarkdown>
           </div>
 
           {/* Author Bio */}

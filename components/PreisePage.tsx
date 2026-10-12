@@ -4,8 +4,9 @@ import PricingSection from './PricingSection';
 import TestimonialsSection from './TestimonialsSection';
 import FAQSection from './FAQSection';
 import MagneticButton from './MagneticButton';
-import { useCopy, LangSwitch } from '../i18n';
-import type { Lang } from '../content/site-copy';
+import { useCopy, useLang, LangSwitch } from '../i18n';
+import { paths, type Lang } from '../content/site-copy';
+import { spaLink } from './spaLink';
 
 interface Props {
   onNavigate: (view: string, slug?: string) => void;
@@ -17,19 +18,22 @@ const factorIcons = [Layers, Palette, Plug, RefreshCw];
 
 const PreisePage: React.FC<Props> = ({ onNavigate, onRequestDraft, onLangChange }) => {
   const t = useCopy();
+  const lang = useLang();
   const p = t.pricingPage;
+  const home = spaLink(paths.home[lang], () => onNavigate('HOME'));
+  const post = (slug: string) => spaLink(`/blog/${slug}`, () => onNavigate('BLOG_POST', slug));
 
   return (
     <div className="min-h-[100dvh] bg-ink text-ftext font-body">
       <div className="px-6 md:px-12 pt-20">
         <div className="flex justify-between items-center gap-4 mb-12">
-          <button
-            onClick={() => onNavigate('HOME')}
+          <a
+            {...home}
             className="flex items-center gap-2 text-muted hover:text-accent transition-colors font-mono text-sm uppercase"
           >
             <ArrowLeft className="w-4 h-4" />
             {p.back}
-          </button>
+          </a>
           <LangSwitch onChange={onLangChange} />
         </div>
 
@@ -73,12 +77,12 @@ const PreisePage: React.FC<Props> = ({ onNavigate, onRequestDraft, onLangChange 
             {p.ownLink && (
               <>
                 {' '}
-                <button
-                  onClick={() => onNavigate('BLOG_POST', 'individuelles-backend-vs-wordpress')}
+                <a
+                  {...post('individuelles-backend-vs-wordpress')}
                   className="text-accent hover:text-ftext transition-colors"
                 >
                   {p.ownLink}
-                </button>
+                </a>
               </>
             )}
           </p>
@@ -87,12 +91,12 @@ const PreisePage: React.FC<Props> = ({ onNavigate, onRequestDraft, onLangChange 
         {p.guide && (
           <p className="text-muted text-[15px] mt-8">
             {p.guide.before}{' '}
-            <button
-              onClick={() => onNavigate('BLOG_POST', 'was-kostet-eine-website-berlin')}
+            <a
+              {...post('was-kostet-eine-website-berlin')}
               className="text-accent hover:text-ftext transition-colors"
             >
               {p.guide.link}
-            </button>{' '}
+            </a>{' '}
             {p.guide.after}
           </p>
         )}
@@ -119,12 +123,18 @@ const PreisePage: React.FC<Props> = ({ onNavigate, onRequestDraft, onLangChange 
       {/* Mini footer */}
       <footer className="px-6 md:px-12 py-10 border-t border-line">
         <div className="flex flex-wrap justify-center gap-8 font-mono text-[14px] uppercase">
-          <button onClick={() => onNavigate('HOME')} className="text-muted hover:text-accent transition-colors">{p.footerHome}</button>
+          <a {...home} className="text-muted hover:text-accent transition-colors">{p.footerHome}</a>
           {t.footer.blog && (
-            <button onClick={() => onNavigate('BLOG')} className="text-muted hover:text-accent transition-colors">{t.footer.blog}</button>
+            <a {...spaLink('/blog', () => onNavigate('BLOG'))} className="text-muted hover:text-accent transition-colors">{t.footer.blog}</a>
           )}
-          <button onClick={() => onNavigate('IMPRINT')} className="text-muted hover:text-accent transition-colors">{t.footer.imprint}</button>
-          <button onClick={() => onNavigate('PRIVACY')} className="text-muted hover:text-accent transition-colors">{t.footer.privacy}</button>
+          {t.industries && (
+            <>
+              <a {...spaLink('/website-fuer-handwerker', () => onNavigate('HANDWERK'))} className="text-muted hover:text-accent transition-colors">{t.industries.handwerk}</a>
+              <a {...spaLink('/website-fuer-praxen', () => onNavigate('PRAXIS'))} className="text-muted hover:text-accent transition-colors">{t.industries.praxis}</a>
+            </>
+          )}
+          <a {...spaLink('/imprint', () => onNavigate('IMPRINT'))} className="text-muted hover:text-accent transition-colors">{t.footer.imprint}</a>
+          <a {...spaLink('/privacy', () => onNavigate('PRIVACY'))} className="text-muted hover:text-accent transition-colors">{t.footer.privacy}</a>
         </div>
       </footer>
     </div>

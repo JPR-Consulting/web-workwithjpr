@@ -62,6 +62,12 @@ const de = {
       { title: 'KI-Automatisierung', desc: 'Prozesse automatisieren — vom Angebot bis zur Rechnung.' },
     ],
   },
+  /** Links zu den Branchen-Landingpages (nur Deutsch, die Seiten gibt es nur auf Deutsch). */
+  industries: {
+    label: 'Für deine Branche:',
+    handwerk: 'Website für Handwerker',
+    praxis: 'Website für Praxen',
+  } as { label: string; handwerk: string; praxis: string } | null,
   projects: {
     eyebrow: '[02] — Ausgewählte Projekte',
     title: 'Aktuelle Projekte.',
@@ -295,6 +301,7 @@ const en: SiteCopy = {
       { title: 'AI automation', desc: 'Automate your processes — from quote to invoice.' },
     ],
   },
+  industries: null,
   projects: {
     eyebrow: '[02] — Selected work',
     title: 'Recent work.',

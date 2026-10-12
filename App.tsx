@@ -18,6 +18,7 @@ import DraftDialog from './components/DraftDialog';
 import HeroDraftForm from './components/HeroDraftForm';
 import LandingPage from './components/LandingPage';
 import { captureAttribution } from './attribution';
+import { spaLink } from './components/spaLink';
 import { handwerk, handwerkPath, type LandingCopy } from './content/handwerk-copy';
 import { praxis, praxisPath } from './content/praxis-copy';
 import { useLenis } from './hooks/useLenis';
@@ -224,6 +225,9 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  /** Echter Link (crawlbar, Strg-Klick öffnet neuen Tab), normaler Klick bleibt in der App. */
+  const appLink = (view: ViewState, slug = '') => spaLink(pathFor(view, lang, slug), () => navigate(view, slug || undefined));
+
   const changeLang = (l: Lang) => setLang(l);
 
   const renderView = () => {
@@ -395,6 +399,13 @@ const App: React.FC = () => {
               <ServiceCell key={s.title} idx={`/ 00${i + 1}`} title={s.title} desc={s.desc} />
             ))}
           </div>
+          {t.industries && (
+            <p className="mt-6 flex flex-wrap items-baseline gap-x-6 gap-y-1 font-mono text-[14px] md:text-[15px] uppercase">
+              <span className="text-muted">{t.industries.label}</span>
+              <a {...appLink('HANDWERK')} className="inline-block py-2 text-accent hover:text-ftext transition-colors">{t.industries.handwerk} →</a>
+              <a {...appLink('PRAXIS')} className="inline-block py-2 text-accent hover:text-ftext transition-colors">{t.industries.praxis} →</a>
+            </p>
+          )}
         </section>
 
         {/* [02] Projekte */}
@@ -459,10 +470,16 @@ const App: React.FC = () => {
             <LangSwitch onChange={changeLang} />
             <button onClick={scrollToTop} className="text-muted hover:text-accent transition-colors">{t.footer.top}</button>
             {t.footer.blog && (
-              <button onClick={() => navigate('BLOG')} className="text-muted hover:text-accent transition-colors">{t.footer.blog}</button>
+              <a {...appLink('BLOG')} className="text-muted hover:text-accent transition-colors">{t.footer.blog}</a>
             )}
-            <button onClick={() => navigate('IMPRINT')} className="text-muted hover:text-accent transition-colors">{t.footer.imprint}</button>
-            <button onClick={() => navigate('PRIVACY')} className="text-muted hover:text-accent transition-colors">{t.footer.privacy}</button>
+            {t.industries && (
+              <>
+                <a {...appLink('HANDWERK')} className="text-muted hover:text-accent transition-colors">{t.industries.handwerk}</a>
+                <a {...appLink('PRAXIS')} className="text-muted hover:text-accent transition-colors">{t.industries.praxis}</a>
+              </>
+            )}
+            <a {...appLink('IMPRINT')} className="text-muted hover:text-accent transition-colors">{t.footer.imprint}</a>
+            <a {...appLink('PRIVACY')} className="text-muted hover:text-accent transition-colors">{t.footer.privacy}</a>
             <a href="https://www.linkedin.com/in/jan-rojek-b31474a" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent transition-colors">LinkedIn</a>
             <a
               href="https://g.page/r/Cbent0mi4nueEAE/review"

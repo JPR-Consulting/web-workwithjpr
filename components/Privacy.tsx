@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
+import { spaLink } from './spaLink';
 
 interface Props {
   onBack: () => void;
@@ -9,9 +10,9 @@ const Privacy: React.FC<Props> = ({ onBack }) => {
   return (
     <div className="min-h-screen bg-ink text-ftext font-body px-4 py-20">
       <div className="container mx-auto max-w-3xl">
-        <button onClick={onBack} className="flex items-center gap-2 text-muted hover:text-accent transition-colors mb-12">
+        <a {...spaLink('/', onBack)} className="flex items-center gap-2 text-muted hover:text-accent transition-colors mb-12">
           <ArrowLeft className="w-4 h-4" /> Zurück zur Startseite
-        </button>
+        </a>
 
         <h1 className="font-syne font-extrabold uppercase text-4xl mb-10">Datenschutzerklärung</h1>
 

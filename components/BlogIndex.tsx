@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, Clock, ArrowLeft } from 'lucide-react';
 import { blogPosts } from '../content/blog';
+import { spaLink } from './spaLink';
 
 interface Props {
   onNavigate: (view: string, slug?: string) => void;
@@ -10,13 +11,13 @@ const BlogIndex: React.FC<Props> = ({ onNavigate }) => {
   return (
     <div className="min-h-[100dvh] bg-ink text-ftext font-body">
       <div className="px-6 md:px-12 py-20 max-w-4xl mx-auto">
-        <button
-          onClick={() => onNavigate('HOME')}
+        <a
+          {...spaLink('/', () => onNavigate('HOME'))}
           className="flex items-center gap-2 text-muted hover:text-accent transition-colors mb-12 font-mono text-sm uppercase"
         >
           <ArrowLeft className="w-4 h-4" />
           Zurück zur Startseite
-        </button>
+        </a>
 
         <div className="mb-16">
           <div className="font-mono text-[13px] text-accent uppercase mb-5">Blog</div>
@@ -30,10 +31,10 @@ const BlogIndex: React.FC<Props> = ({ onNavigate }) => {
 
         <div className="border-t border-line">
           {blogPosts.map((post) => (
-            <article
-              key={post.slug}
-              onClick={() => onNavigate('BLOG_POST', post.slug)}
-              className="group py-8 border-b border-line hover:bg-panel transition-colors cursor-pointer"
+            <article key={post.slug} className="border-b border-line">
+            <a
+              {...spaLink(`/blog/${post.slug}`, () => onNavigate('BLOG_POST', post.slug))}
+              className="group block py-8 hover:bg-panel transition-colors cursor-pointer"
             >
               <div className="flex flex-wrap gap-2 mb-4">
                 {post.tags.map((tag) => (
@@ -63,6 +64,7 @@ const BlogIndex: React.FC<Props> = ({ onNavigate }) => {
                   Lesen <ArrowRight className="w-4 h-4" />
                 </span>
               </div>
+            </a>
             </article>
           ))}
         </div>
