@@ -70,7 +70,7 @@ const BlogIndex: React.FC<Props> = ({ onNavigate }) => {
                 ))}
               </div>
 
-              <h2 className="font-syne font-bold text-2xl mb-3 group-hover:text-accent transition-colors">
+              <h2 className="font-syne font-bold text-2xl mb-3 hyphens-auto break-words group-hover:text-accent transition-colors">
                 {post.title}
               </h2>
 
