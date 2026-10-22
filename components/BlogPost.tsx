@@ -1,24 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import ReactMarkdown, { type Components } from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { ArrowLeft, Clock, Calendar } from 'lucide-react';
 import { BlogPost as BlogPostType, blogPostTitle } from '../content/blog';
 import { copy } from '../content/site-copy';
 import MagneticButton from './MagneticButton';
 import { spaLink } from './spaLink';
 
-/** Interne Links im Artikel (/preise, /blog/…) wechseln die Ansicht ohne Neuladen. */
-const markdownComponents: Components = {
-  a: ({ href = '', children }) =>
-    href.startsWith('/') ? <a {...spaLink(href)}>{children}</a> : <a href={href}>{children}</a>,
-};
+/** Link-Ziel im Artikeltext, das den Entwurf-Dialog öffnet: [Text](#entwurf) */
+const DRAFT_HREF = '#entwurf';
+
+const formatDate = (d: string) => new Date(d).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
 
 interface Props {
   post: BlogPostType;
   onNavigate: (view: string) => void;
+  onRequestDraft: () => void;
   openCalendly: () => void;
 }
 
-const BlogPost: React.FC<Props> = ({ post, onNavigate, openCalendly }) => {
+const BlogPost: React.FC<Props> = ({ post, onNavigate, onRequestDraft, openCalendly }) => {
   useEffect(() => {
     document.title = blogPostTitle(post);
     const metaDesc = document.querySelector('meta[name="description"]');
@@ -28,6 +29,42 @@ const BlogPost: React.FC<Props> = ({ post, onNavigate, openCalendly }) => {
       document.title = copy.de.meta.homeTitle;
     };
   }, [post]);
+
+  const markdownComponents = useMemo<Components>(() => ({
+    // Interne Links (/preise, /blog/…) wechseln die Ansicht ohne Neuladen;
+    // #entwurf wird zum Knopf, der den Entwurf-Dialog öffnet.
+    a: ({ href = '', children }) => {
+      if (href === DRAFT_HREF) {
+        return (
+          <a
+            href={DRAFT_HREF}
+            onClick={(e) => { e.preventDefault(); onRequestDraft(); }}
+            className="not-prose inline-flex items-center gap-2 font-mono text-sm font-medium uppercase bg-accent text-ink px-6 py-3.5 border border-accent hover:bg-transparent hover:text-accent transition-colors"
+          >
+            {children} →
+          </a>
+        );
+      }
+      return href.startsWith('/') ? <a {...spaLink(href)}>{children}</a> : <a href={href}>{children}</a>;
+    },
+    // Zitatblock = Entwurf-Kasten im Text
+    blockquote: ({ children }) => (
+      <aside className="not-italic my-10 p-6 md:p-8 border border-accent/60 bg-panel [&_p]:my-0 [&_p+p]:mt-5 [&_p]:text-ftext">
+        {children}
+      </aside>
+    ),
+    // Breite Tabellen scrollen am Handy seitlich, statt die Seite zu sprengen
+    table: ({ children }) => (
+      <div className="my-8">
+        <p className="not-prose md:hidden font-mono text-xs uppercase text-dim mb-2" aria-hidden="true">← Tabelle seitlich wischen →</p>
+        <div className="overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0">
+          <table className="min-w-[560px]">{children}</table>
+        </div>
+      </div>
+    ),
+  }), [onRequestDraft]);
+
+  const updated = post.updated && post.updated !== post.date ? post.updated : null;
 
   return (
     <div className="min-h-[100dvh] bg-ink text-ftext font-body">
@@ -49,34 +86,49 @@ const BlogPost: React.FC<Props> = ({ post, onNavigate, openCalendly }) => {
             ))}
           </div>
 
-          <h1 className="font-syne font-extrabold uppercase text-[clamp(30px,4.5vw,52px)] tracking-[-0.015em] leading-[1.05] mb-6">
+          <h1 className="font-syne font-bold text-[clamp(32px,4.4vw,48px)] tracking-[-0.02em] leading-[1.1] mb-5 [text-wrap:balance]">
             {post.title}
           </h1>
 
-          <div className="flex items-center gap-4 font-mono text-[13px] text-dim uppercase mb-12 pb-8 border-b border-line">
+          <p className="text-muted text-lg leading-relaxed mb-8">{post.description}</p>
+
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[13px] text-dim uppercase mb-12 pb-8 border-b border-line">
             <span className="flex items-center gap-1.5">
               <Calendar className="w-4 h-4" />
-              {new Date(post.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })}
+              {updated ? <>Aktualisiert: {formatDate(updated)}</> : formatDate(post.date)}
             </span>
             <span className="flex items-center gap-1.5">
               <Clock className="w-4 h-4" />
               {post.readTime}
             </span>
+            <span>Von Jan Rojek</span>
           </div>
 
           <div className="prose prose-invert prose-lg max-w-none
-            prose-headings:font-syne prose-headings:tracking-tight prose-headings:uppercase
-            prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
-            prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+            prose-headings:font-syne prose-headings:tracking-[-0.01em] prose-headings:[text-wrap:balance]
+            prose-h2:text-[28px] prose-h2:leading-tight prose-h2:font-bold prose-h2:mt-14 prose-h2:mb-5
+            prose-h3:font-body prose-h3:text-xl prose-h3:font-semibold prose-h3:mt-8 prose-h3:mb-2
             prose-p:text-muted prose-p:leading-relaxed prose-p:font-body
             prose-li:text-muted
             prose-strong:text-ftext
             prose-a:text-accent prose-a:no-underline hover:prose-a:text-ftext
-            prose-table:text-sm
-            prose-th:text-left prose-th:text-muted prose-th:font-medium prose-th:border-b prose-th:border-line prose-th:pb-2
-            prose-td:border-b prose-td:border-line prose-td:py-2 prose-td:text-muted
+            prose-table:text-sm prose-table:my-0
+            prose-th:text-left prose-th:text-ftext prose-th:font-semibold prose-th:border-b prose-th:border-line prose-th:pb-2 prose-th:align-bottom
+            prose-td:border-b prose-td:border-line prose-td:py-2.5 prose-td:text-muted prose-td:align-top
           ">
-            <ReactMarkdown components={markdownComponents}>{post.content}</ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>{post.content}</ReactMarkdown>
+
+            {post.faq && post.faq.length > 0 && (
+              <>
+                <h2>Häufige Fragen</h2>
+                {post.faq.map((f) => (
+                  <React.Fragment key={f.q}>
+                    <h3>{f.q}</h3>
+                    <p>{f.a}</p>
+                  </React.Fragment>
+                ))}
+              </>
+            )}
           </div>
 
           {/* Author Bio */}
@@ -90,19 +142,24 @@ const BlogPost: React.FC<Props> = ({ post, onNavigate, openCalendly }) => {
             </div>
           </div>
 
-          {/* CTA */}
+          {/* CTA: Entwurf ist der Hauptweg, das Gespräch die Alternative */}
           <div className="mt-16 p-9 border border-line bg-panel text-center">
-            <h3 className="font-syne font-bold text-2xl tracking-tight mb-3">Bereit für deine neue Website?</h3>
-            <p className="text-muted mb-6 max-w-md mx-auto">
-              Kostenloser Entwurf — du siehst vorab, was du bekommst. Kein Risiko, keine Verpflichtung.
+            <h2 className="font-syne font-bold text-[28px] leading-tight tracking-[-0.01em] mb-3 [text-wrap:balance]">Was würde deine Website kosten?</h2>
+            <p className="text-muted mb-7 max-w-md mx-auto">
+              Trag deine aktuelle Website ein. In 48 Stunden bekommst du einen anklickbaren Entwurf deiner neuen Startseite und danach einen Festpreis. Kostenlos und ohne Verpflichtung.
             </p>
             <MagneticButton
               as="button"
-              onClick={openCalendly}
+              onClick={onRequestDraft}
               className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-accent text-ink px-7 py-4 border border-accent hover:bg-transparent hover:text-accent transition-colors"
             >
-              Kostenloser Entwurf anfragen →
+              Kostenlosen Entwurf anfordern →
             </MagneticButton>
+            <p className="mt-5">
+              <button type="button" onClick={openCalendly} className="text-[15px] text-muted hover:text-accent transition-colors underline underline-offset-4">
+                Lieber erst sprechen? Termin buchen
+              </button>
+            </p>
           </div>
         </article>
       </div>

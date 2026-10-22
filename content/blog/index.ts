@@ -25,6 +25,8 @@ export interface BlogPost {
   tags: string[];
   readTime: string;
   content: string;
+  /** Häufige Fragen unter dem Artikel; der Prerender erzeugt daraus auch das FAQPage-Schema. */
+  faq?: { q: string; a: string }[];
 }
 
 export const blogPosts: BlogPost[] = [
@@ -51,14 +53,14 @@ export const blogIntro = {
   description: 'Praktische Tipps für lokale Unternehmen: Was kostet eine Website, SEO-Basics, Online-Kundengewinnung und mehr — vom Berliner Webdesign-Team.',
   paragraphs: [
     'Hier schreibt Jan Rojek, Gründer von JPR Studio, darüber, was lokale Betriebe online weiterbringt. Websites, über die Anfragen kommen. Online-Terminbuchung. Sichtbarkeit bei Google und in KI-Suchen. Und Automatisierung, die im Büro Zeit spart. Geschrieben für Inhaber von Handwerksbetrieben, Praxen, Gyms und anderen lokalen Unternehmen – verständlich, mit echten Preisen und Beispielen aus unseren Projekten.',
-    'Du planst eine neue Website? Dann starte mit den Kosten. Unsere Pakete mit Festpreis stehen auf der Preisseite; wovon der Preis abhängt, erklärt der Ratgeber „Was kostet eine Website in Berlin?“. Für Handwerksbetriebe und Praxen gibt es eigene Seiten mit Beispiel-Entwürfen.',
+    'Du planst eine neue Website? Dann starte mit den Kosten. Unsere Pakete mit Festpreis stehen auf der Preisseite; was eine Website bei Baukasten, Freelancer und Agentur kostet, vergleicht der Ratgeber „Webdesign-Preise in Berlin“. Für Handwerksbetriebe und Praxen gibt es eigene Seiten mit Beispiel-Entwürfen.',
   ],
   groups: [
     {
       title: 'Kosten & Planung',
       links: [
         { label: 'Webdesign-Preise mit Festpreis-Paketen', href: '/preise' },
-        { label: 'Was kostet eine Website in Berlin?', href: '/blog/was-kostet-eine-website-berlin' },
+        { label: 'Webdesign-Preise in Berlin: Was kostet eine Website?', href: '/blog/was-kostet-eine-website-berlin' },
         { label: 'Individuelles Backend oder WordPress?', href: '/blog/individuelles-backend-vs-wordpress' },
         { label: '5 Zeichen, dass deine Website veraltet ist', href: '/blog/5-zeichen-veraltete-website' },
       ],

@@ -3,6 +3,7 @@ export const post = {
   title: 'Individuelles Backend vs. WordPress: Wann lohnt sich was?',
   description: 'WordPress reicht nicht immer. Wann du ein individuelles Backend brauchst und was der Unterschied für dein Unternehmen bedeutet.',
   date: '2026-03-15',
+  updated: '2026-10-22',
   tags: ['Webentwicklung', 'WordPress', 'Backend'],
   readTime: '6 min',
   content: `
@@ -44,11 +45,11 @@ WordPress hat ein Backend — aber es ist für Blogs und einfache Seiten gebaut,
 |-----------|-----------|----------------------|
 | Kosten (Start) | 500-2.000€ | 3.000-10.000€ |
 | Kosten (laufend) | 20-100€/Monat (Hosting, Plugins) | 10-50€/Monat (Hosting) |
-| Ladezeit | 2-5 Sekunden | Unter 1 Sekunde |
-| Sicherheit | Regelmäßige Updates nötig, Plugins als Schwachstelle | Minimale Angriffsfläche |
-| Flexibilität | Begrenzt durch Themes/Plugins | Unbegrenzt |
-| Wartung | Plugins brechen bei Updates | Wartungsarm |
-| Skalierung | Wird langsam ab 10.000+ Seiten | Skaliert problemlos |
+| Inhalte selbst pflegen | Sehr einfach, das ist die Stärke | Über einen Redaktionsbereich, wenn er mitgebaut wird |
+| Ladezeit | Hängt stark von Theme, Plugins und Hosting ab | Sehr schnell möglich, wenn sauber gebaut |
+| Sicherheit | Häufigstes Angriffsziel, mit regelmäßigen Updates gut beherrschbar | Kleine Angriffsfläche, Sicherheit hängt am Entwickler |
+| Eigene Funktionen | Über Plugins, bei komplexer Logik schnell unübersichtlich | Frei baubar |
+| Wartung | Regelmäßige Updates von Kern, Theme und Plugins | Weniger Updates, aber ein Entwickler muss ran |
 
 ## Beispiel: Muay Thai Subyen
 
@@ -59,7 +60,7 @@ Für das Muay Thai Gym in Berlin haben wir ein individuelles Backend gebaut:
 - **Trainingsplan:** Automatische Benachrichtigungen bei Änderungen
 - **Admin-Dashboard:** Der Vereinsvorstand sieht alles auf einen Blick
 
-Das wäre mit WordPress nicht möglich gewesen — zumindest nicht ohne 10 verschiedene Plugins, die ständig kaputtgehen.
+Mit WordPress wäre das nur über viele Plugins gegangen, die einzeln gepflegt und aufeinander abgestimmt werden müssen. Für ein System, an dem Verträge und Zahlungen hängen, war uns das zu fragil.
 
 ## Was kostet ein individuelles Backend?
 
@@ -71,7 +72,7 @@ Bei JPR Consulting starten individuelle Web-Apps ab 5.000€. Der Preis hängt v
 
 ## Fazit
 
-WordPress ist nicht schlecht — es ist nur nicht für alles gemacht. Wenn dein Unternehmen individuelle Funktionen braucht, sparst du langfristig Geld und Nerven mit einem maßgeschneiderten Backend. Keine Plugin-Updates die alles kaputt machen, keine Sicherheitslücken durch veraltete Erweiterungen.
+WordPress ist nicht schlecht — es ist nur nicht für alles gemacht. Für Informationsseiten und Blogs ist es oft die richtige Wahl. Wenn dein Unternehmen individuelle Funktionen braucht, sparst du mit einem maßgeschneiderten Backend auf Dauer meist Geld und Nerven, weil du nicht von vielen einzelnen Erweiterungen abhängst. Was eine Website insgesamt kostet, vergleicht unser Ratgeber [Webdesign-Preise in Berlin](/blog/was-kostet-eine-website-berlin).
 
 Nicht sicher, was du brauchst? Wir beraten dich kostenlos und ehrlich — auch wenn die Antwort "WordPress reicht für dich" ist.
 `

@@ -82,12 +82,21 @@ const shell = (inner) => `
 for (const post of blogPosts) {
   const url = `${SITE}/blog/${post.slug}`;
   const body = marked.parse(post.content);
+  const faq = post.faq ?? [];
+  const faqHtml = faq.length
+    ? `<h2>Häufige Fragen</h2>${faq.map(f => `<h3>${esc(f.q)}</h3><p>${esc(f.a)}</p>`).join('')}`
+    : '';
+  const fmt = (d) => new Date(d).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+  const dateLine = post.updated && post.updated !== post.date
+    ? `Aktualisiert: ${fmt(post.updated)} (erschienen: ${fmt(post.date)})`
+    : fmt(post.date);
   const rootHtml = shell(`
     <p><a href="/blog" style="color:#22d3ee">← Alle Artikel</a></p>
     <article>
       <h1 style="color:#fff;font-size:2.2rem;line-height:1.2">${esc(post.title)}</h1>
-      <p style="color:#71717a">${new Date(post.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })} · ${esc(post.readTime)} · ${post.tags.map(esc).join(', ')}</p>
-      <div class="article-body" style="color:#d4d4d8">${body}</div>
+      <p style="color:#a1a1aa;font-size:1.1rem">${esc(post.description)}</p>
+      <p style="color:#71717a">${dateLine} · ${esc(post.readTime)} · Von Jan Rojek</p>
+      <div class="article-body" style="color:#d4d4d8">${body}${faqHtml}</div>
     </article>
     <p style="margin-top:40px;border-top:1px solid #27272a;padding-top:20px;color:#a1a1aa">
       <strong style="color:#fff">Jan Rojek</strong> — Gründer &amp; Webentwickler bei JPR Consulting GmbH.
@@ -118,6 +127,7 @@ for (const post of blogPosts) {
         { '@type': 'ListItem', position: 3, name: post.title, item: url },
       ],
     },
+    ...(faq.length ? [faqLd(faq)] : []),
   ];
   mkdirSync(`${DIST}/blog/${post.slug}`, { recursive: true });
   writeFileSync(`${DIST}/blog/${post.slug}/index.html`, renderPage({
@@ -199,7 +209,7 @@ for (const lang of ['de', 'en']) {
     <ul>${p.factors.map(fa => `<li><strong style="color:#fff">${esc(fa.title)}</strong> — ${esc(fa.text)}</li>`).join('')}</ul>
     <h2 style="color:#fff">${esc(t.faq.title)}</h2>
     ${t.faq.items.map(fq => `<h3 style="color:#fff">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
-    ${lang === 'de' ? `<p>Ratgeber: <a href="/blog/was-kostet-eine-website-berlin" style="color:#22d3ee">Wovon der Preis einer Website abhängt — Kostenfaktoren &amp; versteckte Kosten</a></p>` : ''}
+    ${lang === 'de' ? `<p>Ratgeber: <a href="/blog/was-kostet-eine-website-berlin" style="color:#22d3ee">Webdesign-Preise in Berlin im Vergleich — Baukasten, Freelancer, Agentur und laufende Kosten</a></p>` : ''}
     <p><a href="${paths.home[lang]}" style="color:#22d3ee">JPR Studio — ${lang === 'de' ? 'Webdesign Berlin' : 'Web design Berlin'}</a></p>`);
   const jsonLd = [
     {

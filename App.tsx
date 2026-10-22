@@ -209,7 +209,7 @@ const App: React.FC = () => {
       onClose={() => setDraftOpen(false)}
       onCall={callInstead}
       presetIndustry={LANDINGS[currentView]?.t.presetIndustry}
-      sourceTag={LANDINGS[currentView]?.t.sourceTag}
+      sourceTag={LANDINGS[currentView]?.t.sourceTag ?? (currentView === 'BLOG_POST' ? `blog-${currentSlug}` : undefined)}
     />
   );
 
@@ -241,7 +241,7 @@ const App: React.FC = () => {
     if (currentView === 'BLOG') return <BlogIndex onNavigate={navigate} />;
     if (currentView === 'BLOG_POST') {
       const post = getPostBySlug(currentSlug);
-      if (post) return <BlogPostView post={post} onNavigate={navigate} openCalendly={openCalendly} />;
+      if (post) return <BlogPostView post={post} onNavigate={navigate} onRequestDraft={() => openDraft()} openCalendly={openCalendly} />;
       return <BlogIndex onNavigate={navigate} />;
     }
     return null;

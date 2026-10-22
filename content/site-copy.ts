@@ -15,7 +15,7 @@ const de = {
   meta: {
     homeTitle: 'Webdesign Berlin – Website ab 1.500 €, Entwurf gratis | JPR Studio',
     homeDesc: 'Kostenloser Entwurf deiner neuen Startseite in 48 Stunden. Festpreis ab 1.500 €, Online-Terminbuchung auf Wunsch, der Code gehört dir – für Handwerk, Praxen und Gyms.',
-    pricingTitle: 'Webdesign Preise Berlin 2026 — Website ab 1.500 € | JPR Consulting',
+    pricingTitle: 'Preise & Pakete: Website ab 1.500 € zum Festpreis | JPR Studio Berlin',
     pricingDesc: 'Transparente Preisliste: One-Page Website ab 1.500 €, Website mit Terminbuchung ab 3.000 €, Shop oder Web-App ab 5.000 €. Festes Angebot nach dem kostenlosen Entwurf.',
   },
   nav: {
@@ -190,7 +190,7 @@ const de = {
     ownTitle: 'Dir gehört der Code',
     ownText: 'Keine Baukasten-Abos, keine Lizenzgebühren, keine Abhängigkeit: Du bekommst den kompletten Quellcode und alle Zugänge. Inhalte pflegst du über einen einfachen Redaktionsbereich selbst, und wenn du willst, kann jederzeit jemand anderes weiterarbeiten.',
     ownLink: 'Mehr dazu im Vergleich →' as string | null,
-    guide: { before: 'Du willst tiefer einsteigen? Im Ratgeber', link: '„Was kostet eine Website in Berlin?"', after: 'rechnen wir alle Posten (inkl. versteckter Kosten) im Detail durch.' } as { before: string; link: string; after: string } | null,
+    guide: { before: 'Du willst vergleichen? Im Ratgeber', link: '„Webdesign-Preise in Berlin"', after: 'stehen die Marktpreise von Baukasten, Freelancer und Agentur – plus alle laufenden Kosten.' } as { before: string; link: string; after: string } | null,
     ctaTitle: 'Was kostet deine Website?',
     ctaText: 'Trag deine Website ein — in 48 Stunden hast du einen kostenlosen Entwurf und danach ein festes Angebot.',
     ctaButton: 'Kostenlosen Entwurf anfordern →',
