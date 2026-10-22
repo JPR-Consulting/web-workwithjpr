@@ -224,7 +224,7 @@ for (const lang of ['de', 'en']) {
       name: lang === 'de' ? 'Webdesign Berlin' : 'Web design Berlin',
       serviceType: lang === 'de' ? 'Webdesign' : 'Web design',
       areaServed: [{ '@type': 'City', name: 'Berlin' }, { '@type': 'Country', name: 'Deutschland' }],
-      provider: { '@type': 'ProfessionalService', name: 'JPR Consulting GmbH', url: SITE, telephone: '+4917631504123', address: { '@type': 'PostalAddress', streetAddress: 'Letteallee 91', postalCode: '13409', addressLocality: 'Berlin', addressCountry: 'DE' } },
+      provider: { '@type': 'ProfessionalService', name: 'JPR Consulting GmbH', url: SITE, address: { '@type': 'PostalAddress', streetAddress: 'Letteallee 91', postalCode: '13409', addressLocality: 'Berlin', addressCountry: 'DE' } },
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: lang === 'de' ? 'Webdesign Pakete' : 'Web design packages',
@@ -291,7 +291,7 @@ const homeFallback = (t, lang) => `<div style="min-height:100vh;background:#1010
         <p>${t.pricing.tiers.map(tier => `${esc(tier.name)} ${esc(tier.price)}`).join(' &middot; ')}. ${esc(t.pricing.note)} <a href="${paths.pricing[lang]}" style="color:#d4ff4f">${esc(t.pricing.detailsLink)}</a></p>
         <h2 style="font-weight:800;text-transform:uppercase;color:#f4f4f0">${esc(t.faq.title)}</h2>
         ${t.faq.items.map(fq => `<h3 style="color:#f4f4f0">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
-        <p>${esc(t.footer.company)} &middot; info@workwithjpr.com &middot; +49 176 31 50 4123</p>
+        <p>${esc(t.footer.company)} &middot; info@workwithjpr.com</p>
         <p><a href="${paths.home[lang === 'de' ? 'en' : 'de']}" style="color:#d4ff4f">${lang === 'de' ? 'English version' : 'Deutsche Version'}</a>${lang === 'de' ? ' &middot; <a href="/blog" style="color:#d4ff4f">Blog</a>' : ''}${t.industries ? ` &middot; <a href="${handwerkPath}" style="color:#d4ff4f">${esc(t.industries.handwerk)}</a> &middot; <a href="${praxisPath}" style="color:#d4ff4f">${esc(t.industries.praxis)}</a>` : ''} &middot; <a href="/imprint" style="color:#d4ff4f">${esc(t.footer.imprint)}</a> &middot; <a href="/privacy" style="color:#d4ff4f">${esc(t.footer.privacy)}</a></p>
       </main>
     </div>`;
@@ -360,7 +360,7 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
         ${hMain(h.faq.title)}
         ${h.faq.items.map(fq => `<h3 style="color:${c.text}">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
         ${hMain(h.cta.title.join(' '))}<p>${esc(h.cta.text)}</p>
-        <p>${esc(copy.de.footer.company)} &middot; info@workwithjpr.com &middot; +49 176 31 50 4123</p>
+        <p>${esc(copy.de.footer.company)} &middot; info@workwithjpr.com</p>
         <p><a href="/imprint" style="color:${c.accent}">Impressum</a> &middot; <a href="/privacy" style="color:${c.accent}">Datenschutz</a></p>
       </main>
     </div>`;
