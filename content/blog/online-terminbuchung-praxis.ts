@@ -3,7 +3,7 @@ export const post = {
   title: 'Online-Terminbuchung für Praxen: So funktioniert\'s ohne Frust',
   description: 'Online-Terminbuchung entlastet Praxen und Patienten. Was ein gutes System können muss, welche Lösungen es gibt und was eine Integration wirklich kostet.',
   date: '2026-03-13',
-  updated: '2026-10-12',
+  updated: '2026-10-22',
   seoTitle: 'Online-Terminbuchung für Praxen: Kosten, DSGVO & Praxissoftware',
   seoDescription: 'Doctolib, Samedi oder eigene Lösung? Was Online-Terminbuchung für die Praxis kostet, was sie können muss und worauf du bei DSGVO und Praxissoftware achtest.',
   tags: ['Praxis', 'Automation', 'Booking'],
@@ -11,7 +11,7 @@ export const post = {
   content: `
 ## Das Problem: Telefon klingelt, Sprechstundenhilfe stirbt
 
-In einer typischen Berliner Arztpraxis klingelt das Telefon zwischen 8 und 12 Uhr fast ohne Pause. Die Sprechstundenhilfe jongliert Telefonate, Wartezimmer-Patienten und Kollegen, die rufen: "Kann Frau Müller am Donnerstag kommen?". Gleichzeitig hängen 30% der Patienten in der Warteschleife oder rufen gar nicht erst an.
+In einer typischen Berliner Arztpraxis klingelt das Telefon zwischen 8 und 12 Uhr fast ohne Pause. Die Sprechstundenhilfe jongliert Telefonate, Wartezimmer-Patienten und Kollegen, die rufen: "Kann Frau Müller am Donnerstag kommen?". Gleichzeitig hängen Patienten in der Warteschleife oder geben auf, bevor jemand abnimmt.
 
 Das Ergebnis: Frustrierte Patienten, genervte Mitarbeiter, verpasste Termine. Dabei gibt es seit Jahren eine simple Lösung — Online-Terminbuchung.
 
@@ -83,6 +83,8 @@ Rechne mit deinen eigenen Zahlen nach: Eine Abo-Gebühr läuft jeden Monat weite
 Moderne Praxen nutzen Software wie CGM M1, medatixx, TurboMed oder medicenter. Ein gutes Buchungssystem kann sich mit diesen Systemen verbinden, sodass Termine automatisch in den Kalender übertragen werden.
 
 **Wichtig:** Nicht jede Praxissoftware bietet eine offene API. Kläre das vorher — sonst zahlst du für eine Lösung, die nicht synchronisiert.
+
+Wie Telefon, Online-Terminbuchung und Praxissoftware zusammenspielen, inklusive KI-Telefonassistent und Checkliste für die Auswahl, steht in [Telefon, Terminbuchung und Praxissoftware verbinden](/blog/praxis-telefon-terminbuchung-praxissoftware).
 
 ## Fazit
 

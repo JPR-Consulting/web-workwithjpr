@@ -76,8 +76,8 @@ const shell = (inner) => `
 <div style="min-height:100vh;background:#09090b;color:#d4d4d8;font-family:system-ui,-apple-system,sans-serif">
 <div style="border-bottom:1px solid #27272a">
 <div style="max-width:768px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;gap:12px">
-<img src="/JPR1.webp" alt="JPR Consulting" width="34" height="34" style="border-radius:50%">
-<span style="color:#fff;font-weight:600;letter-spacing:-.01em">JPR Consulting</span></div></div>
+<img src="/JPR1.webp" alt="JPR Studio" width="34" height="34" style="border-radius:50%">
+<span style="color:#fff;font-weight:600;letter-spacing:-.01em">JPR Studio</span></div></div>
 <div style="max-width:768px;margin:0 auto;padding:60px 20px;line-height:1.7">${inner}</div></div>`;
 
 // --- Blog-Artikel ---
@@ -103,9 +103,9 @@ for (const post of blogPosts) {
       <div class="article-body" style="color:#d4d4d8">${body}${faqHtml}</div>
     </article>
     <p style="margin-top:40px;border-top:1px solid #27272a;padding-top:20px;color:#a1a1aa">
-      <strong style="color:#fff">Jan Rojek</strong> — Gründer &amp; Webentwickler bei JPR Consulting GmbH.
+      <strong style="color:#fff">Jan Rojek</strong> — Gründer von JPR Studio (JPR Consulting GmbH).
       Über 7 Jahre Erfahrung in Webentwicklung, Performance Marketing und KI-Automatisierung.</p>
-    <p><a href="/" style="color:#22d3ee">JPR Consulting — Webdesign Berlin</a></p>`);
+    <p><a href="/" style="color:#22d3ee">JPR Studio — Webdesign Berlin</a></p>`);
   const description = post.seoDescription ?? post.description;
   const image = post.image ? `${SITE}${post.image}` : null;
   const jsonLd = [
@@ -119,8 +119,8 @@ for (const post of blogPosts) {
       inLanguage: 'de-DE',
       datePublished: post.date,
       dateModified: post.updated ?? post.date,
-      author: { '@type': 'Person', name: 'Jan Rojek', url: 'https://www.linkedin.com/in/jan-rojek-b31474a', jobTitle: 'Gründer & Webentwickler', worksFor: { '@type': 'Organization', name: 'JPR Consulting GmbH' } },
-      publisher: { '@type': 'Organization', name: 'JPR Consulting GmbH', logo: { '@type': 'ImageObject', url: `${SITE}/JPR1.png` } },
+      author: { '@type': 'Person', name: 'Jan Rojek', url: 'https://www.linkedin.com/in/jan-rojek-b31474a', jobTitle: 'Gründer & Webentwickler', worksFor: { '@type': 'Organization', name: 'JPR Studio', legalName: 'JPR Consulting GmbH' } },
+      publisher: { '@type': 'Organization', name: 'JPR Studio', legalName: 'JPR Consulting GmbH', logo: { '@type': 'ImageObject', url: `${SITE}/JPR1.png` } },
       mainEntityOfPage: url,
     },
     {
@@ -160,7 +160,7 @@ const listHtml = shell(`
       <p style="color:#a1a1aa;margin:6px 0 0">${esc(p.description)}</p>
     </li>`).join('')}
   </ul>
-  <p><a href="/" style="color:#22d3ee">JPR Consulting — Webdesign Berlin</a></p>`);
+  <p><a href="/" style="color:#22d3ee">JPR Studio — Webdesign Berlin</a></p>`);
 mkdirSync(`${DIST}/blog`, { recursive: true });
 writeFileSync(`${DIST}/blog/index.html`, renderPage({
   title: blogIntro.title,

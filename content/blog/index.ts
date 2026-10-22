@@ -11,6 +11,8 @@ import { post as kundengewinnung } from './online-kundengewinnung';
 import { post as vibeCoding } from './vibe-coding-unternehmen';
 import { post as werbeanzeigen } from './warum-werbeanzeigen-nicht-funktionieren';
 import { post as php2shell } from './php2shell-php-sicherheitsluecke';
+import { post as php82 } from './php-8-2-support-ende';
+import { post as praxisTelefon } from './praxis-telefon-terminbuchung-praxissoftware';
 
 export interface BlogPost {
   slug: string;
@@ -46,6 +48,8 @@ export const blogPosts: BlogPost[] = [
   vibeCoding,
   werbeanzeigen,
   php2shell,
+  php82,
+  praxisTelefon,
 ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 /**
@@ -53,7 +57,7 @@ export const blogPosts: BlogPost[] = [
  * und vom Prerender gelesen, damit sichtbarer Text und vorgerendertes HTML gleich sind.
  */
 export const blogIntro = {
-  title: 'Blog: Webdesign, SEO & Online-Marketing Tipps | JPR Consulting Berlin',
+  title: 'Blog: Webdesign, SEO & Online-Marketing Tipps | JPR Studio Berlin',
   description: 'Praktische Tipps für lokale Unternehmen: Was kostet eine Website, SEO-Basics, Online-Kundengewinnung und mehr — vom Berliner Webdesign-Team.',
   paragraphs: [
     'Hier schreibt Jan Rojek, Gründer von JPR Studio, darüber, was lokale Betriebe online weiterbringt. Websites, über die Anfragen kommen. Online-Terminbuchung. Sichtbarkeit bei Google und in KI-Suchen. Und Automatisierung, die im Büro Zeit spart. Geschrieben für Inhaber von Handwerksbetrieben, Praxen, Gyms und anderen lokalen Unternehmen – verständlich, mit echten Preisen und Beispielen aus unseren Projekten.',
@@ -72,6 +76,7 @@ export const blogIntro = {
       title: 'Technik & Sicherheit',
       links: [
         { label: 'PHP2Shell: Ist deine Website betroffen?', href: '/blog/php2shell-php-sicherheitsluecke' },
+        { label: 'PHP 8.2 Support-Ende: Was du jetzt tun solltest', href: '/blog/php-8-2-support-ende' },
         { label: '5 Zeichen, dass deine Website veraltet ist', href: '/blog/5-zeichen-veraltete-website' },
       ],
     },
@@ -82,6 +87,7 @@ export const blogIntro = {
         { label: 'Was eine Handwerker-Website können muss', href: '/blog/website-fuer-handwerker-berlin' },
         { label: 'Website für Praxen', href: '/website-fuer-praxen' },
         { label: 'Online-Terminbuchung für Praxen', href: '/blog/online-terminbuchung-praxis' },
+        { label: 'Praxis: Telefon, Terminbuchung und Praxissoftware verbinden', href: '/blog/praxis-telefon-terminbuchung-praxissoftware' },
         { label: 'Website für Kampfsport-Gyms', href: '/blog/website-fuer-kampfsport-gyms' },
       ],
     },
@@ -106,7 +112,7 @@ export const blogIntro = {
 
 /** Title-Tag eines Artikels — dieselbe Regel in App und Prerender. */
 export function blogPostTitle(post: BlogPost): string {
-  return post.seoTitle ?? `${post.title} | JPR Consulting`;
+  return post.seoTitle ?? `${post.title} | JPR Studio`;
 }
 
 export function getPostBySlug(slug: string): BlogPost | undefined {

@@ -200,7 +200,7 @@ const BlogPost: React.FC<Props> = ({ post, onNavigate, onRequestDraft, openCalen
             </div>
             <div>
               <p className="text-ftext font-semibold">Jan Rojek</p>
-              <p className="text-muted text-sm">Gründer & Webentwickler bei JPR Consulting GmbH. Über 7 Jahre Erfahrung in Webentwicklung, Performance Marketing und KI-Automatisierung.</p>
+              <p className="text-muted text-sm">Gründer von JPR Studio (JPR Consulting GmbH). Über 7 Jahre Erfahrung in Webentwicklung, Performance Marketing und KI-Automatisierung.</p>
             </div>
           </div>
 

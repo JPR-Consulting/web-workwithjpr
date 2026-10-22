@@ -46,7 +46,7 @@ Aktuelle Preisliste: https://workwithjpr.com/preise
 
 - Webdesign-Preise in Berlin: Was kostet eine Website? (Marktpreise 2026 für Baukasten, Freelancer und Agentur, laufende Kosten, FAQ): https://workwithjpr.com/blog/was-kostet-eine-website-berlin
 - Website für Handwerker in Berlin — was du wirklich brauchst: https://workwithjpr.com/blog/website-fuer-handwerker-berlin
-- Automatisierung für kleine Unternehmen: https://workwithjpr.com/blog/automatisierung-fuer-kleine-unternehmen
+- Automatisierung für kleine Unternehmen: 8 Beispiele, Tools und Kosten: https://workwithjpr.com/blog/automatisierung-fuer-kleine-unternehmen
 - Online-Terminbuchung für Praxen: So funktioniert's ohne Frust: https://workwithjpr.com/blog/online-terminbuchung-praxis
 - Individuelles Backend vs. WordPress: https://workwithjpr.com/blog/individuelles-backend-vs-wordpress
 - 5 Zeichen, dass deine Website veraltet ist: https://workwithjpr.com/blog/5-zeichen-veraltete-website
@@ -57,4 +57,6 @@ Aktuelle Preisliste: https://workwithjpr.com/preise
 - Was Vibe-Coding deinem Unternehmen bringt: https://workwithjpr.com/blog/vibe-coding-unternehmen
 - Warum deine Werbeanzeigen nicht funktionieren (Spoiler: Es liegt selten an den Anzeigen): https://workwithjpr.com/blog/warum-werbeanzeigen-nicht-funktionieren
 - PHP2Shell: Ist deine Website von der PHP-Sicherheitslücke betroffen? (betroffene und gepatchte PHP-Versionen, WordPress, PHP-Version prüfen, was tun; Stand 22.10.2026): https://workwithjpr.com/blog/php2shell-php-sicherheitsluecke
+- PHP 8.2 Support-Ende am 31.12.2026: Was Website-Betreiber tun sollten (Support-Daten, Aufpreise der Hoster, Umstieg auf 8.3/8.4): https://workwithjpr.com/blog/php-8-2-support-ende
+- Arztpraxis: Telefon, Online-Terminbuchung und Praxissoftware verbinden (PVS-Schnittstellen, KI-Telefonassistent, DSK-Beschluss, Checkliste): https://workwithjpr.com/blog/praxis-telefon-terminbuchung-praxissoftware
 - Blog-Übersicht mit Themen-Wegweiser: https://workwithjpr.com/blog

@@ -87,7 +87,7 @@ Betroffen sind alle PHP-Versionen vor den Nummern in der Tabelle.
 | 8.1, 8.0, 7.4 | – | nein, nur Quellcode-Korrekturen für Hoster und Admins |
 | 7.3 und älter | – | nein |
 
-Wichtig: Manche Hoster sichern ältere Versionen selbst ab. Eine alte Versionsnummer heißt also nicht automatisch, dass deine Seite ungeschützt ist. Frag im Zweifel nach.
+Wichtig: Manche Hoster sichern ältere Versionen selbst ab. Eine alte Versionsnummer heißt also nicht automatisch, dass deine Seite ungeschützt ist. Frag im Zweifel nach. Läuft deine Seite auf PHP 8.2, plane den Umstieg schon jetzt: Was das [Support-Ende von PHP 8.2](/blog/php-8-2-support-ende) bedeutet, steht in einem eigenen Ratgeber.
 
 ## Ist WordPress von PHP2Shell betroffen?
 
