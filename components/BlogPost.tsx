@@ -15,6 +15,51 @@ const CHECK_HREF = '#pruefen';
 
 const buttonClass = 'not-prose inline-flex items-center gap-2 font-mono text-sm font-medium uppercase bg-accent text-ink px-6 py-3.5 border border-accent hover:bg-transparent hover:text-accent transition-colors';
 
+/** Website-Feld + Knopf im Artikel; die Adresse geht in den Check-Dialog, dort folgt nur noch die E-Mail. */
+const CheckInline: React.FC<{ onSubmit: (website: string) => void }> = ({ onSubmit }) => {
+  const [website, setWebsite] = useState('');
+  return (
+    <form
+      className="not-prose mt-6"
+      onSubmit={(e) => { e.preventDefault(); onSubmit(website.trim()); }}
+    >
+      <label htmlFor="check-inline" className="block font-mono text-[13px] uppercase text-muted mb-2">Deine Website</label>
+      <div className="flex flex-col sm:flex-row gap-3">
+        <input
+          id="check-inline"
+          type="text"
+          inputMode="url"
+          autoComplete="url"
+          placeholder="meinbetrieb.de"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+          className="flex-1 min-w-0 h-14 px-4 bg-ink border border-line text-ftext text-[17px] font-body placeholder:text-dim focus:border-accent focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        />
+        <button type="submit" className={`${buttonClass} justify-center h-14 whitespace-nowrap`}>
+          Website kostenlos prüfen lassen →
+        </button>
+      </div>
+      <p className="mt-3 font-mono text-[12px] uppercase text-dim">Kostenlos · keine Verpflichtung · kein Verkaufsgespräch</p>
+    </form>
+  );
+};
+
+/** Bild im Artikel: ![Alt](/pfad.png "560x945") – der Titel trägt die Maße gegen Layout-Sprünge. */
+const ArticleImage: React.FC<{ src?: string; alt?: string; title?: string }> = ({ src, alt = '', title }) => {
+  const [w, h] = (title ?? '').split('x').map(Number);
+  return (
+    <img
+      src={src}
+      alt={alt}
+      width={w || undefined}
+      height={h || undefined}
+      loading="lazy"
+      decoding="async"
+      className="block mx-auto w-full max-w-[560px] h-auto border border-line"
+    />
+  );
+};
+
 const formatDate = (d: string) => new Date(d).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
 
 interface Props {
@@ -26,6 +71,8 @@ interface Props {
 
 const BlogPost: React.FC<Props> = ({ post, onNavigate, onRequestDraft, openCalendly }) => {
   const [checkOpen, setCheckOpen] = useState(false);
+  const [checkWebsite, setCheckWebsite] = useState('');
+  const openCheck = (website = '') => { setCheckWebsite(website); setCheckOpen(true); };
 
   useEffect(() => {
     document.title = blogPostTitle(post);
@@ -42,7 +89,7 @@ const BlogPost: React.FC<Props> = ({ post, onNavigate, onRequestDraft, openCalen
     // #entwurf und #pruefen werden zu Knöpfen, die den jeweiligen Dialog öffnen.
     a: ({ href = '', children }) => {
       if (href === DRAFT_HREF || href === CHECK_HREF) {
-        const open = href === DRAFT_HREF ? onRequestDraft : () => setCheckOpen(true);
+        const open = href === DRAFT_HREF ? onRequestDraft : () => openCheck();
         return (
           <a href={href} onClick={(e) => { e.preventDefault(); open(); }} className={buttonClass}>
             {children} →
@@ -51,6 +98,15 @@ const BlogPost: React.FC<Props> = ({ post, onNavigate, onRequestDraft, openCalen
       }
       return href.startsWith('/') ? <a {...spaLink(href)}>{children}</a> : <a href={href}>{children}</a>;
     },
+    // Ein Absatz, der nur aus [Text](#pruefen) besteht, wird zum Website-Feld mit Knopf
+    p: ({ node, children }) => {
+      const only = node?.children.length === 1 ? node.children[0] : null;
+      if (only && only.type === 'element' && only.tagName === 'a' && only.properties?.href === CHECK_HREF) {
+        return <CheckInline onSubmit={openCheck} />;
+      }
+      return <p>{children}</p>;
+    },
+    img: ({ src, alt, title }) => <ArticleImage src={src} alt={alt} title={title} />,
     // Zitatblock = Entwurf-Kasten im Text
     blockquote: ({ children }) => (
       <aside className="not-italic my-10 p-6 md:p-8 border border-accent/60 bg-panel [&_p]:my-0 [&_p+p]:mt-5 [&_p]:text-ftext">
@@ -68,7 +124,7 @@ const BlogPost: React.FC<Props> = ({ post, onNavigate, onRequestDraft, openCalen
     ),
   }), [onRequestDraft]);
 
-  const updated = post.updated && post.updated !== post.date ? post.updated : null;
+  const updated = post.updated ?? null;
 
   return (
     <div className="min-h-[100dvh] bg-ink text-ftext font-body">
@@ -99,7 +155,7 @@ const BlogPost: React.FC<Props> = ({ post, onNavigate, onRequestDraft, openCalen
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[13px] text-dim uppercase mb-12 pb-8 border-b border-line">
             <span className="flex items-center gap-1.5">
               <Calendar className="w-4 h-4" />
-              {updated ? <>Aktualisiert: {formatDate(updated)}</> : formatDate(post.date)}
+              {updated ? <>Zuletzt aktualisiert: <time dateTime={updated}>{formatDate(updated)}</time></> : <time dateTime={post.date}>{formatDate(post.date)}</time>}
             </span>
             <span className="flex items-center gap-1.5">
               <Clock className="w-4 h-4" />
@@ -167,7 +223,7 @@ const BlogPost: React.FC<Props> = ({ post, onNavigate, onRequestDraft, openCalen
           </div>
         </article>
       </div>
-      <CheckDialog open={checkOpen} onClose={() => setCheckOpen(false)} topic={post.slug} />
+      <CheckDialog open={checkOpen} onClose={() => setCheckOpen(false)} topic={post.slug} initialWebsite={checkWebsite} />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { attributionLine } from '../attribution';
 import { trackEvent } from '../tracking';
 
 /**
- * „Kostenlos prüfen lassen“: Website-Adresse, Name, E-Mail – Jan schaut sich die Seite von Hand an
+ * „Kostenlos prüfen lassen“: Website-Adresse, E-Mail, Name optional – Jan schaut sich die Seite von Hand an
  * und antwortet persönlich. Geht an dieselbe Kontakt-Automatik wie der Entwurf-Dialog; `kind`
  * sagt dem Workflow, dass die Bestätigungsmail vom Website-Check sprechen soll, nicht vom Entwurf.
  * Zählt bewusst NICHT als Google-Ads-Conversion (die gehört der Entwurf-Anfrage).
@@ -17,9 +17,11 @@ interface Props {
   onClose: () => void;
   /** Anlass, landet in `source` und in der Nachricht, z. B. „php2shell“. */
   topic: string;
+  /** Aus dem Feld im Artikel übernommen, kann leer sein. */
+  initialWebsite?: string;
 }
 
-type Errors = Partial<Record<'website' | 'name' | 'email', string>>;
+type Errors = Partial<Record<'website' | 'email', string>>;
 
 const EMPTY = { website: '', name: '', email: '', note: '', website2: '' };
 
@@ -35,7 +37,7 @@ const Label: React.FC<{ htmlFor: string; children: React.ReactNode }> = ({ htmlF
 const FieldError: React.FC<{ id: string; text?: string }> = ({ id, text }) =>
   text ? <p id={id} className="mt-2 text-[15px] text-[#ff9a9a]">{text}</p> : null;
 
-const CheckDialog: React.FC<Props> = ({ open, onClose, topic }) => {
+const CheckDialog: React.FC<Props> = ({ open, onClose, topic, initialWebsite = '' }) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [data, setData] = useState(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
@@ -56,7 +58,10 @@ const CheckDialog: React.FC<Props> = ({ open, onClose, topic }) => {
         setStatus('form');
       }
       setErrors({});
+      if (initialWebsite) setData((d) => ({ ...d, website: initialWebsite }));
       if (!dlg.open) dlg.showModal();
+      // Adresse schon da: gleich weiter zur E-Mail
+      if (initialWebsite) requestAnimationFrame(() => document.getElementById('check-email')?.focus());
       document.documentElement.style.overflow = 'hidden';
       trackEvent('form_open', { form: 'website_check', source: topic }, 'WebsiteCheckGeoeffnet');
     } else if (dlg.open) {
@@ -76,7 +81,6 @@ const CheckDialog: React.FC<Props> = ({ open, onClose, topic }) => {
   const validate = (): Errors => {
     const e: Errors = {};
     if (!/\S+\.\S{2,}/.test(data.website.trim())) e.website = 'Bitte die Adresse deiner Website eintragen, z. B. meinbetrieb.de.';
-    if (data.name.trim().length < 2) e.name = 'Wie dürfen wir dich ansprechen?';
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email.trim())) e.email = 'Bitte eine gültige E-Mail-Adresse eintragen.';
     return e;
   };
@@ -186,7 +190,7 @@ const CheckDialog: React.FC<Props> = ({ open, onClose, topic }) => {
                 Wir schauen drauf
               </h2>
               <p className="text-[17px] leading-[1.6] text-muted mb-7">
-                Wir prüfen von außen PHP-Version, Hoster, Ladezeit und Handy-Ansicht und sagen dir ehrlich, ob du etwas tun musst. Keine Zugangsdaten nötig.
+                Wir schauen kostenlos nach, was wir von außen feststellen können, und sagen dir, was du als Nächstes prüfen solltest. Braucht es für eine sichere Aussage Angaben von deinem Hoster, sagen wir dir das. Keine Zugangsdaten nötig.
               </p>
               <div className="mb-6">
                 <Label htmlFor="check-website">Deine Website</Label>
@@ -205,20 +209,6 @@ const CheckDialog: React.FC<Props> = ({ open, onClose, topic }) => {
                 <FieldError id="check-website-error" text={errors.website} />
               </div>
               <div className="mb-6">
-                <Label htmlFor="check-name">Dein Name</Label>
-                <input
-                  id="check-name"
-                  type="text"
-                  autoComplete="name"
-                  value={data.name}
-                  onChange={(e) => set('name', e.target.value)}
-                  aria-invalid={!!errors.name}
-                  aria-describedby={errors.name ? 'check-name-error' : undefined}
-                  className={fieldClass(!!errors.name)}
-                />
-                <FieldError id="check-name-error" text={errors.name} />
-              </div>
-              <div className="mb-6">
                 <Label htmlFor="check-email">Deine E-Mail</Label>
                 <input
                   id="check-email"
@@ -231,6 +221,17 @@ const CheckDialog: React.FC<Props> = ({ open, onClose, topic }) => {
                   className={fieldClass(!!errors.email)}
                 />
                 <FieldError id="check-email-error" text={errors.email} />
+              </div>
+              <div className="mb-6">
+                <Label htmlFor="check-name">Dein Name (optional)</Label>
+                <input
+                  id="check-name"
+                  type="text"
+                  autoComplete="name"
+                  value={data.name}
+                  onChange={(e) => set('name', e.target.value)}
+                  className={fieldClass(false)}
+                />
               </div>
               <div>
                 <Label htmlFor="check-note">Noch etwas? (optional)</Label>

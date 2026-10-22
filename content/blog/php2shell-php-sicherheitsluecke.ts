@@ -1,14 +1,19 @@
 export const post = {
   slug: 'php2shell-php-sicherheitsluecke',
   title: 'PHP2Shell: Ist deine Website von der PHP-Sicherheitslücke betroffen?',
-  description: 'Zwei kritische Lücken in PHP haben im Oktober 2026 Behördenseiten vom Netz genommen. Hier steht, welche PHP-Versionen betroffen sind, was mit WordPress ist, wie du deine Version prüfst und warum du in vielen Fällen gar nichts tun musst.',
+  description: 'Zwei kritische Lücken in PHP haben im Oktober 2026 Behördenseiten vom Netz genommen und werden inzwischen aktiv ausgenutzt. Hier erfährst du, welche PHP-Versionen betroffen sind, was das für WordPress bedeutet und ob du selbst handeln musst oder dein Hoster das Update übernimmt.',
   date: '2026-10-22',
   updated: '2026-10-22',
+  image: '/blog/php2shell/og.png',
   seoTitle: 'PHP2Shell: Ist meine Website betroffen? Versionen & was tun',
   seoDescription: 'PHP2Shell (CVE-2026-109618/-109619): betroffene und gepatchte PHP-Versionen, was mit WordPress ist und wie du in 2 Minuten prüfst, ob du handeln musst.',
   tags: ['Sicherheit', 'WordPress', 'PHP'],
   readTime: '8 min',
   faq: [
+    {
+      q: 'Wird PHP2Shell bereits aktiv ausgenutzt?',
+      a: 'Ja. Amazon hat einen ersten Ausnutzungsversuch schon am 17. Oktober 2026 registriert, vier Tage vor der Bekanntgabe. Am Tag der Veröffentlichung tauchten mehrere Exploits auf, und Amazon beobachtete Angriffe von mehreren Akteuren. Laut Amazon wird PHP2Shell inzwischen breit ausgenutzt; ob einzelne Versuche erfolgreich waren, ist noch unklar. Auch Cloudflare hat Angriffe auf Kundenseiten beobachtet und Schutzregeln für alle Tarife mit Web-Firewall ausgerollt.',
+    },
     {
       q: 'Muss ich als Besucher von Websites etwas tun?',
       a: 'Nein. Die Lücke steckt auf den Servern, nicht auf deinem Computer oder Handy. Indirekt kannst du betroffen sein, wenn Online-Dienste ausfallen oder Daten von ungeschützten Seiten abfließen.',
@@ -39,13 +44,17 @@ export const post = {
 
 PHP2Shell ist der Name für zwei kritische Sicherheitslücken in PHP, der Programmiersprache hinter WordPress, Joomla, TYPO3 und vielen Online-Shops (CVE-2026-109618 und CVE-2026-109619). Geschlossen sind sie in **PHP 8.5.12, 8.4.27, 8.3.36 und 8.2.35**, erschienen am 21. Oktober 2026. **PHP 8.1 und älter bekommt kein offizielles Update mehr.**
 
-Liegt deine Website bei einem normalen Webhosting-Anbieter, spielt in der Regel der Hoster das Update ein. Du musst dann nur prüfen, welche PHP-Version deine Seite nutzt. Handeln musst du vor allem, wenn du einen eigenen Server betreibst oder deine Seite noch auf PHP 8.1 oder älter läuft.
+Die Lücke wird bereits aktiv angegriffen. Liegt deine Website bei einem normalen Webhosting-Anbieter, spielt in der Regel der Hoster das Update ein. Prüfe trotzdem kurz, welche PHP-Version deine Seite nutzt und ob das Update angekommen ist. Selbst handeln musst du vor allem, wenn du einen eigenen Server betreibst oder deine Seite noch auf PHP 8.1 oder älter läuft.
+
+Wir aktualisieren diesen Artikel, wenn neue Informationen zur Lücke bekannt werden.
 
 ## Schnelltest: Musst du etwas tun?
 
+![Entscheidungsbaum: Baukasten wie Wix oder Jimdo – nichts tun. Eigener Server oder VPS – handeln, PHP selbst aktualisieren. Webhosting-Paket oder Agentur mit PHP 8.2 bis 8.5 – kurz prüfen, ob der Patch installiert ist. Mit PHP 8.1 oder älter – handeln, auf PHP 8.3 oder 8.4 umstellen.](/blog/php2shell/schnelltest.png "560x945")
+
 | Deine Situation | Was du tun solltest |
 | --- | --- |
-| Webhosting-Paket (z. B. IONOS, STRATO, Hostinger, ALL-INKL) mit PHP 8.2 bis 8.5 | Meist nichts. Der Hoster spielt das Update ein. Kurz prüfen oder nachfragen. |
+| Webhosting-Paket (z. B. IONOS, STRATO, Hostinger, ALL-INKL) mit PHP 8.2 bis 8.5 | Kurz prüfen. Normalerweise spielt der Hoster das Sicherheitsupdate ein. Sieh auf seiner Statusseite nach oder frag, ob der PHP2Shell-Patch installiert ist. |
 | PHP 8.1 oder älter | Handeln: auf PHP 8.3 oder 8.4 umstellen, vorher Theme und Plugins prüfen. |
 | Eigener Server, VPS oder Root-Server | Handeln: PHP selbst aktualisieren und alle PHP-Prozesse neu starten. |
 | Eine Agentur oder ein Dienstleister betreut die Seite | Nachfragen, ob das Update eingespielt ist (Vorlage unten). |
@@ -61,7 +70,9 @@ Die Lücken stecken in PHP selbst, genauer darin, wie PHP hochgeladene Formulard
 
 Beide Lücken haben die Bewertung 9,2 von 10 (CVSS 4.0), gelten also als kritisch. Ein Angreifer braucht kein Passwort und muss niemanden zu einem Klick bringen.
 
-Zur Einordnung: Ein Angriff ist technisch anspruchsvoll und braucht viele tausend Anfragen. Am größten ist das Risiko bei Servern mit Apache und mod_php. Dort hat das PHP-Team die Ausnutzung mit Standardeinstellungen bestätigt. Amazon und Cloudflare melden erste Angriffsversuche, Amazon sah einen ersten schon am 17. Oktober. Kein Grund zur Panik also, aber auch keiner, es liegen zu lassen.
+**Die Lücke wird bereits aktiv angegriffen.** Amazon registrierte einen ersten Ausnutzungsversuch schon am 17. Oktober, vier Tage vor der öffentlichen Bekanntgabe. Am Tag der Veröffentlichung tauchten mehrere Exploits auf, und Amazon beobachtete Angriffe von mehreren Akteuren. Laut Amazon wird PHP2Shell inzwischen breit ausgenutzt, ob einzelne Versuche erfolgreich waren, ist noch unklar ([AWS Security Blog](https://aws.amazon.com/blogs/security/amazon-threat-intelligence-identifies-php2shell-exploitation-prior-to-public-disclosure-in-madpot/)). Auch Cloudflare hat Angriffe auf Kundenseiten beobachtet und Schutzregeln ausgerollt, auch für kostenlose Tarife ([Cloudflare](https://blog.cloudflare.com/php-vulnerabilities-waf-protection/)).
+
+Zur Einordnung: Ein Angriff ist technisch anspruchsvoll und braucht viele tausend Anfragen. Am größten ist das Risiko bei Servern mit Apache und mod_php. Dort hat das PHP-Team die Ausnutzung mit Standardeinstellungen bestätigt. Kein Grund zur Panik also, aber auch keiner, es liegen zu lassen.
 
 ## Welche PHP-Versionen sind betroffen, welche sicher?
 
@@ -80,7 +91,7 @@ Wichtig: Manche Hoster sichern ältere Versionen selbst ab. Eine alte Versionsnu
 
 ## Ist WordPress von PHP2Shell betroffen?
 
-**WordPress selbst hat diese Lücke nicht. Aber jede WordPress-Seite läuft auf PHP, und damit zählt die PHP-Version auf deinem Server.** Ein aktuelles WordPress schützt nicht, wenn darunter ein ungepatchtes PHP läuft. Die Entdecker der Lücke haben Angriffe auf WordPress, Drupal, Joomla und Magento erfolgreich nachgestellt. Dasselbe gilt für TYPO3, Shopware und andere Systeme auf PHP-Basis.
+**WordPress selbst hat diese Lücke nicht. Aber jede WordPress-Seite läuft auf PHP, und damit zählt die PHP-Version auf deinem Server.** WordPress-Websites können also betroffen sein, wenn die PHP-Version auf dem Server noch verwundbar ist. Ein Update von WordPress oder von Plugins allein schließt die Lücke nicht. Die Entdecker der Lücke haben Angriffe auf WordPress, Drupal, Joomla und Magento erfolgreich nachgestellt. Dasselbe gilt für TYPO3, Shopware und andere Systeme auf PHP-Basis.
 
 Nicht verwechseln: Im Juli 2026 gab es mit „wp2shell“ eine ganz andere Lücke, und zwar im WordPress-Kern selbst. Sie ist seit WordPress 6.9.5 und 7.0.2 behoben.
 
@@ -88,20 +99,22 @@ Nicht verwechseln: Im Juli 2026 gab es mit „wp2shell“ eine ganz andere Lück
 
 **In WordPress (am einfachsten):** Im Admin-Bereich auf Werkzeuge → Website-Zustand → Bericht gehen und den Abschnitt „Server“ aufklappen. Dort steht die PHP-Version, zum Beispiel 8.3.36.
 
+![So findest du die PHP-Version in WordPress: 1. Im Menü Werkzeuge, dann Website-Zustand. 2. Den Reiter Bericht öffnen. 3. Den Abschnitt Server aufklappen, dort steht die Zeile PHP-Version, zum Beispiel 8.3.36.](/blog/php2shell/php-version-wordpress.png "560x1019")
+
 **Im Kundenmenü deines Hosters:** Bei den meisten Anbietern unter Webhosting oder Domains bei den PHP-Einstellungen.
 
 **Beim Hoster nachfragen:** Wenn du keinen Zugang hast, frag den Support schriftlich. Eine Vorlage steht weiter unten.
 
 Viele Hoster zeigen im Kundenmenü nur die Hauptversion, also „PHP 8.3“ statt „8.3.36“. Ob das Update eingespielt ist, kann dir dann nur der Hoster selbst sagen.
 
-> **Keine Zeit, kein Zugang oder unsicher, was die Zahl bedeutet?** Schick uns die Adresse deiner Website. Wir schauen sie uns kostenlos an und sagen dir innerhalb eines Werktags ehrlich, ob du etwas tun musst. Und wenn nicht, sagen wir das auch.
+> **Unsicher, ob deine Website betroffen ist?** Schick uns einfach deine Website-Adresse. Wir schauen kostenlos nach, was wir von außen feststellen können, und sagen dir innerhalb eines Werktags, was du als Nächstes prüfen solltest. Braucht es dafür Angaben von deinem Hoster, sagen wir dir das.
 >
-> [Kostenlos prüfen lassen](#pruefen)
+> [Website kostenlos prüfen lassen](#pruefen)
 
 ## Was du jetzt tun solltest
 
 1. **PHP-Version herausfinden**, wie oben beschrieben.
-2. **Webhosting mit PHP 8.2 bis 8.5:** Prüfen, ob dein Hoster das Update gemeldet hat (Statusseite oder Support). Mehr ist in der Regel nicht nötig.
+2. **Webhosting mit PHP 8.2 bis 8.5:** Prüfen, ob dein Hoster das Update gemeldet hat (Statusseite oder Support). Ist das bestätigt, ist in der Regel nichts weiter nötig.
 3. **PHP 8.1 oder älter:** Auf PHP 8.3 oder 8.4 umstellen. Das geht meist mit einem Klick im Kundenmenü, aber nicht blind. Erst ein Backup machen, dann WordPress, Theme und Plugins aktualisieren, dann umstellen und die wichtigsten Seiten und das Kontaktformular testen. Themes und Plugins, die seit Jahren kein Update hatten, können mit neuem PHP ausfallen.
 4. **Eigener Server:** PHP über den Paketmanager aktualisieren und alle PHP-Prozesse (PHP-FPM, Apache) neu starten. Notlösungen wie das Abschalten von session.upload_progress senken das Risiko nur. Sie schließen die Lücke nicht.
 5. **Nach dem Update:** Das Update schließt die Lücke, entfernt aber nichts, was ein Angreifer vorher hinterlassen hat. Achte auf unbekannte Admin-Konten, neue Dateien und Weiterleitungen auf fremde Seiten. Kommt dir etwas komisch vor, hol dir Hilfe von jemandem, der auf gehackte Websites spezialisiert ist.
@@ -124,9 +137,9 @@ Dann lohnt ein Blick aufs Ganze. Woran du das erkennst, steht in [5 Zeichen, das
 
 Zur Ehrlichkeit gehört auch: Moderne Websites, die ohne PHP und Plugins auskommen, brauchen weniger Updates. Automatisch sicher ist aber keine Technik. Jede Website braucht jemanden, der sich kümmert.
 
-> **Wir schauen uns deine Website kostenlos an.** Wir prüfen von außen PHP-Version, Hoster, Ladezeit und Handy-Ansicht und sagen dir, ob ein Update reicht oder ob sich mehr lohnt. Ohne Verkaufsgespräch.
+> **Wir schauen uns deine Website kostenlos an.** Von außen sehen wir uns PHP-Version, Hoster, Ladezeit und Handy-Ansicht an. Wenn ein PHP-Update reicht, sagen wir dir das. Wenn sich mehr lohnt, auch.
 >
-> [Kostenlos prüfen lassen](#pruefen)
+> [Website kostenlos prüfen lassen](#pruefen)
 
 ## Quellen
 
@@ -134,6 +147,8 @@ Zur Ehrlichkeit gehört auch: Moderne Websites, die ohne PHP und Plugins auskomm
 - [GitHub Security Advisory zu CVE-2026-109618](https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w)
 - [GitHub Security Advisory zu CVE-2026-109619](https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp)
 - [BSI: Kritische Schwachstellen in PHP bedrohen Webanwendungen weltweit](https://www.bsi.bund.de/SharedDocs/Cybersicherheitswarnungen/DE/2026/2026-297981-1032.html)
+- [AWS Security Blog: Ausnutzung von PHP2Shell vor der Bekanntgabe (englisch)](https://aws.amazon.com/blogs/security/amazon-threat-intelligence-identifies-php2shell-exploitation-prior-to-public-disclosure-in-madpot/)
+- [Cloudflare: Schutzregeln gegen die PHP-Lücken (englisch)](https://blog.cloudflare.com/php-vulnerabilities-waf-protection/)
 - [Tenable: Häufige Fragen zu PHP2Shell (englisch)](https://www.tenable.com/blog/php2shell-cve-2026-109618-cve-2026-109619-frequently-asked-questions-about-critical-php-remote)
 - [Wordfence: wp2shell im WordPress-Kern, Juli 2026 (englisch)](https://www.wordfence.com/blog/2026/07/wp2shell-aftermath-the-first-critical-unauthenticated-wordpress-core-rce-in-nearly-a-decade/)
 `,

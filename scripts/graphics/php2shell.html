@@ -1,0 +1,160 @@
+<!doctype html>
+<!--
+  Vorlage für die Grafiken im PHP2Shell-Artikel. Jede <section> mit data-out wird von
+  scripts/graphics/render.mjs als PNG nach public/ fotografiert. Text hier ändern, dann neu rendern.
+  Breite 560 px: Auf dem Handy wird die Grafik auf ~342 px verkleinert, deshalb große Schrift.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=block" rel="stylesheet">
+<style>
+  :root {
+    --ink: #101012; --panel: #1a1a1e; --line: #2e2e34; --ftext: #f4f4f0;
+    --muted: #b4b4bc; --dim: #8e8e98; --accent: #d4ff4f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #000; font-family: 'Space Grotesk', sans-serif; color: var(--ftext); }
+  section { background: var(--ink); margin: 0 0 40px; }
+  .mono { font-family: 'IBM Plex Mono', monospace; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+  .syne { font-family: 'Syne', sans-serif; font-weight: 800; letter-spacing: -.01em; }
+
+  /* ---------- Schnelltest ---------- */
+  #schnelltest { width: 560px; padding: 36px 32px 30px; border: 1px solid var(--line); }
+  .eyebrow { color: var(--accent); font-size: 15px; margin-bottom: 10px; }
+  h2.t { font-size: 34px; line-height: 1.08; margin-bottom: 26px; }
+  .q { border: 2px solid var(--ftext); padding: 14px 18px; font-size: 22px; font-weight: 700; display: inline-block; }
+  .stem { width: 2px; background: var(--line); margin-left: 28px; height: 18px; }
+  .branch { position: relative; margin-left: 28px; border-left: 2px solid var(--line); padding: 0 0 18px 26px; }
+  .branch.last { border-left-color: transparent; padding-bottom: 0; }
+  .branch::before { content: ''; position: absolute; left: -2px; top: 0; width: 22px; height: 26px; border-left: 2px solid var(--line); border-bottom: 2px solid var(--line); }
+  .opt { font-size: 21px; font-weight: 700; padding-top: 12px; }
+  .opt small { display: block; font-size: 17px; font-weight: 400; color: var(--muted); margin-top: 2px; }
+  .res { margin-top: 10px; display: flex; gap: 12px; align-items: flex-start; }
+  .pill { flex: none; font-size: 15px; padding: 7px 10px 6px; line-height: 1; }
+  .pill.act { background: var(--accent); color: var(--ink); border: 2px solid var(--accent); }
+  .pill.check { color: var(--accent); border: 2px dashed var(--accent); }
+  .pill.none { color: var(--muted); border: 2px solid var(--dim); }
+  .res p { font-size: 18px; line-height: 1.35; color: var(--muted); padding-top: 3px; }
+  .sub { margin-top: 12px; }
+  .sub .q2 { font-size: 18px; font-weight: 700; color: var(--ftext); border: 1px solid var(--dim); display: inline-block; padding: 8px 12px; }
+  .sub .branch { margin-left: 18px; }
+  .foot { margin-top: 26px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 15px; color: var(--dim); display: flex; justify-content: space-between; gap: 12px; }
+  .foot b { color: var(--ftext); font-weight: 600; }
+
+  /* ---------- WordPress-Pfad ---------- */
+  #wp-pfad { width: 560px; padding: 36px 32px 30px; border: 1px solid var(--line); }
+  .step { display: flex; gap: 14px; align-items: center; margin: 22px 0 12px; }
+  .num { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: var(--ink); display: grid; place-items: center; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 18px; }
+  .step span { font-size: 21px; font-weight: 700; }
+  .step span em { font-style: normal; color: var(--accent); white-space: nowrap; }
+  .mock { background: #1d2327; border: 1px solid #3c434a; color: #f0f0f1; font-size: 18px; }
+  .menu { display: flex; }
+  .menu ul { list-style: none; width: 50%; padding: 8px 0; }
+  .menu li { padding: 7px 16px; color: #c3c4c7; }
+  .menu li.on { background: #2c3338; color: #fff; font-weight: 700; box-shadow: inset 4px 0 0 var(--accent); }
+  .menu .subm { background: #2c3338; border-left: 1px solid #3c434a; }
+  .menu .subm li.on { background: transparent; color: var(--accent); box-shadow: none; text-decoration: underline; text-underline-offset: 4px; }
+  .tabs { display: flex; background: #f6f7f7; color: #1d2327; font-weight: 700; }
+  .tabs div { padding: 12px 22px; border-bottom: 4px solid transparent; }
+  .tabs div.on { border-bottom-color: #2271b1; color: #2271b1; outline: 3px solid var(--accent); outline-offset: -3px; }
+  .panel { background: #fff; color: #1d2327; }
+  .panel .h { padding: 12px 16px; font-weight: 700; border-bottom: 1px solid #dcdcde; display: flex; justify-content: space-between; }
+  .row { display: grid; grid-template-columns: 44% 56%; border-bottom: 1px solid #f0f0f1; font-size: 17px; }
+  .row div { padding: 9px 16px; }
+  .row.hit { background: #fcffe9; outline: 3px solid #6f8f00; outline-offset: -3px; font-weight: 700; }
+  .callout { margin-top: 14px; display: flex; gap: 12px; align-items: flex-start; font-size: 18px; color: var(--muted); line-height: 1.35; }
+  .callout b { color: var(--ftext); }
+  .note { margin-top: 18px; font-size: 14px; color: var(--dim); }
+
+  /* ---------- Vorschaubild ---------- */
+  #og { width: 1200px; height: 630px; padding: 64px 72px; position: relative; overflow: hidden;
+        background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+        background-size: 60px 60px; background-color: var(--ink); }
+  #og::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 40%, rgba(16,16,18,.4) 0%, rgba(16,16,18,.95) 70%); }
+  #og > * { position: relative; z-index: 1; }
+  #og .eyebrow { font-size: 24px; margin-bottom: 34px; }
+  #og h1 { font-size: 112px; line-height: .95; color: var(--accent); }
+  #og h2 { font-size: 64px; line-height: 1.05; margin-top: 14px; max-width: 980px; }
+  #og .bar { position: absolute; left: 72px; right: 72px; bottom: 56px; display: flex; justify-content: space-between; align-items: center; font-size: 26px; }
+  #og .chip { border: 2px solid var(--accent); color: var(--ftext); padding: 12px 18px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
+  #og .chip b { color: var(--accent); }
+  #og .brand { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 30px; }
+  #og .brand span { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<section id="schnelltest" data-out="public/blog/php2shell/schnelltest.png" data-scale="2">
+  <div class="eyebrow mono">Schnelltest · PHP2Shell</div>
+  <h2 class="t syne">Musst du etwas tun?</h2>
+  <div class="q">Wo läuft deine Website?</div>
+  <div class="stem"></div>
+  <div class="branch">
+    <div class="opt">Baukasten<small>Wix, Jimdo, Squarespace</small></div>
+    <div class="res"><span class="pill none mono">Nichts tun</span><p>Um die Technik kümmert sich der Anbieter.</p></div>
+  </div>
+  <div class="branch">
+    <div class="opt">Eigener Server oder VPS</div>
+    <div class="res"><span class="pill act mono">Handeln</span><p>PHP selbst aktualisieren und alle PHP-Prozesse neu starten.</p></div>
+  </div>
+  <div class="branch last">
+    <div class="opt">Webhosting-Paket oder Agentur</div>
+    <div class="sub">
+      <div class="q2">Welche PHP-Version?</div>
+      <div class="stem" style="margin-left:18px;height:12px"></div>
+      <div class="branch">
+        <div class="opt">8.2 bis 8.5</div>
+        <div class="res"><span class="pill check mono">Kurz prüfen</span><p>Statusseite ansehen oder fragen, ob der Patch installiert ist.</p></div>
+      </div>
+      <div class="branch last">
+        <div class="opt">8.1 oder älter</div>
+        <div class="res"><span class="pill act mono">Handeln</span><p>Auf PHP 8.3 oder 8.4 umstellen, vorher Backup und Plugin-Check.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Gepatcht: <b>8.5.12 · 8.4.27 · 8.3.36 · 8.2.35</b></span><span>Stand 22.10.2026</span></div>
+</section>
+
+<section id="wp-pfad" data-out="public/blog/php2shell/php-version-wordpress.png" data-scale="2">
+  <div class="eyebrow mono">PHP-Version prüfen</div>
+  <h2 class="t syne" style="margin-bottom:6px">So findest du sie in WordPress</h2>
+
+  <div class="step"><div class="num">1</div><span>Links im Menü <em>Werkzeuge</em>, dann <em>Website-Zustand</em></span></div>
+  <div class="mock menu">
+    <ul>
+      <li>Dashboard</li><li>Beiträge</li><li>Seiten</li><li>Plugins</li><li class="on">Werkzeuge</li><li>Einstellungen</li>
+    </ul>
+    <ul class="subm">
+      <li>Verfügbare Werkzeuge</li><li>Daten importieren</li><li>Daten exportieren</li><li class="on">Website-Zustand</li>
+    </ul>
+  </div>
+
+  <div class="step"><div class="num">2</div><span>Oben den Reiter <em>Bericht</em> öffnen</span></div>
+  <div class="mock tabs"><div>Status</div><div class="on">Bericht</div></div>
+
+  <div class="step"><div class="num">3</div><span>Den Abschnitt <em>Server</em> aufklappen</span></div>
+  <div class="mock panel">
+    <div class="h"><span>Server</span><span>▴</span></div>
+    <div class="row"><div>Server-Architektur</div><div>Linux x86_64</div></div>
+    <div class="row"><div>Webserver</div><div>Apache</div></div>
+    <div class="row hit"><div>PHP-Version</div><div>8.3.36</div></div>
+    <div class="row"><div>PHP-SAPI</div><div>fpm-fcgi</div></div>
+  </div>
+  <div class="callout"><div class="num">✓</div><div><b>Diese Nummer vergleichst du mit der Liste:</b> gepatcht sind 8.5.12, 8.4.27, 8.3.36 und 8.2.35.</div></div>
+  <p class="note">Schematische Darstellung. Bezeichnungen können je nach WordPress-Version leicht abweichen.</p>
+</section>
+
+<section id="og" data-out="public/blog/php2shell/og.png" data-scale="1">
+  <div class="eyebrow mono">Ratgeber · Stand 22. Oktober 2026</div>
+  <h1 class="syne">PHP2Shell</h1>
+  <h2 class="syne">Ist deine Website von der PHP-Lücke betroffen?</h2>
+  <div class="bar">
+    <div class="chip">Gepatcht in <b>8.5.12 · 8.4.27 · 8.3.36 · 8.2.35</b></div>
+    <div class="brand">JPR <span>Studio</span></div>
+  </div>
+</section>
+
+</body>
+</html>

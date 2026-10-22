@@ -48,7 +48,7 @@ const faqLd = (items) => ({
   mainEntity: items.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
 });
 
-function renderPage({ title, description, canonical, ogType, rootHtml, jsonLd, lang = 'de', alternates = null, headExtra = '' }) {
+function renderPage({ title, description, canonical, ogType, rootHtml, jsonLd, lang = 'de', alternates = null, headExtra = '', image = null }) {
   let html = template;
   html = html.replace(/<html lang="[^"]*"/, `<html lang="${lang}"`);
   html = html.replace(/(<meta property="og:locale" content=")[^"]*(")/, `$1${lang === 'en' ? 'en_GB' : 'de_DE'}$2`);
@@ -63,6 +63,8 @@ function renderPage({ title, description, canonical, ogType, rootHtml, jsonLd, l
   html = html.replace(/(<meta property="og:type" content=")[^"]*(")/, `$1${ogType}$2`);
   html = html.replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${esc(title)}$2`);
   html = html.replace(/(<meta name="twitter:description" content=")[^"]*(")/, `$1${esc(description)}$2`);
+  // Eigenes Vorschaubild (1200×630 PNG, wie das Standardbild) statt og-image.png
+  if (image) html = html.replace(/(<meta (?:property="og|name="twitter):image" content=")[^"]*(")/g, `$1${image}$2`);
   if (jsonLd) html = html.replace('</head>', `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>\n</head>`);
   if (rootHtml) html = html.replace(/<div id="root">[\s\S]*?<\/body>/, `<div id="root">${rootHtml}</div>\n  </body>`);
   return html;
@@ -87,9 +89,11 @@ for (const post of blogPosts) {
     ? `<h2>Häufige Fragen</h2>${faq.map(f => `<h3>${esc(f.q)}</h3><p>${esc(f.a)}</p>`).join('')}`
     : '';
   const fmt = (d) => new Date(d).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
-  const dateLine = post.updated && post.updated !== post.date
-    ? `Aktualisiert: ${fmt(post.updated)} (erschienen: ${fmt(post.date)})`
-    : fmt(post.date);
+  const dateLine = !post.updated
+    ? `<time datetime="${post.date}">${fmt(post.date)}</time>`
+    : post.updated !== post.date
+      ? `Zuletzt aktualisiert: <time datetime="${post.updated}">${fmt(post.updated)}</time> (erschienen: ${fmt(post.date)})`
+      : `Zuletzt aktualisiert: <time datetime="${post.updated}">${fmt(post.updated)}</time>`;
   const rootHtml = shell(`
     <p><a href="/blog" style="color:#22d3ee">← Alle Artikel</a></p>
     <article>
@@ -103,6 +107,7 @@ for (const post of blogPosts) {
       Über 7 Jahre Erfahrung in Webentwicklung, Performance Marketing und KI-Automatisierung.</p>
     <p><a href="/" style="color:#22d3ee">JPR Consulting — Webdesign Berlin</a></p>`);
   const description = post.seoDescription ?? post.description;
+  const image = post.image ? `${SITE}${post.image}` : null;
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -110,7 +115,7 @@ for (const post of blogPosts) {
       headline: post.title,
       description,
       url,
-      image: `${SITE}/og-image.png`,
+      image: image ?? `${SITE}/og-image.png`,
       inLanguage: 'de-DE',
       datePublished: post.date,
       dateModified: post.updated ?? post.date,
@@ -137,6 +142,7 @@ for (const post of blogPosts) {
     ogType: 'article',
     rootHtml,
     jsonLd,
+    image,
   }));
   console.log(`✓ /blog/${post.slug}`);
 }

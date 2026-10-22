@@ -26,6 +26,8 @@ export interface BlogPost {
   tags: string[];
   readTime: string;
   content: string;
+  /** Eigenes Vorschaubild für Social Media und Schema (Pfad unter public/, 1200×630 PNG). */
+  image?: string;
   /** Häufige Fragen unter dem Artikel; der Prerender erzeugt daraus auch das FAQPage-Schema. */
   faq?: { q: string; a: string }[];
 }
