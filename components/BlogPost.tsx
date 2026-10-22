@@ -1,14 +1,19 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ArrowLeft, Clock, Calendar } from 'lucide-react';
 import { BlogPost as BlogPostType, blogPostTitle } from '../content/blog';
 import { copy } from '../content/site-copy';
 import MagneticButton from './MagneticButton';
+import CheckDialog from './CheckDialog';
 import { spaLink } from './spaLink';
 
 /** Link-Ziel im Artikeltext, das den Entwurf-Dialog öffnet: [Text](#entwurf) */
 const DRAFT_HREF = '#entwurf';
+/** Link-Ziel im Artikeltext, das den Website-Check-Dialog öffnet: [Text](#pruefen) */
+const CHECK_HREF = '#pruefen';
+
+const buttonClass = 'not-prose inline-flex items-center gap-2 font-mono text-sm font-medium uppercase bg-accent text-ink px-6 py-3.5 border border-accent hover:bg-transparent hover:text-accent transition-colors';
 
 const formatDate = (d: string) => new Date(d).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
 
@@ -20,6 +25,8 @@ interface Props {
 }
 
 const BlogPost: React.FC<Props> = ({ post, onNavigate, onRequestDraft, openCalendly }) => {
+  const [checkOpen, setCheckOpen] = useState(false);
+
   useEffect(() => {
     document.title = blogPostTitle(post);
     const metaDesc = document.querySelector('meta[name="description"]');
@@ -32,15 +39,12 @@ const BlogPost: React.FC<Props> = ({ post, onNavigate, onRequestDraft, openCalen
 
   const markdownComponents = useMemo<Components>(() => ({
     // Interne Links (/preise, /blog/…) wechseln die Ansicht ohne Neuladen;
-    // #entwurf wird zum Knopf, der den Entwurf-Dialog öffnet.
+    // #entwurf und #pruefen werden zu Knöpfen, die den jeweiligen Dialog öffnen.
     a: ({ href = '', children }) => {
-      if (href === DRAFT_HREF) {
+      if (href === DRAFT_HREF || href === CHECK_HREF) {
+        const open = href === DRAFT_HREF ? onRequestDraft : () => setCheckOpen(true);
         return (
-          <a
-            href={DRAFT_HREF}
-            onClick={(e) => { e.preventDefault(); onRequestDraft(); }}
-            className="not-prose inline-flex items-center gap-2 font-mono text-sm font-medium uppercase bg-accent text-ink px-6 py-3.5 border border-accent hover:bg-transparent hover:text-accent transition-colors"
-          >
+          <a href={href} onClick={(e) => { e.preventDefault(); open(); }} className={buttonClass}>
             {children} →
           </a>
         );
@@ -163,6 +167,7 @@ const BlogPost: React.FC<Props> = ({ post, onNavigate, onRequestDraft, openCalen
           </div>
         </article>
       </div>
+      <CheckDialog open={checkOpen} onClose={() => setCheckOpen(false)} topic={post.slug} />
     </div>
   );
 };

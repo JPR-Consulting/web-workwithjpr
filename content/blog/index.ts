@@ -10,6 +10,7 @@ import { post as kampfsport } from './website-fuer-kampfsport-gyms';
 import { post as kundengewinnung } from './online-kundengewinnung';
 import { post as vibeCoding } from './vibe-coding-unternehmen';
 import { post as werbeanzeigen } from './warum-werbeanzeigen-nicht-funktionieren';
+import { post as php2shell } from './php2shell-php-sicherheitsluecke';
 
 export interface BlogPost {
   slug: string;
@@ -42,6 +43,7 @@ export const blogPosts: BlogPost[] = [
   kundengewinnung,
   vibeCoding,
   werbeanzeigen,
+  php2shell,
 ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 /**
@@ -62,6 +64,12 @@ export const blogIntro = {
         { label: 'Webdesign-Preise mit Festpreis-Paketen', href: '/preise' },
         { label: 'Webdesign-Preise in Berlin: Was kostet eine Website?', href: '/blog/was-kostet-eine-website-berlin' },
         { label: 'Individuelles Backend oder WordPress?', href: '/blog/individuelles-backend-vs-wordpress' },
+      ],
+    },
+    {
+      title: 'Technik & Sicherheit',
+      links: [
+        { label: 'PHP2Shell: Ist deine Website betroffen?', href: '/blog/php2shell-php-sicherheitsluecke' },
         { label: '5 Zeichen, dass deine Website veraltet ist', href: '/blog/5-zeichen-veraltete-website' },
       ],
     },

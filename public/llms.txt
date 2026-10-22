@@ -56,4 +56,5 @@ Aktuelle Preisliste: https://workwithjpr.com/preise
 - Online-Kundengewinnung für lokale Unternehmen: https://workwithjpr.com/blog/online-kundengewinnung
 - Was Vibe-Coding deinem Unternehmen bringt: https://workwithjpr.com/blog/vibe-coding-unternehmen
 - Warum deine Werbeanzeigen nicht funktionieren (Spoiler: Es liegt selten an den Anzeigen): https://workwithjpr.com/blog/warum-werbeanzeigen-nicht-funktionieren
+- PHP2Shell: Ist deine Website von der PHP-Sicherheitslücke betroffen? (betroffene und gepatchte PHP-Versionen, WordPress, PHP-Version prüfen, was tun; Stand 22.10.2026): https://workwithjpr.com/blog/php2shell-php-sicherheitsluecke
 - Blog-Übersicht mit Themen-Wegweiser: https://workwithjpr.com/blog

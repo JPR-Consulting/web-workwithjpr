@@ -3,6 +3,7 @@ export const post = {
   title: '5 Zeichen, dass deine Website veraltet ist (und Kunden kostet)',
   description: 'Eine veraltete Website kostet Vertrauen, Google-Rankings und Umsatz. Diese 5 Anzeichen sprechen dafür, dass es Zeit für einen Relaunch ist.',
   date: '2026-03-16',
+  updated: '2026-10-22',
   tags: ['Webdesign', 'Redesign', 'Performance'],
   readTime: '6 min',
   content: `
@@ -26,6 +27,8 @@ Wenn dein Mobile-Score unter 60 liegt oder die Ladezeit über 3 Sekunden — du 
 Das ist reiner Umsatzverlust. Und Google weiß das auch — langsame Seiten ranken schlechter. Ein Teufelskreis.
 
 **Typische Ursachen:** Unkomprimierte Bilder, zu viele Plugins (WordPress), altes Hosting, veralteter Code.
+
+Altes Hosting heißt oft auch eine alte PHP-Version, und die bekommt irgendwann keine Sicherheitsupdates mehr. Was das konkret bedeutet, zeigt die Lücke [PHP2Shell vom Oktober 2026](/blog/php2shell-php-sicherheitsluecke).
 
 ## 2. Sie funktioniert nicht (richtig) auf dem Handy
 

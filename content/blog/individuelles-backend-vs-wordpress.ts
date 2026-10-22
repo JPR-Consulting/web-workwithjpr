@@ -51,6 +51,8 @@ WordPress hat ein Backend — aber es ist für Blogs und einfache Seiten gebaut,
 | Eigene Funktionen | Über Plugins, bei komplexer Logik schnell unübersichtlich | Frei baubar |
 | Wartung | Regelmäßige Updates von Kern, Theme und Plugins | Weniger Updates, aber ein Entwickler muss ran |
 
+Warum Updates zählen, hat im Oktober 2026 [PHP2Shell](/blog/php2shell-php-sicherheitsluecke) gezeigt: Die Lücke steckte nicht in WordPress, sondern in PHP darunter, und betraf damit jede Seite auf einer ungepatchten PHP-Version.
+
 ## Beispiel: Muay Thai Subyen
 
 Für das Muay Thai Gym in Berlin haben wir ein individuelles Backend gebaut:
