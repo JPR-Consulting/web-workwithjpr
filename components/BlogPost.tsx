@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useId, useMemo, useState } from 'react';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ArrowLeft, Clock, Calendar } from 'lucide-react';
@@ -18,22 +18,24 @@ const buttonClass = 'not-prose inline-flex items-center gap-2 font-mono text-sm 
 /** Website-Feld + Knopf im Artikel; die Adresse geht in den Check-Dialog, dort folgt nur noch die E-Mail. */
 const CheckInline: React.FC<{ onSubmit: (website: string) => void }> = ({ onSubmit }) => {
   const [website, setWebsite] = useState('');
+  const id = useId(); // Kasten steht mehrfach im Artikel
   return (
     <form
       className="not-prose mt-6"
       onSubmit={(e) => { e.preventDefault(); onSubmit(website.trim()); }}
     >
-      <label htmlFor="check-inline" className="block font-mono text-[13px] uppercase text-muted mb-2">Deine Website</label>
+      <label htmlFor={id} className="block font-mono text-[13px] uppercase text-muted mb-2">Deine Website</label>
       <div className="flex flex-col sm:flex-row gap-3">
         <input
-          id="check-inline"
+          id={id}
+          data-check-inline
           type="text"
           inputMode="url"
           autoComplete="url"
           placeholder="meinbetrieb.de"
           value={website}
           onChange={(e) => setWebsite(e.target.value)}
-          className="flex-1 min-w-0 h-14 px-4 bg-ink border border-line text-ftext text-[17px] font-body placeholder:text-dim focus:border-accent focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          className="w-full sm:flex-1 min-w-0 h-14 px-4 bg-ink border border-line text-ftext text-[17px] font-body placeholder:text-dim focus:border-accent focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         />
         <button type="submit" className={`${buttonClass} justify-center h-14 whitespace-nowrap`}>
           Website kostenlos prüfen lassen →
