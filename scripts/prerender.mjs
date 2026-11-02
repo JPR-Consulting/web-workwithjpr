@@ -385,22 +385,22 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
 }
 
 
-// --- Landingpage /dresden (Toms Seite, Sie-Form, eigenes warmes Thema) ---
+// --- Landingpage /dresden (Toms Seite, Sie-Form, eigenes kühles Thema: Tinte + Kobaltblau) ---
 {
   const d = dresden;
-  const c = { bg: '#141210', line: '#38322c', text: '#f3eee6', muted: '#c0b7aa', accent: '#c9a46a' };
-  const serif = "font-family:'Fraunces',Georgia,serif;font-weight:400";
+  const c = { bg: '#070a12', line: '#20283a', text: '#f4f6fb', muted: '#a3adc2', accent: '#8fa8ff', btn: '#3d5afe' };
+  const serif = "font-family:'Satoshi','Manrope',system-ui,sans-serif;font-weight:700;letter-spacing:-.035em";
   const pageUrl = url(dresdenPath);
   const h2 = (tt) => `<h2 style="${serif};color:${c.text};font-size:32px;line-height:1.1">${esc(tt)}</h2>`;
   const cells = (items) => `<ul>${items.map(i => `<li><strong style="color:${c.text}">${esc(i.title)}</strong> — ${esc(i.desc)}</li>`).join('')}</ul>`;
   const rootHtml = `<div style="min-height:100vh;background:${c.bg};color:${c.text};font-family:'Manrope',system-ui,-apple-system,sans-serif">
       <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 40px">
         <div style="font-family:'Syne',system-ui,sans-serif;font-weight:800;font-size:18px;text-transform:uppercase">JPR <span style="color:${c.accent}">Studio</span>&reg; <span style="font-family:'Manrope',system-ui,sans-serif;font-weight:500;font-size:13px;letter-spacing:.08em;color:${c.muted}">&nbsp;|&nbsp; ${esc(d.nav.place)}</span></div>
-        <div style="font-size:14px;font-weight:700;background:${c.accent};color:#17140f;padding:11px 20px;border-radius:999px">${esc(d.nav.cta)} &rarr;</div>
+        <div style="font-size:14px;font-weight:700;background:${c.btn};color:#fff;padding:11px 20px;border-radius:999px">${esc(d.nav.cta)} &rarr;</div>
       </div>
       <header style="padding:110px 40px 64px;max-width:1280px;box-sizing:border-box">
         <p style="font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:${c.accent};margin:0 0 20px">${esc(d.hero.eyebrow)}</p>
-        <h1 style="${serif};margin:0;font-size:clamp(38px,5.4vw,80px);line-height:1.04;letter-spacing:-.02em;max-width:760px">${esc(d.hero.h1[0])} <em style="color:${c.accent}">${esc(d.hero.h1[1])}</em> ${esc(d.hero.h1[2])}</h1>
+        <h1 style="${serif};margin:0;font-size:clamp(38px,5.4vw,80px);line-height:1.04;letter-spacing:-.02em;max-width:760px">${esc(d.hero.h1[0])} <em style="color:${c.accent};font-family:'Fraunces',Georgia,serif;font-weight:400">${esc(d.hero.h1[1])}</em> ${esc(d.hero.h1[2])}</h1>
         <p style="margin:28px 0 0;font-size:19px;line-height:1.6;color:${c.muted};max-width:560px">${esc(d.hero.sub)}</p>
         <p style="margin:28px 0 0;color:${c.muted}">${esc(d.tom.name)} · ${esc(d.tom.role)}</p>
       </header>
@@ -441,7 +441,8 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
     rootHtml,
     jsonLd,
     headExtra: [
-      '<link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>',
+      '<link rel="preload" href="/fonts/satoshi-variable.woff2" as="font" type="font/woff2" crossorigin>',
+      '<link rel="preload" href="/fonts/fraunces-italic-latin.woff2" as="font" type="font/woff2" crossorigin>',
       '<link rel="preload" href="/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>',
       '<link rel="preload" as="image" type="image/webp" fetchpriority="high" href="/dresden/beispiel-carhifi-desktop.webp" media="(min-width: 1024px)">',
     ].join('\n'),

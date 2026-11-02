@@ -65,7 +65,7 @@ export const dresden = {
   nav: { place: 'Dresden', cta: 'Entwurf anfragen' },
   hero: {
     eyebrow: 'Websites für Betriebe in Dresden',
-    // H1 in drei Teilen: der mittlere wird kursiv und golden gesetzt
+    // H1 in drei Teilen: der mittlere wird kursiv im Akzent gesetzt
     h1: ['Sie sehen Ihre neue Website,', 'bevor', 'Sie etwas bezahlen.'],
     sub: 'Für Handwerk, Praxen und Fahrzeug-Ausstattung: eine Website, die Anfragen und Bewerbungen bringt. Den Entwurf bauen wir vorab und kostenlos, aus Ihrer bisherigen Seite.',
     cta: 'Kostenlosen Entwurf anfragen',
@@ -169,7 +169,13 @@ export const dresden = {
       { title: 'Ihnen gehört die Website', desc: 'Sie bekommen Code, Domain und alle Zugänge. Kein Baukasten-Abo, keine Lizenzgebühren.' },
       { title: 'Ansprechpartner in Dresden', desc: 'Tom Nowak ist Ihr Kontakt vor Ort, vom ersten Gespräch bis zum Angebot.' },
     ],
-    quotesLabel: 'Kundenstimmen von JPR Studio',
+    quotesLabel: 'Was Kunden von JPR Studio sagen',
+    // White-Label (Jan, 02.11.2026): echte, freigegebene Zitate aus site-copy.ts, Wortlaut unverändert,
+    // aber ohne Namen, Firma und Logo, nur Branche und Ort. Reihenfolge = copy.de.testimonials.items.
+    quotes: [
+      { quote: copy.de.testimonials.items[0].quote, who: 'Industriekletter-Betrieb, Berlin' },
+      { quote: copy.de.testimonials.items[1].quote, who: 'Kampfsportverein' },
+    ],
   },
   faq: {
     eyebrow: 'Fragen',
