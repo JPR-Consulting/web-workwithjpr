@@ -179,7 +179,7 @@ export const dresden = {
       { q: 'Ich habe keine Zeit für Website-Kram.', a: 'Wir bauen den Entwurf aus Ihrer bisherigen Seite. Texte, Bilder und Technik übernehmen wir. Von Ihnen brauchen wir ein kurzes Gespräch und Ihre Rückmeldung zum Entwurf.' },
       { q: 'Wie funktioniert der KI-Assistent?', a: 'Kunden sprechen direkt auf Ihrer Website mit dem Assistenten, im Browser. Er sagt zuerst, dass er eine KI ist, stellt die Fragen, die Sie für ein Angebot brauchen, und legt eine Auftragskarte an. Es wird kein Ton aufgezeichnet. Preise und Termine sagt er nie zu, das bleibt bei Ihnen.' },
       { q: 'Was kostet die Website?', a: 'Eine One-Page-Website beginnt bei 1.500 €, eine mehrseitige Website bei 3.000 €, ein Shop oder eine Web-App bei 5.000 €, jeweils netto. Nach dem kostenlosen Entwurf bekommen Sie einen Festpreis. Betreuung mit Hosting, Updates und Backups gibt es ab 49 € im Monat.' },
-      { q: 'Ich habe noch gar keine Website.', a: 'Dann bauen wir den Entwurf aus dem, was Sie uns im Gespräch erzählen, und aus Ihrem Google-Profil, falls Sie eins haben.' },
+      { q: 'Ich habe noch gar keine Website.', a: 'Kein Problem. Dann sprechen Sie kurz mit Tom über Ihren Betrieb und bekommen ein Angebot für Ihre erste Website. Der kostenlose Entwurf vorab wird aus einer bestehenden Seite gebaut.' },
       { q: 'Wem gehört die Website am Ende?', a: 'Ihnen, vollständig. Sie bekommen Code, Domain und alle Zugänge. Betreuung ist möglich, aber kein Muss: Sie können die Seite jederzeit von jemand anderem weiterführen lassen.' },
       { q: 'Wer steckt hinter JPR Studio?', a: 'JPR Studio ist eine Marke der JPR Consulting GmbH mit Sitz in Berlin. In Dresden ist Tom Nowak Ihr Ansprechpartner, gebaut wird im Team von JPR Studio.' },
     ],
