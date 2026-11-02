@@ -24,6 +24,9 @@ export default {
         syne: ['Syne', 'Avenir Next', 'system-ui', 'sans-serif'],
         body: ['Space Grotesk', 'Helvetica Neue', 'system-ui', 'sans-serif'],
         mono: ['IBM Plex Mono', 'SF Mono', 'Menlo', 'monospace'],
+        // nur Landingpage /dresden
+        fraunces: ['Fraunces', 'Georgia', 'serif'],
+        manrope: ['Manrope', 'Helvetica Neue', 'system-ui', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out forwards',

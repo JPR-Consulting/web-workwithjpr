@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Check, X } from 'lucide-react';
 import { useCopy, useLang } from '../i18n';
 import { attributionLine } from '../attribution';
+import type { SiteCopy } from '../content/site-copy';
 import { trackEvent, trackLead } from '../tracking';
 
 /**
@@ -24,6 +25,8 @@ interface Props {
   presetIndustry?: number;
   /** Wird an `source` angehängt, z. B. „lp-handwerk“. */
   sourceTag?: string;
+  /** Eigene Dialog-Texte, z. B. Sie-Form auf /dresden; sonst die Texte der aktiven Sprache. */
+  copyOverride?: SiteCopy['draft'];
 }
 
 type Errors = Partial<Record<'company' | 'industry' | 'name' | 'email', string>>;
@@ -65,8 +68,9 @@ const Choice: React.FC<{ type: 'radio' | 'checkbox'; name: string; label: string
   </label>
 );
 
-const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall, presetIndustry, sourceTag }) => {
-  const t = useCopy().draft;
+const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall, presetIndustry, sourceTag, copyOverride }) => {
+  const baseCopy = useCopy().draft;
+  const t = copyOverride ?? baseCopy;
   const lang = useLang();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);

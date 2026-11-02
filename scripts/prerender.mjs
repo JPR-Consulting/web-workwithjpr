@@ -28,6 +28,9 @@ rmSync('.prerender-handwerk.mjs');
 execSync('npx esbuild content/praxis-copy.ts --bundle --format=esm --outfile=.prerender-praxis.mjs', { stdio: 'inherit' });
 const { praxis, praxisPath } = await import(new URL('../.prerender-praxis.mjs', import.meta.url));
 rmSync('.prerender-praxis.mjs');
+execSync('npx esbuild content/dresden-copy.ts --bundle --format=esm --outfile=.prerender-dresden.mjs', { stdio: 'inherit' });
+const { dresden, dresdenPath } = await import(new URL('../.prerender-dresden.mjs', import.meta.url));
+rmSync('.prerender-dresden.mjs');
 
 const fullTemplate = readFileSync(`${DIST}/index.html`, 'utf8');
 // index.html bringt ein FAQ-Schema mit. Es gehört nur zur Startseite und wird
@@ -381,4 +384,72 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
   console.log(`✓ ${landingPath}`);
 }
 
-console.log(`Prerender fertig: ${blogPosts.length} Artikel + Blog-Index + 2 Rechtsseiten + Start/Preise in DE und EN + Landingpages Handwerk und Praxis.`);
+
+// --- Landingpage /dresden (Toms Seite, Sie-Form, eigenes warmes Thema) ---
+{
+  const d = dresden;
+  const c = { bg: '#141210', line: '#38322c', text: '#f3eee6', muted: '#c0b7aa', accent: '#c9a46a' };
+  const serif = "font-family:'Fraunces',Georgia,serif;font-weight:400";
+  const pageUrl = url(dresdenPath);
+  const h2 = (tt) => `<h2 style="${serif};color:${c.text};font-size:32px;line-height:1.1">${esc(tt)}</h2>`;
+  const cells = (items) => `<ul>${items.map(i => `<li><strong style="color:${c.text}">${esc(i.title)}</strong> — ${esc(i.desc)}</li>`).join('')}</ul>`;
+  const rootHtml = `<div style="min-height:100vh;background:${c.bg};color:${c.text};font-family:'Manrope',system-ui,-apple-system,sans-serif">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 40px">
+        <div style="font-family:'Syne',system-ui,sans-serif;font-weight:800;font-size:18px;text-transform:uppercase">JPR <span style="color:${c.accent}">Studio</span>&reg; <span style="font-family:'Manrope',system-ui,sans-serif;font-weight:500;font-size:13px;letter-spacing:.08em;color:${c.muted}">&nbsp;|&nbsp; ${esc(d.nav.place)}</span></div>
+        <div style="font-size:14px;font-weight:700;background:${c.accent};color:#17140f;padding:11px 20px;border-radius:999px">${esc(d.nav.cta)} &rarr;</div>
+      </div>
+      <header style="padding:110px 40px 64px;max-width:1280px;box-sizing:border-box">
+        <p style="font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:${c.accent};margin:0 0 20px">${esc(d.hero.eyebrow)}</p>
+        <h1 style="${serif};margin:0;font-size:clamp(38px,5.4vw,80px);line-height:1.04;letter-spacing:-.02em;max-width:760px">${esc(d.hero.h1[0])} <em style="color:${c.accent}">${esc(d.hero.h1[1])}</em> ${esc(d.hero.h1[2])}</h1>
+        <p style="margin:28px 0 0;font-size:19px;line-height:1.6;color:${c.muted};max-width:560px">${esc(d.hero.sub)}</p>
+        <p style="margin:28px 0 0;color:${c.muted}">${esc(d.tom.name)} · ${esc(d.tom.role)}</p>
+      </header>
+      <main style="padding:0 40px 64px;max-width:1280px;box-sizing:border-box;color:${c.muted};line-height:1.7">
+        ${h2(d.outcomes.title)}${cells(d.outcomes.items)}
+        ${h2(d.voice.title)}<p>${esc(d.voice.intro)}</p>${cells(d.voice.niches.map(n => ({ title: `${n.label}: ${n.title}`, desc: n.desc })))}<p>${d.voice.rules.map(esc).join(' · ')}</p>
+        ${h2(d.examples.title)}<p>${esc(d.examples.text)}</p><ul>${d.examples.items.map(e => `<li><strong style="color:${c.text}">${esc(e.title)}</strong> — ${esc(e.tag)} (${esc(d.examples.badge)})</li>`).join('')}</ul>
+        ${h2(d.tom.title)}<p>${esc(d.tom.text)}</p>
+        ${h2(d.process.title)}${cells(d.process.steps)}
+        ${h2(d.pricing.title)}
+        <p>${copy.de.pricing.tiers.map(tier => `${esc(tier.name)} ${esc(tier.price)}`).join(' &middot; ')}. ${esc(copy.de.pricing.note)} ${esc(d.pricing.voice)}. <a href="${paths.pricing.de}" style="color:${c.accent}">${esc(d.pricing.more)}</a></p>
+        ${h2(d.trust.title)}${cells(d.trust.facts)}
+        ${h2(d.faq.title)}
+        ${d.faq.items.map(fq => `<h3 style="color:${c.text}">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
+        ${h2(d.cta.title.join(' '))}<p>${esc(d.cta.text)}</p>
+        <p>${esc(copy.de.footer.company)} &middot; info@workwithjpr.com</p>
+        <p><a href="/" style="color:${c.accent}">JPR Studio</a> &middot; <a href="/imprint" style="color:${c.accent}">Impressum</a> &middot; <a href="/privacy" style="color:${c.accent}">Datenschutz</a></p>
+      </main>
+    </div>`;
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: 'Website für Betriebe in Dresden',
+      serviceType: 'Webdesign',
+      areaServed: { '@type': 'City', name: 'Dresden' },
+      provider: { '@type': 'ProfessionalService', name: 'JPR Studio', legalName: 'JPR Consulting GmbH', url: SITE, address: { '@type': 'PostalAddress', streetAddress: 'Letteallee 91', postalCode: '13409', addressLocality: 'Berlin', addressCountry: 'DE' } },
+      offers: { '@type': 'Offer', priceSpecification: { '@type': 'PriceSpecification', minPrice: '1500', priceCurrency: 'EUR' }, url: pageUrl },
+    },
+    faqLd(d.faq.items),
+  ];
+  mkdirSync(`${DIST}${dresdenPath}`, { recursive: true });
+  let page = renderPage({
+    title: d.meta.title,
+    description: d.meta.desc,
+    canonical: pageUrl,
+    ogType: 'website',
+    rootHtml,
+    jsonLd,
+    headExtra: [
+      '<link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>',
+      '<link rel="preload" href="/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>',
+      '<link rel="preload" as="image" type="image/webp" fetchpriority="high" href="/dresden/beispiel-carhifi-desktop.webp" media="(min-width: 1024px)">',
+    ].join('\n'),
+  });
+  // Thema schon im HTML setzen, sonst blitzt beim Laden die Lime-Seite auf
+  page = page.replace(/<html([^>]*?) class="([^"]*)"/, '<html$1 class="$2 theme-dresden"');
+  writeFileSync(`${DIST}${dresdenPath}/index.html`, page);
+  console.log(`✓ ${dresdenPath}`);
+}
+
+console.log(`Prerender fertig: ${blogPosts.length} Artikel + Blog-Index + 2 Rechtsseiten + Start/Preise in DE und EN + Landingpages Handwerk, Praxis und Dresden.`);

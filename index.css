@@ -296,3 +296,76 @@ html.theme-light .bg-texture::after { opacity: 0.08; mix-blend-mode: multiply; }
     background: linear-gradient(to right, rgb(var(--c-ink) / 0.97) 0%, rgb(var(--c-ink) / 0.88) 40%, rgb(var(--c-ink) / 0.15) 64%, rgb(var(--c-ink) / 0) 100%);
   }
 }
+
+/* ---------------------------------------------------------------
+   Landingpage /dresden: ruhiges warmes Dunkel + Papier-Sektionen, Gold statt Lime.
+   html.theme-dresden setzt die Tokens (gilt auch für Entwurf-Dialog und Cookie-Banner),
+   .dd-paper schaltet einzelne Sektionen hell. Gold-Knopf mit dunkler Schrift: 8:1.
+   --------------------------------------------------------------- */
+html.theme-dresden {
+  --c-ink: 20 18 16;
+  --c-panel: 31 28 25;
+  --c-line: 56 50 44;
+  --c-ftext: 243 238 230;
+  --c-muted: 192 183 170;
+  --c-dim: 156 147 134;
+  --c-accent: 201 164 106;
+}
+html.theme-dresden body {
+  background: rgb(var(--c-ink));
+  color: rgb(var(--c-ftext));
+}
+.dd-paper {
+  --c-ink: 244 239 231;
+  --c-panel: 252 249 243;
+  --c-line: 223 213 198;
+  --c-ftext: 28 25 22;
+  --c-muted: 86 78 69;
+  --c-dim: 112 103 92;
+  --c-accent: 128 94 42;
+  background: rgb(var(--c-ink));
+  color: rgb(var(--c-ftext));
+}
+/* geometricPrecision: sonst rundet Chromium (Linux/Windows) kleine Versalien so, dass nach „T“ Lücken entstehen */
+.dd, html.theme-dresden .draft-dialog { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: geometricPrecision; }
+/* Cookie-Banner auf /dresden: Seitenschrift statt Mono/Grotesk */
+html.theme-dresden .font-mono, html.theme-dresden .font-body { font-family: 'Manrope', 'Helvetica Neue', system-ui, sans-serif; text-rendering: geometricPrecision; }
+.dd-btn {
+  background: #c9a46a;
+  color: #17140f;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 10px 30px -12px rgba(201, 164, 106, 0.55);
+}
+.dd-btn:hover { background: #d8b67f; box-shadow: 0 14px 36px -12px rgba(201, 164, 106, 0.7); }
+.dd-btn:active { transform: scale(0.98); }
+.dd-btn:focus-visible,
+.dd button:focus-visible,
+.dd a:focus-visible,
+.dd summary:focus-visible {
+  outline: 2px solid rgb(var(--c-accent));
+  outline-offset: 3px;
+}
+.dd-hero {
+  background:
+    radial-gradient(60% 55% at 85% 20%, rgba(201, 164, 106, 0.13), transparent 70%),
+    radial-gradient(50% 50% at 0% 100%, rgba(201, 164, 106, 0.06), transparent 70%);
+}
+.dd-glow {
+  background: radial-gradient(50% 60% at 50% 100%, rgba(201, 164, 106, 0.16), transparent 70%);
+}
+.dd-faq summary::-webkit-details-marker { display: none; }
+/* Entwurf-Dialog und Cookie-Banner im Dresden-Stil: Serif statt Versal-Grotesk */
+html.theme-dresden .draft-dialog.font-body,
+html.theme-dresden .draft-dialog .font-body { font-family: 'Manrope', 'Helvetica Neue', system-ui, sans-serif; }
+html.theme-dresden .draft-dialog .font-syne {
+  font-family: 'Fraunces', Georgia, serif;
+  text-transform: none;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+html.theme-dresden .draft-dialog .font-mono {
+  font-family: 'Manrope', 'Helvetica Neue', system-ui, sans-serif;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+html.theme-dresden .draft-dialog::backdrop { background: rgba(12, 11, 10, 0.78); }

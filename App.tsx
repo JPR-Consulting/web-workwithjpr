@@ -17,10 +17,12 @@ import PreisePage from './components/PreisePage';
 import DraftDialog from './components/DraftDialog';
 import HeroDraftForm from './components/HeroDraftForm';
 import LandingPage from './components/LandingPage';
+import DresdenPage from './components/DresdenPage';
 import { captureAttribution } from './attribution';
 import { spaLink } from './components/spaLink';
 import { handwerk, handwerkPath, type LandingCopy } from './content/handwerk-copy';
 import { praxis, praxisPath } from './content/praxis-copy';
+import { dresden, dresdenPath } from './content/dresden-copy';
 import { useLenis } from './hooks/useLenis';
 import { useReveal } from './hooks/useReveal';
 import { SectionTitle, Eyebrow, ServiceCell, ProcessStep } from './components/SectionParts';
@@ -37,7 +39,7 @@ declare global {
   }
 }
 
-type ViewState = 'HOME' | 'IMPRINT' | 'PRIVACY' | 'BLOG' | 'BLOG_POST' | 'PREISE' | 'HANDWERK' | 'PRAXIS';
+type ViewState = 'HOME' | 'IMPRINT' | 'PRIVACY' | 'BLOG' | 'BLOG_POST' | 'PREISE' | 'HANDWERK' | 'PRAXIS' | 'DRESDEN';
 
 /** Branchen-Landingpages der Google-Ads-Kampagnen: Ansicht -> Adresse + Texte. */
 const LANDINGS: Partial<Record<ViewState, { path: string; t: LandingCopy }>> = {
@@ -58,6 +60,7 @@ function parseLocation(path: string): { view: ViewState; slug: string; lang: Lan
   if (path === paths.pricing.de) return { view: 'PREISE', slug: '', lang: 'de' };
   if (path === handwerkPath) return { view: 'HANDWERK', slug: '', lang: 'de' };
   if (path === praxisPath) return { view: 'PRAXIS', slug: '', lang: 'de' };
+  if (path === dresdenPath || path === `${dresdenPath}/`) return { view: 'DRESDEN', slug: '', lang: 'de' };
   if (path === '/imprint' || path === '/impressum') return { view: 'IMPRINT', slug: '', lang: null };
   if (path === '/privacy' || path === '/datenschutz') return { view: 'PRIVACY', slug: '', lang: null };
   if (path === '/blog') return { view: 'BLOG', slug: '', lang: null };
@@ -70,6 +73,7 @@ function pathFor(view: ViewState, lang: Lang, slug: string): string {
   if (view === 'PREISE') return paths.pricing[lang];
   const landing = LANDINGS[view];
   if (landing) return landing.path;
+  if (view === 'DRESDEN') return dresdenPath;
   if (view === 'IMPRINT') return '/imprint';
   if (view === 'PRIVACY') return '/privacy';
   if (view === 'BLOG') return '/blog';
@@ -81,6 +85,14 @@ function useDocumentMeta(view: ViewState, lang: Lang) {
   useEffect(() => {
     const landing = LANDINGS[view];
     document.documentElement.classList.toggle('theme-light', landing?.t.theme === 'light');
+    document.documentElement.classList.toggle('theme-dresden', view === 'DRESDEN');
+    if (view === 'DRESDEN') {
+      document.documentElement.lang = 'de';
+      document.title = dresden.meta.title;
+      document.querySelector('meta[name="description"]')?.setAttribute('content', dresden.meta.desc);
+      document.querySelector('link[rel="canonical"]')?.setAttribute('href', `${SITE}${dresdenPath}`);
+      return;
+    }
     if (landing) {
       document.documentElement.lang = 'de';
       document.title = landing.t.meta.title;
@@ -209,7 +221,8 @@ const App: React.FC = () => {
       onClose={() => setDraftOpen(false)}
       onCall={callInstead}
       presetIndustry={LANDINGS[currentView]?.t.presetIndustry}
-      sourceTag={LANDINGS[currentView]?.t.sourceTag ?? (currentView === 'BLOG_POST' ? `blog-${currentSlug}` : undefined)}
+      sourceTag={currentView === 'DRESDEN' ? dresden.sourceTag : LANDINGS[currentView]?.t.sourceTag ?? (currentView === 'BLOG_POST' ? `blog-${currentSlug}` : undefined)}
+      copyOverride={currentView === 'DRESDEN' ? dresden.draft : undefined}
     />
   );
 
@@ -235,6 +248,7 @@ const App: React.FC = () => {
   const renderView = () => {
     const landing = LANDINGS[currentView];
     if (landing) return <LandingPage t={landing.t} onRequestDraft={openDraft} onCall={openCalendly} />;
+    if (currentView === 'DRESDEN') return <DresdenPage onRequestDraft={openDraft} />;
     if (currentView === 'IMPRINT') return <Imprint onBack={() => navigate('HOME')} />;
     if (currentView === 'PRIVACY') return <Privacy onBack={() => navigate('HOME')} />;
     if (currentView === 'PREISE') return <PreisePage onNavigate={navigate} onRequestDraft={() => openDraft()} onLangChange={changeLang} />;
@@ -248,7 +262,7 @@ const App: React.FC = () => {
   };
 
   const other = renderView();
-  if (other) return <LangContext.Provider value={LANDINGS[currentView] ? 'de' : lang}>{other}{draftDialog}</LangContext.Provider>;
+  if (other) return <LangContext.Provider value={LANDINGS[currentView] || currentView === 'DRESDEN' ? 'de' : lang}>{other}{draftDialog}</LangContext.Provider>;
 
   const marqueeItems = (
     <>
