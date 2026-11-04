@@ -120,6 +120,9 @@ const App: React.FC = () => {
   const [currentSlug, setCurrentSlug] = useState<string>(initial.slug);
   const [lang, setLang] = useState<Lang>(initial.lang ?? 'de');
   const [heroIn, setHeroIn] = useState(false);
+  // Vorgerenderte H1 war schon sichtbar: Zeilen sofort im Endzustand halten, nicht neu einfahren lassen.
+  const shellPainted = useRef(typeof document !== 'undefined' && document.documentElement.dataset.shell === '1' && initial.view === 'HOME').current;
+  const lineIn = heroIn || shellPainted;
   // Wasser-Shader erst nach dem Hero-Intro aktivieren, damit der
   // Zeilen-Reveal beim Laden sichtbar bleibt.
   const [waterReady, setWaterReady] = useState(false);
@@ -251,7 +254,7 @@ const App: React.FC = () => {
     if (currentView === 'DRESDEN') return <DresdenPage onRequestDraft={openDraft} />;
     if (currentView === 'IMPRINT') return <Imprint onBack={() => navigate('HOME')} />;
     if (currentView === 'PRIVACY') return <Privacy onBack={() => navigate('HOME')} />;
-    if (currentView === 'PREISE') return <PreisePage onNavigate={navigate} onRequestDraft={() => openDraft()} onLangChange={changeLang} />;
+    if (currentView === 'PREISE') return <PreisePage onNavigate={navigate} onRequestDraft={(w) => openDraft(typeof w === 'string' ? w : '')} onLangChange={changeLang} />;
     if (currentView === 'BLOG') return <BlogIndex onNavigate={navigate} />;
     if (currentView === 'BLOG_POST') {
       const post = getPostBySlug(currentSlug);
@@ -292,15 +295,15 @@ const App: React.FC = () => {
         <div>{t.hero.topRight}</div>
       </div>
 
-      <h1 className="font-syne font-extrabold uppercase text-[clamp(30px,7.6vw,150px)] leading-[1.02] tracking-[-0.015em] break-words">
-        <span className={`hero-line ${heroIn ? 'in' : ''}`}>
+      <h1 className="font-syne font-extrabold uppercase text-[clamp(24px,7.6vw,150px)] leading-[1.02] tracking-[-0.015em] break-words">
+        <span className={`hero-line ${lineIn ? 'in' : ''}`}>
           <span data-line>{t.hero.h1[0]}</span>
         </span>
-        <span className={`hero-line hero-line-2 text-accent ${heroIn ? 'in' : ''}`}>
+        <span className={`hero-line hero-line-2 text-accent ${lineIn ? 'in' : ''}`}>
           <span data-line>{t.hero.h1[1]}</span>
         </span>
         <span
-          className={`hero-line hero-line-3 ${heroIn ? 'in' : ''}`}
+          className={`hero-line hero-line-3 ${lineIn ? 'in' : ''}`}
           style={{ WebkitTextStroke: '2px #f4f4f0', color: 'transparent' }}
         >
           <span data-line>{t.hero.h1[2]}</span>
@@ -354,7 +357,7 @@ const App: React.FC = () => {
         <button onClick={scrollToTop} className="font-syne font-extrabold text-[16px] md:text-[19px] uppercase tracking-[0.01em] text-ftext whitespace-nowrap shrink-0">
           JPR <span className="text-accent">Studio</span>&reg;
         </button>
-        <ul className="hidden md:flex gap-8 list-none font-mono text-[14px] uppercase">
+        <ul className="hidden lg:flex gap-8 list-none font-mono text-[14px] uppercase">
           {t.nav.links.map((link) => (
             <li key={link.id}>
               <ScrambleLabel
@@ -369,7 +372,7 @@ const App: React.FC = () => {
           ))}
         </ul>
         <div className="flex items-center gap-6 shrink-0">
-          <LangSwitch onChange={changeLang} className="hidden md:flex" />
+          <LangSwitch onChange={changeLang} className="hidden lg:flex" />
           <MagneticButton
             as="button"
             onClick={() => openDraft()}
@@ -384,7 +387,7 @@ const App: React.FC = () => {
         {/* Hero */}
         <header className="px-4 md:px-12 border-b border-line pt-24 md:pt-[140px] pb-16 md:pb-[72px]">
           {/* Mobil ist in der Navigation kein Platz für den Umschalter */}
-          <LangSwitch onChange={changeLang} className="md:hidden mb-6" />
+          <LangSwitch onChange={changeLang} className="lg:hidden mb-6" />
           {waterReady ? <WaterHeadline>{heroContent}</WaterHeadline> : heroContent}
           {heroFoot}
         </header>
@@ -460,7 +463,7 @@ const App: React.FC = () => {
         {/* CTA */}
         <section id="kontakt" className="px-6 md:px-12 border-b border-line bg-accent text-ink py-16 md:py-24">
           <div ref={ctaRef} className="reveal flex justify-between items-center gap-10 flex-wrap">
-            <h2 className="font-syne font-extrabold text-[clamp(38px,6vw,78px)] leading-[1.04] uppercase tracking-[-0.015em] break-words max-w-full">
+            <h2 className="font-syne font-extrabold text-[clamp(28px,8vw,38px)] md:text-[clamp(38px,6vw,78px)] leading-[1.04] uppercase tracking-[-0.015em] break-words max-w-full">
               {t.cta.title[0]}<br />{t.cta.title[1]}
             </h2>
             <div className="max-w-[380px]">

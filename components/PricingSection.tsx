@@ -28,7 +28,7 @@ const PriceTier: React.FC<Tier & { onRequestDraft: () => void; recoLabel: string
       )}
       <h3 className="font-syne font-bold text-[26px] mb-1.5">{name}</h3>
       <div className="font-mono text-[14px] text-muted uppercase mb-6">{forWhom}</div>
-      <div className="font-syne font-extrabold text-[40px] text-accent mb-7">{price}</div>
+      <div className="font-syne font-extrabold text-[clamp(22px,6.6vw,40px)] md:text-[clamp(22px,3.2vw,40px)] text-accent mb-7 whitespace-nowrap md:whitespace-normal">{price}</div>
       <ul className="flex flex-col gap-2.5 text-[17px] text-muted flex-grow mb-7">
         {features.map((f) => (
           <li key={f} className="flex gap-2.5 items-start">
@@ -67,7 +67,7 @@ const PricingSection: React.FC<Props> = ({ onRequestDraft, onHome, eyebrow }) =>
       )}
       <h2
         ref={titleRef}
-        className="font-syne font-extrabold uppercase text-[clamp(34px,4.5vw,60px)] tracking-[-0.015em] leading-[1.02] mb-[52px] sec-title-line"
+        className="font-syne font-extrabold uppercase text-[clamp(18px,5.7vw,34px)] md:text-[clamp(34px,4.5vw,60px)] break-words hyphens-auto tracking-[-0.015em] leading-[1.02] mb-[52px] sec-title-line"
       >
         <span>{t.title}</span>
       </h2>

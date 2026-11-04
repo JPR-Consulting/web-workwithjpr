@@ -26,7 +26,7 @@ const FAQSection: React.FC<Props> = ({ onHome, items, eyebrow, title }) => {
       </div>
       <h2
         ref={titleRef}
-        className="font-syne font-extrabold uppercase text-[clamp(34px,4.5vw,60px)] tracking-[-0.015em] leading-[1.02] mb-[52px] sec-title-line"
+        className="font-syne font-extrabold uppercase text-[clamp(18px,5.7vw,34px)] md:text-[clamp(34px,4.5vw,60px)] break-words hyphens-auto tracking-[-0.015em] leading-[1.02] mb-[52px] sec-title-line"
       >
         <span>{t.title}</span>
       </h2>

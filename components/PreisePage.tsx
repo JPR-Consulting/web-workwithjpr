@@ -7,10 +7,11 @@ import MagneticButton from './MagneticButton';
 import { useCopy, useLang, LangSwitch } from '../i18n';
 import { paths, type Lang } from '../content/site-copy';
 import { spaLink } from './spaLink';
+import HeroDraftForm from './HeroDraftForm';
 
 interface Props {
   onNavigate: (view: string, slug?: string) => void;
-  onRequestDraft: () => void;
+  onRequestDraft: (website?: string) => void;
   onLangChange: (lang: Lang) => void;
 }
 
@@ -21,12 +22,16 @@ const PreisePage: React.FC<Props> = ({ onNavigate, onRequestDraft, onLangChange 
   const lang = useLang();
   const p = t.pricingPage;
   const home = spaLink(paths.home[lang], () => onNavigate('HOME'));
+  // Erste zwei Sätze vor dem Formular, der Rest unverändert darunter.
+  const sentences = p.intro.split(/(?<=[.!?])\s+/);
+  const introHead = sentences.slice(0, 2).join(' ');
+  const introRest = sentences.slice(2).join(' ');
   const post = (slug: string) => spaLink(`/blog/${slug}`, () => onNavigate('BLOG_POST', slug));
 
   return (
     <div className="min-h-[100dvh] bg-ink text-ftext font-body">
       <div className="px-6 md:px-12 pt-20">
-        <div className="flex justify-between items-center gap-4 mb-12">
+        <div className="flex justify-between items-center gap-4 mb-8 md:mb-12">
           <a
             {...home}
             className="flex items-center gap-2 text-muted hover:text-accent transition-colors font-mono text-sm uppercase"
@@ -40,19 +45,26 @@ const PreisePage: React.FC<Props> = ({ onNavigate, onRequestDraft, onLangChange 
         {/* Hero */}
         <div className="max-w-3xl mb-4">
           <div className="font-mono text-[14px] text-accent uppercase mb-5">{t.pricing.pageEyebrow}</div>
-          <h1 className="font-syne font-extrabold uppercase text-[clamp(34px,5.5vw,70px)] tracking-[-0.02em] leading-[1.02] mb-6">
+          <h1 className="font-syne font-extrabold uppercase text-[clamp(20px,6.4vw,34px)] md:text-[clamp(34px,5.5vw,70px)] break-words hyphens-auto tracking-[-0.02em] leading-[1.02] mb-6">
             {p.h1[0]} <span className="text-accent">{p.h1[1]}</span>
           </h1>
-          <p className="text-lg text-muted leading-[1.7]">{p.intro}</p>
+          <p className="text-lg text-muted leading-[1.7] mb-8">{introHead}</p>
+          <HeroDraftForm
+            onStart={(w) => onRequestDraft(w)}
+            onPricing={() => document.getElementById('preise-stufen')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+          />
+          {introRest && <p className="text-lg text-muted leading-[1.7] mt-8">{introRest}</p>}
         </div>
       </div>
 
-      <PricingSection onRequestDraft={onRequestDraft} />
+      <div id="preise-stufen">
+        <PricingSection onRequestDraft={() => onRequestDraft()} />
+      </div>
 
       {/* Was den Preis beeinflusst */}
       <section className="px-6 md:px-12 border-b border-line py-16 md:py-24">
         <div className="mb-[52px] max-w-3xl">
-          <h2 className="font-syne font-extrabold uppercase text-[clamp(28px,3.5vw,44px)] tracking-[-0.015em] mb-4">
+          <h2 className="font-syne font-extrabold uppercase text-[clamp(20px,6.4vw,28px)] md:text-[clamp(28px,3.5vw,44px)] break-words hyphens-auto tracking-[-0.015em] mb-4">
             {p.factorsTitle}
           </h2>
           <p className="text-muted text-lg">{p.factorsIntro}</p>
@@ -107,13 +119,13 @@ const PreisePage: React.FC<Props> = ({ onNavigate, onRequestDraft, onLangChange 
 
       {/* CTA */}
       <section className="px-6 md:px-12 bg-accent text-ink py-16 md:py-24 text-center">
-        <h2 className="font-syne font-extrabold uppercase text-[clamp(34px,5vw,60px)] tracking-[-0.02em] mb-4">
+        <h2 className="font-syne font-extrabold uppercase text-[clamp(20px,6.4vw,34px)] md:text-[clamp(34px,5vw,60px)] break-words hyphens-auto tracking-[-0.02em] mb-4">
           {p.ctaTitle}
         </h2>
         <p className="text-lg mb-8 max-w-xl mx-auto">{p.ctaText}</p>
         <MagneticButton
           as="button"
-          onClick={onRequestDraft}
+          onClick={() => onRequestDraft()}
           className="inline-flex items-center gap-2.5 font-mono text-sm font-medium uppercase bg-ink text-ftext px-7 py-4 border border-ink hover:bg-transparent hover:text-ink transition-colors"
         >
           {p.ctaButton}
