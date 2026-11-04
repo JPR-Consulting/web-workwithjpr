@@ -29,7 +29,7 @@ export const ServiceCell: React.FC<{ idx: string; title: string; desc: string }>
   return (
     <div ref={ref} className="reveal bg-ink hover:bg-panel transition-colors p-10">
       <div className="font-mono text-[14px] text-accent mb-[18px]">{idx}</div>
-      <h3 className="font-syne font-bold text-[28px] mb-3">{title}</h3>
+      <h3 className="font-syne font-bold text-[clamp(20px,6.4vw,28px)] sm:text-[28px] break-words hyphens-auto mb-3">{title}</h3>
       <p className="text-[17px] leading-[1.6] text-muted">{desc}</p>
     </div>
   );

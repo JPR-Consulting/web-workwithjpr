@@ -90,9 +90,9 @@ const CookieBanner: React.FC = () => {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-2 md:p-0 animate-slide-up">
-      <div className="bg-panel border border-line md:border-x-0 md:border-b-0 p-4 md:px-12 md:py-4 font-body md:flex md:items-center md:justify-between md:gap-8">
-        <p className="text-muted text-[13px] md:text-sm mb-3 md:mb-0 leading-snug md:leading-relaxed md:max-w-[860px]">
+    <div className="fixed bottom-0 left-0 right-0 z-50 p-1 md:p-0 animate-slide-up">
+      <div className="bg-panel border border-line md:border-x-0 md:border-b-0 p-2 md:p-4 md:px-12 md:py-4 font-body md:flex md:items-center md:justify-between md:gap-8">
+        <p className="text-muted text-[11px] md:text-sm mb-1.5 md:mb-0 leading-[1.35] md:leading-relaxed md:max-w-[860px]">
           {t.text}{' '}
           <span className="whitespace-nowrap">
             <button
@@ -106,11 +106,11 @@ const CookieBanner: React.FC = () => {
             </button>.
           </span>
         </p>
-        <div className="flex gap-2 md:gap-3 font-mono text-[12px] md:text-[13px] uppercase md:shrink-0">
-          <button onClick={() => accept('all')} className="flex-1 md:flex-none px-3 md:px-5 py-3 bg-accent text-ink font-medium border border-accent hover:bg-transparent hover:text-accent transition-colors">
+        <div className="flex gap-2 md:gap-3 font-mono text-[11px] md:text-[13px] uppercase md:shrink-0">
+          <button onClick={() => accept('all')} className="flex-1 md:flex-none px-3 md:px-5 py-2 md:py-3 bg-accent text-ink font-medium border border-accent hover:bg-transparent hover:text-accent transition-colors">
             {t.accept}
           </button>
-          <button onClick={() => accept('necessary')} className="flex-1 md:flex-none px-3 md:px-5 py-3 bg-transparent text-ftext font-medium border border-line hover:border-accent hover:text-accent transition-colors">
+          <button onClick={() => accept('necessary')} className="flex-1 md:flex-none px-3 md:px-5 py-2 md:py-3 bg-transparent text-ftext font-medium border border-line hover:border-accent hover:text-accent transition-colors">
             {t.necessary}
           </button>
         </div>
