@@ -45,7 +45,7 @@ const PreisePage: React.FC<Props> = ({ onNavigate, onRequestDraft, onLangChange 
         {/* Hero */}
         <div className="max-w-3xl mb-4">
           <div className="font-mono text-[14px] text-accent uppercase mb-5">{t.pricing.pageEyebrow}</div>
-          <h1 className="font-syne font-extrabold uppercase text-[clamp(24px,7.4vw,34px)] md:text-[clamp(34px,5.5vw,70px)] break-words hyphens-auto tracking-[-0.02em] leading-[1.02] mb-6">
+          <h1 className="font-syne font-extrabold uppercase text-[clamp(20px,6.4vw,34px)] md:text-[clamp(34px,5.5vw,70px)] break-words hyphens-auto tracking-[-0.02em] leading-[1.02] mb-6">
             {p.h1[0]} <span className="text-accent">{p.h1[1]}</span>
           </h1>
           <p className="text-lg text-muted leading-[1.7] mb-8">{introHead}</p>
@@ -64,7 +64,7 @@ const PreisePage: React.FC<Props> = ({ onNavigate, onRequestDraft, onLangChange 
       {/* Was den Preis beeinflusst */}
       <section className="px-6 md:px-12 border-b border-line py-16 md:py-24">
         <div className="mb-[52px] max-w-3xl">
-          <h2 className="font-syne font-extrabold uppercase text-[clamp(22px,6.4vw,28px)] md:text-[clamp(28px,3.5vw,44px)] break-words hyphens-auto tracking-[-0.015em] mb-4">
+          <h2 className="font-syne font-extrabold uppercase text-[clamp(20px,6.4vw,28px)] md:text-[clamp(28px,3.5vw,44px)] break-words hyphens-auto tracking-[-0.015em] mb-4">
             {p.factorsTitle}
           </h2>
           <p className="text-muted text-lg">{p.factorsIntro}</p>
@@ -119,7 +119,7 @@ const PreisePage: React.FC<Props> = ({ onNavigate, onRequestDraft, onLangChange 
 
       {/* CTA */}
       <section className="px-6 md:px-12 bg-accent text-ink py-16 md:py-24 text-center">
-        <h2 className="font-syne font-extrabold uppercase text-[clamp(24px,6.4vw,34px)] md:text-[clamp(34px,5vw,60px)] break-words hyphens-auto tracking-[-0.02em] mb-4">
+        <h2 className="font-syne font-extrabold uppercase text-[clamp(20px,6.4vw,34px)] md:text-[clamp(34px,5vw,60px)] break-words hyphens-auto tracking-[-0.02em] mb-4">
           {p.ctaTitle}
         </h2>
         <p className="text-lg mb-8 max-w-xl mx-auto">{p.ctaText}</p>
