@@ -26,7 +26,7 @@ const PriceTier: React.FC<Tier & { onRequestDraft: () => void; recoLabel: string
           {recoLabel}
         </div>
       )}
-      <h3 className="font-syne font-bold text-[26px] mb-1.5">{name}</h3>
+      <h3 className="font-syne font-bold text-[26px] md:text-[clamp(20px,2.7vw,26px)] lg:text-[26px] break-words hyphens-auto mb-1.5">{name}</h3>
       <div className="font-mono text-[14px] text-muted uppercase mb-6">{forWhom}</div>
       <div className="font-syne font-extrabold text-[clamp(22px,6.6vw,40px)] md:text-[clamp(22px,3.2vw,40px)] text-accent mb-7 whitespace-nowrap md:whitespace-normal">{price}</div>
       <ul className="flex flex-col gap-2.5 text-[17px] text-muted flex-grow mb-7">

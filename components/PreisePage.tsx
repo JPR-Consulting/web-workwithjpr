@@ -30,8 +30,8 @@ const PreisePage: React.FC<Props> = ({ onNavigate, onRequestDraft, onLangChange 
 
   return (
     <div className="min-h-[100dvh] bg-ink text-ftext font-body">
-      <div className="px-6 md:px-12 pt-20">
-        <div className="flex justify-between items-center gap-4 mb-8 md:mb-12">
+      <div className="px-6 md:px-12 pt-16 md:pt-20">
+        <div className="flex justify-between items-center gap-4 mb-5 md:mb-12">
           <a
             {...home}
             className="flex items-center gap-2 text-muted hover:text-accent transition-colors font-mono text-sm uppercase"
@@ -44,11 +44,11 @@ const PreisePage: React.FC<Props> = ({ onNavigate, onRequestDraft, onLangChange 
 
         {/* Hero */}
         <div className="max-w-3xl mb-4">
-          <div className="font-mono text-[14px] text-accent uppercase mb-5">{t.pricing.pageEyebrow}</div>
-          <h1 className="font-syne font-extrabold uppercase text-[clamp(20px,6.4vw,34px)] md:text-[clamp(34px,5.5vw,70px)] break-words hyphens-auto tracking-[-0.02em] leading-[1.02] mb-6">
+          <div className="font-mono text-[14px] text-accent uppercase mb-3 md:mb-5">{t.pricing.pageEyebrow}</div>
+          <h1 className="font-syne font-extrabold uppercase text-[clamp(20px,6.4vw,34px)] md:text-[clamp(34px,5.5vw,70px)] break-words hyphens-auto tracking-[-0.02em] leading-[1.02] mb-4 md:mb-6">
             {p.h1[0]} <span className="text-accent">{p.h1[1]}</span>
           </h1>
-          <p className="text-lg text-muted leading-[1.7] mb-8">{introHead}</p>
+          <p className="text-base md:text-lg text-muted leading-[1.6] md:leading-[1.7] mb-5 md:mb-8">{introHead}</p>
           <HeroDraftForm
             onStart={(w) => onRequestDraft(w)}
             onPricing={() => document.getElementById('preise-stufen')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}

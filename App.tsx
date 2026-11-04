@@ -290,7 +290,7 @@ const App: React.FC = () => {
   // kleine Texte bleiben echtes DOM, sonst werden sie in der Textur unscharf.
   const heroContent = (
     <>
-      <div className="flex justify-between items-center font-mono text-[14px] text-muted uppercase mb-8 md:mb-10 flex-wrap gap-2">
+      <div className="flex justify-between items-center font-mono text-[14px] text-muted uppercase mb-5 md:mb-10 flex-wrap gap-2">
         <div>{t.hero.topLeft}</div>
         <div>{t.hero.topRight}</div>
       </div>
@@ -316,7 +316,7 @@ const App: React.FC = () => {
   // Eingaben im Formular verlieren.
   const heroFoot = (
     <>
-      <div className={`hero-foot ${heroIn ? 'in' : ''} mt-8 md:mt-12`}>
+      <div className={`hero-foot ${heroIn ? 'in' : ''} mt-4 md:mt-12`}>
         <HeroDraftForm onStart={openDraft} onPricing={() => scrollToSection('preise')} />
       </div>
 
@@ -385,9 +385,9 @@ const App: React.FC = () => {
 
       <main className="relative z-[1]">
         {/* Hero */}
-        <header className="px-4 md:px-12 border-b border-line pt-24 md:pt-[140px] pb-16 md:pb-[72px]">
+        <header className="px-4 md:px-12 border-b border-line pt-20 md:pt-[140px] pb-16 md:pb-[72px]">
           {/* Mobil ist in der Navigation kein Platz für den Umschalter */}
-          <LangSwitch onChange={changeLang} className="lg:hidden mb-6" />
+          <LangSwitch onChange={changeLang} className="lg:hidden mb-4 md:mb-6" />
           {waterReady ? <WaterHeadline>{heroContent}</WaterHeadline> : heroContent}
           {heroFoot}
         </header>
