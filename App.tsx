@@ -295,7 +295,7 @@ const App: React.FC = () => {
         <div>{t.hero.topRight}</div>
       </div>
 
-      <h1 className="font-syne font-extrabold uppercase text-[clamp(30px,7.6vw,150px)] leading-[1.02] tracking-[-0.015em] break-words">
+      <h1 className="font-syne font-extrabold uppercase text-[clamp(24px,7.6vw,150px)] leading-[1.02] tracking-[-0.015em] break-words">
         <span className={`hero-line ${lineIn ? 'in' : ''}`}>
           <span data-line>{t.hero.h1[0]}</span>
         </span>
@@ -463,7 +463,7 @@ const App: React.FC = () => {
         {/* CTA */}
         <section id="kontakt" className="px-6 md:px-12 border-b border-line bg-accent text-ink py-16 md:py-24">
           <div ref={ctaRef} className="reveal flex justify-between items-center gap-10 flex-wrap">
-            <h2 className="font-syne font-extrabold text-[clamp(38px,6vw,78px)] leading-[1.04] uppercase tracking-[-0.015em] break-words max-w-full">
+            <h2 className="font-syne font-extrabold text-[clamp(28px,8vw,38px)] md:text-[clamp(38px,6vw,78px)] leading-[1.04] uppercase tracking-[-0.015em] break-words max-w-full">
               {t.cta.title[0]}<br />{t.cta.title[1]}
             </h2>
             <div className="max-w-[380px]">

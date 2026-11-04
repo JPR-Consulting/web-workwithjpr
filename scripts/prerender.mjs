@@ -277,7 +277,7 @@ const homeFallback = (t, lang) => `<div style="min-height:100vh;background:#1010
         <div style="display:flex;justify-content:space-between;${mono};font-size:13px;color:#b4b4bc;text-transform:uppercase;margin-bottom:48px">
           <span>${esc(t.hero.topLeft)}</span><span>${esc(t.hero.topRight)}</span>
         </div>
-        <h1 style="margin:0;font-weight:800;text-transform:uppercase;font-size:clamp(30px,7.6vw,150px);line-height:1.02;letter-spacing:-.015em;overflow-wrap:break-word">
+        <h1 style="margin:0;font-weight:800;text-transform:uppercase;font-size:clamp(24px,7.6vw,150px);line-height:1.02;letter-spacing:-.015em;overflow-wrap:break-word">
           <span style="display:block">${esc(t.hero.h1[0])}</span>
           <span style="display:block;color:#d4ff4f">${esc(t.hero.h1[1])}</span>
           <span style="display:block;-webkit-text-stroke:2px #f4f4f0;color:transparent">${esc(t.hero.h1[2])}</span>
