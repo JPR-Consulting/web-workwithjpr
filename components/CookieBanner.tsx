@@ -90,21 +90,23 @@ const CookieBanner: React.FC = () => {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 md:left-auto md:w-[460px] z-50 p-2 md:p-4 animate-slide-up">
-      <div className="bg-panel border border-line p-4 md:p-6 font-body">
-        <p className="text-muted text-[13px] md:text-sm mb-3 md:mb-4 leading-snug md:leading-relaxed">
+    <div className="fixed bottom-0 left-0 right-0 z-50 p-2 md:p-0 animate-slide-up">
+      <div className="bg-panel border border-line md:border-x-0 md:border-b-0 p-4 md:px-12 md:py-4 font-body md:flex md:items-center md:justify-between md:gap-8">
+        <p className="text-muted text-[13px] md:text-sm mb-3 md:mb-0 leading-snug md:leading-relaxed md:max-w-[860px]">
           {t.text}{' '}
-          <button
-            onClick={() => {
-              window.history.pushState({}, '', '/privacy');
-              window.dispatchEvent(new PopStateEvent('popstate'));
-            }}
-            className="text-accent hover:text-ftext underline transition-colors"
-          >
-            {t.privacy}
-          </button>.
+          <span className="whitespace-nowrap">
+            <button
+              onClick={() => {
+                window.history.pushState({}, '', '/privacy');
+                window.dispatchEvent(new PopStateEvent('popstate'));
+              }}
+              className="text-accent hover:text-ftext underline transition-colors"
+            >
+              {t.privacy}
+            </button>.
+          </span>
         </p>
-        <div className="flex gap-2 md:gap-3 font-mono text-[12px] md:text-[13px] uppercase">
+        <div className="flex gap-2 md:gap-3 font-mono text-[12px] md:text-[13px] uppercase md:shrink-0">
           <button onClick={() => accept('all')} className="flex-1 md:flex-none px-3 md:px-5 py-3 bg-accent text-ink font-medium border border-accent hover:bg-transparent hover:text-accent transition-colors">
             {t.accept}
           </button>

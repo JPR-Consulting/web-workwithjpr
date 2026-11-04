@@ -15,6 +15,11 @@
   --c-dim: 142 142 152;
   --c-accent: 212 255 79;
 }
+/* Sicherheitsnetz: nichts darf die Seite seitlich scrollbar machen */
+html, body {
+  overflow-x: clip;
+}
+
 /* Helles Thema: Praxis-Landingpage. Akzent ist ein ruhiges Petrol, das als Text
    auf Hell und als Knopf mit heller Schrift AA-Kontrast hat. */
 html.theme-light {

@@ -268,15 +268,16 @@ for (const lang of ['de', 'en']) {
 // Mount eine schmale Textspalte auf); der Rest bleibt für Crawler lesbar.
 const mono = "font-family:'IBM Plex Mono',ui-monospace,monospace";
 const homeFallback = (t, lang) => `<div style="min-height:100vh;background:#101012;color:#f4f4f0;font-family:'Syne','Space Grotesk',system-ui,-apple-system,sans-serif">
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 48px;border-bottom:1px solid #26262a">
+      <style>@media(max-width:767px){.sh-x{padding-left:16px!important;padding-right:16px!important}}</style>
+      <div class="sh-x" style="display:flex;justify-content:space-between;align-items:center;padding:20px 48px;border-bottom:1px solid #26262a">
         <div style="font-weight:800;font-size:19px;text-transform:uppercase;letter-spacing:.01em">JPR <span style="color:#d4ff4f">Studio</span>&reg;</div>
         <div style="${mono};font-size:13px;background:#d4ff4f;color:#101012;padding:13px 22px;text-transform:uppercase">${esc(t.nav.cta)}</div>
       </div>
-      <header style="padding:120px 48px 72px 48px;box-sizing:border-box">
+      <header class="sh-x" style="padding:120px 48px 72px 48px;box-sizing:border-box">
         <div style="display:flex;justify-content:space-between;${mono};font-size:13px;color:#b4b4bc;text-transform:uppercase;margin-bottom:48px">
           <span>${esc(t.hero.topLeft)}</span><span>${esc(t.hero.topRight)}</span>
         </div>
-        <h1 style="margin:0;font-weight:800;text-transform:uppercase;font-size:clamp(52px,9vw,132px);line-height:.95;letter-spacing:-.02em">
+        <h1 style="margin:0;font-weight:800;text-transform:uppercase;font-size:clamp(30px,7.6vw,150px);line-height:1.02;letter-spacing:-.015em;overflow-wrap:break-word">
           <span style="display:block">${esc(t.hero.h1[0])}</span>
           <span style="display:block;color:#d4ff4f">${esc(t.hero.h1[1])}</span>
           <span style="display:block;-webkit-text-stroke:2px #f4f4f0;color:transparent">${esc(t.hero.h1[2])}</span>

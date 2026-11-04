@@ -7,7 +7,7 @@ export const SectionTitle: React.FC<{ children: React.ReactNode; className?: str
   return (
     <h2
       ref={ref}
-      className={`font-syne font-extrabold uppercase text-[clamp(34px,4.5vw,60px)] tracking-[-0.015em] leading-[1.02] mb-[52px] sec-title-line ${className ?? ''}`}
+      className={`font-syne font-extrabold uppercase text-[clamp(24px,6.4vw,34px)] md:text-[clamp(34px,4.5vw,60px)] break-words hyphens-auto tracking-[-0.015em] leading-[1.02] mb-[52px] sec-title-line ${className ?? ''}`}
     >
       <span>{children}</span>
     </h2>
