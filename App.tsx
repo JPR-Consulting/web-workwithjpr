@@ -60,7 +60,8 @@ function parseLocation(path: string): { view: ViewState; slug: string; lang: Lan
   if (path === paths.pricing.de) return { view: 'PREISE', slug: '', lang: 'de' };
   if (path === handwerkPath) return { view: 'HANDWERK', slug: '', lang: 'de' };
   if (path === praxisPath) return { view: 'PRAXIS', slug: '', lang: 'de' };
-  if (path === dresdenPath || path === `${dresdenPath}/`) return { view: 'DRESDEN', slug: '', lang: 'de' };
+  // Alte Adressen (/dresden, /tom.nowak) leitet vercel.json dauerhaft um; hier nur als Rückfall für die lokale Vorschau
+  if ([dresdenPath, '/dresden', '/tom.nowak'].some((p) => path === p || path === `${p}/`)) return { view: 'DRESDEN', slug: '', lang: 'de' };
   if (path === '/imprint' || path === '/impressum') return { view: 'IMPRINT', slug: '', lang: null };
   if (path === '/privacy' || path === '/datenschutz') return { view: 'PRIVACY', slug: '', lang: null };
   if (path === '/blog') return { view: 'BLOG', slug: '', lang: null };

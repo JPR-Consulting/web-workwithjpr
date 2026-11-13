@@ -386,7 +386,7 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
 }
 
 
-// --- Landingpage /dresden (Toms Seite, Sie-Form, eigenes kühles Thema: Tinte + Kobaltblau) ---
+// --- Landingpage /tom-nowak, früher /dresden (Toms Seite, Sie-Form, eigenes kühles Thema: Tinte + Kobaltblau) ---
 {
   const d = dresden;
   const c = { bg: '#070a12', line: '#20283a', text: '#f4f6fb', muted: '#a3adc2', accent: '#8fa8ff', btn: '#3d5afe' };
@@ -403,13 +403,13 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
         <p style="font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:${c.accent};margin:0 0 20px">${esc(d.hero.eyebrow)}</p>
         <h1 style="${serif};margin:0;font-size:clamp(38px,5.4vw,80px);line-height:1.04;letter-spacing:-.02em;max-width:760px">${esc(d.hero.h1[0])} <em style="color:${c.accent};font-family:'Fraunces',Georgia,serif;font-weight:400">${esc(d.hero.h1[1])}</em> ${esc(d.hero.h1[2])}</h1>
         <p style="margin:28px 0 0;font-size:19px;line-height:1.6;color:${c.muted};max-width:560px">${esc(d.hero.sub)}</p>
-        <p style="margin:28px 0 0;color:${c.muted}">${esc(d.tom.name)} · ${esc(d.tom.role)}</p>
+        <p style="margin:28px 0 0;color:${c.muted}">${esc(d.tom.name)} · ${esc(d.tom.role)} · <a href="mailto:${d.tom.email}" style="color:${c.accent}">${esc(d.tom.email)}</a></p>
       </header>
       <main style="padding:0 40px 64px;max-width:1280px;box-sizing:border-box;color:${c.muted};line-height:1.7">
         ${h2(d.outcomes.title)}${cells(d.outcomes.items)}
         ${h2(d.voice.title)}<p>${esc(d.voice.intro)}</p>${cells(d.voice.niches.map(n => ({ title: `${n.label}: ${n.title}`, desc: n.desc })))}<p>${d.voice.rules.map(esc).join(' · ')}</p>
         ${h2(d.examples.title)}<p>${esc(d.examples.text)}</p><ul>${d.examples.items.map(e => `<li><strong style="color:${c.text}">${esc(e.title)}</strong> — ${esc(e.tag)} (${esc(d.examples.badge)})</li>`).join('')}</ul>
-        ${h2(d.tom.title)}<p>${esc(d.tom.text)}</p>
+        ${h2(d.tom.title)}<img src="${d.tom.photo.cutout}-480.webp" alt="${esc(d.tom.photo.alt)}" width="240" height="240" loading="lazy" style="display:block;border-radius:20px;background:#121b38"><p>${esc(d.tom.text)}</p><p>${esc(d.tom.emailLabel)}: <a href="mailto:${d.tom.email}" style="color:${c.accent}">${esc(d.tom.email)}</a></p>
         ${h2(d.process.title)}${cells(d.process.steps)}
         ${h2(d.pricing.title)}
         <p>${copy.de.pricing.tiers.map(tier => `${esc(tier.name)} ${esc(tier.price)}`).join(' &middot; ')}. ${esc(copy.de.pricing.note)} ${esc(d.pricing.voice)}. <a href="${paths.pricing.de}" style="color:${c.accent}">${esc(d.pricing.more)}</a></p>
@@ -418,6 +418,7 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
         ${d.faq.items.map(fq => `<h3 style="color:${c.text}">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
         ${h2(d.cta.title.join(' '))}<p>${esc(d.cta.text)}</p>
         <p>${esc(copy.de.footer.company)} &middot; info@workwithjpr.com</p>
+        <p>${esc(d.footer.tomLine)} &middot; <a href="mailto:${d.tom.email}" style="color:${c.accent}">${esc(d.tom.email)}</a></p>
         <p><a href="/" style="color:${c.accent}">JPR Studio</a> &middot; <a href="/imprint" style="color:${c.accent}">Impressum</a> &middot; <a href="/privacy" style="color:${c.accent}">Datenschutz</a></p>
       </main>
     </div>`;
@@ -428,7 +429,18 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
       name: 'Website für Betriebe in Dresden',
       serviceType: 'Webdesign',
       areaServed: { '@type': 'City', name: 'Dresden' },
-      provider: { '@type': 'ProfessionalService', name: 'JPR Studio', legalName: 'JPR Consulting GmbH', url: SITE, address: { '@type': 'PostalAddress', streetAddress: 'Letteallee 91', postalCode: '13409', addressLocality: 'Berlin', addressCountry: 'DE' } },
+      url: pageUrl,
+      provider: {
+        '@type': 'ProfessionalService',
+        name: 'JPR Studio',
+        legalName: 'JPR Consulting GmbH',
+        url: SITE,
+        email: 'info@workwithjpr.com',
+        address: { '@type': 'PostalAddress', streetAddress: 'Letteallee 91', postalCode: '13409', addressLocality: 'Berlin', addressCountry: 'DE' },
+        // Ansprechpartner für Dresden (Tom Nowak)
+        contactPoint: { '@type': 'ContactPoint', contactType: 'sales', name: d.tom.name, email: d.tom.email, areaServed: { '@type': 'City', name: 'Dresden' }, availableLanguage: 'de' },
+        employee: { '@type': 'Person', name: d.tom.name, jobTitle: d.tom.role, email: d.tom.email, image: url(`${d.tom.photo.cutout}-800.webp`), workLocation: { '@type': 'Place', name: 'Dresden' } },
+      },
       offers: { '@type': 'Offer', priceSpecification: { '@type': 'PriceSpecification', minPrice: '1500', priceCurrency: 'EUR' }, url: pageUrl },
     },
     faqLd(d.faq.items),
