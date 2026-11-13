@@ -5,7 +5,9 @@
 
 import { copy, type SiteCopy } from './site-copy';
 
-export const dresdenPath = '/dresden';
+// Toms Seite liegt seit 13.11.2026 unter /tom-nowak (Jan); /dresden und /tom.nowak leitet vercel.json dauerhaft hierher um.
+// Die Bilder bleiben unter /dresden/*, damit bestehende Bild-Adressen weiter funktionieren.
+export const dresdenPath = '/tom-nowak';
 
 /** Entwurf-Dialog in Sie-Form; gleicher Aufbau wie copy.de.draft, damit der Dialog unverändert bleibt. */
 const draft: SiteCopy['draft'] = {
@@ -77,10 +79,16 @@ export const dresden = {
     initials: 'TN',
     name: 'Tom Nowak',
     role: 'Ihr Ansprechpartner in Dresden',
-    // TODO(Jan): Toms Telefon und E-Mail eintragen, sobald es sie gibt. Leer = wird nicht angezeigt.
-    // Keine Platzhalter-Nummern. Ein Foto gibt es noch nicht, deshalb das Monogramm.
+    // TODO(Jan): Toms Telefon eintragen, sobald es sie gibt. Leer = wird nicht angezeigt. Keine Platzhalter-Nummern.
     phone: '',
-    email: '',
+    email: 'tom@workwithjpr.com',
+    // Foto (13.11.2026): freigestelltes Farbporträt, 800×800, plus kleiner Avatar auf Kobalt-Verlauf
+    photo: {
+      cutout: '/dresden/tom-nowak-portrait',
+      avatar: '/dresden/tom-nowak-avatar.webp',
+      alt: 'Tom Nowak, Ansprechpartner von JPR Studio in Dresden',
+    },
+    emailLabel: 'E-Mail an Tom',
     eyebrow: 'Persönlich vor Ort',
     title: 'Ein Ansprechpartner in Dresden.',
     text: 'Tom Nowak zeigt Ihnen Ihren Entwurf, gern bei Ihnen im Betrieb, und klärt mit Ihnen, was die Seite können soll. Gebaut wird im Team von JPR Studio, mit festem Preis und festem Ablauf.',
@@ -167,8 +175,8 @@ export const dresden = {
     facts: [
       { title: 'JPR Consulting GmbH', desc: 'JPR Studio ist eine Marke der JPR Consulting GmbH, Letteallee 91, 13409 Berlin.' },
       { title: 'Ihnen gehört die Website', desc: 'Sie bekommen Code, Domain und alle Zugänge. Kein Baukasten-Abo, keine Lizenzgebühren.' },
-      { title: 'Ansprechpartner in Dresden', desc: 'Tom Nowak ist Ihr Kontakt vor Ort, vom ersten Gespräch bis zum Angebot.' },
-    ],
+      { title: 'Ansprechpartner in Dresden', desc: 'Tom Nowak ist Ihr Kontakt vor Ort, vom ersten Gespräch bis zum Angebot.', mail: true },
+    ] as { title: string; desc: string; mail?: boolean }[],
     quotesLabel: 'Was Kunden von JPR Studio sagen',
     // White-Label (Jan, 02.11.2026): echte, freigegebene Zitate aus site-copy.ts, Wortlaut unverändert,
     // aber ohne Namen, Firma und Logo, nur Branche und Ort. Reihenfolge = copy.de.testimonials.items.
@@ -187,7 +195,7 @@ export const dresden = {
       { q: 'Was kostet die Website?', a: 'Eine One-Page-Website beginnt bei 1.500 €, eine mehrseitige Website bei 3.000 €, ein Shop oder eine Web-App bei 5.000 €, jeweils netto. Nach dem kostenlosen Entwurf bekommen Sie einen Festpreis. Betreuung mit Hosting, Updates und Backups gibt es ab 49 € im Monat.' },
       { q: 'Ich habe noch gar keine Website.', a: 'Kein Problem. Dann sprechen Sie kurz mit Tom über Ihren Betrieb und bekommen ein Angebot für Ihre erste Website. Der kostenlose Entwurf vorab wird aus einer bestehenden Seite gebaut.' },
       { q: 'Wem gehört die Website am Ende?', a: 'Ihnen, vollständig. Sie bekommen Code, Domain und alle Zugänge. Betreuung ist möglich, aber kein Muss: Sie können die Seite jederzeit von jemand anderem weiterführen lassen.' },
-      { q: 'Wer steckt hinter JPR Studio?', a: 'JPR Studio ist eine Marke der JPR Consulting GmbH mit Sitz in Berlin. In Dresden ist Tom Nowak Ihr Ansprechpartner, gebaut wird im Team von JPR Studio.' },
+      { q: 'Wer steckt hinter JPR Studio?', a: 'JPR Studio ist eine Marke der JPR Consulting GmbH mit Sitz in Berlin. In Dresden ist Tom Nowak Ihr Ansprechpartner, gebaut wird im Team von JPR Studio. Sie erreichen Tom unter tom@workwithjpr.com.' },
     ],
   },
   cta: {
@@ -195,7 +203,7 @@ export const dresden = {
     text: 'Tragen Sie Ihre Website ein. Sie bekommen einen kostenlosen Entwurf mit KI-Assistent und entscheiden danach.',
     button: 'Kostenlosen Entwurf anfragen',
   },
-  footer: { home: 'Startseite', pricing: 'Preise', imprint: 'Impressum', privacy: 'Datenschutz' },
+  footer: { home: 'Startseite', pricing: 'Preise', imprint: 'Impressum', privacy: 'Datenschutz', companyEmail: 'info@workwithjpr.com', tomLine: 'Ansprechpartner in Dresden: Tom Nowak' },
   sticky: 'Kostenlosen Entwurf anfragen',
   draft,
 };

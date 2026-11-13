@@ -2,7 +2,11 @@
   "trailingSlash": false,
   "redirects": [
     { "source": "/impressum", "destination": "/imprint", "permanent": true },
-    { "source": "/datenschutz", "destination": "/privacy", "permanent": true }
+    { "source": "/datenschutz", "destination": "/privacy", "permanent": true },
+    { "source": "/dresden", "destination": "/tom-nowak", "permanent": true },
+    { "source": "/dresden/", "destination": "/tom-nowak", "permanent": true },
+    { "source": "/tom.nowak", "destination": "/tom-nowak", "permanent": true },
+    { "source": "/tom.nowak/", "destination": "/tom-nowak", "permanent": true }
   ],
   "headers": [
     {
