@@ -110,7 +110,7 @@ export const dresden = {
   voice: {
     eyebrow: 'In jedem Entwurf',
     title: 'Ihre Website nimmt Aufträge an. Per Sprache.',
-    intro: 'Jeder Entwurf hat einen KI-Assistenten eingebaut. Kunden tippen auf „Auftrag per Sprache aufgeben“ und erzählen, worum es geht. Der Assistent stellt die Fragen, die Sie für ein Angebot brauchen, und legt Ihnen eine fertige Auftragskarte hin.',
+    intro: 'Jeder Entwurf hat einen KI-Assistenten. Kunden erzählen per Sprache, worum es geht, und Sie bekommen eine fertige Auftragskarte.',
     niches: [
       { label: 'Handwerk', title: 'Auftragsannahme', desc: 'Fragt nach Gewerk, Ort und Erreichbarkeit, markiert Dringendes und bittet um Fotos.' },
       { label: 'Praxen', title: 'KI-Rezeption', desc: 'Beantwortet Fragen zu Öffnungszeiten und Leistungen und notiert Terminwünsche.' },
@@ -191,8 +191,8 @@ export const dresden = {
     items: [
       { q: 'Was kostet der Entwurf?', a: 'Nichts. Der Entwurf ist kostenlos. Gefällt er Ihnen, bekommen Sie ein Festpreis-Angebot für die fertige Website und entscheiden in Ruhe.' },
       { q: 'Ich habe keine Zeit für Website-Kram.', a: 'Wir bauen den Entwurf aus Ihrer bisherigen Seite. Texte, Bilder und Technik übernehmen wir. Von Ihnen brauchen wir ein kurzes Gespräch und Ihre Rückmeldung zum Entwurf.' },
-      { q: 'Wie funktioniert der KI-Assistent?', a: 'Kunden sprechen direkt auf Ihrer Website mit dem Assistenten, im Browser. Er sagt zuerst, dass er eine KI ist, stellt die Fragen, die Sie für ein Angebot brauchen, und legt eine Auftragskarte an. Es wird kein Ton aufgezeichnet. Preise und Termine sagt er nie zu, das bleibt bei Ihnen.' },
-      { q: 'Was kostet die Website?', a: 'Eine One-Page-Website beginnt bei 1.500 €, eine mehrseitige Website bei 3.000 €, ein Shop oder eine Web-App bei 5.000 €, jeweils netto. Nach dem kostenlosen Entwurf bekommen Sie einen Festpreis. Betreuung mit Hosting, Updates und Backups gibt es ab 49 € im Monat.' },
+      { q: 'Wie funktioniert der KI-Assistent?', a: 'Kunden sprechen im Browser mit dem Assistenten. Er sagt zuerst, dass er eine KI ist, stellt Ihre Angebotsfragen und legt eine Auftragskarte an. Kein Ton wird aufgezeichnet, Preise und Termine sagt er nie zu.' },
+      { q: 'Was kostet die Website?', a: 'Ab 1.500 € für eine One-Page, ab 3.000 € mehrseitig, ab 5.000 € mit Shop oder Web-App, jeweils netto. Nach dem Entwurf bekommen Sie einen Festpreis.' },
       { q: 'Ich habe noch gar keine Website.', a: 'Kein Problem. Dann sprechen Sie kurz mit Tom über Ihren Betrieb und bekommen ein Angebot für Ihre erste Website. Der kostenlose Entwurf vorab wird aus einer bestehenden Seite gebaut.' },
       { q: 'Wem gehört die Website am Ende?', a: 'Ihnen, vollständig. Sie bekommen Code, Domain und alle Zugänge. Betreuung ist möglich, aber kein Muss: Sie können die Seite jederzeit von jemand anderem weiterführen lassen.' },
       { q: 'Wer steckt hinter JPR Studio?', a: 'JPR Studio ist eine Marke der JPR Consulting GmbH mit Sitz in Berlin. In Dresden ist Tom Nowak Ihr Ansprechpartner, gebaut wird im Team von JPR Studio. Sie erreichen Tom unter tom@workwithjpr.com.' },

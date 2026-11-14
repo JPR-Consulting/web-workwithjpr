@@ -138,7 +138,7 @@ const Devices: React.FC<{ desktop: string; mobile: string; alt: string; host: st
 
 /** Kleines rundes Foto von Tom mit Akzent-Ring. `alt` leer, wenn der Name direkt daneben steht und das Foto schon einmal beschrieben ist. */
 const Avatar: React.FC<{ size?: number; alt?: string; eager?: boolean }> = ({ size = 44, alt = '', eager }) => (
-  <span className="relative shrink-0 rounded-full p-[1.5px] bg-[linear-gradient(140deg,#c9d6ff,#3d5afe_55%,#1b2a7a)]" style={{ width: size, height: size }}>
+  <span className="relative inline-block shrink-0 rounded-full p-[1.5px] bg-[linear-gradient(140deg,#c9d6ff,#3d5afe_55%,#1b2a7a)]" style={{ width: size, height: size }}>
     <img
       src={t.tom.photo.avatar}
       alt={alt}
