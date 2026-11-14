@@ -100,10 +100,11 @@ const de = {
     now: 'Heute: ein roter Knopf. Probetraining online buchen, Trainingsplan gleich dabei.',
     altOld: 'muaythai-subyen.de im Jahr 2018: schwarzer Vereins-Blog mit News, ohne Knopf zum Probetraining',
     altNew: 'muaythai-subyen.de heute: Video im Hintergrund, Knopf „Probetraining buchen“, Trainingsplan',
-    // Subyen-DB trial_bookings, Stand 14.11.2026: 185 Buchungen seit Start 18.03.2026, davon 131 nicht storniert.
-    count: 131,
+    // Subyen-DB trial_bookings, Stand 14.11.2026: 185 Buchungen seit Start 18.03.2026 (alle, auch
+    // später stornierte; nicht storniert: 131, Personen: 206). Jan wollte die größere Zahl.
+    count: 185,
     countLabel: 'Probetrainings online gebucht',
-    countNote: 'in 8 Monaten, ohne Werbebudget',
+    countNote: 'seit März 2026, ohne Werbebudget',
     notifLabel: 'So kommen die Buchungen an',
     notifTop: 'Neue Probetraining-Buchung',
     notifWhen: 'jetzt',
@@ -355,9 +356,9 @@ const en: SiteCopy = {
     now: 'Today: one red button. Book a trial class online, timetable included.',
     altOld: 'muaythai-subyen.de in 2018: black club blog with news, no button for a trial class',
     altNew: 'muaythai-subyen.de today: background video, "Book a trial class" button, timetable',
-    count: 131,
+    count: 185,
     countLabel: 'trial classes booked online',
-    countNote: 'in 8 months, no ad budget',
+    countNote: 'since March 2026, no ad budget',
     notifLabel: 'How the bookings come in',
     notifTop: 'New trial class booking',
     notifWhen: 'now',
