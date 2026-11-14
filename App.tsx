@@ -25,7 +25,7 @@ import { praxis, praxisPath } from './content/praxis-copy';
 import { dresden, dresdenPath } from './content/dresden-copy';
 import { useLenis } from './hooks/useLenis';
 import { useReveal } from './hooks/useReveal';
-import { SectionTitle, Eyebrow, ServiceCell, ProcessStep } from './components/SectionParts';
+import { SectionTitle, Eyebrow, ServiceRow, ProcessStep } from './components/SectionParts';
 import { getPostBySlug } from './content/blog';
 import { copy, paths, type Lang } from './content/site-copy';
 import { LangContext, LangSwitch, useCopy } from './i18n';
@@ -410,13 +410,15 @@ const App: React.FC = () => {
           </div>
         </section>
 
+        <TestimonialsSection />
+
         {/* [01] Leistungen */}
         <section id="leistungen" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
           <Eyebrow>{t.services.eyebrow}</Eyebrow>
           <SectionTitle>{t.services.title}</SectionTitle>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line">
-            {t.services.items.map((s, i) => (
-              <ServiceCell key={s.title} idx={`/ 00${i + 1}`} title={s.title} desc={s.desc} />
+          <div className="border-t border-line">
+            {t.services.items.map((s) => (
+              <ServiceRow key={s.title} title={s.title} desc={s.desc} />
             ))}
           </div>
           {t.industries && (
@@ -435,8 +437,6 @@ const App: React.FC = () => {
             projects={t.projects.items}
           />
         </section>
-
-        <TestimonialsSection />
 
         {/* [03] Prozess */}
         <section id="prozess" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
