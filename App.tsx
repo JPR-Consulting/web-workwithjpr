@@ -9,7 +9,6 @@ import WaterImage from './components/WaterImage';
 import ScrambleLabel from './components/ScrambleLabel';
 import ProjectCarousel from './components/ProjectCarousel';
 import PricingSection from './components/PricingSection';
-import TestimonialsSection from './components/TestimonialsSection';
 import SubyenCase from './components/SubyenCase';
 import { SHOW_PRICES } from './content/site-copy';
 import FAQSection from './components/FAQSection';
@@ -415,7 +414,6 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        <TestimonialsSection />
 
         {/* [01] Leistungen */}
         <section id="leistungen" className="px-6 md:px-12 border-b border-line py-16 md:py-24">
@@ -436,10 +434,10 @@ const App: React.FC = () => {
         </section>
 
         {/* [02] Projekte */}
-        <section id="projekte" className="border-b border-line py-16 md:py-0">
+        <section id="projekte" className="border-b border-line py-16 md:py-24">
           <ProjectCarousel
             header={<><Eyebrow>{t.projects.eyebrow}</Eyebrow><SectionTitle className="!mb-8">{t.projects.title}</SectionTitle></>}
-            projects={t.projects.items}
+            projects={t.projects.items.filter((p) => !p.href.includes('muaythai-subyen'))}
           />
         </section>
 
@@ -567,7 +565,7 @@ const AboutPhoto: React.FC = () => {
   const ref = useReveal<HTMLDivElement>();
   const t = useCopy().about;
   return (
-    <div ref={ref} className="mask-reveal group w-[320px] h-[380px] flex-shrink-0 relative overflow-hidden">
+    <div ref={ref} className="mask-reveal group hidden md:block w-[320px] h-[380px] flex-shrink-0 relative overflow-hidden">
       <WaterImage
         src="/jan-rojek.webp"
         alt={t.photoAlt}
@@ -586,11 +584,15 @@ const AboutText: React.FC = () => {
   const t = useCopy().about;
   return (
     <div ref={ref} className="reveal flex-1 min-w-[300px] max-w-[640px]">
-      <h2 className="font-syne font-extrabold uppercase text-[clamp(30px,3.6vw,48px)] tracking-[-0.015em] mb-6">
-        {t.hello} <span className="text-accent">{t.name}</span>
-      </h2>
-      {t.paragraphs.map((p) => (
-        <p key={p} className="text-[17px] leading-[1.7] text-muted mb-4">{p}</p>
+      {/* Handy: kleines Foto neben dem Namen statt Bild über die ganze Breite */}
+      <div className="flex items-center gap-4 mb-6">
+        <img src="/jan-rojek.webp" alt={t.photoAlt} width={88} height={88} loading="lazy" decoding="async" className="md:hidden w-[88px] h-[88px] object-cover grayscale contrast-[1.05] shrink-0" />
+        <h2 className="font-syne font-extrabold uppercase text-[clamp(30px,3.6vw,48px)] tracking-[-0.015em]">
+          {t.hello} <span className="text-accent">{t.name}</span>
+        </h2>
+      </div>
+      {t.paragraphs.map((p, i) => (
+        <p key={p} className={`text-[17px] leading-[1.7] text-muted mb-4 ${i > 0 ? 'hidden md:block' : ''}`}>{p}</p>
       ))}
       <p className="text-[17px] leading-[1.7] text-ftext font-medium mb-4">{t.highlight}</p>
       <div className="flex gap-7 flex-wrap mt-7 pt-[22px] border-t border-line font-mono text-[14px] text-muted uppercase">

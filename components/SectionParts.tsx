@@ -50,14 +50,17 @@ export const ServiceRow: React.FC<{ title: string; desc: string }> = ({ title, d
 export const ProcessStep: React.FC<{ n: string; title: string; desc: string }> = ({ n, title, desc }) => {
   const ref = useReveal<HTMLDivElement>();
   return (
-    <div ref={ref} className="reveal group bg-ink hover:bg-panel transition-colors p-10 relative">
+    <div ref={ref} className="reveal group bg-ink hover:bg-panel transition-colors p-6 md:p-10 relative grid grid-cols-[64px_minmax(0,1fr)] md:block gap-x-2">
+      {/* Handy: Zahl klein links neben dem Text (kompakt), ab md groß darüber */}
       <div
-        className="font-syne font-extrabold text-[64px] leading-none mb-6 text-accent transition-opacity opacity-90 group-hover:opacity-100"
+        className="font-syne font-extrabold text-[28px] md:text-[64px] leading-none pt-0.5 md:pt-0 md:mb-6 text-accent transition-opacity opacity-90 group-hover:opacity-100"
       >
         {n}
       </div>
-      <h3 className="font-syne font-bold text-[22px] mb-3">{title}</h3>
-      <p className="text-[17px] leading-[1.6] text-muted">{desc}</p>
+      <div>
+        <h3 className="font-syne font-bold text-[20px] md:text-[22px] mb-2 md:mb-3">{title}</h3>
+        <p className="text-[16px] md:text-[17px] leading-[1.6] text-muted">{desc}</p>
+      </div>
     </div>
   );
 };
