@@ -584,7 +584,7 @@ html.theme-dresden .draft-dialog::backdrop { background: rgba(4, 6, 12, 0.8); ba
    .is-scrub (JS, ohne "Bewegung reduzieren") macht den Abschnitt hoch und die Bühne klebend.
    Fortschritt kommt als CSS-Variablen aus components/SubyenCase.tsx. */
 .cs-sec { position: relative; border-bottom: 1px solid rgb(var(--c-line)); }
-.cs-sec.is-scrub { height: calc(100vh + 220vh); height: calc(100svh + 220svh); }
+.cs-sec.is-scrub { height: calc(100vh + 120vh); height: calc(100svh + 120svh); }
 .cs-stage {
   --gl: 16px; --gr: 16px;
   position: relative; overflow: hidden;
@@ -679,4 +679,16 @@ html.theme-dresden .draft-dialog::backdrop { background: rgba(4, 6, 12, 0.8); ba
   .cs-notif { padding: 10px 12px; column-gap: 10px; }
   .cs-ntop { font-size: 10px; letter-spacing: 0; }
   .cs-when { font-size: 11px; }
+}
+
+/* ===== Projekt-Laufband (Startseite) ===== */
+@keyframes proj-scroll { to { transform: translateX(-50%); } }
+.proj-track { animation: proj-scroll var(--proj-dur, 45s) linear infinite; }
+.proj-strip:hover .proj-track, .proj-strip:focus-within .proj-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .proj-track { animation: none; }
+  .proj-strip { overflow-x: auto; scroll-snap-type: x mandatory; padding-left: 24px; scrollbar-width: none; }
+  .proj-strip::-webkit-scrollbar { display: none; }
+  .proj-card { scroll-snap-align: start; }
+  .proj-half[aria-hidden] { display: none; }
 }

@@ -23,7 +23,8 @@ const MEDIA = '/case/subyen';
 const SubyenCase: React.FC = () => {
   const all = useCopy();
   const t = all.caseStudy;
-  const quote = all.testimonials.items.find((i) => i.name === t.person);
+  const items = all.testimonials.items;
+  const quotes = [...items.filter((i) => i.name === t.person), ...items.filter((i) => i.name !== t.person)];
 
   const secRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -196,22 +197,30 @@ const SubyenCase: React.FC = () => {
         </div>
       </section>
 
-      {quote && (
-        <section className="px-6 md:px-12 border-b border-line pt-14 pb-16 md:pt-16 md:pb-20" aria-label={all.testimonials.eyebrow}>
-          <figure className="m-0 max-w-[900px]">
-            <blockquote className="m-0 font-body text-[22px] leading-[1.45] lg:text-[34px] lg:leading-[1.3] lg:-indent-[0.4em] text-ftext">
-              &bdquo;{quote.quote}&ldquo;
-            </blockquote>
-            <figcaption className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px] text-muted">
-              <span className="inline-block w-[22px] h-px bg-accent" aria-hidden="true" />
-              <b className="font-medium text-ftext">{quote.name}</b>
-              <span>{quote.company}</span>
-            </figcaption>
-            {t.quoteNote && <p className="mt-3 text-[14px] text-muted">{t.quoteNote}</p>}
-          </figure>
-          <p className="mt-10 font-mono text-[12px] text-dim">{t.source}</p>
-        </section>
-      )}
+      {/* Kundenstimmen: Svens Zitat zuerst, dann die übrigen (früher eigener Abschnitt, Jan 14.11.2026 zusammengelegt) */}
+      <section className="px-6 md:px-12 border-b border-line pt-14 pb-14 md:pt-16 md:pb-16" aria-label={all.testimonials.eyebrow}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+          {quotes.map((q) => (
+            <figure key={q.name} className="m-0">
+              <blockquote className="m-0 font-body text-[20px] leading-[1.5] lg:text-[24px] lg:leading-[1.4] text-ftext">
+                &bdquo;{q.quote}&ldquo;
+              </blockquote>
+              <figcaption className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px] text-muted">
+                <span className="inline-block w-[22px] h-px bg-accent" aria-hidden="true" />
+                <b className="font-medium text-ftext">{q.name}</b>
+                <span>{q.company}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        {t.quoteNote && <p className="mt-6 text-[14px] text-muted">{t.quoteNote}</p>}
+        <div className="mt-10 flex flex-col md:flex-row md:items-baseline md:justify-between gap-3">
+          <a href="https://g.page/r/Cbent0mi4nueEAE/review" target="_blank" rel="noopener noreferrer" className="font-mono text-[14px] uppercase text-accent hover:text-ftext transition-colors py-2">
+            {all.testimonials.reviewCta}
+          </a>
+          <p className="font-mono text-[12px] text-dim">{t.source}</p>
+        </div>
+      </section>
     </>
   );
 };
