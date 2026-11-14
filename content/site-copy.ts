@@ -11,10 +11,15 @@ export interface Tier { name: string; for: string; price: string; reco: boolean;
 export interface Faq { q: string; a: string }
 export interface Testimonial { quote: string; logo: string; name: string; company: string }
 
+// Preise vorübergehend aus (Jan, 14.11.2026): kein Preisbereich, kein Menüpunkt, /preise leitet auf die Startseite um
+// (vercel.json), auch auf den Handwerk-/Praxis-Seiten. Blog und Toms Seite /tom-nowak bleiben unverändert.
+// Wieder einschalten: true setzen, Umleitungen in vercel.json entfernen, Texte aus Git (Commit vor diesem) zurückholen.
+export const SHOW_PRICES = false;
+
 const de = {
   meta: {
-    homeTitle: 'Webdesign Berlin – Website ab 1.500 €, Entwurf gratis | JPR Studio',
-    homeDesc: 'Kostenloser Entwurf deiner neuen Startseite in 48 Stunden. Festpreis ab 1.500 €, Online-Terminbuchung auf Wunsch, der Code gehört dir – für Handwerk, Praxen und Gyms.',
+    homeTitle: 'Webdesign Berlin – neue Website, Entwurf in 48 Stunden gratis | JPR Studio',
+    homeDesc: 'Kostenloser Entwurf deiner neuen Startseite in 48 Stunden. Festpreis vor Projektstart, Online-Terminbuchung auf Wunsch, der Code gehört dir – für Handwerk, Praxen und Gyms.',
     pricingTitle: 'Preise & Pakete: Website ab 1.500 € zum Festpreis | JPR Studio Berlin',
     pricingDesc: 'Transparente Preisliste: One-Page Website ab 1.500 €, Website mit Terminbuchung ab 3.000 €, Shop oder Web-App ab 5.000 €. Festes Angebot nach dem kostenlosen Entwurf.',
   },
@@ -23,8 +28,7 @@ const de = {
       { label: '[01] Leistungen', id: 'leistungen' },
       { label: '[02] Projekte', id: 'projekte' },
       { label: '[03] Prozess', id: 'prozess' },
-      { label: '[04] Preise', id: 'preise' },
-      { label: '[05] FAQ', id: 'faq' },
+      { label: '[04] FAQ', id: 'faq' },
     ],
     cta: 'Entwurf anfragen →',
     stickyCta: 'Entwurf anfragen',
@@ -35,7 +39,7 @@ const de = {
     topRight: 'Dir gehört der Code — kein Lock-in',
     h1: ['Website,', 'aber keine', 'Anfragen?'],
     audience: 'Für Gyms, Praxen und Handwerksbetriebe, die über ihre Website neue Kunden gewinnen wollen.',
-    offer: 'Trag deine Website ein. In 48 Stunden schicken wir dir einen anklickbaren Entwurf deiner neuen Seite — kostenlos. Danach entscheidest du. Festpreis ab 1.500 €.',
+    offer: 'Trag deine Website ein. In 48 Stunden schicken wir dir einen anklickbaren Entwurf deiner neuen Seite — kostenlos. Danach entscheidest du.',
     ctaPrimary: 'Kostenlosen Entwurf anfragen →',
     ctaSecondary: 'Preise ansehen',
     proofs: ['Entwurf in 48 Stunden', 'Festpreis vor Projektstart', 'Kostenlos — du entscheidest danach', 'Deutschlandweit, alles läuft online'],
@@ -83,6 +87,32 @@ const de = {
       { url: 'nomadsdigital.com', href: 'https://www.nomadsdigital.com', title: 'Nomads Digital', tag: 'Marketing für Games / Website', img: '/portfolio-shots/nomads.jpg' },
       { url: 'ropefx.com', href: 'https://ropefx.com', title: 'RopeFX', tag: 'Website / Anfragen-Funnel', img: '/portfolio-shots/ropefx.jpg' },
     ] as Project[],
+  },
+  // Kundenprojekt direkt unter dem Hero: Subyen 2018 → heute. Svens Zitat steht dort,
+  // nicht mehr bei den Kundenstimmen (dort per Name ausgefiltert, siehe TestimonialsSection).
+  caseStudy: {
+    kicker: 'Kundenprojekt: Muay Thai Subyen, Berlin',
+    title: ['Vom', 'Vereins-Blog', 'zur Buchung.'],
+    url: 'muaythai-subyen.de',
+    tagOld: '2018',
+    tagNew: 'Heute',
+    old: '2018: ein Vereins-Blog mit News. Aber kein Weg zum Probetraining.',
+    now: 'Heute: ein roter Knopf. Probetraining online buchen, Trainingsplan gleich dabei.',
+    altOld: 'muaythai-subyen.de im Jahr 2018: schwarzer Vereins-Blog mit News, ohne Knopf zum Probetraining',
+    altNew: 'muaythai-subyen.de heute: Video im Hintergrund, Knopf „Probetraining buchen“, Trainingsplan',
+    // Subyen-DB trial_bookings, Stand 14.11.2026: 185 Buchungen seit Start 18.03.2026 (alle, auch
+    // später stornierte; nicht storniert: 131, Personen: 206). Jan wollte die größere Zahl: Personen (participants).
+    count: 206,
+    countLabel: 'Personen online zum Probetraining angemeldet',
+    countNote: 'seit März 2026, ohne Werbebudget',
+    notifLabel: 'So kommen die Buchungen an',
+    notifTop: 'Neue Probetraining-Buchung',
+    notifWhen: 'jetzt',
+    notifClass: 'Muay Thai',
+    notifSlots: ['Di 18:30', 'Mi 17:00', 'Do 18:00'],
+    person: 'Sven Markulla',
+    quoteNote: '',
+    source: 'Bilder: muaythai-subyen.de 2018 (Internet Archive) und heute (Bildschirmaufnahme).',
   },
   testimonials: {
     eyebrow: 'Kundenstimmen',
@@ -141,13 +171,13 @@ const de = {
     ] as Tier[],
   },
   faq: {
-    eyebrow: '[05] — FAQ',
+    eyebrow: '[04] — FAQ',
     title: 'Häufige Fragen.',
     items: [
       { q: 'Was bekomme ich in den 48 Stunden?', a: 'Einen anklickbaren Entwurf deiner neuen Startseite, gebaut aus deiner jetzigen Website. Kostenlos und unverbindlich.' },
-      { q: 'Was kostet eine Website?', a: 'Ab 1.500 € für eine One-Page, ab 3.000 € mit Terminbuchung. Nach dem Entwurf bekommst du einen Festpreis.' },
+      { q: 'Was kostet eine Website?', a: 'Das hängt vom Umfang ab. Nach dem kostenlosen Entwurf bekommst du einen Festpreis, bevor es losgeht.' },
       { q: 'Wie lange dauert es, bis meine Website fertig ist?', a: 'Einfache Seiten in wenigen Tagen, mit Shop oder Extras in ein bis zwei Wochen.' },
-      { q: 'Was passiert nach dem Launch?', a: 'Hosting, Updates und Backups betreuen wir ab 49 €/Monat. Oder du machst es selbst – du bekommst alle Zugänge.' },
+      { q: 'Was passiert nach dem Launch?', a: 'Hosting, Updates und Backups betreuen wir gegen eine kleine Monatsgebühr. Oder du machst es selbst – du bekommst alle Zugänge.' },
       { q: 'Kann ich Inhalte später selbst ändern?', a: 'Ja. Texte, Bilder, Zeiten und Preise pflegst du selbst, ohne Technikwissen.' },
       { q: 'Wem gehört die Website am Ende?', a: 'Dir. Du bekommst den Code und alle Zugänge. Kein Abo, keine Bindung.' },
     ] as Faq[],
@@ -251,8 +281,8 @@ export type SiteCopy = typeof de;
 
 const en: SiteCopy = {
   meta: {
-    homeTitle: 'Web Design Berlin – Websites from €1,500, Free Draft | JPR Studio',
-    homeDesc: 'A free draft of your new homepage within 48 hours. Fixed price from €1,500, online booking if you want it, you own the code – for trades, practices and gyms.',
+    homeTitle: 'Web Design Berlin – New Website, Free Draft in 48 Hours | JPR Studio',
+    homeDesc: 'A free draft of your new homepage within 48 hours. Fixed price before we start, online booking if you want it, you own the code – for trades, practices and gyms.',
     pricingTitle: 'Web Design Prices Berlin 2026 — Websites from €1,500 | JPR Consulting',
     pricingDesc: 'Transparent pricing: one-page website from €1,500, website with online booking from €3,000, shop or web app from €5,000. Fixed quote in a free intro call.',
   },
@@ -261,8 +291,7 @@ const en: SiteCopy = {
       { label: '[01] Services', id: 'leistungen' },
       { label: '[02] Work', id: 'projekte' },
       { label: '[03] Process', id: 'prozess' },
-      { label: '[04] Pricing', id: 'preise' },
-      { label: '[05] FAQ', id: 'faq' },
+      { label: '[04] FAQ', id: 'faq' },
     ],
     cta: 'Request a draft →',
     stickyCta: 'Request a draft',
@@ -273,7 +302,7 @@ const en: SiteCopy = {
     topRight: 'You own the code — no lock-in',
     h1: ['A website,', 'but no', 'enquiries?'],
     audience: 'For gyms, practices and trades that want their website to bring in new clients.',
-    offer: 'Enter your website. Within 48 hours we send you a clickable draft of your new site — free. Then you decide. Fixed price from €1,500.',
+    offer: 'Enter your website. Within 48 hours we send you a clickable draft of your new site — free. Then you decide.',
     ctaPrimary: 'Request your free draft →',
     ctaSecondary: 'See pricing →',
     proofs: ['Draft in 48 hours', 'Fixed price before we start', 'Free — you decide afterwards', 'Anywhere in Germany, fully online'],
@@ -316,6 +345,28 @@ const en: SiteCopy = {
       { url: 'nomadsdigital.com', href: 'https://www.nomadsdigital.com', title: 'Nomads Digital', tag: 'Games marketing / website', img: '/portfolio-shots/nomads.jpg' },
       { url: 'ropefx.com', href: 'https://ropefx.com', title: 'RopeFX', tag: 'Website / lead funnel', img: '/portfolio-shots/ropefx.jpg' },
     ],
+  },
+  caseStudy: {
+    kicker: 'Client project: Muay Thai Subyen, Berlin',
+    title: ['From', 'club blog', 'to bookings.'],
+    url: 'muaythai-subyen.de',
+    tagOld: '2018',
+    tagNew: 'Today',
+    old: '2018: a club blog with news. But no way to book a trial class.',
+    now: 'Today: one red button. Book a trial class online, timetable included.',
+    altOld: 'muaythai-subyen.de in 2018: black club blog with news, no button for a trial class',
+    altNew: 'muaythai-subyen.de today: background video, "Book a trial class" button, timetable',
+    count: 206,
+    countLabel: 'people signed up online for a trial class',
+    countNote: 'since March 2026, no ad budget',
+    notifLabel: 'How the bookings come in',
+    notifTop: 'New trial class booking',
+    notifWhen: 'now',
+    notifClass: 'Muay Thai',
+    notifSlots: ['Tue 18:30', 'Wed 17:00', 'Thu 18:00'],
+    person: 'Sven Markulla',
+    quoteNote: 'Translated from German.',
+    source: 'Images: muaythai-subyen.de in 2018 (Internet Archive) and today (screen recording).',
   },
   testimonials: {
     eyebrow: 'Testimonials',
@@ -374,13 +425,13 @@ const en: SiteCopy = {
     ],
   },
   faq: {
-    eyebrow: '[05] — FAQ',
+    eyebrow: '[04] — FAQ',
     title: 'Frequently asked questions.',
     items: [
       { q: 'What do I get within 48 hours?', a: 'A clickable draft of your new homepage, built from your current website. Free and non-binding.' },
-      { q: 'How much does a website cost?', a: 'From €1,500 for a one-pager, from €3,000 with appointment booking. After the draft you get a fixed price.' },
+      { q: 'How much does a website cost?', a: 'It depends on the scope. After the free draft you get a fixed price before we start.' },
       { q: 'How long until my website is ready?', a: 'Simple sites in a few days, with a shop or extras in one to two weeks.' },
-      { q: 'What happens after launch?', a: 'We look after hosting, updates and backups from €49/month. Or you do it yourself – you get all access.' },
+      { q: 'What happens after launch?', a: 'We look after hosting, updates and backups for a small monthly fee. Or you do it yourself – you get all access.' },
       { q: 'Can I edit the content myself later?', a: 'Yes. You update texts, images, hours and prices yourself, no technical knowledge needed.' },
       { q: 'Who owns the website in the end?', a: 'You do. You get the code and all access. No subscription, no lock-in.' },
     ],

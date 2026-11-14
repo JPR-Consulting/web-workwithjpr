@@ -1,6 +1,8 @@
 {
   "trailingSlash": false,
   "redirects": [
+    { "source": "/preise", "destination": "/", "permanent": false },
+    { "source": "/en/pricing", "destination": "/en", "permanent": false },
     { "source": "/impressum", "destination": "/imprint", "permanent": true },
     { "source": "/datenschutz", "destination": "/privacy", "permanent": true },
     { "source": "/dresden", "destination": "/tom-nowak", "permanent": true },

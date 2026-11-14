@@ -8,21 +8,12 @@ JPR Consulting ist eine Webdesign-Agentur in Berlin, gegründet von Jan Rojek. W
 
 ## Leistungen
 
-- Moderne Websites (mobil optimiert, SEO-freundlich, ab 1.500€)
+- Moderne Websites (mobil optimiert, SEO-freundlich, Festpreis vor Projektstart)
 - Online-Terminbuchung für Praxen und Dienstleister
 - Online-Shops mit sicherer Zahlungsabwicklung
 - Digitale Geschäftstools (Kundenverwaltung, Rechnungen, Automatisierung)
 - KI-Automatisierung und Prozessoptimierung
 
-## Preise
-
-- Starter (One-Page Website): ab 1.500€
-- Professional (Mehrseitige Website + Buchungssystem): ab 3.000€
-- Business (Web-App oder Online-Shop): ab 5.000€
-
-Erster Entwurf kostenlos — du siehst vorab, was du bekommst.
-
-Aktuelle Preisliste: https://workwithjpr.com/preise
 
 ## Branchen
 
