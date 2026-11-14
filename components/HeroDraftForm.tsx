@@ -5,7 +5,8 @@ import { useCopy } from '../i18n';
 interface Props {
   /** Öffnet den Entwurf-Dialog, die eingetragene Adresse wird übernommen. */
   onStart: (website: string) => void;
-  onPricing: () => void;
+  /** Ohne onPricing kein "Preise ansehen"-Link (Preise aus, siehe SHOW_PRICES). */
+  onPricing?: () => void;
   /** Eigener Knopftext statt des Startseiten-Texts. */
   ctaLabel?: string;
   /** Feld und Knopf untereinander, volle Breite (für schmale Formular-Kästen). */
@@ -49,9 +50,11 @@ const HeroDraftForm: React.FC<Props> = ({ onStart, onPricing, ctaLabel, stacked 
       </div>
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-3 text-[15px]">
         <span className="text-dim">{t.draft.heroHint}</span>
-        <button type="button" onClick={onPricing} className="text-muted hover:text-accent transition-colors underline underline-offset-4 py-1">
-          {t.hero.ctaSecondary}
-        </button>
+        {onPricing && (
+          <button type="button" onClick={onPricing} className="text-muted hover:text-accent transition-colors underline underline-offset-4 py-1">
+            {t.hero.ctaSecondary}
+          </button>
+        )}
       </div>
     </form>
   );

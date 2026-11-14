@@ -7,7 +7,7 @@ import FAQSection from './FAQSection';
 import { Eyebrow, SectionTitle, ServiceCell, ProcessStep } from './SectionParts';
 import { useReveal } from '../hooks/useReveal';
 import type { LandingCopy } from '../content/handwerk-copy';
-import { copy } from '../content/site-copy';
+import { copy, SHOW_PRICES } from '../content/site-copy';
 
 interface Props {
   t: LandingCopy;
@@ -110,7 +110,7 @@ const LandingPage: React.FC<Props> = ({ t, onRequestDraft, onCall }) => {
                 stacked
                 ctaLabel={t.hero.cta}
                 onStart={onRequestDraft}
-                onPricing={() => document.getElementById('preise')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                onPricing={SHOW_PRICES ? () => document.getElementById('preise')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) : undefined}
               />
             </div>
           </div>
@@ -381,7 +381,7 @@ const LandingPage: React.FC<Props> = ({ t, onRequestDraft, onCall }) => {
           </div>
         </section>
 
-        <PricingSection onRequestDraft={() => onRequestDraft()} onHome eyebrow={t.pricingEyebrow} />
+        {SHOW_PRICES && <PricingSection onRequestDraft={() => onRequestDraft()} onHome eyebrow={t.pricingEyebrow} />}
         <FAQSection onHome eyebrow={t.faq.eyebrow} title={t.faq.title} items={t.faq.items} />
 
         {/* CTA */}
@@ -411,7 +411,7 @@ const LandingPage: React.FC<Props> = ({ t, onRequestDraft, onCall }) => {
           <div className="leading-[1.7] normal-case">{footer.company}</div>
           <div className="flex gap-x-6 gap-y-3 items-center flex-wrap">
             <a href="/" className="text-muted hover:text-accent transition-colors">{t.footer.home}</a>
-            <a href="/preise" className="text-muted hover:text-accent transition-colors">{t.footer.pricing}</a>
+            {SHOW_PRICES && <a href="/preise" className="text-muted hover:text-accent transition-colors">{t.footer.pricing}</a>}
             <a href="/blog" className="text-muted hover:text-accent transition-colors">{t.footer.blog}</a>
             <a href="/imprint" className="text-muted hover:text-accent transition-colors">{footer.imprint}</a>
             <a href="/privacy" className="text-muted hover:text-accent transition-colors">{footer.privacy}</a>

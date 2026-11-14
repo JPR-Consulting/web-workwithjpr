@@ -18,7 +18,7 @@ rmSync('.prerender-content.mjs');
 
 // Texte von Start- und Preisseite (DE/EN) — dieselbe Quelle wie die App
 execSync('npx esbuild content/site-copy.ts --bundle --format=esm --outfile=.prerender-copy.mjs', { stdio: 'inherit' });
-const { copy, paths } = await import(new URL('../.prerender-copy.mjs', import.meta.url));
+const { copy, paths, SHOW_PRICES } = await import(new URL('../.prerender-copy.mjs', import.meta.url));
 rmSync('.prerender-copy.mjs');
 
 // Texte der Branchen-Landingpages (Google Ads)
@@ -201,7 +201,8 @@ for (const [route, title, file] of [
 
 // --- Preisseiten /preise und /en/pricing (Commercial-Intent-Landingpage) ---
 const alternatesPricing = { de: paths.pricing.de, en: paths.pricing.en };
-for (const lang of ['de', 'en']) {
+// Preise aus (SHOW_PRICES): keine Preisseiten, vercel.json leitet /preise und /en/pricing auf die Startseite um.
+for (const lang of SHOW_PRICES ? ['de', 'en'] : []) {
   const t = copy[lang];
   const p = t.pricingPage;
   const pageUrl = url(paths.pricing[lang]);
@@ -296,8 +297,8 @@ const homeFallback = (t, lang) => `<div style="min-height:100vh;background:#1010
         ${t.industries ? `<p>${esc(t.industries.label)} <a href="${handwerkPath}" style="color:#d4ff4f">${esc(t.industries.handwerk)} →</a> &middot; <a href="${praxisPath}" style="color:#d4ff4f">${esc(t.industries.praxis)} →</a></p>` : ''}
         <h2 style="font-weight:800;text-transform:uppercase;color:#f4f4f0">${esc(t.projects.title)}</h2>
         <ul>${t.projects.items.map(i => `<li><a href="${i.href}" style="color:#d4ff4f">${esc(i.title)}</a> — ${esc(i.tag)}</li>`).join('')}</ul>
-        <h2 style="font-weight:800;text-transform:uppercase;color:#f4f4f0">${esc(t.pricing.title)}</h2>
-        <p>${t.pricing.tiers.map(tier => `${esc(tier.name)} ${esc(tier.price)}`).join(' &middot; ')}. ${esc(t.pricing.note)} <a href="${paths.pricing[lang]}" style="color:#d4ff4f">${esc(t.pricing.detailsLink)}</a></p>
+        ${SHOW_PRICES ? `<h2 style="font-weight:800;text-transform:uppercase;color:#f4f4f0">${esc(t.pricing.title)}</h2>
+        <p>${t.pricing.tiers.map(tier => `${esc(tier.name)} ${esc(tier.price)}`).join(' &middot; ')}. ${esc(t.pricing.note)} <a href="${paths.pricing[lang]}" style="color:#d4ff4f">${esc(t.pricing.detailsLink)}</a></p>` : ''}
         <h2 style="font-weight:800;text-transform:uppercase;color:#f4f4f0">${esc(t.faq.title)}</h2>
         ${t.faq.items.map(fq => `<h3 style="color:#f4f4f0">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
         <p>${esc(t.footer.company)} &middot; info@workwithjpr.com</p>
@@ -364,8 +365,8 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
             : ''}`
           : `<p><a href="${h.reference.href}" style="color:${c.accent}">${esc(h.reference.url)}</a> — ${esc(h.reference.realText || h.reference.text)}</p>`}
         ${hMain(h.process.title)}${cells(h.process.steps)}
-        ${hMain(copy.de.pricing.title)}
-        <p>${copy.de.pricing.tiers.map(tier => `${esc(tier.name)} ${esc(tier.price)}`).join(' &middot; ')}. ${esc(copy.de.pricing.note)} <a href="${paths.pricing.de}" style="color:${c.accent}">${esc(copy.de.pricing.detailsLink)}</a></p>
+        ${SHOW_PRICES ? `${hMain(copy.de.pricing.title)}
+        <p>${copy.de.pricing.tiers.map(tier => `${esc(tier.name)} ${esc(tier.price)}`).join(' &middot; ')}. ${esc(copy.de.pricing.note)} <a href="${paths.pricing.de}" style="color:${c.accent}">${esc(copy.de.pricing.detailsLink)}</a></p>` : ''}
         ${hMain(h.faq.title)}
         ${h.faq.items.map(fq => `<h3 style="color:${c.text}">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
         ${hMain(h.cta.title.join(' '))}<p>${esc(h.cta.text)}</p>

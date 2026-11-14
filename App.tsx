@@ -11,6 +11,7 @@ import ProjectCarousel from './components/ProjectCarousel';
 import PricingSection from './components/PricingSection';
 import TestimonialsSection from './components/TestimonialsSection';
 import SubyenCase from './components/SubyenCase';
+import { SHOW_PRICES } from './content/site-copy';
 import FAQSection from './components/FAQSection';
 import BlogIndex from './components/BlogIndex';
 import BlogPostView from './components/BlogPost';
@@ -57,8 +58,9 @@ const SITE = 'https://workwithjpr.com';
  */
 function parseLocation(path: string): { view: ViewState; slug: string; lang: Lang | null } {
   if (path === paths.home.en || path === `${paths.home.en}/`) return { view: 'HOME', slug: '', lang: 'en' };
-  if (path === paths.pricing.en) return { view: 'PREISE', slug: '', lang: 'en' };
-  if (path === paths.pricing.de) return { view: 'PREISE', slug: '', lang: 'de' };
+  // Preise aus: Preisseite zeigt die Startseite (vercel.json leitet zusätzlich um)
+  if (path === paths.pricing.en) return { view: SHOW_PRICES ? 'PREISE' : 'HOME', slug: '', lang: 'en' };
+  if (path === paths.pricing.de) return { view: SHOW_PRICES ? 'PREISE' : 'HOME', slug: '', lang: 'de' };
   if (path === handwerkPath) return { view: 'HANDWERK', slug: '', lang: 'de' };
   if (path === praxisPath) return { view: 'PRAXIS', slug: '', lang: 'de' };
   // Alte Adressen (/dresden, /tom.nowak) leitet vercel.json dauerhaft um; hier nur als Rückfall für die lokale Vorschau
@@ -256,7 +258,7 @@ const App: React.FC = () => {
     if (currentView === 'DRESDEN') return <DresdenPage onRequestDraft={openDraft} />;
     if (currentView === 'IMPRINT') return <Imprint onBack={() => navigate('HOME')} />;
     if (currentView === 'PRIVACY') return <Privacy onBack={() => navigate('HOME')} />;
-    if (currentView === 'PREISE') return <PreisePage onNavigate={navigate} onRequestDraft={(w) => openDraft(typeof w === 'string' ? w : '')} onLangChange={changeLang} />;
+    if (currentView === 'PREISE' && SHOW_PRICES) return <PreisePage onNavigate={navigate} onRequestDraft={(w) => openDraft(typeof w === 'string' ? w : '')} onLangChange={changeLang} />;
     if (currentView === 'BLOG') return <BlogIndex onNavigate={navigate} />;
     if (currentView === 'BLOG_POST') {
       const post = getPostBySlug(currentSlug);
@@ -319,7 +321,7 @@ const App: React.FC = () => {
   const heroFoot = (
     <>
       <div className={`hero-foot ${heroIn ? 'in' : ''} mt-4 md:mt-12`}>
-        <HeroDraftForm onStart={openDraft} onPricing={() => scrollToSection('preise')} />
+        <HeroDraftForm onStart={openDraft} onPricing={SHOW_PRICES ? () => scrollToSection('preise') : undefined} />
       </div>
 
       <div className={`hero-foot ${heroIn ? 'in' : ''} flex justify-between items-end gap-x-8 gap-y-6 mt-10 md:mt-12 flex-wrap`}>
@@ -461,7 +463,7 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        <PricingSection onRequestDraft={() => openDraft()} onHome />
+        {SHOW_PRICES && <PricingSection onRequestDraft={() => openDraft()} onHome />}
         <FAQSection onHome />
 
         {/* CTA */}

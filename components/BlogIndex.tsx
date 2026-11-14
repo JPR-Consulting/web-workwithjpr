@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { ArrowRight, Clock, ArrowLeft } from 'lucide-react';
 import { blogPosts, blogIntro } from '../content/blog';
 import { spaLink } from './spaLink';
+import { SHOW_PRICES } from '../content/site-copy';
 
 interface Props {
   onNavigate: (view: string, slug?: string) => void;
@@ -39,7 +40,7 @@ const BlogIndex: React.FC<Props> = ({ onNavigate }) => {
 
         {/* Themen-Wegweiser: Preise, Branchenseiten und die wichtigsten Artikel */}
         <nav aria-label="Themen" className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line mb-16">
-          {blogIntro.groups.map((g) => (
+          {blogIntro.groups.map((g) => ({ ...g, links: g.links.filter((l) => SHOW_PRICES || l.href !== '/preise') })).map((g) => (
             <div key={g.title} className="bg-ink p-7 md:p-8">
               <h2 className="font-mono text-[13px] text-accent uppercase mb-4">{g.title}</h2>
               <ul className="flex flex-col gap-1">
