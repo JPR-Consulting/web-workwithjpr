@@ -10,6 +10,7 @@ import ScrambleLabel from './components/ScrambleLabel';
 import ProjectCarousel from './components/ProjectCarousel';
 import PricingSection from './components/PricingSection';
 import TestimonialsSection from './components/TestimonialsSection';
+import SubyenCase from './components/SubyenCase';
 import FAQSection from './components/FAQSection';
 import BlogIndex from './components/BlogIndex';
 import BlogPostView from './components/BlogPost';
@@ -392,6 +393,8 @@ const App: React.FC = () => {
           {waterReady ? <WaterHeadline>{heroContent}</WaterHeadline> : heroContent}
           {heroFoot}
         </header>
+
+        <SubyenCase />
 
         {/* Marquee */}
         <section className="overflow-hidden border-b border-line" aria-label={t.refs.ariaLabel}>

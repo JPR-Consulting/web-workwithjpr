@@ -19,7 +19,11 @@ const TestimonialCell: React.FC<Testimonial> = ({ quote, logo, name, company }) 
 };
 
 const TestimonialsSection: React.FC = () => {
-  const t = useCopy().testimonials;
+  const all = useCopy();
+  const t = all.testimonials;
+  // Svens Zitat steht schon im Kundenprojekt unter dem Hero (SubyenCase), hier nicht doppelt.
+  const items = t.items.filter((i) => i.name !== all.caseStudy.person);
+  const single = items.length === 1;
   const eyebrowRef = useReveal<HTMLDivElement>();
   const titleRef = useReveal<HTMLHeadingElement>();
   return (
@@ -32,8 +36,8 @@ const TestimonialsSection: React.FC = () => {
         <span>{t.title}</span>
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line">
-        {t.items.map((item) => (
+      <div className={`grid grid-cols-1 gap-px bg-line border border-line ${single ? 'max-w-[900px]' : 'md:grid-cols-2'}`}>
+        {items.map((item) => (
           <TestimonialCell key={item.name} {...item} />
         ))}
       </div>
