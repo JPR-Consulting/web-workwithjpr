@@ -7,7 +7,7 @@ export const SectionTitle: React.FC<{ children: React.ReactNode; className?: str
   return (
     <h2
       ref={ref}
-      className={`font-syne font-extrabold uppercase text-[clamp(18px,5.7vw,34px)] md:text-[clamp(34px,4.5vw,60px)] break-words hyphens-auto tracking-[-0.015em] leading-[1.02] mb-[52px] sec-title-line ${className ?? ''}`}
+      className={`font-syne font-extrabold uppercase text-[clamp(18px,5.4vw,34px)] md:text-[clamp(34px,4.5vw,60px)] hyphens-manual tracking-[-0.015em] leading-[1.02] mb-[52px] sec-title-line ${className ?? ''}`}
     >
       <span>{children}</span>
     </h2>
@@ -23,7 +23,7 @@ export const Eyebrow: React.FC<{ children: string }> = ({ children }) => {
   );
 };
 
-/** [01] Leistungen — Grid-Zelle mit Reveal. */
+/** Grid-Zelle mit Reveal (Branchen-Landingpages). */
 export const ServiceCell: React.FC<{ idx: string; title: string; desc: string }> = ({ idx, title, desc }) => {
   const ref = useReveal<HTMLDivElement>();
   return (
@@ -31,6 +31,17 @@ export const ServiceCell: React.FC<{ idx: string; title: string; desc: string }>
       <div className="font-mono text-[14px] text-accent mb-[18px]">{idx}</div>
       <h3 className="font-syne font-bold text-[clamp(20px,6.4vw,28px)] sm:text-[28px] break-words hyphens-auto mb-3">{title}</h3>
       <p className="text-[17px] leading-[1.6] text-muted">{desc}</p>
+    </div>
+  );
+};
+
+/** [01] Leistungen — Listenzeile: Titel links, Beschreibung rechts, Haarlinie dazwischen. */
+export const ServiceRow: React.FC<{ title: string; desc: string }> = ({ title, desc }) => {
+  const ref = useReveal<HTMLDivElement>();
+  return (
+    <div ref={ref} className="reveal grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-2 md:gap-10 py-6 md:py-7 border-b border-line">
+      <h3 className="font-syne font-bold text-[20px] md:text-[22px] leading-tight hyphens-manual">{title}</h3>
+      <p className="text-[17px] leading-[1.6] text-muted max-w-[720px]">{desc}</p>
     </div>
   );
 };

@@ -20,27 +20,31 @@ const FAQSection: React.FC<Props> = ({ onHome, items, eyebrow, title }) => {
   const listRef = useReveal<HTMLDivElement>();
 
   return (
-    <section id={onHome ? 'faq' : undefined} className="px-6 md:px-12 border-b border-line py-16 md:py-24">
-      <div ref={eyebrowRef} className="reveal font-mono text-[14px] text-accent uppercase mb-5">
-        {onHome ? t.eyebrow : 'FAQ'}
-      </div>
-      <h2
-        ref={titleRef}
-        className="font-syne font-extrabold uppercase text-[clamp(18px,5.7vw,34px)] md:text-[clamp(34px,4.5vw,60px)] break-words hyphens-auto tracking-[-0.015em] leading-[1.02] mb-[52px] sec-title-line"
-      >
-        <span>{t.title}</span>
-      </h2>
+    <section id={onHome ? 'faq' : undefined} className="px-6 md:px-12 border-b border-line py-14 md:py-20">
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+        <div className="lg:sticky lg:self-start lg:top-28">
+          <div ref={eyebrowRef} className="reveal font-mono text-[14px] text-accent uppercase mb-5">
+            {onHome ? t.eyebrow : 'FAQ'}
+          </div>
+          <h2
+            ref={titleRef}
+            className="font-syne font-extrabold uppercase text-[clamp(18px,5.4vw,34px)] md:text-[clamp(34px,4.5vw,60px)] hyphens-manual tracking-[-0.015em] leading-[1.02] mb-8 lg:mb-0 sec-title-line"
+          >
+            <span>{t.title}</span>
+          </h2>
+        </div>
 
-      <div ref={listRef} className="reveal border-t border-line max-w-[980px]">
-        {t.items.map((faq, idx) => (
-          <FaqItem
-            key={faq.q}
-            q={faq.q}
-            a={faq.a}
-            isOpen={openIndex === idx}
-            onToggle={() => setOpenIndex(openIndex === idx ? null : idx)}
-          />
-        ))}
+        <div ref={listRef} className="reveal border-t border-line">
+          {t.items.map((faq, idx) => (
+            <FaqItem
+              key={faq.q}
+              q={faq.q}
+              a={faq.a}
+              isOpen={openIndex === idx}
+              onToggle={() => setOpenIndex(openIndex === idx ? null : idx)}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -69,7 +73,7 @@ const FaqItem: React.FC<{ q: string; a: string; isOpen: boolean; onToggle: () =>
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
-        className="w-full flex justify-between items-center gap-6 py-[26px] bg-transparent border-none cursor-pointer text-left font-syne font-bold text-xl text-ftext hover:text-accent transition-colors"
+        className="w-full flex justify-between items-center gap-6 py-[15px] bg-transparent border-none cursor-pointer text-left font-body font-semibold text-[16px] md:text-[17px] leading-snug text-ftext hover:text-accent transition-colors"
       >
         {q}
         <span
@@ -84,7 +88,7 @@ const FaqItem: React.FC<{ q: string; a: string; isOpen: boolean; onToggle: () =>
         style={{ maxHeight: isOpen ? `${height || 600}px` : '0px' }}
       >
         <div ref={contentRef}>
-          <p className="pb-[26px] pr-10 text-[17px] leading-[1.7] text-muted max-w-[760px]">{a}</p>
+          <p className="pb-[16px] pr-10 text-[16px] md:text-[17px] leading-[1.6] text-muted max-w-[760px]">{a}</p>
         </div>
       </div>
     </div>
