@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Bot, CalendarX, Check, MicOff, Phone, Plus, ShieldCheck, X } from 'lucide-react';
+import { ArrowRight, Bot, CalendarX, Check, ChevronDown, MicOff, Phone, Plus, ShieldCheck, X } from 'lucide-react';
 import CookieBanner from './CookieBanner';
 import CompareSlider from './dresden/CompareSlider';
 import Lightbox from './dresden/Lightbox';
@@ -29,6 +29,8 @@ interface Props {
 // Abstand zwischen Abschnitten: gleiche Fläche = nur oben (64/96), letzter Abschnitt eines Blocks auch unten
 const SEC = 'pt-16 md:pt-24';
 const SEC_END = 'pb-16 md:pb-24';
+// Folgt auf einen gleichfarbigen Abschnitt: 96/128, damit die Grenze mehr als doppelt so groß ist wie Abstände im Abschnitt (≤ 48)
+const SEC_SAME = 'pt-24 md:pt-32';
 
 /** Website-Feld (Hero und Schluss): Adresse eintragen, der Dialog öffnet vorbefüllt. Eigener State, damit Tippen nicht die ganze Seite rendert. */
 const WebsiteField: React.FC<{ id: string; onStart: (website: string) => void; ctaRef?: React.Ref<HTMLButtonElement>; magnetic?: boolean; center?: boolean }> = ({
@@ -47,10 +49,10 @@ const WebsiteField: React.FC<{ id: string; onStart: (website: string) => void; c
       }}
       className={`w-full max-w-[680px] text-left ${center ? 'mx-auto' : ''}`}
     >
-      <label htmlFor={id} className="block text-[14px] font-semibold text-muted mb-2 pl-2">
+      <label htmlFor={id} className="block text-[14px] font-semibold text-muted mb-2">
         {t.draft.heroLabel}
       </label>
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-2 sm:p-2 sm:rounded-full sm:border sm:border-white/12 sm:bg-white/[0.04]">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-2 sm:p-2 sm:rounded-full sm:border sm:border-white/12 sm:bg-white/[0.04] sm:focus-within:ring-2 sm:focus-within:ring-[#8fa8ff]">
         <input
           id={id}
           type="text"
@@ -59,11 +61,11 @@ const WebsiteField: React.FC<{ id: string; onStart: (website: string) => void; c
           placeholder={t.draft.heroPlaceholder}
           value={url}
           onChange={(e) => setUrl(e.target.value)}
-          className="dd-field w-full sm:flex-1 min-w-0 h-14 px-6 rounded-full bg-white/[0.06] sm:bg-transparent border border-white/12 sm:border-0 text-ftext text-[17px] placeholder:text-dim focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8fa8ff]"
+          className="dd-field w-full sm:flex-1 min-w-0 h-14 px-6 rounded-full bg-white/[0.06] sm:bg-transparent border border-white/12 sm:border-0 text-ftext text-[17px] placeholder:text-dim focus:outline-none max-sm:focus-visible:ring-2 max-sm:focus-visible:ring-[#8fa8ff]"
         />
         <Cta type="submit" ctaRef={ctaRef} magnetic={magnetic} className="w-full sm:w-auto shrink-0">{t.cta.button}</Cta>
       </div>
-      <p className="mt-3 pl-2 text-[14px] text-dim">{t.draft.heroHint}</p>
+      <p className="mt-3 text-[15px] text-muted">{t.draft.heroHint}</p>
     </form>
   );
 };
@@ -143,11 +145,11 @@ const DresdenPage: React.FC<Props> = ({ onRequestDraft }) => {
         {/* 1 Hero (dunkel): Eyebrow, H1, Satz, Website-Feld, Tom-Zeile; rechts der 3D-Kartenstapel */}
         <header className="dd-hero relative isolate overflow-hidden">
           <div className="dd-hero-glow absolute inset-0 -z-10 pointer-events-none" aria-hidden="true" />
-          <div className="max-w-[1280px] mx-auto px-4 md:px-10 pt-[88px] md:pt-[136px] pb-12 md:pb-24 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] gap-x-10 xl:gap-x-14 gap-y-10 lg:gap-y-0 items-center">
+          <div className="max-w-[1280px] mx-auto px-4 md:px-10 pt-[88px] md:pt-[112px] pb-12 md:pb-24 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] gap-x-10 xl:gap-x-14 gap-y-10 lg:gap-y-0 items-center">
             {/* Text steht sofort (LCP): keine Deckkraft-Einblendung, nur der Rest bewegt sich */}
             <div className="min-w-0">
               <Eyebrow>{t.hero.eyebrow}</Eyebrow>
-              <h1 className="dd-h text-[clamp(40px,5.6vw,88px)] leading-[1.0] text-ftext">
+              <h1 className="dd-h text-[clamp(40px,5vw,72px)] leading-[1.0] text-ftext [text-wrap:balance]">
                 <span className="block">{t.hero.h1[0]}</span>
                 <span className="block">
                   <em className="dd-em">{t.hero.h1[1]}</em> {t.hero.h1[2]}
@@ -157,7 +159,7 @@ const DresdenPage: React.FC<Props> = ({ onRequestDraft }) => {
               <div className="mt-6 md:mt-8">
                 <WebsiteField id="dd-website-hero" onStart={(w) => onRequestDraft(w)} ctaRef={heroCta} magnetic />
               </div>
-              <div className="mt-6 md:mt-8 flex items-center gap-4">
+              <div className="mt-5 md:mt-6 flex items-center gap-4">
                 <Avatar size={48} alt={t.tom.photo.alt} eager />
                 <div className="min-w-0">
                   <div className="font-display font-bold text-[17px] leading-tight tracking-[-0.01em] text-ftext">{t.hero.tomCard.name}</div>
@@ -225,7 +227,7 @@ const DresdenPage: React.FC<Props> = ({ onRequestDraft }) => {
               <VoiceDemo />
             </div>
             <Reveal className="min-w-0 lg:col-start-1 lg:row-start-2">
-              <ul className="lg:mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 list-none p-0 m-0">
+              <ul className="lg:mt-10 grid grid-cols-1 gap-3 list-none p-0 m-0">
                 {t.voice.rules.map((r, i) => {
                   const Icon = [Bot, MicOff, CalendarX][i];
                   return (
@@ -242,7 +244,7 @@ const DresdenPage: React.FC<Props> = ({ onRequestDraft }) => {
         </section>
 
         {/* 4 Beispiel-Entwürfe (dunkel): ein großes Fenster mit Branchen-Reitern */}
-        <section id="beispiele" className={`scroll-mt-16 ${SEC}`}>
+        <section id="beispiele" className={`scroll-mt-16 ${SEC_SAME}`}>
           <div className="max-w-[1280px] mx-auto px-4 md:px-10">
             <Reveal>
               <Title>{t.examples.title}</Title>
@@ -255,16 +257,18 @@ const DresdenPage: React.FC<Props> = ({ onRequestDraft }) => {
         </section>
 
         {/* 5 Beweis (dunkel): 206 + Vorher/Heute + Brücke, darunter die zwei Zitate, dann der Zwischen-Knopf. Bewusst anonym. */}
-        <section className={`relative ${SEC} ${SEC_END}`}>
+        <section className={`relative ${SEC_SAME} ${SEC_END}`}>
           <div className="max-w-[1280px] mx-auto px-4 md:px-10">
             <Reveal className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-10 lg:gap-16 items-center">
               <div className="min-w-0">
-                <div className="font-manrope text-[14px] font-semibold tracking-[0.04em] text-accent mb-4">{cs.kicker}</div>
+                <div className="font-manrope text-[16px] md:text-[17px] font-semibold text-ftext mb-5">
+                  <span className="text-accent">{cs.kicker.split(' · ')[0]}</span>{cs.kicker.includes(' · ') ? ` · ${cs.kicker.split(' · ').slice(1).join(' · ')}` : ''}
+                </div>
                 <div className="dd-h text-[clamp(120px,22vw,220px)] leading-[0.82] tracking-[-0.06em] text-ftext">
                   <Count value={String(cs.count)} duration={1900} />
                 </div>
                 <p className="mt-6 max-w-[420px] text-[19px] md:text-[21px] leading-[1.4] font-semibold text-ftext">{cs.countLabel}</p>
-                <p className="mt-1 text-[16px] text-muted">{cs.countNote}</p>
+                <p className="mt-1 text-[16px] font-medium text-muted">{cs.countNote}</p>
               </div>
               <div className="min-w-0">
                 <h2 className="dd-h text-[clamp(32px,3.4vw,48px)] leading-[1.06] text-ftext [text-wrap:balance]">
@@ -283,17 +287,17 @@ const DresdenPage: React.FC<Props> = ({ onRequestDraft }) => {
                 <p className="mt-6 text-[16px] md:text-[17px] leading-[1.6] text-muted max-w-[560px]">{cs.bridge}</p>
               </div>
             </Reveal>
-            <div className="mt-12 md:mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            <div className="mt-10 md:mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
               {cs.quotes.map((q, i) => (
                 <Reveal key={q.who} delay={i * 100}>
                   <figure className="m-0 pt-6 border-t border-line h-full">
                     <blockquote className="m-0 text-[18px] md:text-[19px] leading-[1.55] font-medium text-ftext">„{q.quote}“</blockquote>
-                    <figcaption className="mt-4 text-[15px] text-muted">{q.who}</figcaption>
+                    <figcaption className="mt-4 text-[15px] font-medium text-muted">{q.who}</figcaption>
                   </figure>
                 </Reveal>
               ))}
             </div>
-            <div className={`mt-10 md:mt-12 ${stickyHide}`}>
+            <div className={`mt-8 md:mt-10 ${stickyHide}`}>
               <Cta onClick={open} className="w-full sm:w-auto">{cs.cta}</Cta>
             </div>
           </div>
@@ -321,7 +325,7 @@ const DresdenPage: React.FC<Props> = ({ onRequestDraft }) => {
                 </Reveal>
               ))}
             </ol>
-            <Reveal className="mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-[minmax(0,200px)_1fr] gap-5 sm:gap-8 items-center rounded-[20px] border border-line bg-panel p-5 md:p-6">
+            <Reveal className="mt-10 md:mt-12 grid grid-cols-1 sm:grid-cols-[minmax(0,200px)_1fr] gap-5 sm:gap-8 items-center rounded-[20px] border border-line bg-panel p-5 md:p-6">
               <div className="dd-portrait relative aspect-square w-full max-w-[160px] sm:max-w-none rounded-[12px] overflow-hidden">
                 <img
                   src={`${portrait}-480.webp`}
@@ -357,15 +361,16 @@ const DresdenPage: React.FC<Props> = ({ onRequestDraft }) => {
         </section>
 
         {/* 7 Preise (hell): drei Pakete, ein Knopf darunter */}
-        <section id="preise" className={`dd-paper ${SEC}`}>
+        <section id="preise" className={`dd-paper ${SEC_SAME}`}>
           <div className="max-w-[1280px] mx-auto px-4 md:px-10">
             <Reveal>
               <Title>{t.pricing.title}</Title>
             </Reveal>
             <div className="mt-10 md:mt-12 grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-6 items-stretch">
               {t.pricing.tiers.map((tier, i) => {
-                const shown = tier.features.slice(0, 3);
-                const rest = tier.features.slice(3);
+                const cut = tier.features.length - 3 >= 2 ? 3 : tier.features.length;
+                const shown = tier.features.slice(0, cut);
+                const rest = tier.features.slice(cut);
                 const li = (f: string, extra = '') => (
                   <li key={f} className={`flex items-start gap-3 text-[16px] leading-[1.45] ${extra}`}>
                     <Check className="w-4 h-4 mt-1 shrink-0 text-accent" strokeWidth={2.4} aria-hidden="true" />
@@ -387,12 +392,13 @@ const DresdenPage: React.FC<Props> = ({ onRequestDraft }) => {
                     </ul>
                     {/* Handy und Tablet: Rest aufklappbar */}
                     {rest.length > 0 && (
-                      <details className="dd-more group mt-3 lg:hidden">
+                      <details className="dd-more group mt-3 lg:hidden flex flex-col-reverse">
                         <summary className="inline-flex items-center gap-2 min-h-[44px] cursor-pointer list-none text-[15px] font-semibold text-accent">
-                          <Plus className="w-4 h-4 transition-transform duration-300 group-open:rotate-45" strokeWidth={2.2} aria-hidden="true" />
-                          {t.pricing.allFeatures}
+                          <span className="group-open:hidden">{t.pricing.more.replace('{n}', String(rest.length))}</span>
+                          <span className="hidden group-open:inline">{t.pricing.less}</span>
+                          <ChevronDown className="w-4 h-4 transition-transform duration-300 group-open:rotate-180" strokeWidth={2.2} aria-hidden="true" />
                         </summary>
-                        <ul className="mt-2 space-y-3 list-none p-0">{rest.map((f) => li(f))}</ul>
+                        <ul className="space-y-3 list-none p-0">{rest.map((f) => li(f))}</ul>
                       </details>
                     )}
                   </Reveal>
@@ -466,7 +472,7 @@ const DresdenPage: React.FC<Props> = ({ onRequestDraft }) => {
         </section>
 
         <footer className="border-t border-line">
-          <div className="max-w-[1280px] mx-auto px-4 md:px-10 pt-6 pb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-[14px] text-muted">
+          <div className="max-w-[1280px] mx-auto px-4 md:px-10 pt-6 pb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-[14px] font-medium text-muted">
             <div className="flex flex-col gap-2">
               <span className="font-syne font-extrabold text-[16px] uppercase text-ftext">JPR <span className="text-accent">Studio</span>&reg;</span>
               <span>

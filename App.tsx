@@ -234,6 +234,7 @@ const App: React.FC = () => {
       presetIndustry={LANDINGS[currentView]?.t.presetIndustry}
       sourceTag={currentView === 'DRESDEN' ? dresden.sourceTag : LANDINGS[currentView]?.t.sourceTag ?? (currentView === 'BLOG_POST' ? `blog-${currentSlug}` : undefined)}
       copyOverride={currentView === 'DRESDEN' ? dresden.draft : undefined}
+      callHref={currentView === 'DRESDEN' ? 'mailto:tom@workwithjpr.com' : undefined}
     />
   );
 

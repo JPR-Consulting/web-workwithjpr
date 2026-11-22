@@ -16,7 +16,7 @@ const draft: SiteCopy['draft'] = {
   heroPlaceholder: 'deine-firma.de',
   // Ohne Website (Jan, 22.11.2026): einheitlich an Hero-Feld, Schluss-Feld, Dialog und FAQ
   heroHint: 'Noch keine Website? Feld leer lassen, dann meldet sich Tom.',
-  call: 'Lieber erst sprechen? Termin buchen →',
+  call: 'Lieber erst Tom fragen? E-Mail an Tom →',
   submit: 'Entwurf anfragen →',
   q1: {
     title: 'Um welchen Betrieb geht es?',
@@ -53,8 +53,8 @@ const draft: SiteCopy['draft'] = {
   },
   success: {
     title: 'Danke, {name}!',
-    text: 'Wir bauen jetzt deinen Entwurf. Du bekommst ihn innerhalb von 48 Stunden an {email}. Die Bestätigung ist schon unterwegs.',
-    call: 'Lieber vorher kurz sprechen? 30 Minuten buchen →',
+    text: 'Die Bestätigung ist schon unterwegs an {email}. Hast du eine Website eingetragen, kommt dein Entwurf innerhalb von 48 Stunden. Sonst meldet sich Tom bei dir.',
+    call: 'Noch eine Frage? E-Mail an Tom →',
     close: 'Fertig',
   },
 };
@@ -115,9 +115,8 @@ export const dresden = {
     footnote: 'Eigene automatische Prüfung im November 2026, nur erreichbare Websites.',
   },
   voice: {
-    eyebrow: 'KI-Assistent · in jedem Entwurf',
     title: 'Deine Website nimmt Aufträge an. Per Sprache.',
-    intro: 'Kunden erzählen, worum es geht. Der Assistent fragt nach, was du fürs Angebot brauchst. Du bekommst eine fertige Auftragskarte.',
+    intro: 'Kunden erzählen, worum es geht. Der Assistent fragt nach, was du fürs Angebot brauchst. Du bekommst eine fertige Auftragskarte. In deinem Entwurf ist er als Demo schon drin.',
     rules: [
       'Sagt im ersten Satz, dass er eine KI ist',
       'Nimmt keinen Ton auf',
@@ -149,6 +148,7 @@ export const dresden = {
     title: 'Drei Branchen. Drei Entwürfe.',
     text: 'Die Betriebe sind erfunden, die Entwürfe echt gebaut. Dein Entwurf zeigt deine Leistungen und deine Fotos.',
     badge: 'Beispiel-Entwurf',
+    zoom: 'Groß ansehen',
     // tab = Reiter-Name
     items: [
       { tab: 'Handwerk', title: 'Wendler Haustechnik', tag: 'Heizung & Sanitär · warm und kräftig', img: '/dresden/beispiel-shk' },
@@ -195,15 +195,16 @@ export const dresden = {
   process: {
     title: 'Von dir brauchen wir zwei Minuten und ein Gespräch.',
     steps: [
-      { title: 'Website eintragen', desc: 'Adresse und vier kurze Fragen. Zwei Minuten.' },
-      { title: 'Entwurf in 48 Stunden', desc: 'Aus deiner jetzigen Seite. Texte, Bilder und Technik machen wir.' },
-      { title: 'Gespräch und Festpreis', desc: 'Gefällt dir der Entwurf, bekommst du ein Angebot zum Festpreis.' },
+      { title: 'Website eintragen', desc: 'Adresse und vier kurze Fragen.' },
+      { title: 'Entwurf in 48 Stunden', desc: 'Texte, Bilder und Technik übernehmen wir.' },
+      { title: 'Gespräch und Festpreis', desc: 'Gefällt dir der Entwurf, bekommst du ein Angebot.' },
     ],
   },
   pricing: {
     title: 'Festpreis, bevor es losgeht.',
     reco: 'Empfohlen',
-    allFeatures: 'Alle Leistungen',
+    more: '{n} weitere Leistungen',
+    less: 'Weniger anzeigen',
     tiers: [
       {
         name: 'Starter', price: 'ab 1.500 €', reco: false,
@@ -238,7 +239,7 @@ export const dresden = {
     title: ['Erst sehen.', 'Dann entscheiden.'],
     text: 'Trag deine Website ein. In 48 Stunden hast du deinen Entwurf im Postfach.',
     button: 'Kostenlosen Entwurf anfragen',
-    mail: 'Lieber erst mit Tom sprechen? tom@workwithjpr.com',
+    mail: 'Lieber erst Tom fragen? tom@workwithjpr.com',
   },
   // Schlichte Beschriftungen für Bedienelemente (aria-label), keine Werbetexte
   ui: {

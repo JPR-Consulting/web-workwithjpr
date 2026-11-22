@@ -63,14 +63,15 @@ const ExampleSwitcher: React.FC<{ onOpen: (i: number) => void }> = ({ onOpen }) 
                 </div>
               ))}
             </div>
-            <span className="absolute right-2 top-2 md:right-4 md:top-4 grid place-items-center w-10 h-10 rounded-full bg-white/10 text-white/85 backdrop-blur-md opacity-70 group-hover:opacity-100 transition-opacity" aria-hidden="true">
-              <Maximize2 className="w-4 h-4" strokeWidth={2} />
-            </span>
           </div>
         </button>
-        <div className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <div className="mt-6 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
           <h3 className="dd-h text-[22px] md:text-[26px] leading-tight tracking-[-0.025em] text-ftext">{items[active].title}</h3>
-          <p className="text-[16px] text-muted">{items[active].tag}</p>
+          <p className="text-[16px] font-medium text-muted">{items[active].tag}</p>
+          <button type="button" onClick={() => onOpen(active)} className="ml-auto inline-flex items-center gap-2 min-h-[44px] text-[15px] font-semibold text-accent hover:underline underline-offset-4">
+            <Maximize2 className="w-4 h-4" strokeWidth={2} aria-hidden="true" />
+            {t.examples.zoom}
+          </button>
         </div>
       </div>
     </div>
