@@ -297,7 +297,7 @@ export const dresden = {
     lightboxMobile: 'Handy',
     mockAlt: 'Gestaltete Attrappe einer typischen älteren Handwerker-Website',
   },
-  footer: { home: 'Startseite', imprint: 'Impressum', privacy: 'Datenschutz', companyEmail: 'info@workwithjpr.com', tomLine: 'Ansprechpartner in Dresden: Tom Nowak' },
+  footer: { home: 'Startseite', imprint: 'Impressum', privacy: 'Datenschutz', terms: 'AGB', companyEmail: 'info@workwithjpr.com', tomLine: 'Ansprechpartner in Dresden: Tom Nowak' },
   sticky: 'Kostenlosen Entwurf anfragen',
   draft,
 };

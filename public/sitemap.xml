@@ -115,6 +115,18 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://workwithjpr.com/agb</loc>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://workwithjpr.com/avv</loc>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://workwithjpr.com/blog/warum-werbeanzeigen-nicht-funktionieren</loc>
     <lastmod>2026-08-12</lastmod>
     <changefreq>monthly</changefreq>

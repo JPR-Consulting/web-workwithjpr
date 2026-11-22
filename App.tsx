@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Imprint from './components/Imprint';
 import Privacy from './components/Privacy';
+import LegalPage from './components/LegalPage';
 import CookieBanner from './components/CookieBanner';
 import CustomCursor from './components/CustomCursor';
 import MagneticButton from './components/MagneticButton';
@@ -40,7 +41,7 @@ declare global {
   }
 }
 
-type ViewState = 'HOME' | 'IMPRINT' | 'PRIVACY' | 'BLOG' | 'BLOG_POST' | 'PREISE' | 'HANDWERK' | 'PRAXIS' | 'DRESDEN';
+type ViewState = 'HOME' | 'IMPRINT' | 'PRIVACY' | 'AGB' | 'AVV' | 'BLOG' | 'BLOG_POST' | 'PREISE' | 'HANDWERK' | 'PRAXIS' | 'DRESDEN';
 
 /** Branchen-Landingpages der Google-Ads-Kampagnen: Ansicht -> Adresse + Texte. */
 const LANDINGS: Partial<Record<ViewState, { path: string; t: LandingCopy }>> = {
@@ -66,6 +67,8 @@ function parseLocation(path: string): { view: ViewState; slug: string; lang: Lan
   if ([dresdenPath, '/dresden', '/tom.nowak'].some((p) => path === p || path === `${p}/`)) return { view: 'DRESDEN', slug: '', lang: 'de' };
   if (path === '/imprint' || path === '/impressum') return { view: 'IMPRINT', slug: '', lang: null };
   if (path === '/privacy' || path === '/datenschutz') return { view: 'PRIVACY', slug: '', lang: null };
+  if (path === '/agb') return { view: 'AGB', slug: '', lang: null };
+  if (path === '/avv') return { view: 'AVV', slug: '', lang: null };
   if (path === '/blog') return { view: 'BLOG', slug: '', lang: null };
   if (path.startsWith('/blog/')) return { view: 'BLOG_POST', slug: path.replace('/blog/', ''), lang: null };
   return { view: 'HOME', slug: '', lang: path.startsWith('/en/') ? 'en' : 'de' };
@@ -79,6 +82,8 @@ function pathFor(view: ViewState, lang: Lang, slug: string): string {
   if (view === 'DRESDEN') return dresdenPath;
   if (view === 'IMPRINT') return '/imprint';
   if (view === 'PRIVACY') return '/privacy';
+  if (view === 'AGB') return '/agb';
+  if (view === 'AVV') return '/avv';
   if (view === 'BLOG') return '/blog';
   return slug ? `/blog/${slug}` : '/blog';
 }
@@ -257,6 +262,8 @@ const App: React.FC = () => {
     if (currentView === 'DRESDEN') return <DresdenPage onRequestDraft={openDraft} />;
     if (currentView === 'IMPRINT') return <Imprint onBack={() => navigate('HOME')} />;
     if (currentView === 'PRIVACY') return <Privacy onBack={() => navigate('HOME')} />;
+    if (currentView === 'AGB') return <LegalPage doc="agb" onBack={() => navigate('HOME')} />;
+    if (currentView === 'AVV') return <LegalPage doc="avv" onBack={() => navigate('HOME')} />;
     if (currentView === 'PREISE' && SHOW_PRICES) return <PreisePage onNavigate={navigate} onRequestDraft={(w) => openDraft(typeof w === 'string' ? w : '')} onLangChange={changeLang} />;
     if (currentView === 'BLOG') return <BlogIndex onNavigate={navigate} />;
     if (currentView === 'BLOG_POST') {
@@ -503,6 +510,7 @@ const App: React.FC = () => {
             )}
             <a {...appLink('IMPRINT')} className="text-muted hover:text-accent transition-colors">{t.footer.imprint}</a>
             <a {...appLink('PRIVACY')} className="text-muted hover:text-accent transition-colors">{t.footer.privacy}</a>
+            <a {...appLink('AGB')} className="text-muted hover:text-accent transition-colors">{t.footer.terms}</a>
             <a href="https://www.linkedin.com/in/jan-rojek-b31474a" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent transition-colors">LinkedIn</a>
             <a
               href="https://g.page/r/Cbent0mi4nueEAE/review"

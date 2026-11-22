@@ -633,6 +633,7 @@ const DresdenPage: React.FC<Props> = ({ onRequestDraft }) => {
               <a href="/" className="py-2 hover:text-accent transition-colors">{t.footer.home}</a>
               <a href="/imprint" className="py-2 hover:text-accent transition-colors">{t.footer.imprint}</a>
               <a href="/privacy" className="py-2 hover:text-accent transition-colors">{t.footer.privacy}</a>
+              <a href="/agb" className="py-2 hover:text-accent transition-colors">{t.footer.terms}</a>
             </nav>
           </div>
         </footer>
