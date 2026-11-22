@@ -27,12 +27,16 @@ export const Reveal: React.FC<{ className?: string; children: React.ReactNode; a
   );
 };
 
-export const Eyebrow: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div className="inline-flex items-center gap-2.5 font-manrope text-[13px] font-semibold uppercase tracking-[0.16em] text-accent mb-5">
-    <span className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_0_4px_rgb(var(--c-accent)/0.16)]" aria-hidden="true" />
-    {children}
-  </div>
-);
+/** Dot + Versalien nur im Hero und im KI-Abschnitt (`strong`); sonst eine ruhige Zeile (Review P2-6). */
+export const Eyebrow: React.FC<{ children: React.ReactNode; strong?: boolean }> = ({ children, strong }) =>
+  strong ? (
+    <div className="inline-flex items-start gap-2.5 font-manrope text-[13px] font-semibold uppercase tracking-[0.16em] text-accent mb-5">
+      <span className="w-1.5 h-1.5 mt-[6px] shrink-0 rounded-full bg-accent shadow-[0_0_0_4px_rgb(var(--c-accent)/0.16)]" aria-hidden="true" />
+      {children}
+    </div>
+  ) : (
+    <div className="font-manrope text-[14px] font-semibold tracking-[0.04em] text-muted mb-4">{children}</div>
+  );
 
 /** Überschrift, deren Wörter einzeln aus einer Maske steigen, sobald die umgebende .reveal ins Bild kommt. */
 export const Words: React.FC<{ text: string }> = ({ text }) => (
@@ -74,7 +78,7 @@ export const Cta: React.FC<{
       ref={setRef}
       type={type}
       onClick={onClick}
-      className={`dd-btn dd-roll inline-flex items-center justify-center gap-3 min-h-[56px] max-w-full py-2 pl-6 pr-2 rounded-full font-manrope text-[16px] leading-snug text-center font-bold ${className}`}
+      className={`dd-btn dd-roll inline-flex items-center justify-center gap-3 min-h-[56px] max-w-full py-2 pl-6 pr-2 max-[400px]:pl-5 rounded-full font-manrope text-[16px] leading-snug text-center font-bold whitespace-nowrap ${className}`}
     >
       <span className="dd-roll-win min-w-0">
         <span className="dd-roll-in">
@@ -90,7 +94,7 @@ export const Cta: React.FC<{
 };
 
 /** Browser-Rahmen mit Handy davor: zeigt einen Beispiel-Entwurf auf beiden Geräten. `host` = Name im Adressfeld (bewusst keine Domain). */
-export const Devices: React.FC<{ desktop: string; mobile: string; alt: string; host: string; eager?: boolean; high?: boolean; className?: string }> = ({
+export const Devices: React.FC<{ desktop: string; mobile: string; alt: string; host: string; eager?: boolean; high?: boolean; className?: string; phoneRight?: boolean }> = ({
   desktop,
   mobile,
   alt,
@@ -98,8 +102,9 @@ export const Devices: React.FC<{ desktop: string; mobile: string; alt: string; h
   eager,
   high,
   className = '',
+  phoneRight,
 }) => (
-  <div className={`dd-devices relative pl-[9%] pb-[7%] ${className}`}>
+  <div className={`dd-devices relative ${phoneRight ? 'pr-[5%] pb-[8%]' : 'pl-[9%] pb-[7%]'} ${className}`}>
     <div className="dd-browser">
       <div className="dd-browser-bar flex items-center gap-3 px-3 h-6 md:h-8" aria-hidden="true">
         <span className="flex gap-1.5">
@@ -125,7 +130,7 @@ export const Devices: React.FC<{ desktop: string; mobile: string; alt: string; h
         />
       </div>
     </div>
-    <div className="dd-phone absolute left-0 bottom-0 w-[27%]">
+    <div className={`dd-phone absolute bottom-0 ${phoneRight ? 'right-0 w-[26%]' : 'left-0 w-[27%]'}`}>
       <img src={`${mobile}-mobile.webp`} alt="" width={585} height={1266} loading={eager ? 'eager' : 'lazy'} decoding="async" className="block w-full h-auto rounded-[15px] md:rounded-[18px]" />
     </div>
   </div>

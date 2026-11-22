@@ -474,6 +474,8 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
   });
   // Thema schon im HTML setzen, sonst blitzt beim Laden die Lime-Seite auf
   page = page.replace(/<html([^>]*?) class="([^"]*)"/, '<html$1 class="$2 theme-dresden"');
+  // Der Startseiten-Hintergrund (backplate.webp) wird auf dieser Route nicht benutzt: Vorladen würde dem echten LCP-Bild Bandbreite nehmen
+  page = page.replace(/\s*<link rel="preload" as="image"[^>]*backplate[^>]*>/, '');
   writeFileSync(`${DIST}${dresdenPath}/index.html`, page);
   console.log(`✓ ${dresdenPath}`);
 }

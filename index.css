@@ -700,7 +700,7 @@ html.theme-dresden .draft-dialog::backdrop { background: rgba(4, 6, 12, 0.8); ba
 .dd-stack-scene {
   aspect-ratio: 1.4 / 1;
   transform-style: preserve-3d;
-  transform: rotateX(calc(4deg + var(--rx))) rotateY(calc(-9deg + var(--ry)));
+  transform: rotateX(calc(4deg + var(--rx))) rotateY(calc(-8deg + var(--ry)));
   transition: transform 0.6s var(--ease-out);
 }
 @media (max-width: 767px) { .dd-stack-scene { transform: rotateX(3deg) rotateY(-6deg); } }
@@ -732,7 +732,7 @@ html.theme-dresden .draft-dialog::backdrop { background: rgba(4, 6, 12, 0.8); ba
 @keyframes ddDots { 0%, 60%, 100% { opacity: 0.35; transform: none; } 30% { opacity: 1; transform: translateY(-3px); } }
 .dd-order { opacity: 0; transform: translate3d(70px, 56px, 0) rotate(-2.5deg) scale(0.96); transition: opacity 0.5s var(--ease-out), transform 1.1s var(--ease-out); }
 .dd-order.on { opacity: 1; transform: none; }
-.dd-order.on .dd-urgent { animation: ddUrgent 1.3s ease-out 0.8s 1 both; }
+.dd-order.on .dd-urgent { animation: ddUrgent 1.3s ease-out 0.4s 1 both; }
 @keyframes ddUrgent { 0% { box-shadow: 0 0 0 0 rgba(229, 72, 77, 0.65); transform: scale(1); } 35% { transform: scale(1.1); } 100% { box-shadow: 0 0 0 14px rgba(229, 72, 77, 0); transform: scale(1); } }
 .dd-wave { display: inline-flex; align-items: center; gap: 3px; height: 24px; }
 .dd-wave span { width: 3px; height: 22px; border-radius: 2px; background: #8fa8ff; opacity: 0.5; transform: scaleY(0.25); animation: ddWave 1.6s ease-in-out infinite; animation-delay: calc(var(--b) * 0.14s); }
@@ -766,7 +766,7 @@ html.theme-dresden .draft-dialog::backdrop { background: rgba(4, 6, 12, 0.8); ba
 }
 @media (prefers-reduced-motion: reduce) {
   .dd-card3d, .dd-stack-scene { transition: none !important; }
-  .dd-stack-scene { transform: rotateX(4deg) rotateY(-9deg) !important; }
+  .dd-stack-scene { transform: rotateX(4deg) rotateY(-8deg) !important; }
   .dd-dot-bar.run > span, .dd-wave span, .dd-typing i, .dd-order.on .dd-urgent { animation: none !important; }
   .dd-wave span { transform: scaleY(0.55); }
   .dd-chat .dd-msg, .dd-order { opacity: 1 !important; transform: none !important; transition: none !important; }
@@ -774,4 +774,29 @@ html.theme-dresden .draft-dialog::backdrop { background: rgba(4, 6, 12, 0.8); ba
   .dd-marquee-list { flex-wrap: wrap; justify-content: center; }
   .dd-marquee-dup { display: none; }
   .dd-marquee { -webkit-mask-image: none; mask-image: none; }
+}
+
+/* v3.2 (22.11.2026, Design-Review): Hero-Text ohne Einblendung (LCP), Zeigerlicht, Schwenk im Beispiel-Fenster, Cookie-Banner im Seitenstil */
+.dd-rise { transform: translateY(14px); transition: transform 0.6s var(--ease-out) 0.1s; }
+.dd-rise.in { transform: none; }
+.dd-stack-persp::after { content: ''; position: absolute; left: 8%; right: 14%; bottom: -4%; height: 12%; background: radial-gradient(50% 50% at 50% 50%, rgba(61, 90, 254, 0.35), transparent 70%); filter: blur(18px); pointer-events: none; }
+[data-cursor-light] > .dd-cursor-light {
+  position: absolute; inset: 0; pointer-events: none; opacity: var(--co, 0);
+  background: radial-gradient(600px circle at var(--cx, 50%) var(--cy, 50%), rgba(61, 90, 254, 0.2), transparent 60%);
+}
+.dd-hero[data-cursor-light] > .dd-cursor-light { mix-blend-mode: screen; }
+.dd-pan .dd-shot { transform-origin: 0 0; transition: transform 1.2s var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .dd-pan-host:hover .dd-pan .dd-shot { transform: scale(1.22) translate(-2%, -4%); transform-origin: 100% 100%; transition: transform 9s linear; }
+}
+.dd-handle:focus-visible { outline: 2px solid #8fa8ff; outline-offset: 3px; }
+/* Cookie-Banner nur auf dieser Seite: runde Knöpfe, beide gleich gewichtet, auf dem Handy höchstens 40 % der Höhe */
+html.theme-dresden .fixed.bottom-0.z-50 .font-mono button { border-radius: 999px; background: #1a2133; color: #f4f6fb; border: 1px solid rgba(255, 255, 255, 0.18); min-height: 44px; }
+html.theme-dresden .fixed.bottom-0.z-50 .font-mono button:hover { border-color: #8fa8ff; color: #8fa8ff; background: #1a2133; }
+@media (max-width: 767px) { html.theme-dresden .fixed.bottom-0.z-50 > .bg-panel { max-height: 40vh; overflow-y: auto; } }
+@media (prefers-reduced-motion: reduce) {
+  .dd-rise { transform: none !important; transition: none !important; }
+  .dd-compare * { transition: none !important; }
+  .dd-pan .dd-shot, .dd-pan-host:hover .dd-pan .dd-shot { transform: none !important; transition: none !important; }
+  [data-cursor-light] > .dd-cursor-light { display: none; }
 }

@@ -3,16 +3,9 @@ import { Mic } from 'lucide-react';
 import { useSeen } from '../../hooks/useSeen';
 import { dresden as t } from '../../content/dresden-copy';
 
-const typingMs = (who: 'ki' | 'kunde') => (who === 'ki' ? 1100 : 900);
-
-/**
- * Gestaltetes Beispiel (kein Live-Assistent): Beim Erscheinen tippt erst die KI, dann der Kunde (drei Punkte),
- * die Blasen kommen nacheinander, danach legt sich die Auftragskarte hin und „Dringend“ pulsiert einmal.
- * Platz für alle Blasen ist von Anfang an reserviert, nichts springt. Ohne Eingabe (Fallback) steht alles sofort.
- */
 const VoiceDemo: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const { seen, instant } = useSeen(ref, 0.8);
+  const { seen, instant } = useSeen(ref, 0.6);
   const msgs = t.voice.chat;
   const [shown, setShown] = useState(0);
   const [typing, setTyping] = useState(-1);
@@ -26,15 +19,15 @@ const VoiceDemo: React.FC = () => {
       setCard(true);
       return;
     }
+    // Auszahlung in unter 4 s: Blase 1 bei 0,3 s, Tippen 0,6 s, Blase 2 bei 1,2 s, Tippen 1,6 s, Blase 3 bei 2,2 s, Karte bei 3,4 s
     const timers: number[] = [];
-    let at = 350;
-    msgs.forEach((m, i) => {
-      timers.push(window.setTimeout(() => setTyping(i), at));
-      at += typingMs(m.who);
-      timers.push(window.setTimeout(() => { setTyping(-1); setShown(i + 1); }, at));
-      at += 250;
-    });
-    timers.push(window.setTimeout(() => setCard(true), at + 150));
+    const at = (ms: number, fn: () => void) => timers.push(window.setTimeout(fn, ms));
+    at(300, () => setShown(1));
+    at(600, () => setTyping(1));
+    at(1200, () => { setTyping(-1); setShown(2); });
+    at(1600, () => setTyping(2));
+    at(2200, () => { setTyping(-1); setShown(3); });
+    at(3400, () => setCard(true));
     return () => timers.forEach((x) => window.clearTimeout(x));
   }, [seen, instant, msgs]);
 
@@ -57,7 +50,7 @@ const VoiceDemo: React.FC = () => {
           ))}
         </span>
       </div>
-      <div className="space-y-3 mb-6">
+      <div className="space-y-3 pb-10">
         {msgs.map((m, i) => (
           <div key={i} className={`relative flex ${m.who === 'ki' ? 'justify-start' : 'justify-end'}`}>
             <p
@@ -81,7 +74,7 @@ const VoiceDemo: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className={`dd-order rounded-[16px] bg-white text-[#0a0e1a] p-5 shadow-[0_20px_40px_-24px_rgba(0,0,0,0.6)] ${card ? 'on' : ''}`}>
+      <div className={`dd-order relative z-[1] -mt-8 rounded-[16px] bg-white text-[#0a0e1a] p-5 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] ${card ? 'on' : ''}`}>
         <div className="flex items-center justify-between gap-3 mb-4">
           <span className="font-manrope text-[13px] font-bold uppercase tracking-[0.12em]">{t.voice.card.number}</span>
           <span className="dd-urgent inline-flex items-center gap-1.5 rounded-full bg-[#e5484d] text-white px-3 py-1 text-[12px] font-bold uppercase tracking-[0.08em]">

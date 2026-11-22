@@ -18,7 +18,7 @@ export const HeroParticles: React.FC = () => {
     type P = { x: number; y: number; vx: number; vy: number; r: number; a: number; ph: number; c: string };
     let ps: P[] = [];
     const seed = () => {
-      const n = w < 768 ? 22 : 46;
+      const n = w < 768 ? 16 : 12; // wenige Punkte; das Licht am Zeiger (useCursorLight) trägt die Tiefe
       ps = Array.from({ length: n }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
@@ -119,8 +119,8 @@ export const HeroStack: React.FC = () => {
       const r = el.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - 0.5;
       const y = (e.clientY - r.top) / r.height - 0.5;
-      el.style.setProperty('--rx', `${(-y * 7).toFixed(2)}deg`);
-      el.style.setProperty('--ry', `${(x * 10).toFixed(2)}deg`);
+      el.style.setProperty('--rx', `${(-y * 8).toFixed(2)}deg`);
+      el.style.setProperty('--ry', `${(x * 8).toFixed(2)}deg`);
     };
     const leave = () => {
       el.style.setProperty('--rx', '0deg');
@@ -145,7 +145,7 @@ export const HeroStack: React.FC = () => {
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      <div className="dd-stack-persp relative pt-[12%] pr-[11%] md:pr-[12%] md:pt-[14%]">
+      <div className="dd-stack-persp relative pt-[7%] pr-[7%] md:pr-[9%] md:pt-[11%]">
         <div className="dd-stack-scene relative">
           {items.map((it, i) => {
             const pos = (i - active + n) % n;
@@ -156,6 +156,7 @@ export const HeroStack: React.FC = () => {
                   mobile={it.img}
                   host={it.title}
                   alt={`${t.examples.badge}: ${it.title}`}
+                  phoneRight
                   eager
                   high={i === 0}
                 />
@@ -164,7 +165,7 @@ export const HeroStack: React.FC = () => {
           })}
         </div>
       </div>
-      <div className="mt-5 md:mt-7 flex items-center justify-between gap-4 pr-[11%] md:pr-[12%]">
+      <div className="mt-5 md:mt-7 flex items-center justify-between gap-4 pr-[7%] md:pr-[9%]">
         <div className="flex items-center">
           {items.map((it, i) => (
             <button
