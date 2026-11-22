@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { onIdleFallback } from './useSeen';
 
 /**
  * Eine rAF-Schleife für alle scroll-gebundenen Effekte einer Seite (Toms Seite /tom-nowak).
@@ -10,6 +11,8 @@ import { useEffect } from 'react';
  *  [data-parallax="0.12"]  verschiebt das Element um (Abstand zur Bildmitte × Faktor) in Y
  *  [data-progress]         setzt --p (0…1) am Element; Kinder [data-step] bekommen .on, sobald die Füllung sie erreicht
  *  [data-page-progress]    setzt --page-p (0…1) = Lesefortschritt der Seite
+ *
+ * Fallback: ohne Eingabe nach 2,5 s (oder beim Drucken) bekommen alle .reveal ihr .in (hooks/useSeen.ts).
  *
  * prefers-reduced-motion: keine Parallaxe, Fortschritt sofort voll, alle Schritte .on.
  */
@@ -121,7 +124,13 @@ export function useScrollMotion(root: React.RefObject<HTMLElement | null>) {
     schedule();
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule);
+    // Fallback: ohne jede Eingabe (Screenshot, Vorschau, Druck) alles zeigen, damit nie Inhalt unsichtbar bleibt
+    const stopIdle = onIdleFallback(() => {
+      pending.forEach((r) => r.classList.add('in'));
+      pending = [];
+    });
     return () => {
+      stopIdle();
       if (raf) cancelAnimationFrame(raf);
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
