@@ -177,20 +177,23 @@ console.log('✓ /blog');
 // --- Imprint & Privacy: echter Rechtstext im HTML ---
 // Die React-Komponenten selbst werden statisch gerendert — so steht im Quelltext
 // derselbe Text wie in der App, und die Startseiten-Hero-Kopie taucht hier nicht auf.
-for (const [route, title, file] of [
-  ['imprint', 'Impressum | JPR Consulting', 'Imprint'],
-  ['privacy', 'Datenschutzerklärung | JPR Consulting', 'Privacy'],
+for (const [route, title, file, props, description] of [
+  ['imprint', 'Impressum | JPR Consulting', 'Imprint', {}],
+  ['privacy', 'Datenschutzerklärung | JPR Consulting', 'Privacy', {}],
+  // AGB und AVV: gleiche Komponente, Text aus content/legal (erzeugt von scripts/sync-legal.mjs)
+  ['agb', 'AGB für Webprojekte | JPR Studio', 'LegalPage', { doc: 'agb' }, 'Allgemeine Geschäftsbedingungen von JPR Studio (JPR Consulting GmbH, Berlin) für Webprojekte im B2B-Bereich.'],
+  ['avv', 'Auftragsverarbeitungsvertrag (AVV) | JPR Studio', 'LegalPage', { doc: 'avv' }, 'Auftragsverarbeitungsvertrag nach Art. 28 DSGVO von JPR Studio (JPR Consulting GmbH, Berlin) mit Anlagen zu Verarbeitungen, Maßnahmen und Unterauftragsverarbeitern.'],
 ]) {
   const tmp = `.prerender-${route}.mjs`;
   execSync(`npx esbuild components/${file}.tsx --bundle --format=esm --platform=node --jsx=automatic --packages=external --outfile=${tmp}`, { stdio: 'inherit' });
   const { default: Component } = await import(new URL(`../${tmp}`, import.meta.url));
   rmSync(tmp);
-  const rootHtml = renderToStaticMarkup(createElement(Component, { onBack: () => {} }));
+  const rootHtml = renderToStaticMarkup(createElement(Component, { onBack: () => {}, ...props }));
   if (!rootHtml.includes('<h1')) throw new Error(`/${route}: keine H1 im vorgerenderten Rechtstext`);
   mkdirSync(`${DIST}/${route}`, { recursive: true });
   writeFileSync(`${DIST}/${route}/index.html`, renderPage({
     title,
-    description: `${title.split(' | ')[0]} der JPR Consulting GmbH, Berlin.`,
+    description: description ?? `${title.split(' | ')[0]} der JPR Consulting GmbH, Berlin.`,
     canonical: `${SITE}/${route}`,
     ogType: 'website',
     rootHtml,
@@ -302,7 +305,7 @@ const homeFallback = (t, lang) => `<div style="min-height:100vh;background:#1010
         <h2 style="font-weight:800;text-transform:uppercase;color:#f4f4f0">${esc(t.faq.title)}</h2>
         ${t.faq.items.map(fq => `<h3 style="color:#f4f4f0">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
         <p>${esc(t.footer.company)} &middot; info@workwithjpr.com</p>
-        <p><a href="${paths.home[lang === 'de' ? 'en' : 'de']}" style="color:#d4ff4f">${lang === 'de' ? 'English version' : 'Deutsche Version'}</a>${lang === 'de' ? ' &middot; <a href="/blog" style="color:#d4ff4f">Blog</a>' : ''}${t.industries ? ` &middot; <a href="${handwerkPath}" style="color:#d4ff4f">${esc(t.industries.handwerk)}</a> &middot; <a href="${praxisPath}" style="color:#d4ff4f">${esc(t.industries.praxis)}</a>` : ''} &middot; <a href="/imprint" style="color:#d4ff4f">${esc(t.footer.imprint)}</a> &middot; <a href="/privacy" style="color:#d4ff4f">${esc(t.footer.privacy)}</a></p>
+        <p><a href="${paths.home[lang === 'de' ? 'en' : 'de']}" style="color:#d4ff4f">${lang === 'de' ? 'English version' : 'Deutsche Version'}</a>${lang === 'de' ? ' &middot; <a href="/blog" style="color:#d4ff4f">Blog</a>' : ''}${t.industries ? ` &middot; <a href="${handwerkPath}" style="color:#d4ff4f">${esc(t.industries.handwerk)}</a> &middot; <a href="${praxisPath}" style="color:#d4ff4f">${esc(t.industries.praxis)}</a>` : ''} &middot; <a href="/imprint" style="color:#d4ff4f">${esc(t.footer.imprint)}</a> &middot; <a href="/privacy" style="color:#d4ff4f">${esc(t.footer.privacy)}</a> &middot; <a href="/agb" style="color:#d4ff4f">${esc(t.footer.terms)}</a></p>
       </main>
     </div>`;
 
@@ -371,7 +374,7 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
         ${h.faq.items.map(fq => `<h3 style="color:${c.text}">${esc(fq.q)}</h3><p>${esc(fq.a)}</p>`).join('')}
         ${hMain(h.cta.title.join(' '))}<p>${esc(h.cta.text)}</p>
         <p>${esc(copy.de.footer.company)} &middot; info@workwithjpr.com</p>
-        <p><a href="/imprint" style="color:${c.accent}">Impressum</a> &middot; <a href="/privacy" style="color:${c.accent}">Datenschutz</a></p>
+        <p><a href="/imprint" style="color:${c.accent}">Impressum</a> &middot; <a href="/privacy" style="color:${c.accent}">Datenschutz</a> &middot; <a href="/agb" style="color:${c.accent}">AGB</a></p>
       </main>
     </div>`;
   mkdirSync(`${DIST}${landingPath}`, { recursive: true });
@@ -431,7 +434,7 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
         ${h2(d.cta.title.join(' '))}<p>${esc(d.cta.text)}</p><p>${esc(d.cta.mail)}</p>
         <p>${esc(copy.de.footer.company)} &middot; info@workwithjpr.com</p>
         <p>${esc(d.footer.tomLine)} &middot; <a href="mailto:${d.tom.email}" style="color:${c.accent}">${esc(d.tom.email)}</a></p>
-        <p><a href="/" style="color:${c.accent}">JPR Studio</a> &middot; <a href="/imprint" style="color:${c.accent}">Impressum</a> &middot; <a href="/privacy" style="color:${c.accent}">Datenschutz</a></p>
+        <p><a href="/" style="color:${c.accent}">JPR Studio</a> &middot; <a href="/imprint" style="color:${c.accent}">Impressum</a> &middot; <a href="/privacy" style="color:${c.accent}">Datenschutz</a> &middot; <a href="/agb" style="color:${c.accent}">AGB</a></p>
       </main>
     </div>`;
   const jsonLd = [
@@ -480,4 +483,4 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
   console.log(`✓ ${dresdenPath}`);
 }
 
-console.log(`Prerender fertig: ${blogPosts.length} Artikel + Blog-Index + 2 Rechtsseiten + Start/Preise in DE und EN + Landingpages Handwerk, Praxis und Dresden.`);
+console.log(`Prerender fertig: ${blogPosts.length} Artikel + Blog-Index + 4 Rechtsseiten + Start/Preise in DE und EN + Landingpages Handwerk, Praxis und Dresden.`);

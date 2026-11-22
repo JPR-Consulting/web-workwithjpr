@@ -800,3 +800,20 @@ html.theme-dresden .fixed.bottom-0.z-50 .font-mono button:hover { border-color: 
   .dd-pan .dd-shot, .dd-pan-host:hover .dd-pan .dd-shot { transform: none !important; transition: none !important; }
   [data-cursor-light] > .dd-cursor-light { display: none; }
 }
+
+/* AGB / AVV: Druck und PDF-Export (Browser-Dialog "Als PDF speichern") */
+@media print {
+  html, body { background: #fff !important; }
+  .legal-page { background: #fff !important; color: #000 !important; padding: 0 !important; min-height: 0 !important; }
+  .legal-page *, .legal-page h1 { color: #000 !important; background: transparent !important; border-color: #999 !important; }
+  .legal-noprint, .legal-anchor, .fixed { display: none !important; }
+  .legal-page .container { max-width: none !important; }
+  .legal-page h1 { font-size: 20pt !important; }
+  .legal-body { font-size: 10.5pt; line-height: 1.45; }
+  .legal-body h2 { font-size: 13pt !important; margin-top: 1.4em !important; break-after: avoid; }
+  .legal-body li, .legal-body p { orphans: 3; widows: 3; }
+  .legal-table { overflow: visible !important; }
+  .legal-table table { min-width: 0 !important; width: 100%; font-size: 9pt; }
+  .legal-table tr { break-inside: avoid; }
+  .legal-body a { text-decoration: none; }
+}

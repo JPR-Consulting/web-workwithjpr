@@ -147,6 +147,7 @@ const PreisePage: React.FC<Props> = ({ onNavigate, onRequestDraft, onLangChange 
           )}
           <a {...spaLink('/imprint', () => onNavigate('IMPRINT'))} className="text-muted hover:text-accent transition-colors">{t.footer.imprint}</a>
           <a {...spaLink('/privacy', () => onNavigate('PRIVACY'))} className="text-muted hover:text-accent transition-colors">{t.footer.privacy}</a>
+          <a {...spaLink('/agb', () => onNavigate('AGB'))} className="text-muted hover:text-accent transition-colors">{t.footer.terms}</a>
         </div>
       </footer>
     </div>

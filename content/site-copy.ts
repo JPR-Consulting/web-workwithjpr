@@ -194,6 +194,7 @@ const de = {
     blog: 'Blog' as string | null,
     imprint: 'Impressum',
     privacy: 'Datenschutz',
+    terms: 'AGB',
     review: 'Bewertung auf Google',
   },
   cookie: {
@@ -448,6 +449,7 @@ const en: SiteCopy = {
     blog: null,
     imprint: 'Imprint',
     privacy: 'Privacy',
+    terms: 'Terms (German)',
     review: 'Review us on Google',
   },
   cookie: {
