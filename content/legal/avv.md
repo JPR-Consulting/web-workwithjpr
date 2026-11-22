@@ -1,23 +1,19 @@
 # Vertrag über die Verarbeitung personenbezogener Daten im Auftrag (Art. 28 DSGVO)
 
-Nr. laut Angebot · Datum: 22. November 2026 · zu: Angebot, Betreuungsvertrag und Zusatzvereinbarungen
+**Stand: 22.11.2026 · Version 1.0**
 
-zwischen
+**Verantwortlicher („Sie"):** der Kunde, der den Hauptvertrag (§ 1 Abs. 1) angenommen hat; Firma, Anschrift, Ansprechpartner und Datenschutz-Kontakt stehen im Hauptvertrag und in unserer Bestätigung des Vertragsschlusses.
 
-**der Auftraggeber (Kunde gemäß Angebot)**, Anschrift laut Angebot, vertreten durch die im Angebot genannte Person
-– „Verantwortlicher" oder „Sie" –
-
-und
-
-**JPR Consulting GmbH** (Marke: JPR Studio), Letteallee 91, 13409 Berlin, Amtsgericht Charlottenburg HRB 207244 B, vertreten durch Jan Rojek
-– „Auftragsverarbeiter" oder „wir" –
+**Auftragsverarbeiter („wir"):** JPR Consulting GmbH (Marke: JPR Studio) · Letteallee 91 · 13409 Berlin · Amtsgericht Charlottenburg, HRB 207244 B · vertreten durch den Geschäftsführer Jan Rojek · E-Mail: info@workwithjpr.com
 
 ---
 
-## § 1 Gegenstand und Dauer
+## § 1 Abschluss, Gegenstand und Dauer
 
-1. Wir verarbeiten personenbezogene Daten in Ihrem Auftrag, soweit das für die Leistungen aus dem Hauptvertrag (Angebot, Betreuungsvertrag und Zusatzvereinbarungen) nötig ist. Welche Leistungen betroffen sind, steht in **Anlage 1**.
-2. Dieser Vertrag gilt, solange wir für Sie personenbezogene Daten verarbeiten, und endet mit dem letzten Hauptvertrag. Die Pflichten zur Löschung, Rückgabe und Verschwiegenheit gelten darüber hinaus.
+1. **Abschluss.** Dieser Vertrag wird geschlossen, wenn Sie ein Angebot, einen Betreuungsvertrag oder eine Zusatzvereinbarung von JPR Studio annehmen, die auf ihn verweist („Hauptvertrag"). Die Annahme kann elektronisch erfolgen, z. B. per Klick oder E-Mail (Art. 28 Abs. 9 DSGVO). Wir bestätigen den Abschluss per E-Mail und schicken Ihnen diesen Vertrag in der geltenden Fassung als PDF, zusammen mit den Angaben zu beiden Vertragsparteien und dem Zeitpunkt des Abschlusses.
+2. **Fassung.** Es gilt die Fassung, die der Hauptvertrag mit ihrem Datum nennt. Sie bleibt unter https://workwithjpr.com/avv abrufbar. Eine spätere Fassung gilt für Sie nur, wenn wir das mit Ihnen in Textform vereinbaren; für neue Unterauftragsverarbeiter gilt § 6 Abs. 2.
+3. **Gegenstand.** Wir verarbeiten personenbezogene Daten in Ihrem Auftrag, soweit das für die Leistungen aus dem Hauptvertrag nötig ist. Welche Verarbeitungen das sind, ergibt sich aus den gebuchten Leistungen und **Anlage 1**.
+4. **Dauer.** Dieser Vertrag gilt, solange wir für Sie personenbezogene Daten verarbeiten, und endet mit dem letzten Hauptvertrag. Die Pflichten zur Löschung, Rückgabe und Verschwiegenheit gelten darüber hinaus.
 
 ## § 2 Art und Zweck, Daten, Betroffene
 
@@ -43,7 +39,7 @@ Alle Personen, die bei uns Zugang zu Ihren Daten haben, sind zur Vertraulichkeit
 
 ## § 6 Unterauftragsverarbeiter
 
-1. Sie genehmigen den Einsatz der Unterauftragsverarbeiter in **Anlage 3** (allgemeine schriftliche Genehmigung nach Art. 28 Abs. 2 DSGVO).
+1. Sie genehmigen den Einsatz der Unterauftragsverarbeiter in **Anlage 3** für die Leistungen, die Sie gebucht haben (allgemeine schriftliche Genehmigung nach Art. 28 Abs. 2 DSGVO).
 2. Wollen wir einen Unterauftragsverarbeiter hinzufügen oder ersetzen, informieren wir Sie mindestens 4 Wochen vorher in Textform, mit Name, Sitz, Leistung, Ort der Verarbeitung und Grundlage bei Drittländern. Sie können innerhalb dieser Frist widersprechen; bitte nennen Sie uns den Grund. Bis zur Klärung setzen wir den neuen Unterauftragsverarbeiter für Ihre Daten nicht ein. Finden wir keine Lösung, können beide Seiten die betroffene Leistung zum Wechseltermin kündigen.
 3. Wir verpflichten jeden Unterauftragsverarbeiter vertraglich auf ein Schutzniveau, das diesem Vertrag entspricht (Art. 28 Abs. 4 DSGVO). Wir haften Ihnen gegenüber für ihn wie für uns selbst.
 4. Keine Unterauftragsverarbeitung sind Nebenleistungen wie Telekommunikation, Post oder die Wartung von Hardware, solange dabei kein planmäßiger Zugriff auf Ihre Daten besteht.
@@ -58,20 +54,20 @@ Alle Personen, die bei uns Zugang zu Ihren Daten haben, sind zur Vertraulichkeit
 
 1. Wir unterstützen Sie mit geeigneten Maßnahmen dabei, Anfragen betroffener Personen zu beantworten (Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit, Widerspruch). Wenden sich Betroffene direkt an uns, leiten wir die Anfrage unverzüglich an Sie weiter und antworten nicht selbst, außer Sie weisen uns an.
 2. Wir unterstützen Sie bei den Pflichten aus Art. 32 bis 36 DSGVO (Sicherheit, Meldung von Datenpannen, Datenschutz-Folgenabschätzung, vorherige Konsultation), soweit es unsere Verarbeitung betrifft.
-3. Unterstützung, die über das Übliche hinausgeht und nicht auf einen Fehler von uns zurückgeht, können wir nach vorheriger Ansage zum Stundensatz von [ZU BESTÄTIGEN: z. B. 95 €] netto berechnen.
+3. Unterstützung, die über das Übliche hinausgeht und nicht auf einen Fehler von uns zurückgeht, können wir nach vorheriger Ansage zu dem Stundensatz berechnen, den der Hauptvertrag nennt.
 4. Wendet sich eine Aufsichtsbehörde wegen Ihrer Daten an uns oder kontrolliert sie uns, informieren wir Sie unverzüglich, soweit das erlaubt ist.
 
 ## § 9 Datenpannen
 
-1. Bemerken wir eine Verletzung des Schutzes Ihrer Daten, informieren wir Sie unverzüglich, möglichst innerhalb von 24 Stunden, an  (ist dort nichts eingetragen, an Ihre E-Mail-Adresse aus dem Hauptvertrag), damit Sie die 72-Stunden-Frist aus Art. 33 DSGVO einhalten können.
+1. Bemerken wir eine Verletzung des Schutzes Ihrer Daten, informieren wir Sie unverzüglich, möglichst innerhalb von 24 Stunden, an den Datenschutz-Kontakt aus dem Hauptvertrag (ist dort keiner genannt, an Ihre E-Mail-Adresse aus dem Hauptvertrag), damit Sie die 72-Stunden-Frist aus Art. 33 DSGVO einhalten können.
 2. Die Meldung enthält, soweit bekannt: was passiert ist, welche Daten und wie viele Personen betroffen sind, die wahrscheinlichen Folgen und was wir dagegen tun. Fehlende Angaben reichen wir nach.
 3. Die Meldung an die Aufsichtsbehörde und an Betroffene ist Ihre Aufgabe (Art. 33, 34 DSGVO); wir liefern Ihnen alle nötigen Angaben.
 
 ## § 10 Löschung und Rückgabe
 
 1. Nach dem Ende der jeweiligen Leistung geben wir Ihnen auf Wunsch alle Daten in einem gängigen Format zurück und löschen sie anschließend, spätestens nach 30 Tagen, außer eine gesetzliche Pflicht verlangt die Aufbewahrung.
-2. Datensicherungen werden im regulären Rhythmus überschrieben, spätestens nach [ZU BESTÄTIGEN: z. B. 30] Tagen.
-3. Für den KI-Assistenten gilt unabhängig davon: Gesprächstexte und Auftragskarten werden nach 7 Tagen automatisch gelöscht; Audio wird nicht gespeichert.
+2. Datensicherungen werden im regulären Rhythmus überschrieben, spätestens nach der im Betreuungsvertrag genannten Aufbewahrungsdauer, sonst nach höchstens [ZU BESTÄTIGEN: Höchstdauer Backups. Vorschlag: 30] Tagen.
+3. Für den KI-Assistenten gilt unabhängig davon: Gesprächstexte und Auftragskarten werden nach der in der Zusatzvereinbarung genannten Frist, höchstens nach 7 Tagen, automatisch gelöscht; Audio wird nicht gespeichert.
 4. Die Löschung bestätigen wir Ihnen auf Anfrage in Textform.
 
 ## § 11 Nachweise und Kontrollen
@@ -82,91 +78,86 @@ Alle Personen, die bei uns Zugang zu Ihren Daten haben, sind zur Vertraulichkeit
 
 ## § 12 Berufsgeheimnisse (§ 203 StGB)
 
-Dieser Abschnitt gilt nur, wenn der Kunde Berufsgeheimnisträger ist; für diesen Vertrag gilt er nicht.
+Dieser Abschnitt gilt, wenn Sie Berufsgeheimnisträger sind (z. B. Arzt-, Zahnarzt-, Physiotherapie- oder Psychotherapiepraxis), auch wenn das Angebot es nicht ausdrücklich ausweist. Weist das Angebot Sie als Praxis oder Gesundheitsberuf aus, ohne dass § 203 StGB gilt (z. B. Heilpraktiker), gilt er als vertragliche Verschwiegenheitspflicht genauso.
 
 1. Wir wirken an Ihrer beruflichen Tätigkeit mit (§ 203 Abs. 3 Satz 2 StGB). Mit diesem Vertrag verpflichten Sie uns zur Geheimhaltung (§ 203 Abs. 4 Satz 2 Nr. 1 StGB). Wir verpflichten uns zur Verschwiegenheit über alle fremden Geheimnisse, die uns bei der Arbeit für Sie bekannt werden, auch nach Vertragsende. Wir wissen, dass ein Verstoß nach § 203 Abs. 4 Satz 1 StGB strafbar ist.
 2. Wir verpflichten alle Mitarbeiter und freien Mitarbeiter, die an Ihren Daten mitwirken, vor Beginn in Textform zur Verschwiegenheit und belehren sie über die Strafbarkeit (§ 203 Abs. 4 Satz 2 Nr. 2 StGB).
 3. Wir verschaffen uns nur Kenntnis von Geheimnissen, soweit das für unsere Aufgabe erforderlich ist.
-4. Unterauftragsverarbeiter setzen wir für diese Daten nur ein, wenn sie vertraglich zur Verschwiegenheit verpflichtet sind, und zwar so, dass die Pflicht auch ihr Personal bindet. Bei Anbietern im Ausland achten wir zusätzlich darauf, dass der Schutz der Geheimnisse dort vergleichbar gewährleistet ist. Können wir das für einen Anbieter nicht sicherstellen, nutzen wir ihn für Ihre Daten nicht. [ZU BESTÄTIGEN: Vorschlag – je Anbieter aus Anlage 3 die Vertraulichkeitsklausel im DPA prüfen und ablegen; das gilt für Hetzner, Vercel, Mail-Dienst, ElevenLabs und LLM-Anbieter gleichermaßen; ohne Nachweis Modul KI-Assistent für Praxen nicht ankreuzen]
+4. Unterauftragsverarbeiter setzen wir für diese Daten nur ein, wenn sie vertraglich zur Verschwiegenheit verpflichtet sind, und zwar so, dass die Pflicht auch ihr Personal bindet. Bei Anbietern im Ausland achten wir zusätzlich darauf, dass der Schutz der Geheimnisse dort vergleichbar gewährleistet ist. Können wir das für einen Anbieter nicht sicherstellen, nutzen wir ihn für Ihre Daten nicht.
 5. Verlangen Behörden oder Gerichte Daten heraus, die einem Berufsgeheimnis unterliegen, informieren wir Sie sofort, soweit das erlaubt ist, und berufen uns auf unsere Rechte als mitwirkende Person (§ 53a StPO).
 
 ## § 13 Haftung
 
-Für die Haftung gegenüber betroffenen Personen gilt Art. 82 DSGVO. Im Verhältnis zwischen Ihnen und uns gelten die Haftungsregeln des Hauptvertrags, soweit Art. 82 DSGVO nicht entgegensteht.
+Für die Haftung gegenüber betroffenen Personen gilt Art. 82 DSGVO. Im Verhältnis zwischen Ihnen und uns gelten die Haftungsregeln des Hauptvertrags und unserer AGB (§ 13), soweit Art. 82 DSGVO nicht entgegensteht.
 
 ## § 14 Schlussbestimmungen
 
 1. Bei Widersprüchen geht dieser Vertrag in Fragen des Datenschutzes dem Hauptvertrag und den AGB vor.
-2. Dieser Vertrag kann elektronisch geschlossen werden (Art. 28 Abs. 9 DSGVO). Änderungen bedürfen der Textform.
-3. Datenschutz-Kontakt bei uns: info@workwithjpr.com. Datenschutzbeauftragter: [ZU BESTÄTIGEN: bestellt ja/nein, Name/Kontakt].
+2. Dieser Vertrag wird elektronisch geschlossen (Art. 28 Abs. 9 DSGVO). Änderungen bedürfen der Textform.
+3. Datenschutz-Kontakt bei uns: Jan Rojek, info@workwithjpr.com. Ein Datenschutzbeauftragter ist derzeit nicht bestellt, da keine Pflicht nach Art. 37 DSGVO und § 38 BDSG besteht. Entsteht eine Pflicht, bestellen wir einen und nennen ihn Ihnen.
 4. Es gilt deutsches Recht. Ist eine Bestimmung unwirksam, bleibt der Rest wirksam; an ihre Stelle tritt die Regel, die Art. 28 DSGVO verlangt.
-
-| Für der Auftraggeber (Kunde gemäß Angebot) (Verantwortlicher) | Für JPR Consulting GmbH (Auftragsverarbeiter) |
-|---|---|
-| Ort, Datum: ____________________ | Ort, Datum: ____________________ |
-| Unterschrift: ____________________ | Unterschrift: ____________________ |
-| Name: die im Angebot genannte Person | Name: Jan Rojek (Geschäftsführer) |
 
 ---
 
 ## Anlage 1: Verarbeitungen im Einzelnen
 
-Es gelten nur die angekreuzten Leistungen.
+Es gelten die Zeilen für die Leistungen, die Sie laut Hauptvertrag gebucht haben.
 
 | Leistung | Zweck und Art der Verarbeitung | Arten der Daten | Betroffene |
 |---|---|---|---|
-| ☒ Hosting und Betreuung | Betrieb der Website, Speicherung, Datensicherung, Updates, Fehlersuche, Support | Server-Protokolle (IP-Adresse, Zeitpunkt, aufgerufene Seite, Browser), alle auf der Website gespeicherten Daten | Besucher der Website, Kunden und Mitarbeiter des Verantwortlichen |
-| ☒ Kontaktformular | Entgegennahme und Weiterleitung von Anfragen per E-Mail | Name, Kontaktdaten, Inhalt der Nachricht, ggf. Anhänge | Interessenten, Kunden |
-| ☐ Terminbuchung | Buchung, Bestätigung, Erinnerung und Verwaltung von Terminen | Name, Kontaktdaten, Termin, Art der Leistung, ggf. Anmerkungen | Kunden, Patienten |
-| ☐ Shop / Kundenverwaltung / Web-App | Bestellungen, Kundenkonten, Verwaltung im Backend | Stammdaten, Kontaktdaten, Bestell- und Vertragsdaten, Zahlungsstatus (keine vollständigen Kartendaten), Zugangsdaten (verschlüsselt) | Kunden, Mitarbeiter des Verantwortlichen |
-| ☐ Automatisierungen | Automatische E-Mails, Weiterleitungen, Erinnerungen, Übertragung an angebundene Systeme | Daten aus Formularen, Buchungen und Bestellungen | wie oben |
-| ☐ KI-Assistent | Annahme von Anfragen per Sprache: Umwandlung von Sprache in Text in Echtzeit (ohne Speicherung von Audio), Antwort durch ein Sprachmodell, Erstellung und Versand der Auftragskarte, Speicherung von Gesprächstext und Auftragskarte für 7 Tage | Gesprochene Angaben während des Gesprächs (nicht gespeichert), Gesprächstext, Name, Kontaktdaten, Anliegen, Ort, ggf. Fotos; bei Praxen ggf. Gesundheitsdaten nach Art. 9 DSGVO sowie Zeitpunkt und Textversion der Einwilligung | Besucher der Website, Interessenten, Patienten |
-| ☐ Monatsbericht | Zählen von Anfragen, Buchungen und Besuchen für den Bericht | Zusammengefasste Zahlen; zur Zählung kurzzeitig Daten aus Formularen und Buchungen | wie oben |
+| Hosting und Betreuung | Betrieb der Website, Speicherung, Datensicherung, Updates, Fehlersuche, Support | Server-Protokolle (IP-Adresse, Zeitpunkt, aufgerufene Seite, Browser), alle auf der Website gespeicherten Daten | Besucher der Website, Kunden und Mitarbeiter des Verantwortlichen |
+| Kontaktformular | Entgegennahme und Weiterleitung von Anfragen per E-Mail | Name, Kontaktdaten, Inhalt der Nachricht, ggf. Anhänge | Interessenten, Kunden |
+| Terminbuchung | Buchung, Bestätigung, Erinnerung und Verwaltung von Terminen | Name, Kontaktdaten, Termin, Art der Leistung, ggf. Anmerkungen; bei Praxen Gesundheitsdaten nach Art. 9 DSGVO | Kunden, Patienten |
+| Shop, Kundenverwaltung, Web-App | Bestellungen, Kundenkonten, Verwaltung im Backend | Stammdaten, Kontaktdaten, Bestell- und Vertragsdaten, Zahlungsstatus (keine vollständigen Kartendaten), Zugangsdaten (verschlüsselt) | Kunden, Mitarbeiter des Verantwortlichen |
+| Automatisierungen | Automatische E-Mails, Weiterleitungen, Erinnerungen, Übertragung an angebundene Systeme | Daten aus Formularen, Buchungen und Bestellungen | wie oben |
+| KI-Assistent | Annahme von Anfragen per Sprache: Umwandlung von Sprache in Text in Echtzeit (ohne Speicherung von Audio), Antwort durch ein Sprachmodell, Erstellung und Versand der Auftragskarte, Speicherung von Gesprächstext und Auftragskarte für höchstens 7 Tage | Gesprochene Angaben während des Gesprächs (nicht gespeichert), Gesprächstext, Name, Kontaktdaten, Anliegen, Ort, ggf. Fotos; bei Praxen ggf. Gesundheitsdaten nach Art. 9 DSGVO sowie Zeitpunkt und Textversion der Einwilligung | Besucher der Website, Interessenten, Patienten |
+| Monatsbericht | Zählen von Anfragen, Buchungen und Besuchen für den Bericht | Zusammengefasste Zahlen; zur Zählung kurzzeitig Daten aus Formularen und Buchungen | wie oben |
 
 Ort der Verarbeitung: grundsätzlich EU/EWR; Ausnahmen nur nach § 7 und Anlage 3.
 
 ## Anlage 2: Technische und organisatorische Maßnahmen (Art. 32 DSGVO)
 
-Stand 22. November 2026. Gliederung nach Art. 32 Abs. 1 DSGVO. [ZU BESTÄTIGEN: jeden Punkt gegen die tatsächliche Einrichtung prüfen, bevor die Anlage verschickt wird]
+Gliederung nach Art. 32 Abs. 1 DSGVO.
 
 **1. Vertraulichkeit**
-- *Zutritt:* Keine eigenen Server-Räume. Server und Daten liegen in Rechenzentren der Anbieter aus Anlage 3 mit Zutrittskontrolle und Zertifizierung (z. B. ISO/IEC 27001) [ZU BESTÄTIGEN: Zertifikate je Anbieter]. Büro- und Heimarbeitsplätze sind abgeschlossen.
-- *Zugang:* Anmeldung an Servern nur mit SSH-Schlüssel, Passwort-Anmeldung abgeschaltet. Zwei-Faktor-Anmeldung für Hosting-, Code- und Verwaltungskonten [ZU BESTÄTIGEN: überall aktiv]. Passwort-Manager, keine geteilten Passwörter. Bildschirmsperre und verschlüsselte Festplatten auf allen Arbeitsgeräten.
-- *Zugriff:* Rollen und Rechte nach dem Prinzip „so viel wie nötig"; Zugänge werden beim Ausscheiden von Mitarbeitern oder Subunternehmern sofort entzogen.
-- *Trennung:* Getrennte Projekte, Datenbanken und Zugangsschlüssel je Kunde; Test- und Echtbetrieb getrennt; Entwicklung mit Testdaten statt echter Kundendaten, wo möglich.
-- *Pseudonymisierung und Verschlüsselung:* Passwörter werden nur als Hash gespeichert; Datenübertragung ausschließlich verschlüsselt (TLS/https); Verschlüsselung gespeicherter Daten beim Anbieter, wo verfügbar.
+- *Zutritt:* Keine eigenen Server-Räume. Server und Daten liegen in Rechenzentren der Anbieter aus Anlage 3, eigene Server bei Hetzner in Deutschland, jeweils mit Zutrittskontrolle [ZU BESTÄTIGEN: Zertifikate je Anbieter. Vorschlag: ISO/IEC-27001-Nachweise von Hetzner und Vercel ablegen].
+- *Zugang:* Anmeldung an Servern nur mit SSH-Schlüssel, Passwort-Anmeldung abgeschaltet. Administrative Zugänge mit Passwort und Zwei-Faktor-Anmeldung, wo der Anbieter sie anbietet. [ZU BESTÄTIGEN: Arbeitsgeräte. Vorschlag: Festplattenverschlüsselung, Bildschirmsperre und Passwort-Manager auf allen Geräten aktiv]
+- *Zugriff:* Rollen und Rechte nach dem Prinzip „so viel wie nötig"; im CRM sehen Vertriebsmitarbeiter nur die Daten ihrer eigenen Produkte. Zugänge werden beim Ausscheiden von Mitarbeitern oder Subunternehmern sofort entzogen.
+- *Trennung:* [ZU BESTÄTIGEN: Trennung je Kunde. Vorschlag: getrennte Projekte, Datenbanken und Zugangsschlüssel je Kunde; Test- und Echtbetrieb getrennt; Entwicklung mit Testdaten statt echter Kundendaten]
+- *Verschlüsselung und Datensparsamkeit:* Datenübertragung ausschließlich verschlüsselt (HTTPS/TLS). Passwörter werden nur als Hash gespeichert. Formulare und unsere Annahmeseite speichern keine IP-Adressen.
 
 **2. Integrität**
 - *Weitergabe:* Übertragung nur verschlüsselt; keine Daten auf USB-Sticks oder in privaten Postfächern.
-- *Eingabe:* Änderungen am Code werden versioniert (Git); Anmeldungen und Änderungen an Servern werden protokolliert.
+- *Eingabe:* Code wird in privaten GitHub-Repositorys versioniert; dort liegen planmäßig keine Daten Ihrer Kunden. [ZU BESTÄTIGEN: Protokollierung. Vorschlag: Anmeldungen und Änderungen an Servern werden protokolliert]
 
 **3. Verfügbarkeit und Belastbarkeit**
-- Datensicherungen nach Betreuungsvertrag, verschlüsselt und getrennt vom Echtbetrieb gespeichert; regelmäßige Testwiederherstellung [ZU BESTÄTIGEN: Vorschlag vierteljährlich].
+- Tägliche Sicherung der Datenbanken (CRM: 7 Tage Aufbewahrung), nächtliche verschlüsselte Sicherungen der übrigen Dienste, getrennt vom Echtbetrieb. [ZU BESTÄTIGEN: Testwiederherstellung. Vorschlag: vierteljährlich]
 - Automatische Überwachung der Erreichbarkeit; Sicherheitsupdates zeitnah.
 - Schutz gegen Spam und automatisierte Angriffe auf Formularen; Begrenzung von Anfragen beim KI-Assistenten.
 
 **4. Wiederherstellung**
-- Dokumentierter Ablauf zur Wiederherstellung aus Backups; Ziel: Wiederherstellung innerhalb eines Arbeitstags [ZU BESTÄTIGEN].
+- Dokumentierter Ablauf zur Wiederherstellung aus Sicherungen. [ZU BESTÄTIGEN: Wiederherstellungsziel. Vorschlag: innerhalb eines Arbeitstags]
 
 **5. Regelmäßige Überprüfung**
-- Überprüfung dieser Maßnahmen mindestens einmal im Jahr und nach jedem Sicherheitsvorfall.
-- Ablauf für Datenpannen nach § 9.
+- Überprüfung dieser Maßnahmen mindestens einmal im Jahr und nach jedem Sicherheitsvorfall; Ablauf für Datenpannen nach § 9.
 - Mitarbeiter und Subunternehmer sind auf Vertraulichkeit verpflichtet und werden zu Datenschutz und Sicherheit unterwiesen.
-- *Auftragskontrolle:* Unterauftragsverarbeiter nur mit schriftlichem Vertrag nach Art. 28 Abs. 4 DSGVO; deren Nachweise (Zertifikate, TOMs) werden vor Beginn und danach jährlich geprüft.
-- Löschfristen sind technisch hinterlegt (z. B. 7 Tage beim KI-Assistenten).
+- *Auftragskontrolle:* Unterauftragsverarbeiter nur mit Vertrag nach Art. 28 Abs. 4 DSGVO; ihre Nachweise werden vor Beginn und danach jährlich geprüft.
+- Löschfristen sind technisch hinterlegt: Uploads (z. B. Fotos) nach 7 Tagen, Gesprächstexte des KI-Assistenten nach höchstens 7 Tagen. [ZU BESTÄTIGEN: Uploads. Vorschlag: die 7-Tage-Löschung der Demo-Formulare auch für Kundenformulare und KI-Fotos einrichten]
 
 ## Anlage 3: Unterauftragsverarbeiter
 
-[ZU BESTÄTIGEN: gesamte Liste gegen die tatsächlich genutzten Dienste und Verträge prüfen; nur Zeilen für gebuchte Leistungen stehen lassen]
+Es gelten die Anbieter für die Leistungen, die Sie gebucht haben.
 
 | Anbieter | Sitz | Leistung | Ort der Verarbeitung | Grundlage bei Drittland |
 |---|---|---|---|---|
-| Hetzner Online GmbH | Industriestr. 25, 91710 Gunzenhausen, Deutschland | Server, Datenbanken, Automatisierungen, Backups | Deutschland/Finnland [ZU BESTÄTIGEN: Standort] | nicht nötig (EU) |
-| Vercel Inc. | USA [ZU BESTÄTIGEN: Anschrift laut aktuellem Vercel-DPA, zuletzt 440 N Barranca Ave #4133, Covina, CA 91723] | Hosting und Auslieferung der Website (CDN) | EU-Region und weltweites Netz [ZU BESTÄTIGEN: Region] | EU-US Data Privacy Framework / Standardvertragsklauseln [ZU BESTÄTIGEN] |
-| [ZU BESTÄTIGEN: Mail-Dienst, z. B. für Formular- und Buchungs-E-Mails] | [ZU BESTÄTIGEN] | Versand von E-Mails aus Formularen, Buchungen und Auftragskarten | [ZU BESTÄTIGEN] | [ZU BESTÄTIGEN] |
-| [ZU BESTÄTIGEN: Datenbank-/Backend-Dienst, falls nicht Hetzner] | [ZU BESTÄTIGEN] | Datenbank für Buchungen, Shop, Kundenverwaltung | [ZU BESTÄTIGEN] | [ZU BESTÄTIGEN] |
-| ElevenLabs [ZU BESTÄTIGEN: Vertragsgesellschaft, z. B. ElevenLabs Inc.] | [ZU BESTÄTIGEN] | KI-Assistent: Spracherkennung, Stimme, Gesprächssteuerung | [ZU BESTÄTIGEN: EU-Datenresidenz möglich?] | [ZU BESTÄTIGEN: DPF-Zertifizierung oder Standardvertragsklauseln] |
-| [ZU BESTÄTIGEN: LLM-Anbieter, direkt oder über ElevenLabs] | [ZU BESTÄTIGEN] | KI-Assistent: Erzeugen der Antworten und der Auftragskarte | [ZU BESTÄTIGEN] | [ZU BESTÄTIGEN] |
-| [ZU BESTÄTIGEN: Speicher für Foto-Uploads, falls angeboten] | [ZU BESTÄTIGEN] | KI-Assistent: Fotos von Kunden | [ZU BESTÄTIGEN] | [ZU BESTÄTIGEN] |
+| Hetzner Online GmbH | Industriestr. 25, 91710 Gunzenhausen, Deutschland | Server für Formular-Verarbeitung und Automatisierungen (selbst betrieben), Backend, Datenbanken, CRM, Sicherungen [ZU BESTÄTIGEN: Foto-Uploads ebenfalls hier?] | Deutschland | nicht nötig (EU) |
+| Vercel Inc. | San Francisco, USA [ZU BESTÄTIGEN: Anschrift laut aktuellem Vercel-DPA] | Hosting und Auslieferung der Kunden-Websites | [ZU BESTÄTIGEN: Region. Vorschlag: EU-Region als Standard, dazu weltweites Auslieferungsnetz] | EU-US Data Privacy Framework [ZU BESTÄTIGEN: Zertifizierung auf der DPF-Liste prüfen] und Standardvertragsklauseln im Vercel-DPA |
+| Namecheap, Inc. (Private Email) | USA [ZU BESTÄTIGEN: Anschrift laut DPA] | E-Mail-Postfächer @workwithjpr.com, Versand von Anfrage-Benachrichtigungen | [ZU BESTÄTIGEN: Standort der Mailserver] | [ZU BESTÄTIGEN: DPF oder Standardvertragsklauseln] |
+| Google Ireland Limited (Google Workspace/Gmail) | Gordon House, Barrow Street, Dublin 4, Irland | Empfang von Anfrage-Benachrichtigungen [ZU BESTÄTIGEN: weiter genutzt? sonst Zeile streichen] | EU und USA | EU-US Data Privacy Framework bzw. Standardvertragsklauseln im Google-DPA |
+| ElevenLabs Inc. – nur KI-Assistent | USA [ZU BESTÄTIGEN: Vertragsgesellschaft und Anschrift] | Spracherkennung, künstliche Stimme, Gesprächssteuerung; keine Tonaufnahme, Gesprächstexte höchstens 7 Tage, kein Training | USA/EU [ZU BESTÄTIGEN: EU-Datenresidenz aktiv?] | [ZU BESTÄTIGEN: DPF oder Standardvertragsklauseln] |
+| Google (Gemini-Sprachmodell, über ElevenLabs) – nur KI-Assistent | [ZU BESTÄTIGEN: Vertragspartner und Gesellschaft. Vorschlag: klären, ob Gemini über ein eigenes Google-Cloud-Konto von JPR läuft (dann Google als unser Unterauftragsverarbeiter, Gesellschaft laut Google-Cloud-DPA) oder über ElevenLabs (dann Unterauftragsverarbeiter von ElevenLabs); nur bezahlter Zugang ohne Training] | Erzeugen der Antworten und der Auftragskarte; kein Training | [ZU BESTÄTIGEN: Region. Vorschlag: EU-Region] | [ZU BESTÄTIGEN: DPF oder Standardvertragsklauseln] |
+| [ZU BESTÄTIGEN: Speicherort der nächtlichen Sicherungen. Vorschlag: Hetzner Storage Box in Deutschland, dann Zeile streichen; sonst Anbieter eintragen] | | Speicherung der verschlüsselten Sicherungen | | |
 
-Subunternehmer aus dem JPR-Studio-Team, die Zugriff auf Kundendaten haben, werden ebenfalls hier aufgeführt [ZU BESTÄTIGEN: freie Mitarbeiter mit Datenzugriff].
+Die Anbieter setzen für ihre Leistung eigene Unterauftragsverarbeiter ein (z. B. Rechenzentren). Diese stehen in deren veröffentlichten Listen; wir nennen sie Ihnen auf Anfrage.
+
+Freie Mitarbeiter von JPR Studio mit Zugriff auf Kundendaten: [ZU BESTÄTIGEN: Namen und Aufgaben oder „keine"].
