@@ -4,7 +4,7 @@ import { useMagnetic } from '../../hooks/useMagnetic';
 import { prefersReducedMotion, useSeen } from '../../hooks/useSeen';
 import { dresden as t } from '../../content/dresden-copy';
 
-/** Gemeinsame Bausteine der Seite /tom-nowak (v3): Reveal, Überschriften, Hauptknopf, Geräte-Rahmen, Zählwerk. */
+/** Gemeinsame Bausteine der Seite /tom-nowak: Reveal, Überschriften, Hauptknopf, Geräte-Rahmen, Zählwerk. */
 
 export const finePointer = () =>
   typeof window !== 'undefined' &&
@@ -27,16 +27,13 @@ export const Reveal: React.FC<{ className?: string; children: React.ReactNode; a
   );
 };
 
-/** Dot + Versalien nur im Hero und im KI-Abschnitt (`strong`); sonst eine ruhige Zeile (Review P2-6). */
-export const Eyebrow: React.FC<{ children: React.ReactNode; strong?: boolean }> = ({ children, strong }) =>
-  strong ? (
-    <div className="inline-flex items-start gap-2.5 font-manrope text-[13px] font-semibold uppercase tracking-[0.16em] text-accent mb-5">
-      <span className="w-1.5 h-1.5 mt-[6px] shrink-0 rounded-full bg-accent shadow-[0_0_0_4px_rgb(var(--c-accent)/0.16)]" aria-hidden="true" />
-      {children}
-    </div>
-  ) : (
-    <div className="font-manrope text-[14px] font-semibold tracking-[0.04em] text-muted mb-4">{children}</div>
-  );
+/** Eyebrow: nur im Hero (v4). Normale Schreibweise, damit sie am Handy in eine Zeile passt. */
+export const Eyebrow: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div className="inline-flex items-start gap-2.5 font-manrope text-[14px] font-semibold tracking-[0.01em] text-accent mb-4 md:mb-5">
+    <span className="w-1.5 h-1.5 mt-[8px] shrink-0 rounded-full bg-accent" aria-hidden="true" />
+    {children}
+  </div>
+);
 
 /** Überschrift, deren Wörter einzeln aus einer Maske steigen, sobald die umgebende .reveal ins Bild kommt. */
 export const Words: React.FC<{ text: string }> = ({ text }) => (
@@ -53,7 +50,7 @@ export const Words: React.FC<{ text: string }> = ({ text }) => (
 );
 
 export const Title: React.FC<{ children: string; className?: string }> = ({ children, className = '' }) => (
-  <h2 className={`dd-h text-[clamp(32px,4.2vw,56px)] leading-[1.06] text-ftext [text-wrap:balance] ${className}`}>
+  <h2 className={`dd-h text-[clamp(32px,3.4vw,48px)] leading-[1.06] text-ftext [text-wrap:balance] ${className}`}>
     <Words text={children} />
   </h2>
 );

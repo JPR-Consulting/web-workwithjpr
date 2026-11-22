@@ -395,7 +395,7 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
 }
 
 
-// --- Landingpage /tom-nowak, früher /dresden (Toms Seite, Sie-Form, eigenes kühles Thema: Tinte + Kobaltblau) ---
+// --- Landingpage /tom-nowak, früher /dresden (Toms Seite, Du-Form, eigenes kühles Thema: Tinte + Kobaltblau) ---
 {
   const d = dresden;
   const c = { bg: '#070a12', line: '#20283a', text: '#f4f6fb', muted: '#a3adc2', accent: '#8fa8ff', btn: '#3d5afe' };
@@ -415,17 +415,14 @@ for (const [h, landingPath] of [[handwerk, handwerkPath], [praxis, praxisPath]])
         <p style="margin:28px 0 0;color:${c.muted}">${esc(d.tom.name)} · ${esc(d.tom.role)} · <a href="mailto:${d.tom.email}" style="color:${c.accent}">${esc(d.tom.email)}</a></p>
       </header>
       <main style="padding:0 40px 64px;max-width:1280px;box-sizing:border-box;color:${c.muted};line-height:1.7">
-        <p>${d.hero.proofs.map(esc).join(' &middot; ')}. ${esc(d.hero.secondary)}.</p>
-        <ul>${d.strip.items.map(i => `<li><strong style="color:${c.text}">${esc(i.value)}</strong> ${esc(i.label)}</li>`).join('')}</ul><p>${esc(d.strip.footnote)}</p>
         ${h2(d.beforeAfter.title)}<p>${esc(d.beforeAfter.intro)}</p>
         <ul>${d.beforeAfter.pairs.map(p => `<li><strong style="color:${c.text}">${esc(p.label)}</strong> (${esc(p.stat)}): ${esc(d.beforeAfter.colBefore)}: ${esc(p.before)} ${esc(d.beforeAfter.colAfter)}: ${esc(p.after)}</li>`).join('')}</ul><p>${esc(d.beforeAfter.footnote)}</p>
-        ${h2(d.outcomes.title)}${cells(d.outcomes.items)}
-        ${h2(d.voice.title)}<p>${esc(d.voice.intro)}</p>${cells(d.voice.niches.map(n => ({ title: `${n.label}: ${n.title}`, desc: n.desc })))}<p>${d.voice.rules.map(esc).join(' · ')}</p><p>${esc(d.voice.note)}</p>
+        ${h2(d.voice.title)}<p>${esc(d.voice.intro)}</p><p>${d.voice.rules.map(esc).join(' · ')}</p><p>${esc(d.voice.note)}</p>
         ${h2(d.examples.title)}<p>${esc(d.examples.text)}</p><ul>${d.examples.items.map(e => `<li><strong style="color:${c.text}">${esc(e.title)}</strong> — ${esc(e.tag)} (${esc(d.examples.badge)})</li>`).join('')}</ul>
         ${h2(d.caseStudy.title)}<p>${esc(d.caseStudy.kicker)}: <strong style="color:${c.text}">${d.caseStudy.count}</strong> ${esc(d.caseStudy.countLabel)} (${esc(d.caseStudy.countNote)}).</p><p>${esc(d.caseStudy.old)} ${esc(d.caseStudy.now)}</p><p>${esc(d.caseStudy.bridge)}</p>
-        ${h2(d.testimonials.title)}${d.testimonials.quotes.map(q => `<blockquote>„${esc(q.quote)}“ — ${esc(q.who)}</blockquote>`).join('')}
-        ${h2(d.tom.title)}<img src="${d.tom.photo.cutout}-480.webp" alt="${esc(d.tom.photo.alt)}" width="240" height="240" loading="lazy" style="display:block;border-radius:20px;background:#121b38"><p>${esc(d.tom.text)}</p><p>${esc(d.tom.emailLabel)}: <a href="mailto:${d.tom.email}" style="color:${c.accent}">${esc(d.tom.email)}</a></p><p>${esc(d.tom.company)}</p>
+        ${d.caseStudy.quotes.map(q => `<blockquote>„${esc(q.quote)}“ — ${esc(q.who)}</blockquote>`).join('')}
         ${h2(d.process.title)}${cells(d.process.steps)}
+        <img src="${d.tom.photo.cutout}-480.webp" alt="${esc(d.tom.photo.alt)}" width="240" height="240" loading="lazy" style="display:block;border-radius:20px;background:#121b38"><h3 style="color:${c.text}">${esc(d.tom.title)}</h3><p>${esc(d.tom.text)}</p><p>${esc(d.tom.emailLabel)}: <a href="mailto:${d.tom.email}" style="color:${c.accent}">${esc(d.tom.email)}</a></p>
         ${h2(d.pricing.title)}
         <ul>${d.pricing.tiers.map(tier => `<li><strong style="color:${c.text}">${esc(tier.name)} ${esc(tier.price)}</strong> — ${esc(tier.for)} ${tier.features.map(esc).join(', ')}.</li>`).join('')}</ul>
         <p>${esc(d.pricing.care)}. ${esc(d.pricing.voice)}. ${esc(d.pricing.note)}</p>

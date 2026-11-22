@@ -83,28 +83,29 @@ const OldSiteMock: React.FC<{ scale: number; height?: number }> = ({ scale, heig
 };
 
 /**
- * Vorher/Nachher-Regler: links die Attrappe „Ihre Seite heute“, rechts der Beispiel-Entwurf. Ziehen mit Maus/Finger,
+ * Vorher/Nachher-Regler: rechts die Attrappe „Deine Seite heute“, links der Beispiel-Entwurf. Ziehen mit Maus/Finger,
  * Tastatur: Pfeile ±5, Bild auf/ab ±20, Pos1/Ende. Beim Erscheinen schiebt sich der Regler einmal von rechts in die Mitte.
  */
 const CompareSlider: React.FC = () => {
   const wrap = useRef<HTMLDivElement>(null);
   const { seen, instant } = useSeen(wrap, 0.5);
-  // v = Anteil der Attrappe („Ihre Seite heute“) von rechts in %. Ruhelage 35: zwei Drittel des Entwurfs sind sichtbar, mit Überschrift und Knopf.
-  const [v, setV] = useState(35);
+  // v = Anteil der Attrappe („Deine Seite heute“) von rechts in %. Ruhelage 35 (Handy 25): der Entwurf bleibt mit Überschrift und Knopf sichtbar.
+  const rest = typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches ? 25 : 35;
+  const [v, setV] = useState(rest);
   const [drag, setDrag] = useState(false);
   const [box, setBox] = useState({ w: 600, h: 375, narrow: false });
   const touched = useRef(false);
 
   useEffect(() => {
     if (!seen || instant || touched.current) return;
-    // einmaliger Hinweis: Regler gleitet 35 → 60 → 35
+    // einmaliger Hinweis: Regler gleitet Ruhelage → 60 → Ruhelage
     const a = window.setTimeout(() => !touched.current && setV(60), 250);
-    const b = window.setTimeout(() => !touched.current && setV(35), 1750);
+    const b = window.setTimeout(() => !touched.current && setV(rest), 1750);
     return () => {
       window.clearTimeout(a);
       window.clearTimeout(b);
     };
-  }, [seen, instant]);
+  }, [seen, instant, rest]);
 
   useEffect(() => {
     const el = wrap.current;
@@ -145,9 +146,10 @@ const CompareSlider: React.FC = () => {
   const glide = !drag ? 'transition-[clip-path,left] duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)]' : '';
 
   return (
+    <div className="w-full max-w-[calc(70svh*9/16)] mx-auto md:max-w-none">
     <div
       ref={wrap}
-      className="dd-compare relative w-full max-w-[calc(70svh*9/16)] mx-auto md:max-w-none aspect-[9/16] md:aspect-[16/10] rounded-[18px] md:rounded-[22px] overflow-hidden bg-[#0b0f19] select-none touch-pan-y cursor-ew-resize shadow-[0_40px_90px_-40px_rgba(20,40,140,0.55)] ring-1 ring-black/10"
+      className="dd-compare relative w-full aspect-[9/16] md:aspect-[16/10] rounded-[20px] overflow-hidden bg-[#0b0f19] select-none touch-pan-y cursor-ew-resize shadow-[0_40px_90px_-40px_rgba(20,40,140,0.55)] ring-1 ring-black/10"
       onPointerDown={(e) => {
         e.currentTarget.setPointerCapture(e.pointerId);
         setDrag(true);
@@ -171,18 +173,12 @@ const CompareSlider: React.FC = () => {
           className="absolute inset-0 w-full h-full object-cover object-left-top"
         />
       </picture>
-      <span className="absolute left-3 bottom-3 md:left-4 md:bottom-4 z-[1] inline-flex items-center rounded-full bg-[#3d5afe] px-3.5 py-1.5 text-[13px] font-bold text-white shadow-lg whitespace-nowrap">
-        {t.beforeAfter.sliderAfter}
-      </span>
 
       {/* Vorher: Attrappe, nur der rechte Teil (v %) */}
       <div className={`absolute inset-0 bg-[#e4e4e4] ${glide}`} style={{ clipPath: `inset(0 0 0 ${100 - v}%)` }}>
         <div role="img" aria-label={t.ui.mockAlt} className="absolute inset-0 overflow-hidden">
           <OldSiteMock scale={scale} height={mockH} />
         </div>
-        <span className="absolute right-3 bottom-3 md:right-4 md:bottom-4 z-[1] inline-flex items-center rounded-full bg-[#2a2f3a] px-3.5 py-1.5 text-[13px] font-bold text-white shadow-lg whitespace-nowrap">
-          {t.beforeAfter.sliderBefore}
-        </span>
       </div>
 
       {/* Griff */}
@@ -203,6 +199,12 @@ const CompareSlider: React.FC = () => {
           <ChevronsLeftRight className="w-5 h-5" strokeWidth={2.4} aria-hidden="true" />
         </div>
       </div>
+    </div>
+    {/* Beschriftung unter dem Rahmen: nie abgeschnitten, entspricht der Lage der beiden Seiten */}
+    <div className="mt-3 flex items-center justify-between gap-4 text-[14px] font-semibold" aria-hidden="true">
+      <span className="inline-flex items-center gap-2 text-ftext"><span className="w-2.5 h-2.5 rounded-full bg-[#3d5afe]" />{t.beforeAfter.sliderAfter}</span>
+      <span className="inline-flex items-center gap-2 text-muted">{t.beforeAfter.sliderBefore}<span className="w-2.5 h-2.5 rounded-full bg-[#8a8f9b]" /></span>
+    </div>
     </div>
   );
 };

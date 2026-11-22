@@ -21,11 +21,13 @@ interface Props {
   initialWebsite: string;
   onClose: () => void;
   onCall: () => void;
+  /** Wenn gesetzt, ist der Link „Lieber erst sprechen“ ein normaler Link (z. B. mailto:) statt onCall. */
+  callHref?: string;
   /** Index in q2.options, der beim Öffnen vorgewählt wird (z. B. Handwerk = 2). */
   presetIndustry?: number;
   /** Wird an `source` angehängt, z. B. „lp-handwerk“. */
   sourceTag?: string;
-  /** Eigene Dialog-Texte, z. B. Sie-Form auf /dresden; sonst die Texte der aktiven Sprache. */
+  /** Eigene Dialog-Texte, z. B. Dresden-Variante auf /tom-nowak; sonst die Texte der aktiven Sprache. */
   copyOverride?: SiteCopy['draft'];
 }
 
@@ -68,7 +70,7 @@ const Choice: React.FC<{ type: 'radio' | 'checkbox'; name: string; label: string
   </label>
 );
 
-const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall, presetIndustry, sourceTag, copyOverride }) => {
+const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall, callHref, presetIndustry, sourceTag, copyOverride }) => {
   const baseCopy = useCopy().draft;
   const t = copyOverride ?? baseCopy;
   const lang = useLang();
@@ -241,9 +243,15 @@ const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall, p
               >
                 {t.success.close}
               </button>
-              <button type="button" onClick={onCall} className="text-[16px] text-muted hover:text-accent transition-colors underline underline-offset-4">
-                {t.success.call}
-              </button>
+              {callHref ? (
+                <a href={callHref} className="text-[16px] text-muted hover:text-accent transition-colors underline underline-offset-4">
+                  {t.success.call}
+                </a>
+              ) : (
+                <button type="button" onClick={onCall} className="text-[16px] text-muted hover:text-accent transition-colors underline underline-offset-4">
+                  {t.success.call}
+                </button>
+              )}
             </div>
           </div>
         ) : (
@@ -404,9 +412,15 @@ const DraftDialog: React.FC<Props> = ({ open, initialWebsite, onClose, onCall, p
             {/* Fuß */}
             <div className="flex items-center justify-between gap-3 border-t border-line px-6 md:px-8 pt-4 pb-[max(16px,env(safe-area-inset-bottom))]">
               {step === 1 ? (
-                <button type="button" onClick={onCall} className="text-left text-[15px] text-muted hover:text-accent transition-colors py-2">
-                  {t.call}
-                </button>
+                callHref ? (
+                  <a href={callHref} className="text-left text-[15px] text-muted hover:text-accent transition-colors py-2">
+                    {t.call}
+                  </a>
+                ) : (
+                  <button type="button" onClick={onCall} className="text-left text-[15px] text-muted hover:text-accent transition-colors py-2">
+                    {t.call}
+                  </button>
+                )
               ) : (
                 <button
                   type="button"

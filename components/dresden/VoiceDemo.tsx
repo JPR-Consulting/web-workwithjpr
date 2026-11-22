@@ -34,7 +34,7 @@ const VoiceDemo: React.FC = () => {
   const listening = typing >= 0 && msgs[typing].who === 'kunde';
 
   return (
-    <div ref={ref} className="dd-chat relative rounded-[24px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.015))] p-5 md:p-7 shadow-[0_40px_90px_-40px_rgba(20,40,140,0.6)]">
+    <div ref={ref} className="dd-chat relative rounded-[20px] border border-white/10 bg-white/[0.04] p-5 md:p-6">
       <div className="flex items-center gap-3 mb-6">
         <span className="relative grid place-items-center w-10 h-10 shrink-0 rounded-full bg-[#3d5afe] text-white" aria-hidden="true">
           <span className="absolute inset-[-5px] rounded-full border border-[#3d5afe]/50" />
@@ -74,7 +74,7 @@ const VoiceDemo: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className={`dd-order relative z-[1] -mt-8 rounded-[16px] bg-white text-[#0a0e1a] p-5 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] ${card ? 'on' : ''}`}>
+      <div className={`dd-order relative z-[1] -mt-8 rounded-[12px] bg-white text-[#0a0e1a] p-5 ${card ? 'on' : ''}`}>
         <div className="flex items-center justify-between gap-3 mb-4">
           <span className="font-manrope text-[13px] font-bold uppercase tracking-[0.12em]">{t.voice.card.number}</span>
           <span className="dd-urgent inline-flex items-center gap-1.5 rounded-full bg-[#e5484d] text-white px-3 py-1 text-[12px] font-bold uppercase tracking-[0.08em]">

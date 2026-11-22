@@ -314,7 +314,7 @@ html.theme-dresden {
   --c-line: 32 40 58;
   --c-ftext: 244 246 251;
   --c-muted: 163 173 194;
-  --c-dim: 125 136 158;
+  --c-dim: 150 160 182;
   --c-accent: 143 168 255;
 }
 html.theme-dresden body {
@@ -364,7 +364,7 @@ html.theme-dresden .bg-accent.text-ink:hover { filter: brightness(1.12); }
   outline: 2px solid rgb(var(--c-accent));
   outline-offset: 3px;
 }
-/* Überschriften: klare Grotesk, eng gesetzt; Akzentwort kursiv in Serif mit kühlem Verlauf */
+/* Überschriften: klare Grotesk, eng gesetzt; Akzentwort kursiv in Serif, volle Akzentfarbe (kein Verlauf) */
 .dd-h { font-family: 'Satoshi', 'Manrope', system-ui, sans-serif; font-weight: 700; letter-spacing: -0.035em; }
 .dd-em {
   font-family: 'Fraunces', Georgia, serif;
@@ -372,12 +372,9 @@ html.theme-dresden .bg-accent.text-ink:hover { filter: brightness(1.12); }
   font-weight: 400;
   letter-spacing: -0.02em;
   padding-right: 0.04em;
-  background: linear-gradient(100deg, #c9d6ff 0%, #8fa8ff 45%, #5f7dff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: #8fa8ff;
 }
-.dd-paper .dd-em { background: linear-gradient(100deg, #3d5afe 0%, #2a3fc4 100%); -webkit-background-clip: text; background-clip: text; }
+.dd-paper .dd-em { color: #3d5afe; }
 /* Hero: feines Raster, das zum Rand ausblendet, plus kühler Lichtschein */
 .dd-hero::before {
   content: '';
@@ -418,20 +415,11 @@ html.theme-dresden .bg-accent.text-ink:hover { filter: brightness(1.12); }
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16), 0 28px 60px -20px rgba(0, 0, 0, 0.85);
 }
 @media (min-width: 768px) { .dd-phone { border-radius: 24px; border-width: 5px; } }
-/* Bühne hinter den Beispiel-Entwürfen */
-.dd-stage {
-  background:
-    radial-gradient(70% 60% at 70% 20%, rgba(61, 90, 254, 0.28), transparent 70%),
-    linear-gradient(160deg, #0f1526 0%, #070a12 100%);
-}
-/* Karten: leichtes Anheben beim Überfahren */
-.dd-card { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
-@media (hover: hover) {
-  .dd-card:hover { transform: translateY(-3px); box-shadow: 0 24px 50px -28px rgba(10, 20, 60, 0.35); border-color: rgb(var(--c-accent) / 0.45); }
-}
-.dd-faq summary::-webkit-details-marker { display: none; }
+/* Lichtschein hinter den Beispiel-Entwürfen (kein Kasten) */
+.dd-stage { background: radial-gradient(60% 55% at 60% 40%, rgba(61, 90, 254, 0.2), transparent 70%); }
+.dd-faq summary::-webkit-details-marker, .dd-more summary::-webkit-details-marker { display: none; }
 @media (prefers-reduced-motion: reduce) {
-  .dd-card, .dd-card:hover, .dd-btn, .dd-btn:active { transform: none !important; transition: none !important; }
+  .dd-btn, .dd-btn:active { transform: none !important; transition: none !important; }
 }
 /* Entwurf-Dialog im Dresden-Stil: dieselbe Grotesk wie die Seite */
 html.theme-dresden .draft-dialog.font-body,
@@ -478,8 +466,6 @@ html.theme-dresden .draft-dialog::backdrop { background: rgba(4, 6, 12, 0.8); ba
   will-change: transform;
 }
 /* Zeiger-Tiefe im Hero: Browser und Handy auf zwei Ebenen (Werte setzt DresdenPage, nur Maus) */
-.dd-hero-devices .dd-browser { transform: translate3d(calc(var(--mx, 0) * -12px), calc(var(--my, 0) * -9px), 0); }
-.dd-hero-devices .dd-phone { transform: translate3d(calc(var(--mx, 0) * 20px), calc(var(--my, 0) * 16px), 0); }
 
 /* Überschriften: Wörter steigen einzeln aus einer Maske (45 ms Versatz) */
 .dd-word { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 0.07em 0.14em 0; margin: 0 -0.07em -0.14em 0; }
@@ -509,33 +495,11 @@ html.theme-dresden .draft-dialog::backdrop { background: rgba(4, 6, 12, 0.8); ba
 /* KI-Beispiel: Blasen und Auftragskarte steuert components/dresden/VoiceDemo.tsx per Klasse .on (siehe v3.1-Block unten) */
 
 /* Beispiel-Bühnen: Tiefe zum Zeiger, Licht folgt, Handy hebt sich, Bild zoomt leicht */
-.dd-tilt { perspective: 1100px; }
-.dd-tilt-in { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 0.45s var(--ease-out), box-shadow 0.45s var(--ease-out); }
-.dd-tilt-in::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.4s ease; background: radial-gradient(460px circle at var(--lx, 50%) var(--ly, 0%), rgba(143, 168, 255, 0.16), transparent 60%); }
-.dd-tilt .dd-phone, .dd-tilt .dd-shot { transition: transform 0.7s var(--ease-out); }
 @media (hover: hover) and (pointer: fine) {
-  .dd-tilt:hover .dd-tilt-in { box-shadow: 0 46px 80px -44px rgba(20, 40, 140, 0.6); }
-  .dd-tilt:hover .dd-tilt-in::after { opacity: 1; }
-  .dd-tilt:hover .dd-phone { transform: translateY(-10px); }
-  .dd-tilt:hover .dd-shot { transform: scale(1.035); }
 }
 
-/* Porträt Tom: freigestellt auf kühlem Lichtschein, Ringe wie ein Ortsmarker; Einstieg per Masken-Wisch */
-.dd-portrait {
-  background:
-    radial-gradient(52% 40% at 50% 34%, rgba(95, 125, 255, 0.55), rgba(61, 90, 254, 0.16) 58%, transparent 78%),
-    linear-gradient(180deg, #121b38 0%, #0a0f1e 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 40px 80px -40px rgba(20, 40, 140, 0.6);
-}
-.dd-rings > span { position: absolute; left: 50%; top: 34%; aspect-ratio: 1; border-radius: 50%; border: 1px solid rgba(143, 168, 255, 0.16); transform: translate(-50%, -50%) scale(0.86); opacity: 0; transition: transform 1.4s var(--ease-out), opacity 1.4s var(--ease-out); }
-.dd-rings > span:nth-child(1) { width: 58%; transition-delay: 0.25s; }
-.dd-rings > span:nth-child(2) { width: 88%; transition-delay: 0.35s; border-color: rgba(143, 168, 255, 0.11); }
-.dd-rings > span:nth-child(3) { width: 122%; transition-delay: 0.45s; border-color: rgba(143, 168, 255, 0.07); }
-.reveal.in .dd-rings > span { transform: translate(-50%, -50%); opacity: 1; }
-.dd .reveal.dd-mask { opacity: 1; transform: none; clip-path: inset(22% 0 0 0 round 22px); transition: clip-path 1.2s var(--ease-out); }
-.dd .reveal.dd-mask.in { clip-path: inset(0 0 0 0 round 22px); }
-.dd-portrait-img { transform: translateY(5%) scale(1.06); transform-origin: 50% 100%; transition: transform 1.6s var(--ease-out) 0.1s; }
-.reveal.in .dd-portrait-img { transform: none; }
+/* Porträt Tom: freigestellt auf hellem Kobalt-Ton (Karte im Ablauf) */
+.dd-portrait { background: radial-gradient(60% 50% at 50% 38%, rgba(61, 90, 254, 0.26), rgba(61, 90, 254, 0.06) 70%), #ebefff; }
 
 /* Ablauf: Linie verbindet die Schritte und füllt sich beim Scrollen */
 .dd-rail { position: absolute; left: 20px; top: var(--rail-start, 20px); width: 1px; height: var(--rail-len, 0px); background: rgb(var(--c-line)); pointer-events: none; }
@@ -547,7 +511,7 @@ html.theme-dresden .draft-dialog::backdrop { background: rgba(4, 6, 12, 0.8); ba
 .dd-step { z-index: 1; width: 40px; }
 .dd-step > span { background: rgb(var(--c-ink)); border-color: rgb(var(--c-line)); color: rgb(var(--c-dim)); transition: border-color 0.4s ease, color 0.4s ease, background-color 0.4s ease, box-shadow 0.5s var(--ease-out); }
 .dd-step.on > span { border-color: rgb(var(--c-accent) / 0.7); color: rgb(var(--c-accent)); background: rgb(13 20 44); box-shadow: 0 0 0 5px rgb(var(--c-accent) / 0.1); }
-.dd-paper .dd-step.on > span { background: rgb(var(--c-accent) / 0.1); }
+.dd-paper .dd-step.on > span { background: #ebefff; }
 
 /* FAQ: Antwort klappt weich auf (wo der Browser es kann) */
 .dd-faq::details-content { block-size: 0; overflow: hidden; transition: block-size 0.45s var(--ease-out), content-visibility 0.45s allow-discrete; }
@@ -562,10 +526,8 @@ html.theme-dresden .draft-dialog::backdrop { background: rgba(4, 6, 12, 0.8); ba
 @media (prefers-reduced-motion: reduce) {
   .dd-nav { animation: none; }
   .dd .hero-foot, .dd .hero-foot.dd-blur, .dd .hero-foot.dd-settle { filter: none !important; transform: none !important; opacity: 1 !important; transition: none !important; }
-  .dd-hero-devices .dd-browser, .dd-hero-devices .dd-phone, .dd-tilt-in, .dd-tilt .dd-phone, .dd-tilt .dd-shot, .dd-portrait-img, .dd [data-parallax] { transform: none !important; transition: none !important; }
+  .dd-hero-devices .dd-browser, .dd-hero-devices .dd-phone, .dd-tilt-in, .dd-tilt .dd-phone, .dd-tilt .dd-shot, .dd [data-parallax] { transform: none !important; transition: none !important; }
   .dd-word > span { transform: none !important; opacity: 1 !important; transition: none !important; }
-  .dd-rings > span { transform: translate(-50%, -50%) !important; opacity: 1 !important; transition: none !important; }
-  .dd .reveal.dd-mask { clip-path: none !important; transition: none !important; }
   .dd-rail > span { transform: none !important; }
   .dd-step > span, .dd-roll-in, .dd-roll-chip, .dd-roll-chip svg, .dd-sticky { transition: none !important; }
   .dd-roll:hover .dd-roll-in { transform: none; }
@@ -717,11 +679,6 @@ html.theme-dresden .draft-dialog::backdrop { background: rgba(4, 6, 12, 0.8); ba
 @keyframes ddDot { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 /* Laufband der Branchen: ruhig, pausiert beim Überfahren, Ränder blenden aus */
-.dd-marquee { -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); }
-.dd-marquee-track { display: flex; width: max-content; animation: ddMarquee 46s linear infinite; }
-.dd-marquee:hover .dd-marquee-track { animation-play-state: paused; }
-.dd-marquee-list { display: flex; flex: none; }
-@keyframes ddMarquee { to { transform: translateX(-50%); } }
 
 /* KI-Demo: Tipp-Punkte, Blasen, Auftragskarte „fliegt“ rein, Dringend pulsiert einmal, Wellenform am Mikro */
 .dd-chat .dd-msg { opacity: 0; transform: translateY(10px) scale(0.98); transition: opacity 0.45s var(--ease-out), transform 0.6s var(--ease-out); }
@@ -738,19 +695,6 @@ html.theme-dresden .draft-dialog::backdrop { background: rgba(4, 6, 12, 0.8); ba
 .dd-wave span { width: 3px; height: 22px; border-radius: 2px; background: #8fa8ff; opacity: 0.5; transform: scaleY(0.25); animation: ddWave 1.6s ease-in-out infinite; animation-delay: calc(var(--b) * 0.14s); }
 .dd-wave.live span { opacity: 1; animation-duration: 0.7s; }
 @keyframes ddWave { 0%, 100% { transform: scaleY(0.25); } 50% { transform: scaleY(0.85); } }
-
-/* Kundenprojekt: dunkle Karte mit Lichtschein und weiten Ringen */
-.dd-case {
-  background:
-    radial-gradient(55% 75% at 14% 35%, rgba(61, 90, 254, 0.34), transparent 65%),
-    radial-gradient(40% 60% at 100% 100%, rgba(143, 168, 255, 0.12), transparent 70%),
-    linear-gradient(160deg, #0f1630 0%, #070a12 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 50px 100px -50px rgba(20, 40, 140, 0.7);
-}
-.dd-case-rings { left: -16%; top: 50%; width: 72%; aspect-ratio: 1; transform: translateY(-50%); }
-.dd-case-rings > span { position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(143, 168, 255, 0.1); }
-.dd-case-rings > span:nth-child(2) { inset: 13%; border-color: rgba(143, 168, 255, 0.08); }
-.dd-case-rings > span:nth-child(3) { inset: 27%; border-color: rgba(143, 168, 255, 0.06); }
 
 /* Schluss: feines Raster, das nach oben ausblendet */
 .dd-final-grid {
@@ -770,21 +714,12 @@ html.theme-dresden .draft-dialog::backdrop { background: rgba(4, 6, 12, 0.8); ba
   .dd-dot-bar.run > span, .dd-wave span, .dd-typing i, .dd-order.on .dd-urgent { animation: none !important; }
   .dd-wave span { transform: scaleY(0.55); }
   .dd-chat .dd-msg, .dd-order { opacity: 1 !important; transform: none !important; transition: none !important; }
-  .dd-marquee-track { animation: none; width: auto; flex-wrap: wrap; justify-content: center; }
-  .dd-marquee-list { flex-wrap: wrap; justify-content: center; }
-  .dd-marquee-dup { display: none; }
-  .dd-marquee { -webkit-mask-image: none; mask-image: none; }
 }
 
-/* v3.2 (22.11.2026, Design-Review): Hero-Text ohne Einblendung (LCP), Zeigerlicht, Schwenk im Beispiel-Fenster, Cookie-Banner im Seitenstil */
+/* v3.2 (22.11.2026, Design-Review): Hero-Text ohne Einblendung (LCP), Schwenk im Beispiel-Fenster, Cookie-Banner im Seitenstil */
 .dd-rise { transform: translateY(14px); transition: transform 0.6s var(--ease-out) 0.1s; }
 .dd-rise.in { transform: none; }
 .dd-stack-persp::after { content: ''; position: absolute; left: 8%; right: 14%; bottom: -4%; height: 12%; background: radial-gradient(50% 50% at 50% 50%, rgba(61, 90, 254, 0.35), transparent 70%); filter: blur(18px); pointer-events: none; }
-[data-cursor-light] > .dd-cursor-light {
-  position: absolute; inset: 0; pointer-events: none; opacity: var(--co, 0);
-  background: radial-gradient(600px circle at var(--cx, 50%) var(--cy, 50%), rgba(61, 90, 254, 0.2), transparent 60%);
-}
-.dd-hero[data-cursor-light] > .dd-cursor-light { mix-blend-mode: screen; }
 .dd-pan .dd-shot { transform-origin: 0 0; transition: transform 1.2s var(--ease-out); }
 @media (hover: hover) and (pointer: fine) {
   .dd-pan-host:hover .dd-pan .dd-shot { transform: scale(1.22) translate(-2%, -4%); transform-origin: 100% 100%; transition: transform 9s linear; }
@@ -798,7 +733,6 @@ html.theme-dresden .fixed.bottom-0.z-50 .font-mono button:hover { border-color: 
   .dd-rise { transform: none !important; transition: none !important; }
   .dd-compare * { transition: none !important; }
   .dd-pan .dd-shot, .dd-pan-host:hover .dd-pan .dd-shot { transform: none !important; transition: none !important; }
-  [data-cursor-light] > .dd-cursor-light { display: none; }
 }
 
 /* AGB / AVV: Druck und PDF-Export (Browser-Dialog "Als PDF speichern") */
