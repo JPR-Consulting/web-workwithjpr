@@ -25,7 +25,7 @@ interface Props {
   presetIndustry?: number;
   /** Wird an `source` angehängt, z. B. „lp-handwerk“. */
   sourceTag?: string;
-  /** Eigene Dialog-Texte, z. B. Sie-Form auf /dresden; sonst die Texte der aktiven Sprache. */
+  /** Eigene Dialog-Texte, z. B. Dresden-Variante auf /tom-nowak; sonst die Texte der aktiven Sprache. */
   copyOverride?: SiteCopy['draft'];
 }
 
