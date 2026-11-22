@@ -60,20 +60,154 @@ const draft: SiteCopy['draft'] = {
 export const dresden = {
   /** Wird an `source` der Anfrage angehängt („workwithjpr.com · Entwurf-Formular · dresden“), so sieht Jan die Herkunft. */
   sourceTag: 'dresden',
+  // v3 (22.11.2026): Texte aus tom-v3/copy-final.md (Texter-Agent). Reihenfolge der Seite:
+  // Hero · Zahlenleiste · Vorher/Nachher · Ergebnisse · KI-Assistent · Beispiel-Entwürfe · Kundenprojekt · Kundenstimmen · Tom · Ablauf · Preise · FAQ · Schluss
   meta: {
-    title: 'Website für Betriebe in Dresden — Entwurf kostenlos vorab | JPR Studio',
-    desc: 'Neue Website für Handwerk, Praxen und Fahrzeug-Ausstattung in Dresden: Sie sehen Ihre neue Seite, bevor Sie etwas bezahlen. Mit KI-Assistent, der Anfragen per Sprache annimmt. Festpreis ab 1.500 €.',
+    title: 'Webdesign Dresden: Entwurf in 48 Stunden gratis | JPR Studio',
+    desc: 'Website für Handwerk, Praxen und Car-HiFi in Dresden. Den Entwurf sehen Sie vor dem Bezahlen: in 48 Stunden, mit KI-Assistent. Festpreis ab 1.500 € netto.',
   },
   nav: { place: 'Dresden', cta: 'Entwurf anfragen' },
   hero: {
-    eyebrow: 'Websites für Betriebe in Dresden',
+    eyebrow: 'Für Handwerk, Praxen und Car-HiFi in Dresden',
     // H1 in drei Teilen: der mittlere wird kursiv im Akzent gesetzt
-    h1: ['Sie sehen Ihre neue Website,', 'bevor', 'Sie etwas bezahlen.'],
-    sub: 'Für Handwerk, Praxen und Fahrzeug-Ausstattung: eine Website, die Anfragen und Bewerbungen bringt. Den Entwurf bauen wir vorab und kostenlos, aus Ihrer bisherigen Seite.',
+    h1: ['Sie sehen Ihre neue Website,', 'bevor', 'Sie einen Euro bezahlen.'],
+    sub: 'Eine Website, über die Kunden anfragen und Bewerber sich melden. Den Entwurf bauen wir in 48 Stunden aus Ihrer jetzigen Seite. Kostenlos.',
     cta: 'Kostenlosen Entwurf anfragen',
-    secondary: 'Beispiele ansehen',
-    proofs: ['Festpreis ab 1.500 €', 'KI-Assistent in jedem Entwurf', 'JPR Consulting GmbH'],
+    secondary: 'Beispiel-Entwürfe ansehen',
+    proofs: ['Festpreis ab 1.500 € netto', 'KI-Assistent in jedem Entwurf', 'JPR Consulting GmbH, Berlin'],
+    // Tom-Minikarte unter den Knöpfen: Avatar + zwei Zeilen + Mail-Link
+    tomCard: { name: 'Tom Nowak', role: 'Ihr Ansprechpartner in Dresden', link: 'E-Mail an Tom' },
     deviceAlt: 'Beispiel-Entwurf einer Website für einen Car-HiFi-Betrieb auf dem Rechner und für einen Heizungsbauer auf dem Handy',
+  },
+  // Laufband unter der Zahlenleiste: die Branchen aus der bisherigen Seite (kein neuer Text)
+  audience: {
+    label: 'Branchen',
+    items: ['Handwerk', 'Praxen & Therapie', 'Fahrzeug-Ausstattung & Car-HiFi'],
+  },
+  strip: {
+    items: [
+      { value: '48 h', label: 'bis Ihr Entwurf da ist' },
+      { value: '0 €', label: 'bis Sie Ja sagen' },
+      { value: '206', label: 'Personen zum Probetraining angemeldet, bei einem Kunden*' },
+      { value: '100 %', label: 'Code, Domain und Zugänge gehören Ihnen' },
+    ],
+    footnote: '* Kampfsportverein in Berlin, online angemeldet seit März 2026, ohne Werbebudget.',
+  },
+  beforeAfter: {
+    eyebrow: 'Vorher / Nachher',
+    title: 'Der Kunde hat Sie gefunden. Und dann?',
+    intro: 'Wir haben Websites von Handwerksbetrieben in Dresden geprüft. Vier Dinge fehlen besonders oft. So sieht es auf Ihrer neuen Website aus.',
+    colBefore: 'Heute oft',
+    colAfter: 'Mit Ihrer neuen Website',
+    // Regler-Beschriftung (Jan, 22.11.2026) und Name der Attrappe (erfunden, kein echter Betrieb)
+    sliderBefore: 'Ihre Seite heute',
+    sliderAfter: 'Ihr Entwurf',
+    mockName: 'Mustermann Haustechnik',
+    pairs: [
+      {
+        label: 'Telefon',
+        before: 'Die Nummer steht da, aber am Handy lässt sie sich nicht antippen. Wer anrufen will, muss sie abschreiben.',
+        after: 'Ein Tipp auf die Nummer, und bei Ihnen klingelt es.',
+        stat: '33 von 46 geprüften Seiten',
+      },
+      {
+        label: 'Anfrage',
+        before: 'Kein Anfrageformular. Wer lieber schreibt als anruft, muss selbst eine Mail aufsetzen.',
+        after: 'Ein Anfrageformular, direkt am Handy. Auch abends, auch sonntags.',
+        stat: '23 von 46 geprüften Seiten',
+      },
+      {
+        label: 'Bewerbung',
+        before: 'Keine Seite für Bewerber. Ein Geselle, der wechseln will, sieht nicht, dass Sie suchen.',
+        after: 'Eine Karriereseite, die zeigt, wen Sie suchen. Bewerben geht direkt am Handy.',
+        stat: '37 von 46 geprüften Seiten',
+      },
+      {
+        // Ersatzpaar „Arbeiten“ aus dem Deck (Jan, 22.11.2026): Referenzen fehlten bei 30 von 46
+        label: 'Arbeiten',
+        before: 'Keine Referenzen. Besucher sehen nicht, was Sie schon gebaut haben.',
+        after: 'Ihre Arbeiten als Bilder, sortiert nach Leistung. Handyfotos reichen.',
+        stat: '30 von 46 geprüften Seiten',
+      },
+    ],
+    footnote: 'Eigene Prüfung im November 2026: 46 erreichbare Websites Dresdner Handwerksbetriebe, automatisch geprüft.',
+  },
+  outcomes: {
+    eyebrow: 'Ergebnis',
+    title: 'Was bei Ihnen ankommt.',
+    items: [
+      { title: 'Anfragen, mit denen Sie arbeiten können', desc: 'Kunden wählen die Leistung, laden Fotos hoch und nennen ihren Stadtteil. Sie lesen die Anfrage und wissen, ob sich der Rückruf lohnt.' },
+      { title: 'Bewerbungen in 60 Sekunden', desc: 'Gesellen, Azubis und Fachkräfte bewerben sich am Handy, ohne Anschreiben.' },
+      { title: 'Kunden aus Ihrem Stadtteil', desc: 'Eigene Seiten für Ihre Leistungen und Stadtteile, dazu ein sauber eingerichtetes Google-Unternehmensprofil. Damit man Sie findet, wenn in Dresden jemand sucht.' },
+    ],
+  },
+  voice: {
+    eyebrow: 'KI-Assistent · in jedem Entwurf',
+    title: 'Ihre Website nimmt Aufträge an. Per Sprache.',
+    intro: 'Ihre Kunden erzählen, worum es geht. Der Assistent fragt nach, was Sie für ein Angebot brauchen. Sie bekommen eine fertige Auftragskarte.',
+    niches: [
+      { label: 'Handwerk', title: 'Auftragsannahme', desc: 'Fragt nach Gewerk, Ort und Erreichbarkeit, markiert Dringendes und bittet um Fotos.' },
+      { label: 'Praxen', title: 'KI-Rezeption', desc: 'Beantwortet Fragen zu Öffnungszeiten und Leistungen und notiert Terminwünsche.' },
+      { label: 'Fahrzeug', title: 'Einbau-Anfrage', desc: 'Fragt Fahrzeug, Baujahr und Wunsch ab, damit Sie gleich ein Angebot machen können.' },
+    ],
+    rules: [
+      'Sagt im ersten Satz, dass er eine KI ist',
+      'Nimmt keinen Ton auf',
+      'Preise und Termine sagen Sie zu, nicht die KI',
+    ],
+    note: 'Für Ihre fertige Website gibt es den Assistenten auf Wunsch dazu. Den Preis sehen Sie im Angebot.',
+    // Gesprächsausschnitt und Auftragskarte: gestaltetes Beispiel, kein Live-Assistent auf dieser Seite
+    demoTitle: 'Auftrag per Sprache aufgeben',
+    demoLabel: 'Beispiel · Wendler Haustechnik',
+    chat: [
+      { who: 'ki', text: 'Hallo, hier ist die KI-Assistentin von Wendler Haustechnik. Worum geht es?' },
+      { who: 'kunde', text: 'Unsere Heizung ist seit heute früh aus. Altbau, zweiter Stock.' },
+      { who: 'ki', text: 'Das notiere ich als dringend. In welchem Stadtteil sind Sie?' },
+    ] as { who: 'ki' | 'kunde'; text: string }[],
+    card: {
+      number: 'Auftrag A-1042',
+      badge: 'Dringend',
+      rows: [
+        ['Anliegen', 'Heizung ausgefallen'],
+        ['Objekt', 'Altbau, 2. OG'],
+        ['Ort', 'Dresden-Striesen'],
+        ['Erreichbar', 'heute bis 18 Uhr'],
+        ['Fotos', 'Foto-Link erstellt'],
+      ] as [string, string][],
+    },
+  },
+  examples: {
+    eyebrow: 'So sieht ein Entwurf aus',
+    title: 'Drei Branchen. Drei Entwürfe.',
+    text: 'Die Betriebe sind erfunden, die Entwürfe sind echt gebaut. Ihr Entwurf zeigt Ihre Leistungen und Ihre Fotos.',
+    badge: 'Beispiel-Entwurf',
+    items: [
+      { title: 'Wendler Haustechnik', tag: 'Heizung & Sanitär · warm und kräftig', img: '/dresden/beispiel-shk' },
+      { title: 'Physio am Lindenplatz', tag: 'Physiotherapie · hell und ruhig', img: '/dresden/beispiel-praxis' },
+      { title: 'Elbklang Car-HiFi', tag: 'Car-HiFi & Nachrüstung · dunkel und präzise', img: '/dresden/beispiel-carhifi' },
+    ],
+  },
+  // Kundenprojekt (White-Label: kein Name, keine URL, kein Logo)
+  caseStudy: {
+    kicker: 'Kundenprojekt · Kampfsportverein in Berlin',
+    count: 206,
+    countLabel: 'Personen haben sich online zum Probetraining angemeldet',
+    countNote: 'seit März 2026',
+    title: 'Ohne einen Euro Werbung.',
+    old: 'Vorher: ein Vereins-Blog mit News. Aber kein Weg zum Probetraining.',
+    now: 'Heute: ein roter Knopf. Probetraining online buchen, Trainingsplan gleich dabei.',
+    bridge: 'Anderes Geschäft, gleicher Moment: Jemand will loslegen. Bei Ihnen heißt der Knopf „Anfrage senden“ oder „Termin buchen“.',
+    cta: 'Kostenlosen Entwurf anfragen',
+  },
+  testimonials: {
+    eyebrow: 'Kundenstimmen',
+    title: 'Das sagen Kunden von JPR Studio.',
+    // Wortlaut unverändert aus copy.de.testimonials.items, ohne Namen, Firma und Logo
+    quotes: [
+      { quote: copy.de.testimonials.items[1].quote, who: 'Kampfsportverein, Berlin' },
+      { quote: copy.de.testimonials.items[0].quote, who: 'Industriekletter-Betrieb, Berlin' },
+    ],
+    note: 'Wortlaut unverändert.',
   },
   tom: {
     initials: 'TN',
@@ -90,120 +224,80 @@ export const dresden = {
     },
     emailLabel: 'E-Mail an Tom',
     eyebrow: 'Persönlich vor Ort',
-    title: 'Ein Ansprechpartner in Dresden.',
-    text: 'Tom Nowak zeigt Ihnen Ihren Entwurf, gern bei Ihnen im Betrieb, und klärt mit Ihnen, was die Seite können soll. Gebaut wird im Team von JPR Studio, mit festem Preis und festem Ablauf.',
+    title: 'Den Entwurf zeigt Ihnen Tom. Gern bei Ihnen im Betrieb.',
+    text: 'Tom Nowak ist Ihr Ansprechpartner in Dresden, vom ersten Gespräch bis zum Angebot. Er klickt den Entwurf mit Ihnen am Handy durch und klärt, was die Seite können soll. Gebaut wird im Team von JPR Studio, zum Festpreis und mit festem Ablauf.',
+    // TODO(Jan/Tom): optional ein Satz von Tom in eigenen Worten, nur wenn er ihn freigibt. Leer = ausgeblendet.
+    personal: '',
+    company: 'JPR Studio ist eine Marke der JPR Consulting GmbH, Letteallee 91, 13409 Berlin.',
     cta: 'Entwurf anfragen',
-  },
-  audience: {
-    label: 'Für',
-    items: ['Handwerk', 'Praxen & Therapie', 'Fahrzeug-Ausstattung & Car-HiFi'],
-  },
-  outcomes: {
-    eyebrow: 'Was die neue Website erledigt',
-    title: 'Mehr Anfragen. Mehr Bewerbungen. Weniger Telefon.',
-    items: [
-      { title: 'Anfragen, mit denen Sie arbeiten können', desc: 'Kunden wählen die Leistung, laden Fotos hoch und geben ihren Ort an. Bei Ihnen kommt eine vollständige Anfrage an, statt einer Bitte um Rückruf.' },
-      { title: 'Bewerbung in 60 Sekunden', desc: 'Eine Karriereseite mit Kurzbewerbung am Handy. Gesellen, Azubis und Fachkräfte bewerben sich ohne Anschreiben, in einer Minute.' },
-      { title: 'Gefunden, wenn Dresden sucht', desc: 'Eigene Seiten für Ihre Leistungen und Stadtteile, dazu ein sauber eingerichtetes Google-Unternehmensprofil.' },
-    ],
-  },
-  voice: {
-    eyebrow: 'In jedem Entwurf',
-    title: 'Ihre Website nimmt Aufträge an. Per Sprache.',
-    intro: 'Jeder Entwurf hat einen KI-Assistenten. Kunden erzählen per Sprache, worum es geht, und Sie bekommen eine fertige Auftragskarte.',
-    niches: [
-      { label: 'Handwerk', title: 'Auftragsannahme', desc: 'Fragt nach Gewerk, Ort und Erreichbarkeit, markiert Dringendes und bittet um Fotos.' },
-      { label: 'Praxen', title: 'KI-Rezeption', desc: 'Beantwortet Fragen zu Öffnungszeiten und Leistungen und notiert Terminwünsche.' },
-      { label: 'Fahrzeug', title: 'Einbau-Anfrage', desc: 'Fragt Fahrzeug, Baujahr und Wunsch ab, damit Sie gleich ein Angebot machen können.' },
-    ],
-    rules: [
-      'Sagt im ersten Satz, dass er eine KI ist',
-      'Es wird kein Ton aufgezeichnet',
-      'Nennt keine Preise, sagt keine Termine zu',
-    ],
-    note: 'Den Assistenten gibt es auf Wunsch auch für Ihre fertige Website.',
-    // Gesprächsausschnitt und Auftragskarte: gestaltetes Beispiel, kein Live-Assistent auf dieser Seite
-    demoLabel: 'Beispiel · Wendler Haustechnik',
-    chat: [
-      { who: 'ki', text: 'Hallo, hier ist die KI-Assistentin von Wendler Haustechnik. Worum geht es?' },
-      { who: 'kunde', text: 'Unsere Heizung ist seit heute früh aus. Altbau, zweiter Stock.' },
-      { who: 'ki', text: 'Das notiere ich als dringend. In welchem Stadtteil sind Sie?' },
-    ],
-    card: {
-      number: 'Auftrag A-1042',
-      badge: 'Dringend',
-      rows: [
-        ['Anliegen', 'Heizung ausgefallen'],
-        ['Objekt', 'Altbau, 2. OG'],
-        ['Ort', 'Dresden-Striesen'],
-        ['Rückruf', 'heute bis 18 Uhr'],
-        ['Fotos', 'Foto-Link erstellt'],
-      ] as [string, string][],
-    },
-  },
-  examples: {
-    eyebrow: 'So sieht ein Entwurf aus',
-    title: 'Drei Beispiel-Entwürfe.',
-    text: 'Jede Branche bekommt ihren eigenen Stil. Ihr Entwurf zeigt Ihre Leistungen, Ihre Fotos und Ihr Team.',
-    badge: 'Beispiel-Entwurf',
-    items: [
-      { title: 'Wendler Haustechnik', tag: 'Heizung & Sanitär · warm und kräftig', img: '/dresden/beispiel-shk' },
-      { title: 'Physio am Lindenplatz', tag: 'Physiotherapie · hell und ruhig', img: '/dresden/beispiel-praxis' },
-      { title: 'Elbklang Car-HiFi', tag: 'Car-HiFi & Nachrüstung · dunkel und präzise', img: '/dresden/beispiel-carhifi' },
-    ],
   },
   process: {
     eyebrow: 'Ablauf',
     title: 'Vier Schritte bis online.',
     steps: [
-      { title: 'Gespräch oder Besuch', desc: 'Sie erzählen, was die Website bringen soll: Aufträge, Patienten, Bewerber. Am Telefon oder bei Ihnen im Betrieb.' },
-      { title: 'Kostenloser Entwurf', desc: 'Wir bauen Ihre neue Startseite aus Ihrer bisherigen Website, mit KI-Assistent. Sie klicken sie in Ruhe am Handy durch.' },
-      { title: 'Angebot zum Festpreis', desc: 'Gefällt Ihnen der Entwurf, bekommen Sie ein festes Angebot. Sie entscheiden danach.' },
-      { title: 'Live, mit Monatsbericht', desc: 'Ihre Website geht online. Danach sehen Sie jeden Monat, wie viele Anfragen und Bewerbungen darüber kamen.' },
+      { title: 'Website eintragen', desc: 'Die Adresse Ihrer jetzigen Seite und vier kurze Fragen. Dauert zwei Minuten.' },
+      { title: 'Entwurf in 48 Stunden', desc: 'Ihre neue Startseite, gebaut aus Ihrer jetzigen, mit KI-Assistent. Sie klicken sie in Ruhe am Handy durch.' },
+      { title: 'Gespräch und Festpreis', desc: 'Tom bespricht den Entwurf mit Ihnen, am Telefon oder bei Ihnen im Betrieb. Gefällt er Ihnen, bekommen Sie ein Angebot zum Festpreis.' },
+      // Kein Monatsbericht (Jan, 22.11.2026): Schritt 4 ohne Berichtszusage
+      { title: 'Live', desc: 'Ihre Website geht online. Code, Domain und alle Zugänge gehören Ihnen.' },
     ],
   },
   pricing: {
     eyebrow: 'Preise',
     title: 'Festpreis, bevor es losgeht.',
-    voice: 'KI-Assistent: auf Wunsch, Preis im Angebot',
-    cta: 'Entwurf anfragen',
-    more: 'Alle Preise im Detail →',
-  },
-  trust: {
-    eyebrow: 'Wer dahintersteht',
-    title: 'Eine deutsche GmbH. Ein Gesicht vor Ort.',
-    facts: [
-      { title: 'JPR Consulting GmbH', desc: 'JPR Studio ist eine Marke der JPR Consulting GmbH, Letteallee 91, 13409 Berlin.' },
-      { title: 'Ihnen gehört die Website', desc: 'Sie bekommen Code, Domain und alle Zugänge. Kein Baukasten-Abo, keine Lizenzgebühren.' },
-      { title: 'Ansprechpartner in Dresden', desc: 'Tom Nowak ist Ihr Kontakt vor Ort, vom ersten Gespräch bis zum Angebot.', mail: true },
-    ] as { title: string; desc: string; mail?: boolean }[],
-    quotesLabel: 'Was Kunden von JPR Studio sagen',
-    // White-Label (Jan, 02.11.2026): echte, freigegebene Zitate aus site-copy.ts, Wortlaut unverändert,
-    // aber ohne Namen, Firma und Logo, nur Branche und Ort. Reihenfolge = copy.de.testimonials.items.
-    quotes: [
-      { quote: copy.de.testimonials.items[0].quote, who: 'Industriekletter-Betrieb, Berlin' },
-      { quote: copy.de.testimonials.items[1].quote, who: 'Kampfsportverein' },
+    reco: 'Empfohlen',
+    tiers: [
+      {
+        name: 'Starter', price: 'ab 1.500 €', reco: false,
+        for: 'Eine Seite, schnell online: für Betriebe, die vor allem angerufen werden wollen.',
+        features: ['One-Page-Website', 'Fürs Handy gebaut', 'Kontaktformular', 'Google Maps eingebunden', 'Grundlagen für Google (Basis-SEO)', '1 Korrekturschleife'],
+      },
+      {
+        name: 'Professional', price: 'ab 3.000 €', reco: true,
+        for: 'Für Betriebe und Praxen mit mehreren Leistungen, einem Team und Online-Terminen.',
+        features: ['Mehrseitige Website', 'Online-Terminbuchung', 'Seiten für Team, Leistungen und Galerie', 'Erweiterte Optimierung für Google (SEO)', 'Besucherzahlen mit Google Analytics', '3 Korrekturschleifen, Einführung und Support'],
+      },
+      {
+        name: 'Business', price: 'ab 5.000 €', reco: false,
+        for: 'Für Betriebe, die online verkaufen oder Abläufe automatisieren wollen.',
+        features: ['Alles aus Professional', 'Online-Shop oder Web-App', 'Kundenverwaltung', 'Eigene Funktionen und Automatisierungen', 'Laufender Support', 'Unbegrenzte Korrekturen'],
+      },
     ],
+    care: 'Betreuung ab 49 €/Monat: Hosting, Updates, Backups, Support',
+    voice: 'KI-Assistent für die fertige Website: auf Wunsch, Preis im Angebot',
+    note: 'Alle Preise netto zzgl. MwSt.',
+    cta: 'Kostenlosen Entwurf anfragen',
   },
   faq: {
     eyebrow: 'Fragen',
     title: 'Häufige Fragen.',
     items: [
-      { q: 'Was kostet der Entwurf?', a: 'Nichts. Der Entwurf ist kostenlos. Gefällt er Ihnen, bekommen Sie ein Festpreis-Angebot für die fertige Website und entscheiden in Ruhe.' },
-      { q: 'Ich habe keine Zeit für Website-Kram.', a: 'Wir bauen den Entwurf aus Ihrer bisherigen Seite. Texte, Bilder und Technik übernehmen wir. Von Ihnen brauchen wir ein kurzes Gespräch und Ihre Rückmeldung zum Entwurf.' },
-      { q: 'Wie funktioniert der KI-Assistent?', a: 'Kunden sprechen im Browser mit dem Assistenten. Er sagt zuerst, dass er eine KI ist, stellt Ihre Angebotsfragen und legt eine Auftragskarte an. Kein Ton wird aufgezeichnet, Preise und Termine sagt er nie zu.' },
-      { q: 'Was kostet die Website?', a: 'Ab 1.500 € für eine One-Page, ab 3.000 € mehrseitig, ab 5.000 € mit Shop oder Web-App, jeweils netto. Nach dem Entwurf bekommen Sie einen Festpreis.' },
-      { q: 'Ich habe noch gar keine Website.', a: 'Kein Problem. Dann sprechen Sie kurz mit Tom über Ihren Betrieb und bekommen ein Angebot für Ihre erste Website. Der kostenlose Entwurf vorab wird aus einer bestehenden Seite gebaut.' },
-      { q: 'Wem gehört die Website am Ende?', a: 'Ihnen, vollständig. Sie bekommen Code, Domain und alle Zugänge. Betreuung ist möglich, aber kein Muss: Sie können die Seite jederzeit von jemand anderem weiterführen lassen.' },
-      { q: 'Wer steckt hinter JPR Studio?', a: 'JPR Studio ist eine Marke der JPR Consulting GmbH mit Sitz in Berlin. In Dresden ist Tom Nowak Ihr Ansprechpartner, gebaut wird im Team von JPR Studio. Sie erreichen Tom unter tom@workwithjpr.com.' },
+      { q: 'Was kostet das?', a: 'Der Entwurf: nichts. Die fertige Website: ab 1.500 € als One-Page, ab 3.000 € mehrseitig mit Online-Terminen, ab 5.000 € mit Shop oder Web-App, jeweils netto. Nach dem Entwurf bekommen Sie einen Festpreis und entscheiden dann.' },
+      { q: 'Wie schnell ist die Website online?', a: 'Den Entwurf haben Sie nach 48 Stunden. Die fertige Website: einfache Seiten in wenigen Tagen, mit Shop oder Extras in ein bis zwei Wochen.' },
+      { q: 'Ich habe keine Zeit für Website-Kram.', a: 'Wir bauen den Entwurf aus Ihrer jetzigen Seite. Texte, Bilder und Technik übernehmen wir. Von Ihnen brauchen wir ein kurzes Gespräch und Ihre Rückmeldung zum Entwurf.' },
+      { q: 'Was macht der KI-Assistent genau?', a: 'Ihre Kunden sprechen im Browser mit ihm. Er sagt zuerst, dass er eine KI ist, stellt Ihre Fragen für ein Angebot und legt eine Auftragskarte an. Ton nimmt er nicht auf. Preise und Termine sagen Sie zu, nicht er.' },
+      { q: 'Ich habe noch gar keine Website.', a: 'Dann schreiben Sie Tom an tom@workwithjpr.com. Er spricht mit Ihnen über Ihren Betrieb, am Telefon oder bei Ihnen vor Ort. Danach bekommen Sie ein Angebot für Ihre erste Website. Den kostenlosen Entwurf vorab bauen wir aus einer bestehenden Seite.' },
+      { q: 'Wem gehört die Website am Ende?', a: 'Ihnen, vollständig: Code, Domain und alle Zugänge. Betreuung bei uns buchen Sie dazu, wenn Sie wollen. Weiterführen kann die Seite jederzeit auch jemand anderes.' },
+      { q: 'Wer baut die Website?', a: 'Das Team von JPR Studio, einer Marke der JPR Consulting GmbH mit Sitz in Berlin. Tom Nowak ist Ihr Ansprechpartner in Dresden, vom ersten Gespräch bis zum Angebot. Sie erreichen ihn unter tom@workwithjpr.com.' },
     ],
   },
   cta: {
     title: ['Erst sehen.', 'Dann entscheiden.'],
-    text: 'Tragen Sie Ihre Website ein. Sie bekommen einen kostenlosen Entwurf mit KI-Assistent und entscheiden danach.',
+    text: 'Tragen Sie Ihre Website ein. In 48 Stunden haben Sie Ihren Entwurf im Postfach, mit KI-Assistent.',
     button: 'Kostenlosen Entwurf anfragen',
+    mail: 'Lieber erst mit Tom sprechen? tom@workwithjpr.com',
   },
-  footer: { home: 'Startseite', pricing: 'Preise', imprint: 'Impressum', privacy: 'Datenschutz', companyEmail: 'info@workwithjpr.com', tomLine: 'Ansprechpartner in Dresden: Tom Nowak' },
+  // Schlichte Beschriftungen für Bedienelemente (aria-label), keine Werbetexte
+  ui: {
+    stackLabel: 'Beispiel-Entwürfe',
+    stackDot: 'Entwurf anzeigen',
+    sliderLabel: 'Vorher-Nachher-Regler',
+    lightboxClose: 'Schließen',
+    lightboxDesktop: 'Rechner',
+    lightboxMobile: 'Handy',
+    mockAlt: 'Gestaltete Attrappe einer typischen älteren Handwerker-Website',
+  },
+  footer: { home: 'Startseite', imprint: 'Impressum', privacy: 'Datenschutz', companyEmail: 'info@workwithjpr.com', tomLine: 'Ansprechpartner in Dresden: Tom Nowak' },
   sticky: 'Kostenlosen Entwurf anfragen',
   draft,
 };
